@@ -3,6 +3,7 @@ import {ValidateService} from '../../../services/validate.service';
 import {AuthService} from '../../../services/auth.service'
 import {FlashMessagesService} from 'angular2-flash-messages';
 import {Router} from '@angular/router';
+import { NG_VALIDATORS,Validator,Validators,AbstractControl,ValidatorFn } from '@angular/forms';
 
 
 
@@ -16,14 +17,30 @@ export class RegisterstudentComponent implements OnInit {
   	Email_ID: String;
   	username: String;
   	Pwd: String;
+	ConfirmPwd:String;
   	DOB: Date;
     Student_ID: String;
     Address: String;
     Mobile_No: String;
     Orgn_ID: Number;
     Dept_ID: Number;
-    
-
+    model:Object;
+	submitted = false;
+	public Organizations = [
+	  {id: 0,  name:"Please select"},
+      {id: 1, name: "Sunway"},
+      {id: 2, name: "Eon"},
+      {id: 3, name: "Scome"}      
+     ];
+	 
+	 public Departsments = [
+	  {id: 0,  name:"Please select"},
+      {id: 1, name: "Computer Science"},
+      {id: 2, name: "Mathematics"},
+      {id: 3, name: "Social Engineering"}      
+     ];
+	
+	 
   constructor(
    private validateService: ValidateService,
    private flashMessage:FlashMessagesService,
@@ -35,16 +52,38 @@ export class RegisterstudentComponent implements OnInit {
     ) { }
 
   ngOnInit() {
+	  this.model={
+
+  	Student_Name: '',
+  	Email_ID: '',
+  	username: '',
+  	Pwd: '',
+	ConfirmPwd:'',
+    Student_ID: '',
+    DOB: '',
+    Address: '',
+    Mobile_No: '',
+    Orgn_ID: '0',
+    Dept_ID: '0'
+   
+  	}
   }
 
   onRegisterSubmit(){
+<<<<<<< HEAD
 	  debugger
+=======
+	  debugger;
+	  this.submitted = true;
+	  
+>>>>>>> 8b8b0725f512b220ad2a4f5feceb519223f5a8b3
   	const student = {
 
   	Student_Name: this.Student_Name,
   	Email_ID: this.Email_ID,
   	username: this.username,
   	Pwd: this.Pwd,
+	ConfirmPwd : this.ConfirmPwd,
     Student_ID: this.Student_ID,
     DOB: this.DOB,
     Address: this.Address,
@@ -54,19 +93,20 @@ export class RegisterstudentComponent implements OnInit {
    
   	}
   	 // Required Fields
-    if(!this.validateService.validateRegister(student)){
+    if(!this.validateService.validateRegister(this.model)){
       this.flashMessage.show('Please fill in all fields', {cssClass: 'alert-danger', timeout: 3000});
       return false;
     }
 
     // Validate Email
-    if(!this.validateService.validateEmail(student.Email_ID)){
-     this.flashMessage.show('Please use a valid email', {cssClass: 'alert-danger', timeout: 3000});
-      return false;
-    }
+    //if(!this.validateService.validateEmail(this.model.Email_ID)){
+     //this.flashMessage.show('Please use a valid email', {cssClass: 'alert-danger', timeout: 3000});
+      //return false;
+    //}
 
   // Register user
-    this.authService.registerStudent(student).subscribe(data => {
+    this.authService.registerStudent(this.model).subscribe(data => {
+		debugger;
       if(data.success){
         this.flashMessage.show('You are now registered and can log in', {cssClass: 'alert-success', timeout: 3000});
         this.router.navigate(['/login']);

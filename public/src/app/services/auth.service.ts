@@ -30,6 +30,7 @@ export class AuthService {
 
   //get the profile--will get unauthorized if the token is not sent
   getProfile(){
+	  debugger
     let headers = new Headers();
     this.loadToken();
     headers.append('Authorization', this.authToken);
@@ -50,18 +51,58 @@ export class AuthService {
   loadToken(){
     const token = localStorage.getItem('id_token');
     this.authToken = token;
+	
+  }
+  
+  getStudent()
+  {
+	  return localStorage.getItem('http://localhost:3777/student');
   }
 
 
   login(){
-    return tokenNotExpired();
+	  //debugger;
+	  console.log(tokenNotExpired());
+    //return tokenNotExpired();
+	if(this.authToken != null || this.student != null)
+	{
+		return false;
+	}else 
+	{
+		return true;
+	}
   }
 
 
   logout(){
+	  debugger;	
     this.authToken = null;
     this.student = null;
     localStorage.clear();
+	localStorage.removeItem('id_token');
+	localStorage.removeItem('http://localhost:3777/student');
+
+	console.log(tokenNotExpired());
   }
+  
+  registerEvent(event){
+  	let headers = new Headers();
+  	headers.append('Content-Type','application/json');
+
+	
+    //event/register is temporary domain
+  	return this.http.post('http://localhost:3777/events/AddEvent', event,{headers: headers})
+  	.map(res => res.json());
+  }
+  
+  getEvents(){
+	return this.http.get('../src/app/services/data/data.json')
+                .map(res => res.json());
+}
+
+getEventsById(id){
+	return this.http.get('../src/app/services/data/data.json')
+                .map(res => res.json());
+}
 
 }
