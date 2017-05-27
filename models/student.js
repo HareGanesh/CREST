@@ -84,9 +84,15 @@ const StudentSchema = mongoose.Schema({
 
 });
 
-const Student = module.exports = mongoose.model('Student', StudentSchema);
+const Student = module.exports = mongoose.model('Student', StudentSchema,'Student');
 
 module.exports.getStudentById = function(id, callback){
+	console.log(id);
+	Student.findById(id, callback);
+}
+
+module.exports.profile = function(id, callback){
+	console.log(id);
 	Student.findById(id, callback);
 }
 
@@ -96,16 +102,14 @@ module.exports.getStudentByUsername = function(username,callback){
 }
 
 module.exports.addStudent = function(newStudent, callback){
-  bcrypt.genSalt(10, (err, salt) => {
-    bcrypt.hash(newStudent.Pwd, salt, (err, hash) => {
-      if(err) throw err;
-      newStudent.Pwd = hash;
-      newStudent.save(callback);
-    });
-  });
+ console.log(newStudent);
+  newStudent.save(callback);
+ // if(err) throw err;
 }
 
 module.exports.comparePwd = function(candidatePwd, hash, callback){
+	console.log(candidatePwd);
+	console.log(hash);
   bcrypt.compare(candidatePwd, hash, (err, isMatch) => {
      if(err) throw err;
     callback(null, isMatch);

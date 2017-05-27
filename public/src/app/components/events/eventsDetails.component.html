@@ -1,0 +1,160 @@
+<div class="main-wrapper">
+
+<div class="events-wrapper">
+<!-- phead -->
+<div class="profile2">
+<div class="head blue-bg" id="head">
+<div class="row">
+<div class="twelve columns">
+<div class="pic left" style="background-image: url('http://hackathon.io.s3.amazonaws.com/profiles/images/000/082/329/thumb/oculus_rift_3.jpg?1489763175');"></div>
+<div class="wrapper left">
+<div class="info">
+<h1 class="title">{{eventDetails.EventTitle}}</h1>
+<p class="heading">{{eventDetails.Description}}...</p>
+<div class="extras">
+<ul class="clearfix">
+<li class="date">
+<i class="icon-time"></i>
+{{eventDetails.StartDt | date}}
+
+</li>
+
+</ul>
+<ul class="clearfix">
+<li>
+<i class="icon-map-marker"></i>
+{{eventDetails.Location}}
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="wrapper right">
+<!-- links -->
+</div>
+</div>
+</div>
+
+</div>
+</div>
+<div id="tabs">
+<div class="row">
+
+<ul class="nav nav-tabs">
+<li class="active" >
+<a href="#OverviewTab" data-toggle="tab">Overview</a>
+</li>
+<li>
+<a href="#ScheduleTab" data-toggle="tab">Schedule</a>
+</li>
+<li class="RulesTab">
+<a href="#RulesTab" data-toggle="tab">Rules</a>
+</li>
+
+<li>
+<a href="#PeopleTab" data-toggle="tab">People</a>
+</li>
+<li>
+<a href="#PrizesTab" data-toggle="tab">Prizes</a>
+</li>
+<li>
+<a href="#ChatTab" data-toggle="tab">Chat</a>
+</li>
+<li>
+<a href="#OrganizersTab" data-toggle="tab">Organizers</a>
+</li>
+
+</ul>
+
+<div class="tab-content x_panel">
+<div id="OverviewTab" class="tab-pane fade in active">
+
+<div class="eventcheck border border2">
+<div class="ebgins">
+<div class="joinEvent">
+<a href="#" class="big-red-button">JOIN EVENT</a>
+</div>
+Submission deadline
+<ul>
+<li>Days</li>
+<li>Hours</li>
+<li>Min</li>
+</ul>
+<ul data-timestamp="1548921600" id="js-clock">
+<li class="days js-days">{{dayDiff}}</li>
+<li class="hours js-hours">{{dayHours}}</li>
+<li class="minutes js-minutes">{{dayMin}}</li>
+</ul> 
+</div>
+</div>
+<div class="ebgins">
+<h2>About this event</h2>
+<div class="js-text-full"><p>{{eventDetails.Description}}</p>
+</div>
+</div>
+<div class="ebgins">
+<h2>
+Prizes
+</h2>
+<div class="not-available"> <i class="icon-exclamation-sign"></i> {{eventDetails.Prizes[0].PrizeDescription}}</div>
+<a class="footerlink" data-toggle="tab" href="#PrizesTab">More</a>
+<div class="clear"></div>
+</div>
+<div class="ebgins">
+<h2>Schedule</h2>
+<div>
+
+</div>
+<a class="footerlink" data-toggle="tab" href="#ScheduleTab">More</a>
+<div class="clear"></div>
+</div>
+<div class="ebgins">
+<h2>Rules</h2>
+<!-- <div class="not-available"> <i class="icon-exclamation-sign"></i> Rules are not published.</div> -->
+<div class="not-available"> <i class="icon-exclamation-sign"></i> {{eventDetails.Rules[0].RuleDescription}}</div>
+<a class="footerlink" data-toggle="tab" (click)="ActiveTab('RulesTab')" href="#RulesTab">More</a>
+</div>
+</div>
+
+
+<div id="ScheduleTab" class="tab-pane fade"><h3>ContactTab
+</h3>
+</div> 
+
+<div id="RulesTab" class="tab-pane fade "><h3>Rules
+</h3>
+<div *ngFor="let rule of eventDetails.Rules">
+{{rule.RuleDescription}}
+</div>
+</div>
+
+<div id="PeopleTab" class="tab-pane fade"><h3>PeopleTab
+</h3>
+</div>
+
+<div id="PrizesTab" class="tab-pane fade"><h3>PrizesTab
+</h3>
+
+<div *ngFor="let prize of eventDetails.Prizes">
+{{prize.PrizeDescription}}
+</div>
+</div>
+
+<div id="ChatTab" class="tab-pane fade"><h3>Chate Tab
+</h3>
+</div>
+
+<div id="OrganizersTab" class="tab-pane fade"><h3>OrganizersTab
+</h3>
+</div>
+
+</div>
+</div>
+
+</div>
+
+
+</div>
+
+<div class="footer-spacer"></div>
+</div>

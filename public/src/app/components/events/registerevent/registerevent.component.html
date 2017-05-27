@@ -1,0 +1,377 @@
+<!-- <div class="showcase"> -->
+<!-- <div class="jumbotron-register"> -->
+  <!-- <h1>Welcome to LinkUS Registration page!</h1> -->
+  <!-- <p> -->
+    
+  <!-- </p> -->
+
+<!-- </div> -->
+
+
+
+
+<div class="container">
+
+  <div class="row">
+    <div class="col-am-6 col-md-4 col-md-offset-4" style="width:100%">
+      <h1 class="text-left">Event Detail</h1>
+      <br>
+      <div class="account-wall" style="width:50%">
+	  
+	  
+	  
+	  
+<div [hidden]="submitted">
+
+
+
+<form #EventForm="ngForm" enctype="multipart/form-data">
+
+<div id="tabs">
+<div class="row">
+
+<ul class="nav nav-tabs" id="wheel-tab">
+<li class="active " #firstLI>
+<a href="#OverviewTab" data-toggle="tab">Overview</a>
+</li>
+
+<li #secondLI>
+<a href="#RulesTab" data-toggle="tab" [class.disabled]="isDisabled()">Rules</a>
+</li>
+
+<li #thirdLI>
+<a href="#PrizesTab" data-toggle="tab" [class.disabled]="isDisabled()">Prizes</a>
+</li>
+<li #forthLI>
+<a href="#OrganizersTab" data-toggle="tab" [class.disabled]="isDisabled()">OrganizersTab</a>
+</li>
+
+</ul>
+
+<div class="tab-content x_panel">
+<div id="OverviewTab" class="tab-pane fade in active">
+
+<div>
+<ul>
+<li class="red" *ngFor="let a of this.ErrorList; let index = index">
+{{ErrorList[index]}}
+</li>
+</ul>
+</div>
+
+	<label>Event Title<span class="red">*</span></label>
+	<div class="input-group">
+     <span class="input-group-addon"><i class="fa fa-address-book"></i></span>
+		
+		<input required type="text" [(ngModel)]="model.EventTitle" name="EventTitle" ngControl="EventTitle"  class="form-control" placeholder="Event Title"
+		autofocus="true" id="#EventTitle" #EventTitle="ngModel">
+		<div [hidden]="EventTitle.valid || EventTitle.pristine"
+             class="alert alert-danger">
+          Event Title is required
+        </div>	
+	</div>
+
+
+	<label>Event Description <span class="red">*</span></label>
+	<div class="input-group">
+     <span class="input-group-addon"><i class="fa fa-address-card"></i></span>
+		
+		<textarea [(ngModel)]="model.Description" name="Description" ngControl="Description"  class="form-control" placeholder="Description"
+		autofocus="true" id="#Description" #Description="ngModel" cols="3" rows="3" maxlength="2000" required></textarea>
+		<div [hidden]="Description.valid || Description.pristine"
+             class="alert alert-danger">
+          Event Description is required
+        </div>
+	</div>
+
+ <label>Event Logo <span class="red">*</span></label>
+	<div class="input-group">
+     <span class="input-group-addon"><i class="fa fa-address-card"></i></span>
+		
+		<!-- <input type="file" NgFileSelect [(ngModel)]="model.Event_Logo" name="Event_Logo" ngControl="Event_Logo"  class="form-control" placeholder="Event_Logo" -->
+		<!-- autofocus="true" id="#Event_Logo" #Event_Logo="ngModel" (change)="fileChange(Event_Logo)"> -->
+		  <input type="file" name="student_img" required (change)="fileChange(inputImage)" #inputImage class="form-control" />
+      </div>
+ <div *ngIf ="eventId !=''"> 
+      <img [attr.src]='file_srcs[0]' alt="" height="250" width="250"/>
+    </div>
+	<div *ngIf="eventId ==''"> 
+      <img [attr.src]='file_srcs[0]' alt=""/>
+    </div>
+	<label>Event Category<span class="red">*</span></label>
+	<div class="input-group">
+     <span class="input-group-addon"><i class="fa fa-key"></i></span>
+	
+		<select id="#CategoriesMstr" [(ngModel)]="model.CategoriesMstr"  #CategoriesMstr="ngModel" name="CategoriesMstr" ngControl="CategoriesMstr"  class="form-control" >
+         
+		<option *ngFor="let c of Categories" [value]="c.id" >  
+        {{c.name}}
+        </option>
+    </select>
+		<div [hidden]="CategoriesMstr.valid || CategoriesMstr.pristine"
+             class="alert alert-danger">
+          Category is required 
+		  </div>
+	
+	</div>
+	<label>Event Sub Category<span class="red">*</span></label>
+	<div class="input-group">
+     <span class="input-group-addon"><i class="fa fa-key"></i></span>
+	
+		<select id="#CategoriesSubMstr" #CategoriesSubMstr="ngModel" name="CategoriesSubMstr" [(ngModel)]="model.CategoriesSubMstr" ngControl="CategoriesSubMstr"  class="form-control" >
+        
+		<option *ngFor="let c of Categories" [value]="c.id">  
+        {{c.name}}
+        </option>
+    </select>
+	<div [hidden]="CategoriesSubMstr.valid || CategoriesSubMstr.pristine"
+             class="alert alert-danger">
+         Sub Category is required 
+		  </div>
+	</div>
+	 <label>Event Type <span class="red">*</span></label>
+	<div class="input-group">
+     <span class="input-group-addon"><i class="fa fa-key"></i></span>
+		<select [(ngModel)]="model.EventType" name="EventType" ngControl="EventType"  class="form-control" placeholder="Event Type"
+		autofocus="true" id="#EventType" #EventType="ngModel">		
+		 <option *ngFor="let c of Categories" [value]="c.id" >  
+        {{c.name}}
+        </option>
+		</select>
+		<div [hidden]="EventType.valid || EventType.pristine"
+             class="alert alert-danger">
+          Event Type is required 
+		  </div>
+	</div>
+
+	<label>Start Date <span class="red">*</span></label>
+	<div class="input-group">
+     <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+		<!-- <input type="date" #myDate [value]="model.StartDt | date:'yyyy-MM-dd'" (input)="model.StartDt=parseDate($event.target.value)" /> -->
+		<input type="date" required name="StartDt" ngControl="StartDt"  class="form-control" placeholder="Start Date"
+		autofocus="true" id="#StartDt" (blur)="compareDates()" [value]="model.StartDt | date:'yyyy-MM-dd'" (input)="model.StartDt=parseDate($event.target.value)" />
+		
+	
+	</div>
+
+
+	<label>End Date <span class="red">*</span></label>
+	<div class="input-group">
+     <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+		
+		<input required type="date" name="EndDt" ngControl="EndDt"  class="form-control" placeholder="End Date"
+		autofocus="true" id="#EndDt" (blur)="compareDates()" [value]="model.EndDt | date:'yyyy-MM-dd'" (input)="model.EndDt=parseDate($event.target.value)" />
+		</div>
+	<!-- <div [hidden]="EndDt.valid || EndDt.pristine" -->
+             <!-- class="alert alert-danger"> -->
+          <!-- End Date is required -->
+   
+        <!-- </div> -->
+	
+	
+	<label>Event Registration End Date <span class="red">*</span></label>
+	<div class="input-group">
+     <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+		     
+
+		<input required type="date"  name="EventRegisterEndDt" ngControl="EventRegisterEndDt"  class="form-control" placeholder="End Date"
+		autofocus="true" id="#EventRegisterEndDt" [value]="model.EventRegisterEndDt | date:'yyyy-MM-dd'" (input)="model.EventRegisterEndDt=parseDate($event.target.value)" />
+		
+		<!-- <div [hidden]="EventRegisterEndDt.valid || EventRegisterEndDt.pristine" -->
+             <!-- class="alert alert-danger"> -->
+         <!-- Registration End Date is required -->
+   
+        <!-- </div> -->
+		
+	</div>
+	
+	<label>POC Required?</label>
+    <div class="form-group">
+        <div class="radio">
+            <label>
+                <input type="radio" [(ngModel)]="model.POCRequired" class="radio-control"  ngControl="POCRequired" id="#POCRequired" #POCRequired="ngModel"  name="POCRequired" value="Yes">Yes
+                
+            </label>
+        </div>
+        <div class="radio">
+            <label>
+                <input type="radio" [(ngModel)]="model.POCRequired" class="radio-control" ngControl="POCRequired" id="#POCRequired" #POCRequired="ngModel"   name="POCRequired" value="No">No
+            </label>
+        </div>
+    </div>
+	
+		<div *ngIf="model.POCRequired == 'Yes'" class="form-group">
+		<label>POC Deadline<span class="red">*</span></label>
+	<div class="input-group">
+     <span class="input-group-addon"><i class="fa fa-calendar"></i></span>		     
+
+		<input required type="date" [(ngModel)]="model.POCDeadLine" name="POCDeadLine" ngControl="POCDeadLine"  class="form-control" placeholder="End Date"
+		autofocus="true" id="#POCDeadLine" #POCDeadLine="ngModel" >
+		<div [hidden]="POCDeadLine.valid || POCDeadLine.pristine"
+             class="alert alert-danger">
+         POC DeadLine is required
+   
+        </div>
+		
+	</div>
+		</div>
+		<label>Status</label>
+    <div class="form-group">
+        <label class="checkbox-inline">
+            <input type="checkbox" name="Status" [(ngModel)]="model.Status" id="#Status" #Status="ngModel" > Active
+        </label>
+		</div>
+	
+	
+	
+	
+	<label>Location <span class="red">*</span></label>
+	<div class="input-group">
+     <span class="input-group-addon"><i class="fa fa-marker"></i></span>
+		
+		<input required type="text" [(ngModel)]="model.Location" name="Location" ngControl="Location"  class="form-control" placeholder="Location"
+		autofocus="true" id="#Location" #Location="ngModel" >
+		<div [hidden]="Location.valid || Location.pristine"
+             class="alert alert-danger">
+          Location is required
+   
+        </div>
+	</div>
+	
+	
+	
+	<button (click)="onEventSubmit()" class="big-red-button floatRight" [disabled]="!EventForm.form.valid" >Finish</button>
+	<a id="Next" class="big-red-button floatRight" data-toggle="tab" [class.disabled]="isDisabled()" (click)=OnNextClick(input,1,firstLI,secondLI) #input>Next</a>
+	<!-- <input type="submit" class="btn btn-lg btn btn-primary btnNext" value="Next"> -->
+</div> 
+
+
+<div id="RulesTab" class="tab-pane fade "><label>Event Rules</label>
+
+<a id="addMore" class=" floatRight"(click)=AddMoreRules()><img src="..\..\src\img\AddMore.png" height="30px" width="30px"></a> 
+
+	 <div class="input-group" *ngFor="let rule of model.Rules;let i = index">
+      
+	  
+     
+	 <span class="input-group-addon"><i class="fa fa-address-card">{{i+1}}</i></span>
+		<textarea [(ngModel)]="rule.RuleDescription" name="Rules{{i}}" ngControl="Rules" placeholder="Rules"  class="form-control"
+		 autofocus="true" cols="3" rows="3" >
+		 </textarea>	
+	 
+		<a *ngIf="model.Rules.length == i+1 && model.Rules.length !=1" id="Remove" class="floatRight" (click)=RemoveRules()><img src="..\..\src\img\Remove.png" height="30px" width="30px"></a>
+	</div>
+	
+	
+	<a id="Next1" class="big-red-button floatRight" data-toggle="tab" (click)=OnNextClick(input1,2,secondLI,thirdLI) #input1>Next</a>
+	<a id="Prev1" class="big-red-button" data-toggle="tab" (click)=OnPrevClick(inputc,2,secondLI,firstLI) #inputc>Prev</a>
+	<!-- <input type="submit" class="btn btn-lg btn btn-primary " value="Next" [disabled]="!EventForm.form.valid"> -->
+</div>
+
+<div id="PrizesTab" class="tab-pane fade"><label>Event Prizes</label>
+<a class="floatRight"(click)=AddMorePrizes()><img src="..\..\src\img\AddMore.png" height="30px" width="30px"></a> 
+	<div class="input-group" *ngFor="let rule of model.Prizes;let i = index">
+     <span class="input-group-addon"><i class="fa fa-address-card">{{i+1}}</i></span>
+		
+		<textarea [(ngModel)]="model.Prizes[i].PrizeDescription" name="Prizes{{i}}" ngControl="Prizes"  class="form-control" placeholder="Prizes"
+		autofocus="true" cols="3" rows="3"></textarea>
+		<a *ngIf="model.Prizes.length == i+1 && model.Prizes.length !=1" id="RemovePrize" class="floatRight" (click)=RemovePrize()><img src="..\..\src\img\Remove.png" height="30px" width="30px"></a>
+	 </div>
+	<a id="Next2" class="big-red-button floatRight" data-toggle="tab" (click)=OnNextClick(input2,3,thirdLI,forthLI) #input2>Next</a>
+	<a id="Prev2" class="big-red-button" data-toggle="tab" (click)=OnPrevClick(inputb,3,thirdLI,secondLI) #inputb>Prev</a>
+		<!-- <input type="submit" class="btn btn-lg btn btn-primary " value="Next" [disabled]="!EventForm.form.valid"> -->
+</div>
+
+
+
+
+<div id="OrganizersTab" class="tab-pane fade">
+<a class="floatRight"(click)=AddMoreOrganizer()><img src="..\..\src\img\AddMore.png" height="30px" width="30px"></a> 
+	<div *ngFor="let rule of model.Organizers;let i = index">
+<label>Organizer Name</label>
+	<div class="input-group">
+	
+     <span class="input-group-addon"><i class="fa fa-address-book">{{i+1}}</i></span>
+		
+		<input type="text" [(ngModel)]="model.Organizers[i].OrganizerName" name="organizerName{{i}}" ngControl="organizerName"  class="form-control" placeholder="organizer Name"
+		autofocus="true" id="#organizerName" #organizerName="ngModel">
+		
+        </div>	
+		<label>Organizer Email</label>
+		<div class="input-group">
+     <span class="input-group-addon"><i class="fa fa-address-book">{{i+1}}</i></span>
+		
+		<input type="text" [(ngModel)]="model.Organizers[i].OrganizerEmail" name="OrganizerEmail{{i}}" ngControl="OrganizerEmail"  class="form-control" placeholder="organizer Email"
+		autofocus="true" id="#OrganizerEmail" #OrganizerEmail="ngModel" pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$">
+		<div [hidden]="OrganizerEmail.valid || OrganizerEmail.pristine"
+             class="alert alert-danger">          
+   <div [hidden]="!OrganizerEmail.hasError('pattern')">Email format should be 
+      <small><b>joe@abc.com</b></small>
+   </div>
+
+        </div>
+        </div>	
+		
+		<label>Contact Number <span class="red">*</span></label>	
+	<div class="input-group">
+     <span class="input-group-addon"><i class="fa fa-address-book">{{i+1}}</i></span>
+		
+		<input required type="text" [(ngModel)]="model.Organizers[i].OrganizerContact" name="ContactNo{{i}}" ngControl="ContactNo"  class="form-control" placeholder="Contact No"
+		autofocus="true" id="#ContactNo" #ContactNo="ngModel" pattern="[0-9]*" minlength="10" maxlength="10" 
+>
+		<div [hidden]="ContactNo.valid || ContactNo.pristine"
+             class="alert alert-danger">
+          <div [hidden]="!ContactNo.hasError('minlength')">Mobile number should be 10 digit</div>
+      <div [hidden]="!ContactNo.hasError('required')">Mobile number is required</div>
+      <div [hidden]="!ContactNo.hasError('pattern')">Mobile number should be only numbers</div>
+
+        </div>
+	</div>
+	
+		<a *ngIf="model.Organizers.length == i+1 && model.Organizers.length !=1" id="RemoveOrg" class="floatRight" (click)=RemoveOrganizer()><img src="..\..\src\img\Remove.png" height="30px" width="30px"></a>
+
+	</div>
+
+<button (click)="onEventSubmit()" class="big-red-button floatRight" [disabled]="!EventForm.form.valid" >Submit All</button>
+<a id="Prev3" class="big-red-button" data-toggle="tab" (click)=OnPrevClick(inputa,4,forthLI,thirdLI) #inputa>Prev</a>
+
+<!-- <input type="submit" class="btn btn btn-primary " value="Save" [disabled]="!EventForm.form.valid" (onclick)="onEventSubmit()"> -->
+
+</div>
+
+</div>
+</div>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+		
+		
+	
+
+
+	
+
+
+</form>
+</div>
+
+

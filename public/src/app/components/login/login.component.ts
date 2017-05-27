@@ -11,7 +11,8 @@ import {FlashMessagesService} from 'angular2-flash-messages';
 export class LoginComponent implements OnInit {
 username: String;
   Pwd: String;
-
+submitted = false;
+model:Object;
   constructor(
     private authService:AuthService,
     private router:Router,
@@ -19,21 +20,25 @@ username: String;
   ) { }
 
   ngOnInit() {
+	this.model= {
+      username: '',
+      Pwd: ''
+    }
   }
 
   onLoginSubmit(){
-    const student = {
-      username: this.username,
-      Pwd: this.Pwd
-    }
+	  debugger;
+	  this.submitted = true;
+   
 
-    this.authService.authenticateStudent(student).subscribe(data => {
+    this.authService.authenticateStudent(this.model).subscribe(data => {
+	
       if(data.success){
         this.authService.storeStudentData(data.token, data.student);
         this.flashMessage.show('You are now logged in', {
           cssClass: 'alert-success',
           timeout: 5000});
-        this.router.navigate(['dashboard']);
+        this.router.navigate(['']);
       } else {
         this.flashMessage.show(data.msg, {
           cssClass: 'alert-danger',

@@ -9,13 +9,14 @@ import {FlashMessagesService} from 'angular2-flash-messages';
   styleUrls: ['./navbar.component.css']
 })
 export class NavbarComponent implements OnInit {
-
+student:Object;
   constructor(
     private authService:AuthService,
     private router:Router,
     private flashMessage:FlashMessagesService) { }
 
   ngOnInit() {
+	  this.student = JSON.parse(this.authService.getStudent());
   }
 
   onLogoutClick(){

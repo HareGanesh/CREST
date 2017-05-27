@@ -1,42 +1,57 @@
 
-<div class="showcase">
+<!--<div class="showcase">
 <div class="jumbotron-login">
-  <h1>Welcome to LinkUS login page!</h1>
+  <h1>LinkUS login!</h1>
   <p>
     
   </p>
 
 </div>
+-->
+<head>
 
 
+</head>
 <div class="container-login">
   <div class="row">
     <div class="col-am-6 col-md-4 col-md-offset-4">
-      <h1 class="text-center">Login to continue to LinkUS</h1>
-      <br>
+      <h1 class="text-center">Login to CREST</h1>
+     <!-- <br>
       <div class="account-wall">
-        <img src="http://apps.uap.asia/admissions/images/defaultpic.jpg" alt="" class="profile-image">
+        <img src="http://apps.uap.asia/admissions/images/defaultpic.jpg" alt="" class="profile-image">-->
         
 
 
 
-
-<form (submit)="onLoginSubmit()">
+ <div [hidden]="submitted">
+<form (submit)="onLoginSubmit()" #LoginForm="ngForm">
 
     <div class="input-group">
      <span class="input-group-addon"><i class="fa fa-user"></i></span>
-    <input type="text" [(ngModel)]="username" name="username" class="form-control" placeholder="Username" autofocus="true">
-  </div>
+	 
+    <input required type="text" [(ngModel)]="model.username" name="username" ngControl="username"  class="form-control" placeholder="Username" autofocus="true" id="#username" #username="ngModel">
   
 
+<div [hidden]="username.valid || username.pristine"
+             class="alert alert-danger">
+          User Name is required
+        </div>		
+  </div> 
  
     <div class="input-group">
      <span class="input-group-addon"><i class="fa fa-lock"></i></span>
-    <input type="password" [(ngModel)]="Pwd" name="Pwd" class="form-control" placeholder="Password" autofocus="true">
-  </div>
+    <input type="password" [(ngModel)]="model.Pwd" name="Pwd" class="form-control" placeholder="Password" autofocus="true" required id="#pwd" #pwd="ngModel">
+ <div [hidden]="pwd.valid || pwd.pristine"
+             class="alert alert-danger">
+          password is required
+        </div>	
+ </div>
   
 
-  <input type="submit" class="btn btn-lg btn btn-primary btn-block" value="Sign in">
+  <input type="submit" class="btn btn-lg btn btn-primary btn-block " value="Sign in" [disabled]="!LoginForm.form.valid">
 
+<a style="float:right;padding-left:10px;font-weight:bold" [routerLink]="['/register']">Signup</a>
+<span style="float:right;font-weight:bold"> Need an account? </span>
 </form>
 
+</div>
