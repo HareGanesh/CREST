@@ -23,6 +23,11 @@ const app = express();
 const port = 3777;
 const students = require('./routes/students');
 const events = require('./routes/Events');
+const categoryMstr = require('./routes/CategoryMstr');
+const subCategoryMstr = require('./routes/SubCategoryMstr');
+
+const eventTypeMaster = require('./routes/EventTypeMaster');
+//const events = require('./routes/Events');
 
 //MIDDLEWARE
 app.use(cors());//run on diff port
@@ -47,6 +52,10 @@ app.use(express.static(path.join(__dirname, 'public')));
 require('./config/passport')(passport);
 app.use('/students', students);
 app.use('/Events', events);
+app.use('/CategoryMstr',categoryMstr);
+app.use('/SubCategoryMstr',subCategoryMstr);
+app.use('/EventTypeMaster', eventTypeMaster);
+
 
 //app.use('/events', events);
 // app.use('/students', function(students, res, next) {

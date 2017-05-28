@@ -95,6 +95,26 @@ export class AuthService {
   	.map(res => res.json());
   }
   
+  getCategories()
+  {
+	  debugger;
+	  return this.http.get('http://localhost:3777/CategoryMstr/getAllCategory')
+  	.map(res => res.json());
+  }
+  
+  getSubCategories()
+  {
+	  debugger;
+	  return this.http.get('http://localhost:3777/SubCategoryMstr/getAllSubCategory')
+  	.map(res => res.json());
+  }
+  
+  getEventTypes()
+  {
+	  debugger;
+	  return this.http.get('http://localhost:3777/EventTypeMaster/getAllEventTypeMaster')
+  	.map(res => res.json());
+  }
   getEvents(){
 	return this.http.get('../src/app/services/data/data.json')
                 .map(res => res.json());

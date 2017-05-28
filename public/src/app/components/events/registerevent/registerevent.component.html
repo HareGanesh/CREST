@@ -102,10 +102,10 @@
 	<div class="input-group">
      <span class="input-group-addon"><i class="fa fa-key"></i></span>
 	
-		<select id="#CategoriesMstr" [(ngModel)]="model.CategoriesMstr"  #CategoriesMstr="ngModel" name="CategoriesMstr" ngControl="CategoriesMstr"  class="form-control" >
+		<select id="#CategoriesMstr"  (ngModelChange)="onChange($event)" [(ngModel)]="model.CategoriesMstr"  #CategoriesMstr="ngModel" name="CategoriesMstr" ngControl="CategoriesMstr"  class="form-control" >
          
-		<option *ngFor="let c of Categories" [value]="c.id" >  
-        {{c.name}}
+		<option *ngFor="let c of Categories" [value]="c.CategoryID" >  
+        {{c.CategoryName}}
         </option>
     </select>
 		<div [hidden]="CategoriesMstr.valid || CategoriesMstr.pristine"
@@ -120,8 +120,8 @@
 	
 		<select id="#CategoriesSubMstr" #CategoriesSubMstr="ngModel" name="CategoriesSubMstr" [(ngModel)]="model.CategoriesSubMstr" ngControl="CategoriesSubMstr"  class="form-control" >
         
-		<option *ngFor="let c of Categories" [value]="c.id">  
-        {{c.name}}
+		<option *ngFor="let c of SubCategories" [value]="c.SubCategoryID">  
+        {{c.SubCategoryName}}
         </option>
     </select>
 	<div [hidden]="CategoriesSubMstr.valid || CategoriesSubMstr.pristine"
@@ -134,8 +134,8 @@
      <span class="input-group-addon"><i class="fa fa-key"></i></span>
 		<select [(ngModel)]="model.EventType" name="EventType" ngControl="EventType"  class="form-control" placeholder="Event Type"
 		autofocus="true" id="#EventType" #EventType="ngModel">		
-		 <option *ngFor="let c of Categories" [value]="c.id" >  
-        {{c.name}}
+		 <option *ngFor="let et of EventTypes" [value]="et.EventTypeID" >  
+        {{et.EventTypeName}}
         </option>
 		</select>
 		<div [hidden]="EventType.valid || EventType.pristine"
@@ -239,8 +239,8 @@
 	</div>
 	
 	
-	
-	<button (click)="onEventSubmit()" class="big-red-button floatRight" [disabled]="!EventForm.form.valid" >Finish</button>
+	<a id="btnFinal" class="big-red-button floatRight" [class.disabled]="isDisabled()" (click)=onEventSubmit()>Finish All</a>
+	<!-- <button (click)="onEventSubmit()" class="big-red-button floatRight" [disabled]="!EventForm.form.valid" >Finish</button> -->
 	<a id="Next" class="big-red-button floatRight" data-toggle="tab" [class.disabled]="isDisabled()" (click)=OnNextClick(input,1,firstLI,secondLI) #input>Next</a>
 	<!-- <input type="submit" class="btn btn-lg btn btn-primary btnNext" value="Next"> -->
 </div> 

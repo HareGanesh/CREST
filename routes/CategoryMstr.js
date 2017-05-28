@@ -63,7 +63,7 @@ console.log("Test");
 		throw err;
 	}
      else
-	  {		 
+	  {		console.log(Category); 
 		  res.json(Category);
 	  }
   });  

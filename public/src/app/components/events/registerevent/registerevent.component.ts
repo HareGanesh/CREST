@@ -16,7 +16,7 @@ import {Router, ActivatedRoute, Params} from '@angular/router';
 })
 export class RegistereventComponent implements OnInit {
 	student:Object;
-	
+	category:Object;
 	  
 	  
     path='';
@@ -40,17 +40,19 @@ public selectedEvent:any = null;
     // params: { 'post_id': this.postId }
   // };
 public Categories = [
-	  {id: 0,  name:"Please select"},
-      {id: 1, name: "Clutural"},
-      {id: 2, name: "Business"},
-      {id: 3, name: "Educational"}      
+	  {CategoryID: 0,  CategoryName:"Please select"}
+         
      ];
- 
+ public SubCategories = [
+	  
+         
+     ];
+	 public SubCategoriesWithCategory = [
+	  
+         
+     ];
 public EventTypes = [
-      {id: 0,  name:"Please select"},
-      {id: 1, name: "Clutural"},
-      {id: 2, name: "Business"},
-      {id: 3, name: "Educational"}      
+      {EventTypeID: 0,  EventTypeName:"Please select"}    
      ]; 
   
     EventTitle:String;  
@@ -79,7 +81,7 @@ public EventTypes = [
     EndDt:'',
 	EventRegisterEndDt:'',
     EventType:'0',
-    POCRequired:'',
+    POCRequired:'No',
     POCDeadLine:'',
     Location:'',
     Status:'Yes',
@@ -114,8 +116,39 @@ submitted = false;
 	  
 	  // Logged in user
 	this.student = JSON.parse(this.authService.getStudent());
-       
-	  
+       debugger;
+	   this.authService.getCategories().subscribe(data => {
+		   for(let i=0; i< data.length; i++)
+      this.Categories.push(data[i]);
+    },
+    //observable also returns error
+    err => {
+      console.log(err);
+      return false;
+    });
+	
+	
+	// Load sub categories
+	this.authService.getSubCategories().subscribe(data => {
+		   for(let i=0; i< data.length; i++)
+      this.SubCategoriesWithCategory.push(data[i]);
+    },
+    //observable also returns error
+    err => {
+      console.log(err);
+      return false;
+    });
+	
+	// Load event types
+	this.authService.getEventTypes().subscribe(data => {
+		   for(let i=0; i< data.length; i++)
+      this.EventTypes.push(data[i]);
+    },
+    //observable also returns error
+    err => {
+      console.log(err);
+      return false;
+    });
 	  
 	  let eventID
 	 this.activatedRoute.params.subscribe((params: Params) => {
@@ -172,12 +205,20 @@ submitted = false;
 }
   isDisabled() {
 	  //debugger;
-        // if(this.validateService.validateEvent(this.model)){
-		   // return false;		 
-		  // }
-         // else{
-		  // return true;
-	     // }
+         if(this.validateService.validateEvent(this.model)){
+		    return false;		 
+		   }
+          else{
+		   return true;
+	      }
+  }
+  
+  onChange(category) {
+	  debugger;
+	  
+	 this.SubCategories = this.SubCategoriesWithCategory.filter(x=>x.CategoryID ==category);
+	 
+	
   }
   
   AddMoreRules()
