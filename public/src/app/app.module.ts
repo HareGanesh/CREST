@@ -12,7 +12,9 @@ import { RegisterComponent } from './components/register/register.component';
 import { HomeComponent } from './components/home/home.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { ProfileComponent } from './components/profile/profile.component';
+
 import {EventsComponent} from './components/events/events.component';
+
 
 import {ValidateService} from './services/validate.service';
 import {AuthService} from './services/auth.service';
@@ -20,7 +22,11 @@ import { RegisterstudentComponent } from './components/register/registerstudent/
 import { RegistereventComponent } from './components/events/registerevent/registerevent.component';
 import {FlashMessagesModule} from 'angular2-flash-messages';
 import {AuthGuard} from './guards/auth.guard';
+
+import { OrganizationComponent } from './components/organization/organization.component';
+
 import { EqualValidator } from './services/password.match.directive';
+
 
 const appRoutes: Routes = [
 
@@ -30,8 +36,11 @@ const appRoutes: Routes = [
   {path:'dashboard', component: DashboardComponent ,canActivate:[AuthGuard]},
   {path:'profile', component: ProfileComponent, canActivate:[AuthGuard]},
   {path:'student', component: RegisterstudentComponent},
+
+  {path:'organization', component: OrganizationComponent},
   {path:'eventinfo/:id', component: RegistereventComponent},
   {path: 'eventDetails/:id', component: EventsComponent }	
+
 
 ]
 
@@ -45,10 +54,13 @@ const appRoutes: Routes = [
     DashboardComponent,
     ProfileComponent,
     RegisterstudentComponent,
+
+    OrganizationComponent,
 	RegistereventComponent,
 	EqualValidator
 	,
 	EventsComponent
+
   ],
   imports: [
     BrowserModule,

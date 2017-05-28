@@ -21,6 +21,10 @@ const EventSchema = mongoose.Schema({
 		type: String,
 		
 	},
+	CategoriesSubMstr:{
+		type: String,
+		
+	},
 
 	StartDt:{
 		type: Date,

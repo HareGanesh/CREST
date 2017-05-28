@@ -39,6 +39,7 @@ router.post('/AddEvent', (req, res, next) => {
                 EventTitle: req.body.EventTitle,
                 Description: req.body.Description,
                 CategoriesMstr: req.body.CategoriesMstr,
+				CategoriesSubMstr: req.body.CategoriesSubMstr,
     StartDt: req.body.StartDt,
     EndDt: req.body.EndDt,
     EventRegisterEndDt: req.body.EventRegisterEndDt,

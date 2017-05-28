@@ -70,9 +70,11 @@ export class RegisterstudentComponent implements OnInit {
   }
 
   onRegisterSubmit(){
+
 	  debugger;
 	  this.submitted = true;
 	  
+
   	const student = {
 
   	Student_Name: this.Student_Name,
