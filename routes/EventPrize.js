@@ -86,5 +86,18 @@ console.log(EventPrizeID);
   });  
 });
 
+router.get('/GetEventPrizeByEventID', (req, res) => {
+  var EventID = req.headers["eventid"];  
+  EventPrize.getEventPrizeByEventID(EventID, (err,EventPrize)=>{
+    if(err) {
+		throw err;		
+	}
+     else
+	  {		 
+		  res.json(EventPrize);
+	  }
+  });  
+}); 
+
 
 module.exports = router;

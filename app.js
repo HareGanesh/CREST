@@ -27,6 +27,8 @@ const categoryMstr = require('./routes/CategoryMstr');
 const subCategoryMstr = require('./routes/SubCategoryMstr');
 
 const eventTypeMaster = require('./routes/EventTypeMaster');
+const EventRule = require('./routes/EventRule');
+const EventPrize = require('./routes/EventPrize'); 
 //const events = require('./routes/Events');
 
 //MIDDLEWARE
@@ -55,7 +57,8 @@ app.use('/Events', events);
 app.use('/CategoryMstr',categoryMstr);
 app.use('/SubCategoryMstr',subCategoryMstr);
 app.use('/EventTypeMaster', eventTypeMaster);
-
+app.use('/EventRule', EventRule);
+app.use('/EventPrize', EventPrize); 
 
 //app.use('/events', events);
 // app.use('/students', function(students, res, next) {

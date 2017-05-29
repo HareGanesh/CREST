@@ -6,7 +6,7 @@ const config = require('../config/database');
 const EventSchema = mongoose.Schema({
 
 	EventID:{
-  type: Number,
+  type: String,
   required: false
   },
   EventTitle:{
@@ -94,7 +94,7 @@ const EventSchema = mongoose.Schema({
 const Event = module.exports = mongoose.model('Events', EventSchema,'Events');
 
  module.exports.getEventById = function(EventID,callback){
-	const query = {EventID: EventID};
+	const query = {_id: EventID};
 	Event.findOne(query, callback);	
 }
 

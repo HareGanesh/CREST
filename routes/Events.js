@@ -67,7 +67,7 @@ router.post('/AddEvent', (req, res, next) => {
                                                 for(var n=0;n < rulesInfo.length; n++)
                                                 {
                                                     var  eventRuleDetail= new EventRule();
-                                                                eventRuleDetail.eventid= Event._id;
+                                                                eventRuleDetail.EventID= Event._id;
                 eventRuleDetail.RuleNo=rulesInfo[n].RuleNo;
                 eventRuleDetail.RuleDescription=rulesInfo[n].RuleDescription;                                                 
                                                                 
@@ -82,7 +82,7 @@ router.post('/AddEvent', (req, res, next) => {
                                                 for(var n=0;n < prizeInfo.length; n++)
                                                 {
                                                     var  prizeDetail= new EventPrize();
-                                                                prizeDetail.eventid= Event._id;
+                                                                prizeDetail.EventID= Event._id;
                 prizeDetail.PrizeNo=prizeInfo[n].PrizeNo;
                 prizeDetail.PrizeDescription=prizeInfo[n].PrizeDescription;                                                         
                                                                 
@@ -97,7 +97,7 @@ router.post('/AddEvent', (req, res, next) => {
                                                 for(var n=0;n < organizerInfo.length; n++)
                                                 {
                                                     var  orgDetail= new EventOrganizer();
-                                                                orgDetail.eventid= Event._id;
+                                                                orgDetail.EventID= Event._id;
                 orgDetail.OrganizerNo=organizerInfo[n].OrganizerNo;
                 orgDetail.OrganizerName=organizerInfo[n].OrganizerName;  
 orgDetail.OrganizerContact = organizerInfo[n].OrganizerContact;				
@@ -115,13 +115,16 @@ orgDetail.OrganizerContact = organizerInfo[n].OrganizerContact;
 });
 
 router.get('/GetEventByID', (req, res) => {
-  var EventID = req.headers["eventid"];  
+	console.log(req.headers);
+  var EventID = req.headers["id"];  
+  console.log(EventID);
   Event.getEventById(EventID, (err,Event)=>{
     if(err) {
                                 throw err;                            
                 }
      else
-                  {                            
+                  {                     
+console.log("aaaa");			  
                                   res.json(Event);
                   }
   });  

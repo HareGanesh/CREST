@@ -96,8 +96,8 @@ Submission deadline
 <h2>
 Prizes
 </h2>
-<div class="not-available"> <i class="icon-exclamation-sign"></i> {{eventDetails.Prizes[0].PrizeDescription}}</div>
-<a class="footerlink" data-toggle="tab" href="#PrizesTab">More</a>
+<div class="not-available"> <i class="icon-exclamation-sign"></i> {{eventPrizeArray[0].PrizeDescription}}</div> 
+<a class="footerlink" data-toggle="tab" href="#">More</a>
 <div class="clear"></div>
 </div>
 <div class="ebgins">
@@ -105,13 +105,13 @@ Prizes
 <div>
 
 </div>
-<a class="footerlink" data-toggle="tab" href="#ScheduleTab">More</a>
+<a class="footerlink" data-toggle="tab" href="#">More</a>
 <div class="clear"></div>
 </div>
 <div class="ebgins">
 <h2>Rules</h2>
 <!-- <div class="not-available"> <i class="icon-exclamation-sign"></i> Rules are not published.</div> -->
-<div class="not-available"> <i class="icon-exclamation-sign"></i> {{eventDetails.Rules[0].RuleDescription}}</div>
+<div class="not-available"> <i class="icon-exclamation-sign"></i> {{eventRuleArray[0].RuleDescription}}</div>
 <a class="footerlink" data-toggle="tab" (click)="ActiveTab('RulesTab')" href="#RulesTab">More</a>
 </div>
 </div>
@@ -123,9 +123,10 @@ Prizes
 
 <div id="RulesTab" class="tab-pane fade "><h3>Rules
 </h3>
-<div *ngFor="let rule of eventDetails.Rules">
+<div *ngFor="let rule of eventRuleArray"> 
+
 {{rule.RuleDescription}}
-</div>
+</div> 
 </div>
 
 <div id="PeopleTab" class="tab-pane fade"><h3>PeopleTab
@@ -135,9 +136,9 @@ Prizes
 <div id="PrizesTab" class="tab-pane fade"><h3>PrizesTab
 </h3>
 
-<div *ngFor="let prize of eventDetails.Prizes">
-{{prize.PrizeDescription}}
-</div>
+<div *ngFor="let prize of eventPrizeArray"> 
+{{prize.PrizeDescription}} 
+</div> 
 </div>
 
 <div id="ChatTab" class="tab-pane fade"><h3>Chate Tab

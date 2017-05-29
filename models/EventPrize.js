@@ -51,7 +51,7 @@ module.exports.getEventPrizeById = function(id, callback){
 
 module.exports.getEventPrizeByEventID = function(EventID,callback){
 	const query = {EventID: EventID}
-	EventPrize.findOne(query,callback);}
+	EventPrize.find(query,callback);} 
 
 module.exports.AddEventPrize = function(newEventPrize, callback){ 
 	console.log(newEventPrize);
@@ -71,6 +71,4 @@ EventPrize.update(query, {Active: false}, callback);}
 module.exports.DeleteEventPrizeByEventID = function(EventID, callback){ 
 var query = { EventID: EventID };
 EventPrize.update(query, {Active: false}, callback);}
-
-
 

@@ -47,7 +47,7 @@ module.exports.getEventRuleById = function(id, callback){
 
 module.exports.getEventRuleByEventID = function(EventID,callback){
 	const query = {EventID: EventID}
-	EventRule.findOne(query,callback);}
+	EventRule.find(query,callback);}
 
 module.exports.AddEventRule = function(newEventRule, callback){ 
 	console.log(newEventRule);

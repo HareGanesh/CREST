@@ -116,13 +116,33 @@ export class AuthService {
   	.map(res => res.json());
   }
   getEvents(){
-	return this.http.get('../src/app/services/data/data.json')
+	return this.http.get('http://localhost:3777/Events/getAllEvent')
+                .map(res => res.json());
+} 
+
+getEventsById(id){
+	debugger;
+	
+	let headers = new Headers();
+  	headers.append('id',id);
+	return this.http.get('http://localhost:3777/Events/getEventById',{headers: headers})
                 .map(res => res.json());
 }
 
-getEventsById(id){
-	return this.http.get('../src/app/services/data/data.json')
+GetEventRuleByEventID(id){
+	console.log(id);
+	let headers = new Headers();
+  	headers.append('EventID',id);
+	return this.http.get('http://localhost:3777/EventRule/GetEventRuleByEventID',{headers: headers})
                 .map(res => res.json());
-}
+}  
+ 
+ GetEventPrizeByEventID(id){
+	
+	let headers = new Headers();
+  	headers.append('EventID',id);
+	return this.http.get('http://localhost:3777/EventPrize/GetEventPrizeByEventID',{headers: headers})
+                .map(res => res.json());
+}    
 
 }

@@ -45,7 +45,8 @@ router.get('/GetEventRuleByID', (req, res) => {
 });
 
 router.get('/GetEventRuleByEventID', (req, res) => {
-  var EventID = req.headers["EventID"];  
+  var EventID = req.headers["eventid"];  
+  
   EventRule.getEventRuleByEventID(EventID, (err,EventRule)=>{
     if(err) {
 		throw err;		
@@ -101,7 +102,19 @@ console.log(EventID);
   });  
 });
 
-
+router.get('/GetEventRuleByEventID', (req, res) => {
+  var EventID = req.headers["eventid"];  
+  console.log(EventID);
+  EventRule.getEventRuleByEventID(EventID, (err,EventRule)=>{
+    if(err) {
+		throw err;		
+	}
+     else
+	  {		 
+		  res.json(EventRule);
+	  }
+  });  
+}); 
 
 
 module.exports = router;
