@@ -33,7 +33,7 @@
                     <div class="row">
                       <div class="col-md-12 mail_list_column" *ngFor="let item of eventModel; ">
                       
-                        <a href="#" id="{{item.EventID}}">
+                        <a href="#" id="{{item._id}}">
                           <div class="mail_list">
                             <div class="left">
                               <i class="fa icon-time"></i>  &nbsp;{{item.RemainDay}} days
@@ -42,7 +42,7 @@
 							
                             <div class="right">						
 
-                              <h3><a [routerLink]="['/eventDetails/', item.EventID]">{{item.EventTitle}}</a> 
+                              <h3><a [routerLink]="['/eventDetails/', item._id]">{{item.EventTitle}}</a> 
 							  
 							  <small>&nbsp;{{item.Location}}</small>
 							  

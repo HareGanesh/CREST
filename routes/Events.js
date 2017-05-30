@@ -7,6 +7,7 @@ const Event = require('../models/Event');
 const EventRule = require('../models/EventRule');
 const EventPrize = require('../models/EventPrize'); 
 const EventOrganizer = require('../models/EventOrganizer'); 
+const EventOrganization = require('../models/EventOrganization'); 
 
 var fs = require('fs');
 router.post('/AddEvent', (req, res, next) => {
@@ -32,7 +33,7 @@ router.post('/AddEvent', (req, res, next) => {
                 rulesInfo=req.body.Rules;            
                 prizeInfo=req.body.Prizes;
                 organizerInfo=req.body.Organizers;
-                
+                organizationInfo = req.body.Organizations;
                 
   let newEvent = new Event({
                 EventID: req.body.EventID,
@@ -86,8 +87,8 @@ router.post('/AddEvent', (req, res, next) => {
                 prizeDetail.PrizeNo=prizeInfo[n].PrizeNo;
                 prizeDetail.PrizeDescription=prizeInfo[n].PrizeDescription;                                                         
                                                                 
-                                                                EventRule.AddEventRule(prizeDetail, (err, PrizeRule)=> {
-                                                                                console.log(PrizeRule);
+                                                                EventPrize.AddEventPrize(prizeDetail, (err, prizeInfo)=> {
+                                                                                console.log(prizeInfo);
                                                                 });
                                                 }
                                                 
@@ -103,8 +104,23 @@ router.post('/AddEvent', (req, res, next) => {
 orgDetail.OrganizerContact = organizerInfo[n].OrganizerContact;				
                                                                 orgDetail.OrganizerEmail=organizerInfo[n].OrganizerEmail;                                                          
                                                                 
-                                                                EventRule.AddEventRule(orgDetail, (err, orginfo)=> {
+                                                                EventOrganizer.AddEventOrganizer(orgDetail, (err, orginfo)=> {
                                                                                 console.log(orginfo);
+                                                                });
+                                                }
+                                                
+                                }
+								if(organizationInfo.length>0)
+                                {
+                                                for(var n=0;n < organizationInfo.length; n++)
+                                                {
+                                                    var  eventOrganization= new EventOrganization();
+                                                                eventOrganization.EventID= Event._id;
+                eventOrganization.OrgnID=organizationInfo[n];
+                                                                       
+                                                                
+                                                                EventOrganization.AddEventOrganization(eventOrganization, (err, organizationInfo)=> {
+                                                                                console.log(organizationInfo);
                                                                 });
                                                 }
                                                 

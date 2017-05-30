@@ -21,8 +21,8 @@ export class Event {
 	public Created_On:Date,
 	public Created_by:String,
 	public Modified_On:Date,
-	public Modified_by:String
-	
+	public Modified_by:String,
+	public Organizations:any[]
 	)
 	{
 		

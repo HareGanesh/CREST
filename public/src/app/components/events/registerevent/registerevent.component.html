@@ -39,11 +39,17 @@
 <a href="#RulesTab" data-toggle="tab" [class.disabled]="isDisabled()">Rules</a>
 </li>
 
+
+
 <li #thirdLI>
 <a href="#PrizesTab" data-toggle="tab" [class.disabled]="isDisabled()">Prizes</a>
 </li>
 <li #forthLI>
 <a href="#OrganizersTab" data-toggle="tab" [class.disabled]="isDisabled()">Organizers</a>
+</li>
+
+<li #fifthLI>
+<a href="#OrganizationsTab" data-toggle="tab" [class.disabled]="isDisabled()">Organizations</a>
 </li>
 
 </ul>
@@ -59,6 +65,9 @@
 </ul>
 </div>
 
+
+
+ 
 	<label>Event Title<span class="red">*</span></label>
 	<div class="input-group">
      <span class="input-group-addon"><i class="fa fa-address-book"></i></span>
@@ -246,39 +255,50 @@
 </div> 
 
 
-<div id="RulesTab" class="tab-pane fade "><label>Event Rules</label>
-
-<a id="addMore" class=" floatRight"(click)=AddMoreRules()><img src="..\..\src\img\AddMore.png" height="30px" width="30px"></a> 
-
-	 <div class="input-group" *ngFor="let rule of model.Rules;let i = index">
+<div id="RulesTab" class="tab-pane fade ">
+<div class="AddMoreDiv">
+<label>Event Rules</label>
+<a id="addMore" class=" floatRight"(click)=AddMoreRules()><img src="..\..\src\img\AddMore.png" height="30px" width="30px"></a>
+</div>
+	 <div *ngFor="let rule of model.Rules;let i = index">
       
-	  
+	  <div class="input-group" >
      
 	 <span class="input-group-addon"><i class="fa fa-address-card">{{i+1}}</i></span>
 		<textarea [(ngModel)]="rule.RuleDescription" name="Rules{{i}}" ngControl="Rules" placeholder="Rules"  class="form-control"
 		 autofocus="true" cols="3" rows="3" >
 		 </textarea>	
-	 
+	 </div>
+	 <div class="floatRight">
 		<a *ngIf="model.Rules.length == i+1 && model.Rules.length !=1" id="Remove" class="floatRight" (click)=RemoveRules()><img src="..\..\src\img\Remove.png" height="30px" width="30px"></a>
 	</div>
+	</div>
 	
-	
-	<a id="Next1" class="big-red-button floatRight" data-toggle="tab" (click)=OnNextClick(input1,2,secondLI,thirdLI) #input1>Next</a>
 	<a id="Prev1" class="big-red-button" data-toggle="tab" (click)=OnPrevClick(inputc,2,secondLI,firstLI) #inputc>Prev</a>
+	<a id="Next1" class="big-red-button" data-toggle="tab" (click)=OnNextClick(input1,2,secondLI,thirdLI) #input1>Next</a>
+	
 	<!-- <input type="submit" class="btn btn-lg btn btn-primary " value="Next" [disabled]="!EventForm.form.valid"> -->
 </div>
 
-<div id="PrizesTab" class="tab-pane fade"><label>Event Prizes</label>
+<div id="PrizesTab" class="tab-pane fade">
+<div class="AddMoreDiv">
+<label>Event Prizes</label>
 <a class="floatRight"(click)=AddMorePrizes()><img src="..\..\src\img\AddMore.png" height="30px" width="30px"></a> 
-	<div class="input-group" *ngFor="let rule of model.Prizes;let i = index">
-     <span class="input-group-addon"><i class="fa fa-address-card">{{i+1}}</i></span>
+</div>
+	<div *ngFor="let rule of model.Prizes;let i = index">
+     <div class="input-group" >
+	 <span class="input-group-addon"><i class="fa fa-address-card">{{i+1}}</i></span>
 		
 		<textarea [(ngModel)]="model.Prizes[i].PrizeDescription" name="Prizes{{i}}" ngControl="Prizes"  class="form-control" placeholder="Prizes"
 		autofocus="true" cols="3" rows="3"></textarea>
+		</div>
+		<div>
 		<a *ngIf="model.Prizes.length == i+1 && model.Prizes.length !=1" id="RemovePrize" class="floatRight" (click)=RemovePrize()><img src="..\..\src\img\Remove.png" height="30px" width="30px"></a>
 	 </div>
-	<a id="Next2" class="big-red-button floatRight" data-toggle="tab" (click)=OnNextClick(input2,3,thirdLI,forthLI) #input2>Next</a>
+	 </div>
+	
 	<a id="Prev2" class="big-red-button" data-toggle="tab" (click)=OnPrevClick(inputb,3,thirdLI,secondLI) #inputb>Prev</a>
+	<a id="Next2" class="big-red-button" data-toggle="tab" (click)=OnNextClick(input2,3,thirdLI,forthLI) #input2>Next</a>
 		<!-- <input type="submit" class="btn btn-lg btn btn-primary " value="Next" [disabled]="!EventForm.form.valid"> -->
 </div>
 
@@ -286,7 +306,10 @@
 
 
 <div id="OrganizersTab" class="tab-pane fade">
+<div class="AddMoreDiv">
+<label>Event Organizers</label>
 <a class="floatRight"(click)=AddMoreOrganizer()><img src="..\..\src\img\AddMore.png" height="30px" width="30px"></a> 
+</div>
 	<div *ngFor="let rule of model.Organizers;let i = index">
 <label>Organizer Name</label>
 	<div class="input-group">
@@ -331,13 +354,29 @@
 		<a *ngIf="model.Organizers.length == i+1 && model.Organizers.length !=1" id="RemoveOrg" class="floatRight" (click)=RemoveOrganizer()><img src="..\..\src\img\Remove.png" height="30px" width="30px"></a>
 
 	</div>
-
-<button (click)="onEventSubmit()" class="big-red-button floatRight" [disabled]="!EventForm.form.valid" >Submit All</button>
 <a id="Prev3" class="big-red-button" data-toggle="tab" (click)=OnPrevClick(inputa,4,forthLI,thirdLI) #inputa>Prev</a>
+<a id="Next3" class="big-red-button" data-toggle="tab" (click)=OnNextClick(input4,4,forthLI,fifthLI) #input4>Next</a>
+<!-- <button (click)="onEventSubmit()" class="big-red-button floatRight" [disabled]="!EventForm.form.valid" >Submit All</button> -->
+<!-- <a id="Prev3" class="big-red-button" data-toggle="tab" (click)=OnPrevClick(inputa,4,forthLI,thirdLI) #inputa>Prev</a>	 -->
 
 <!-- <input type="submit" class="btn btn btn-primary " value="Save" [disabled]="!EventForm.form.valid" (onclick)="onEventSubmit()"> -->
 
 </div>
+
+<div id="OrganizationsTab" class="tab-pane fade ">
+<div class="AddMoreDiv">
+<label>Organizations to be invite:</label>
+<ss-multiselect-dropdown name="Organizations"  [options]="myOptions" [texts]="myTexts" (ngModelChange)="onOrganizationChange($event)" [settings]="mySettings" [ngModel]="model.Organizations" style="width:100px;"></ss-multiselect-dropdown>
+</div>
+	
+
+	
+	<a id="Prev4" class="big-red-button" data-toggle="tab" (click)=OnPrevClick(inputao,5,fifthLI,forthLI) #inputao>Prev</a>
+<button (click)="onEventSubmit()" class="big-red-button" [disabled]="!EventForm.form.valid" >Submit All</button>
+	
+	<!-- <input type="submit" class="btn btn-lg btn btn-primary " value="Next" [disabled]="!EventForm.form.valid"> -->
+</div>
+
 
 </div>
 </div>

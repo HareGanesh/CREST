@@ -25,6 +25,8 @@ ngOnInit() {
 	//this.dayDiff('01/01/2039');
 	this.bindGrid();
   }
+  
+  
 
   bindGrid()
   {
@@ -56,7 +58,7 @@ return diffDays;
 }
 
 public open() {
-	debugger;
+	
 	if(this.searchFilter !=undefined && this.searchFilter !='')
 	{
 	var modelData=this.eventModel;
@@ -64,8 +66,7 @@ public open() {
 	
 	  for(var i=0;i<modelData.length;i++)
 	 {
-		 
-		  if(modelData[i].Location==this.searchFilter.toLowerCase())
+		  if(modelData[i].Location.toString().toLowerCase().indexOf(this.searchFilter.toLowerCase())!=-1 || modelData[i].Description.toString().toLowerCase().indexOf(this.searchFilter.toLowerCase())!=-1)
 		  {
 			  filterData.push(modelData[i]);
 		  }
@@ -78,6 +79,7 @@ public open() {
 	}
     //alert(filterData);
   }
+  
  
 
 }

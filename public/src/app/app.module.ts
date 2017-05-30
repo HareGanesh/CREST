@@ -12,14 +12,9 @@ import { RegisterComponent } from './components/register/register.component';
 import { HomeComponent } from './components/home/home.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { ProfileComponent } from './components/profile/profile.component';
-<<<<<<< HEAD
 
-=======
-<<<<<<< HEAD
-=======
->>>>>>> a891def34267f263a94e9653d07caa5f8c1b706e
 import {EventsComponent} from './components/events/events.component';
->>>>>>> 8b8b0725f512b220ad2a4f5feceb519223f5a8b3
+
 
 
 import {ValidateService} from './services/validate.service';
@@ -28,17 +23,14 @@ import { RegisterstudentComponent } from './components/register/registerstudent/
 import { RegistereventComponent } from './components/events/registerevent/registerevent.component';
 import {FlashMessagesModule} from 'angular2-flash-messages';
 import {AuthGuard} from './guards/auth.guard';
-<<<<<<< HEAD
+import { MultiselectDropdownModule } from 'angular-2-dropdown-multiselect';
+
 
 import { OrganizationComponent } from './components/organization/organization.component';
 
-=======
-<<<<<<< HEAD
-import { OrganizationComponent } from './components/organization/organization.component';
-=======
->>>>>>> a891def34267f263a94e9653d07caa5f8c1b706e
+
 import { EqualValidator } from './services/password.match.directive';
->>>>>>> 8b8b0725f512b220ad2a4f5feceb519223f5a8b3
+
 
 
 const appRoutes: Routes = [
@@ -49,22 +41,16 @@ const appRoutes: Routes = [
   {path:'dashboard', component: DashboardComponent ,canActivate:[AuthGuard]},
   {path:'profile', component: ProfileComponent, canActivate:[AuthGuard]},
   {path:'student', component: RegisterstudentComponent},
-<<<<<<< HEAD
+
 
   {path:'organization', component: OrganizationComponent},
   {path:'eventinfo/:id', component: RegistereventComponent},
-  {path: 'eventDetails/:id', component: EventsComponent }	
+  {path: 'eventDetails/:id', component: EventsComponent },
 
 
-=======
-<<<<<<< HEAD
-  {path:'organization', component: OrganizationComponent}
-=======
   {path:'eventinfo/:id', component: RegistereventComponent},
   {path: 'eventDetails/:id', component: EventsComponent }	
 
->>>>>>> 8b8b0725f512b220ad2a4f5feceb519223f5a8b3
->>>>>>> a891def34267f263a94e9653d07caa5f8c1b706e
 ]
 
 @NgModule({
@@ -77,30 +63,23 @@ const appRoutes: Routes = [
     DashboardComponent,
     ProfileComponent,
     RegisterstudentComponent,
-<<<<<<< HEAD
+
 
     OrganizationComponent,
-=======
-<<<<<<< HEAD
-    OrganizationComponent
-=======
->>>>>>> a891def34267f263a94e9653d07caa5f8c1b706e
-	RegistereventComponent,
-	EqualValidator
-	,
-	EventsComponent
-<<<<<<< HEAD
 
-=======
->>>>>>> 8b8b0725f512b220ad2a4f5feceb519223f5a8b3
->>>>>>> a891def34267f263a94e9653d07caa5f8c1b706e
+
+	RegistereventComponent,
+	EqualValidator,
+	EventsComponent
+
   ],
   imports: [
     BrowserModule,
     FormsModule,
     HttpModule,
     RouterModule.forRoot(appRoutes),
-    FlashMessagesModule
+    FlashMessagesModule,
+	MultiselectDropdownModule
   ],
   providers: [ValidateService, AuthService, AuthGuard],
   bootstrap: [AppComponent]

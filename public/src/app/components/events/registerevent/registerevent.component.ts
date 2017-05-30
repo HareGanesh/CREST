@@ -8,6 +8,12 @@ import { EventRule } from './eventRule';
 import { EventPrize } from './eventPrize';
 import { EventOrganizer } from './eventOrganizer';
 import {Router, ActivatedRoute, Params} from '@angular/router';
+
+import { IMultiSelectOption } from 'angular-2-dropdown-multiselect';
+
+ import { IMultiSelectSettings } from 'angular-2-dropdown-multiselect';
+import { IMultiSelectTexts } from 'angular-2-dropdown-multiselect';
+
 @Component({
   selector: 'app-registerevent',
   templateUrl: './registerevent.component.html',
@@ -17,7 +23,47 @@ import {Router, ActivatedRoute, Params} from '@angular/router';
 export class RegistereventComponent implements OnInit {
 	student:Object;
 	category:Object;
+	
+	public organizations = [
 	  
+         
+     ];
+
+	  optionsModel: number[] = [1, 2];
+ public selectedTexts: any[] = [];
+
+// // Settings configuration
+
+
+// // Labels / Parents
+ myOptions: IMultiSelectOption[] = [
+     // { id: 1, name: 'Car brands', isLabel: true },
+     
+     
+    
+ ];
+
+
+ mySettings: IMultiSelectSettings = {
+     enableSearch: true,
+     checkedStyle: 'fontawesome',
+     buttonClasses: 'btn btn-block',
+     dynamicTitleMaxItems: 3,
+     displayAllSelectedText: true,
+	 showCheckAll:true,
+	 showUncheckAll:true
+ };
+
+// // Text configuration
+ myTexts: IMultiSelectTexts = {
+     checkAll: 'Select all',
+     uncheckAll: 'Unselect all',
+     checked: 'item selected',
+     checkedPlural: 'items selected',
+     searchPlaceholder: 'Find',
+     defaultTitle: 'Select',
+    allSelected: 'All selected',
+};
 	  
     path='';
 	public eventId='';
@@ -90,6 +136,7 @@ public EventTypes = [
     Prizes:[],
 	Rules:[],
 	Organizers:[],
+	Organizations:[],
 	Created_On:new Date(),
 	Created_by:'',
 	Modified_On:'',
@@ -111,9 +158,27 @@ submitted = false;
     ) { }
 
 	
+onOrganizationChange(items) {
+	debugger;
+       this.model.Organizations = items;
+    }
+
   ngOnInit() {
 	  debugger;
 	  
+	  // Get all organization
+	  this.authService.getOrganizations().subscribe(data => {
+		   for(let i=0; i< data.length; i++)
+      this.myOptions.push({id:data[i].OrgnID, name:data[i].OrgnName});
+    },
+    //observable also returns error
+    err => {
+      console.log(err);
+      return false;
+    });
+ 
+   
+
 	  // Logged in user
 	this.student = JSON.parse(this.authService.getStudent());
        debugger;
@@ -205,12 +270,12 @@ submitted = false;
 }
   isDisabled() {
 	  //debugger;
-         if(this.validateService.validateEvent(this.model)){
-		    return false;		 
-		   }
-          else{
-		   return true;
-	      }
+         // if(this.validateService.validateEvent(this.model)){
+		    // return false;		 
+		   // }
+          // else{
+		   // return true;
+	      // }
   }
   
   onChange(category) {
@@ -220,6 +285,9 @@ submitted = false;
 	 
 	
   }
+  
+  
+
   
   AddMoreRules()
   {
@@ -470,6 +538,9 @@ OnNextClick(input, count,li1, li2)
 	}else if(count==3)
 	{
 		input.href="#OrganizersTab"
+	}else if(count==4)
+	{
+		input.href="#OrganizationsTab"
 	}
 	debugger;
 }
@@ -480,7 +551,11 @@ OnPrevClick(input, count,li1, li2)
 	debugger;
 	li1.className=''
 		li2.className ='active';
-	if(count == '4')
+		if(count == '5')
+	{
+	input.href="#OrganizersTab";
+	}
+	else if(count == '4')
 	{
 	input.href="#PrizesTab";
 	}else if(count=='3')
