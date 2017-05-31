@@ -364,9 +364,12 @@
 </div>
 
 <div id="OrganizationsTab" class="tab-pane fade ">
+
 <div class="AddMoreDiv">
 <label>Organizations to be invite:</label>
-<ss-multiselect-dropdown name="Organizations"  [options]="myOptions" [texts]="myTexts" (ngModelChange)="onOrganizationChange($event)" [settings]="mySettings" [ngModel]="model.Organizations" style="width:100px;"></ss-multiselect-dropdown>
+<div>
+<ss-multiselect-dropdown id ="orgn" name="Organizations" [options]="myOptions" [texts]="myTexts" (ngModelChange)="onOrganizationChange($event)" [settings]="mySettings" [ngModel]="model.Organizations" style="width:200px !important;"></ss-multiselect-dropdown>
+</div>
 </div>
 	
 
@@ -412,5 +415,4 @@
 
 </form>
 </div>
-
 

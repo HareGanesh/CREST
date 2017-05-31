@@ -14,6 +14,7 @@ export class EventsComponent implements OnInit {
   eventDetails  =new EventModel();
   public eventRuleArray:any;
   public eventPrizeArray :any;
+  public eventOrganizerArray :any;
    public dayDiff : number;
   public dayHours : number;
   public dayMin : number;
@@ -57,6 +58,14 @@ this.eventDetails=event;
 this.authService.GetEventPrizeByEventID(eventID).subscribe(prize => {
 	debugger;
 	this.eventPrizeArray=prize;
+},  err => {
+      console.log(err);
+      return false;
+    });
+
+this.authService.GetEventOrganizerByEventID(eventID).subscribe(organizer => {
+	debugger;
+	this.eventOrganizerArray=organizer;
 },  err => {
       console.log(err);
       return false;

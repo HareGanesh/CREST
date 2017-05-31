@@ -61,7 +61,7 @@ module.exports.AddEventPrize = function(newEventPrize, callback){
 module.exports.getAllEvent = function(callback){	
 	Event.find("",callback);
 }
-
+	
 
 module.exports.DeleteEventPrizeByEventPrizeID = function(EventPrizeID, callback){ 
 var query = { EventPrizeID: EventPrizeID };

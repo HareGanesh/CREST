@@ -114,6 +114,16 @@ Prizes
 <div class="not-available"> <i class="icon-exclamation-sign"></i> {{eventRuleArray[0].RuleDescription}}</div>
 <a class="footerlink" data-toggle="tab" (click)="ActiveTab('RulesTab')" href="#RulesTab">More</a>
 </div>
+<div class="ebgins">
+<h2>Organizers</h2>
+<!-- <div class="not-available"> <i class="icon-exclamation-sign"></i> Rules are not published.</div> -->
+<div class="not-available"> <i class="icon-exclamation-sign"></i> 
+<a href="mailto:{{eventOrganizerArray[0].OrganizerEmail}}">{{eventOrganizerArray[0].OrganizerEmail}}</a>
+</div>
+  
+
+<a class="footerlink" data-toggle="tab" (click)="ActiveTab('RulesTab')" href="#RulesTab">More</a>
+</div>
 </div>
 
 
@@ -147,6 +157,23 @@ Prizes
 
 <div id="OrganizersTab" class="tab-pane fade"><h3>OrganizersTab
 </h3>
+
+ 
+<ul class="block-grid one-up" *ngFor="let organizer of eventOrganizerArray"> 
+<li><div class="pane">
+<div class="header">
+<div class="pane-title">{{organizer.OrganizerName}}</div>
+</div>
+<div class="body">
+<div class="not-available"> <i class="icon-exclamation-sign"></i> {{organizer.OrganizerEmail}}</div>
+<div class="not-available"> <i class="icon-exclamation-sign"></i> {{organizer.OrganizerContact}}</div>
+</div>
+</div>
+</li>
+</ul>
+
+
+
 </div>
 
 </div>

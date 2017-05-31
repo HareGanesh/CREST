@@ -56,7 +56,7 @@ module.exports.getEventOrganizerById = function(id, callback){
 
 module.exports.getEventOrganizerByEventID = function(EventID,callback){
 	const query = {EventID: EventID}
-	EventOrganizer.findOne(query,callback);}
+	EventOrganizer.find(query,callback);}
 
 module.exports.AddEventOrganizer = function(newEventOrganizer, callback){ 
 	console.log(newEventOrganizer);

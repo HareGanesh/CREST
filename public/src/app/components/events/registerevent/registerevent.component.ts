@@ -1,4 +1,4 @@
-import { Component, OnInit,ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit,ChangeDetectorRef,ViewEncapsulation } from '@angular/core';
 import {ValidateService} from '../../../services/validate.service';
 import {AuthService} from '../../../services/auth.service';
 import {FlashMessagesService} from 'angular2-flash-messages';
@@ -17,7 +17,8 @@ import { IMultiSelectTexts } from 'angular-2-dropdown-multiselect';
 @Component({
   selector: 'app-registerevent',
   templateUrl: './registerevent.component.html',
-  styleUrls: ['./registerevent.component.scss']
+  styleUrls: ['./registerevent.component.scss'],
+  encapsulation: ViewEncapsulation.None 
 
 })
 export class RegistereventComponent implements OnInit {
@@ -60,8 +61,8 @@ export class RegistereventComponent implements OnInit {
      uncheckAll: 'Unselect all',
      checked: 'item selected',
      checkedPlural: 'items selected',
-     searchPlaceholder: 'Find',
-     defaultTitle: 'Select',
+     searchPlaceholder: 'Organization Name',
+     defaultTitle: 'Select Organizations',
     allSelected: 'All selected',
 };
 	  
@@ -270,12 +271,12 @@ onOrganizationChange(items) {
 }
   isDisabled() {
 	  //debugger;
-         // if(this.validateService.validateEvent(this.model)){
-		    // return false;		 
-		   // }
-          // else{
-		   // return true;
-	      // }
+         if(this.validateService.validateEvent(this.model)){
+		    return false;		 
+		   }
+          else{
+		   return true;
+	      }
   }
   
   onChange(category) {

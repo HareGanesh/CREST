@@ -29,6 +29,7 @@ const subCategoryMstr = require('./routes/SubCategoryMstr');
 const eventTypeMaster = require('./routes/EventTypeMaster');
 const EventRule = require('./routes/EventRule');
 const EventPrize = require('./routes/EventPrize'); 
+const EventOrganizer = require('./routes/EventOrganizer');
 const organizationMstr = require('./routes/OrganizationMstr'); 
 const EventOrganization = require('./routes/EventOrganization'); 
 //const events = require('./routes/Events');
@@ -63,6 +64,7 @@ app.use('/EventRule', EventRule);
 app.use('/EventPrize', EventPrize); 
 app.use('/OrganizationMstr', organizationMstr); 
 app.use('/EventOrganization', EventOrganization); 
+app.use('/EventOrganizer', EventOrganizer); 
 //app.use('/events', events);
 // app.use('/students', function(students, res, next) {
 // var _send = res.send;

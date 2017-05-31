@@ -143,6 +143,14 @@ GetEventRuleByEventID(id){
   	headers.append('EventID',id);
 	return this.http.get('http://localhost:3777/EventPrize/GetEventPrizeByEventID',{headers: headers})
                 .map(res => res.json());
+}
+
+GetEventOrganizerByEventID(id){
+	
+	let headers = new Headers();
+  	headers.append('EventID',id);
+	return this.http.get('http://localhost:3777/EventOrganizer/GetEventOrganizerByEventID',{headers: headers})
+                .map(res => res.json());
 }  
 
 getOrganizations()
