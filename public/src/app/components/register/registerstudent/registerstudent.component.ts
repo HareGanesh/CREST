@@ -27,10 +27,8 @@ export class RegisterstudentComponent implements OnInit {
     model:Object;
 	submitted = false;
 	public Organizations = [
-	  {id: 0,  name:"Please select"},
-      {id: 1, name: "Sunway"},
-      {id: 2, name: "Eon"},
-      {id: 3, name: "Scome"}      
+	  {id: 0,  name:"Please select"}
+            
      ];
 	 
 	 public Departsments = [
@@ -52,6 +50,18 @@ export class RegisterstudentComponent implements OnInit {
     ) { }
 
   ngOnInit() {
+	  
+	  // Get all organization
+	  this.authService.getOrganizations().subscribe(data => {
+		   for(let i=0; i< data.length; i++)
+      this.Organizations.push({id:data[i].OrgnID, name:data[i].OrgnName});
+    },
+    //observable also returns error
+    err => {
+      console.log(err);
+      return false;
+    });
+	
 	  this.model={
 
   	Student_Name: '',
@@ -70,21 +80,17 @@ export class RegisterstudentComponent implements OnInit {
   }
 
   onRegisterSubmit(){
-<<<<<<< HEAD
+
 
 	  debugger;
 	  this.submitted = true;
 	  
 
-=======
-<<<<<<< HEAD
-	  debugger
-=======
+
 	  debugger;
 	  this.submitted = true;
 	  
->>>>>>> 8b8b0725f512b220ad2a4f5feceb519223f5a8b3
->>>>>>> a891def34267f263a94e9653d07caa5f8c1b706e
+
   	const student = {
 
   	Student_Name: this.Student_Name,
@@ -116,10 +122,10 @@ export class RegisterstudentComponent implements OnInit {
     this.authService.registerStudent(this.model).subscribe(data => {
 		debugger;
       if(data.success){
-        this.flashMessage.show('You are now registered and can log in', {cssClass: 'alert-success', timeout: 3000});
+        //this.flashMessage.show('You are now registered and can log in', {cssClass: 'alert-success', timeout: 3000});
         this.router.navigate(['/login']);
       } else {
-        this.flashMessage.show('Something went wrong', {cssClass: 'alert-danger', timeout: 3000});
+        //this.flashMessage.show('Something went wrong', {cssClass: 'alert-danger', timeout: 3000});
         this.router.navigate(['/register']);
       }
     });
