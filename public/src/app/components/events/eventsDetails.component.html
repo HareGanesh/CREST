@@ -1,4 +1,9 @@
+
+<ng-container *ngIf="authService.login();">
+<app-navbar></app-navbar> 
+
 <div class="main-wrapper">
+
 
 <div class="events-wrapper">
 <!-- phead -->
@@ -63,7 +68,9 @@
 <li>
 <a href="#OrganizersTab" data-toggle="tab">Organizers</a>
 </li>
-
+<li>
+<a href="#OrganizationTab" data-toggle="tab">Organization</a>
+</li>
 </ul>
 
 <div class="tab-content x_panel">
@@ -96,34 +103,64 @@ Submission deadline
 <h2>
 Prizes
 </h2>
-<div class="not-available"> <i class="icon-exclamation-sign"></i> {{eventPrizeArray[0].PrizeDescription}}</div> 
-<a class="footerlink" data-toggle="tab" href="#">More</a>
+
+
+<div *ngFor="let rule of eventPrizeArray; let i=index;"> 
+
+<div class="not-available" *ngIf="i == 0"> <i class="icon-exclamation-sign"></i> {{eventPrizeArray[i].PrizeDescription}}</div>
+<a class="footerlink" *ngIf="i == 0" data-toggle="tab" href="#">More</a>
+</div>
+
+
+
+
 <div class="clear"></div>
 </div>
 <div class="ebgins">
 <h2>Schedule</h2>
 <div>
-
+<div class="not-available"> <i class="icon-exclamation-sign"></i> Not available</div> 
 </div>
-<a class="footerlink" data-toggle="tab" href="#">More</a>
+<!-- <a class="footerlink" data-toggle="tab" href="#">More</a> -->
 <div class="clear"></div>
 </div>
 <div class="ebgins">
 <h2>Rules</h2>
 <!-- <div class="not-available"> <i class="icon-exclamation-sign"></i> Rules are not published.</div> -->
-<div class="not-available"> <i class="icon-exclamation-sign"></i> {{eventRuleArray[0].RuleDescription}}</div>
-<a class="footerlink" data-toggle="tab" (click)="ActiveTab('RulesTab')" href="#RulesTab">More</a>
+
+
+<div *ngFor="let rule of eventRuleArray; let i=index;"> 
+
+<div class="not-available" *ngIf="i == 0"> <i class="icon-exclamation-sign"></i> {{eventRuleArray[i].RuleDescription}}</div>
+<a class="footerlink" *ngIf="i == 0" data-toggle="tab" (click)="ActiveTab('RulesTab')" href="#RulesTab">More</a>
 </div>
+
+</div>
+
+
 <div class="ebgins">
 <h2>Organizers</h2>
-<!-- <div class="not-available"> <i class="icon-exclamation-sign"></i> Rules are not published.</div> -->
-<div class="not-available"> <i class="icon-exclamation-sign"></i> 
-<a href="mailto:{{eventOrganizerArray[0].OrganizerEmail}}">{{eventOrganizerArray[0].OrganizerEmail}}</a>
+
+<div *ngFor="let rule of eventOrganizerArray; let i=index;"> 
+
+<div class="not-available" *ngIf="i == 0"> <i class="icon-exclamation-sign"></i> <a href="mailto:{{eventOrganizerArray[i].OrganizerEmail}}">{{eventOrganizerArray[i].OrganizerEmail}}</a></div>
+<a class="footerlink"  *ngIf="i == 0" data-toggle="tab" (click)="ActiveTab('OrganizersTab')" href="#OrganizersTab">More</a>
 </div>
+</div>
+
+<div class="ebgins">
+<h2>Organization</h2>
+<div *ngFor="let rule of eventOrganizerArray; let i=index;"> 
+
+<div class="not-available" *ngIf="i == 0"> <i class="icon-exclamation-sign"></i> <a href="mailto:{{eventOrganizerArray[i].OrganizerEmail}}">{{eventOrganizerArray[i].OrganizerEmail}}</a></div>
+<a class="footerlink" *ngIf="i == 0" data-toggle="tab" (click)="ActiveTab('OrganizersTab')" href="#OrganizersTab">More</a>
+</div>
+
   
 
-<a class="footerlink" data-toggle="tab" (click)="ActiveTab('RulesTab')" href="#RulesTab">More</a>
+
 </div>
+
 </div>
 
 
@@ -133,40 +170,67 @@ Prizes
 
 <div id="RulesTab" class="tab-pane fade "><h3>Rules
 </h3>
-<div *ngFor="let rule of eventRuleArray"> 
 
-{{rule.RuleDescription}}
-</div> 
-</div>
-
-<div id="PeopleTab" class="tab-pane fade"><h3>PeopleTab
-</h3>
-</div>
-
-<div id="PrizesTab" class="tab-pane fade"><h3>PrizesTab
-</h3>
-
-<div *ngFor="let prize of eventPrizeArray"> 
-{{prize.PrizeDescription}} 
-</div> 
-</div>
-
-<div id="ChatTab" class="tab-pane fade"><h3>Chate Tab
-</h3>
-</div>
-
-<div id="OrganizersTab" class="tab-pane fade"><h3>OrganizersTab
-</h3>
-
- 
-<ul class="block-grid one-up" *ngFor="let organizer of eventOrganizerArray"> 
-<li><div class="pane">
+<div class="pane">
 <div class="header">
-<div class="pane-title">{{organizer.OrganizerName}}</div>
+<div class="pane-title">Rules listed below:</div>
 </div>
+</div>
+<ul class="block-grid one-up" *ngFor="let rule of eventRuleArray"> 
+<li><div class="pane">
 <div class="body">
-<div class="not-available"> <i class="icon-exclamation-sign"></i> {{organizer.OrganizerEmail}}</div>
-<div class="not-available"> <i class="icon-exclamation-sign"></i> {{organizer.OrganizerContact}}</div>
+<div class="not-available"> <i class="icon-exclamation-sign"></i> {{rule.RuleDescription}}</div>
+</div>
+</div>
+</li>
+</ul>
+
+</div>
+
+<div id="PeopleTab" class="tab-pane fade"><h3>People
+</h3>
+</div>
+
+<div id="PrizesTab" class="tab-pane fade"><h3>Prizes
+</h3>
+
+
+<div class="pane">
+<div class="header">
+<div class="pane-title">Prizes listed below:</div>
+</div>
+</div>
+<ul class="block-grid one-up" *ngFor="let prize of eventPrizeArray"> 
+<li><div class="pane">
+<div class="body">
+<div class="not-available"> <i class="icon-exclamation-sign"></i> {{prize.PrizeDescription}}</div>
+</div>
+</div>
+</li>
+</ul>
+
+
+</div>
+
+<div id="ChatTab" class="tab-pane fade"><h3>Chate
+</h3>
+</div>
+
+<div id="OrganizersTab" class="tab-pane fade"><h3>Organizers
+</h3>
+
+ <div class="pane">
+<div class="header">
+<div class="pane-title">Organizers listed below:</div>
+</div>
+</div>
+<ul class="block-grid one-up" *ngFor="let organizer of eventOrganizerArray"> 
+<li>
+<div class="pane">
+<div class="body">
+<div class="not-available"> <i class="icon-exclamation-sign"></i> You may contact <h4>{{organizer.OrganizerName}}</h4> at this email address <h4>{{organizer.OrganizerEmail}}</h4> or dial 
+ <h4>{{organizer.OrganizerContact}}</h4>
+ </div>
 </div>
 </div>
 </li>
@@ -176,6 +240,100 @@ Prizes
 
 </div>
 
+<div id="OrganizationTab" class="tab-pane fade"><h3>Organization
+</h3>
+
+
+<div class="eventcheck border border2">
+<div class="ebgins">
+<div class="row network_cell">
+<div class="col-md-1">
+<a class="user-pic-large round-button" href="/rahul92"><img src="..\..\src\img\Remove.png" ></a>
+
+</div>
+<div class="col-md-6 col-md-offset-2 ">
+<div class="row">
+<h5>
+<a href="/rahul92">PSDC</a>
+</h5>
+</div>
+<div class="row">
+Penang state development center
+</div>
+<div class="row">
+Bayan lepas, Penang
+</div>
+<div class="row">
+
+</div>
+</div>
+<div class="col-md-9 col-md-offset-2 ">
+<div class="row">
+<div class="msg">
+<a href="/conversations?member_ids%5B%5D=60218" class="big-red-button" style="float:right;" rel="nofollow">Details</a>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+ </div>
+<div class="eventcheck border border2">
+<div class="ebgins">
+<div class="row network_cell">
+<div class="col-md-1">
+<a class="user-pic-large round-button" href="/rahul92"><img src="..\..\src\img\Remove.png" ></a>
+
+</div>
+<div class="col-md-6 col-md-offset-2 ">
+<div class="row">
+<h5>
+<a href="/rahul92">AEON </a>
+</h5>
+</div>
+<div class="row">
+Technical university
+</div>
+<div class="row">
+Bayan Baru, Penang
+</div>
+<div class="row">
+
+</div>
+</div>
+<div class="col-md-9 col-md-offset-2 ">
+<div class="row">
+<div class="msg">
+<a href="/conversations?member_ids%5B%5D=60218" class="big-red-button" style="float:right;" rel="nofollow">Details</a>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+ </div>
+<!-- <ul class="block-grid one-up" *ngFor="let organization of eventOrganizationArray">  -->
+<!-- <li><div class="pane"> -->
+<!-- <div class="header"> -->
+<!-- <div class="pane-title">Invited organization</div> -->
+<!-- </div> -->
+<!-- <div class="body"> -->
+<!-- <!-- <div class="not-available"> <i class="icon-exclamation-sign"></i> GetName({{organization}})</div> -->
+
+<!-- </div> -->
+<!-- </div> -->
+<!-- </li> -->
+<!-- </ul> -->
+
+
+
+
+
+
+
+
+</div>
+
 </div>
 </div>
 
@@ -184,5 +342,11 @@ Prizes
 
 </div>
 
-<div class="footer-spacer"></div>
+
+
+
 </div>
+</ng-container> 
+<ng-container *ngIf="!authService.login();">
+    <app-login></app-login>
+</ng-container> 

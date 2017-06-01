@@ -21,9 +21,17 @@ eventModel:EventModel[];
 
     ) { }
 ngOnInit() {
+	debugger;
+	if(this.authService.login())
+	{
+		this.bindGrid();
+		return;
+	}
+	else{
+		this.router.navigate(['/login']);
+		return;
+	} 
 	
-	//this.dayDiff('01/01/2039');
-	this.bindGrid();
   }
   
   

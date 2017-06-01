@@ -7,7 +7,7 @@ import { tokenNotExpired } from 'angular2-jwt';
 export class AuthService {
 	authToken: any;
 	student: any;
-
+	studentID:String; 
 
   constructor(private http:Http) { }
 //connect to backend
@@ -41,10 +41,14 @@ export class AuthService {
   }
 
   storeStudentData(token, student){
+	  //let student_id String;
+	  debugger;
+	  this.studentID= student.id; 
     localStorage.setItem('id_token',token); //JWT look directly for this in local storage
-    localStorage.setItem('http://localhost:3777/student',JSON.stringify(student));
-    this.authToken = token;
+    //localStorage.setItem('http://localhost:3777/student',JSON.stringify(student));
+    this.authToken = token;	
     this.student = student;
+	localStorage.setItem('currentUser', JSON.stringify(student)); 
   }
 
 
@@ -56,20 +60,23 @@ export class AuthService {
   
   getStudent()
   {
-	  return localStorage.getItem('http://localhost:3777/student');
+	  return localStorage.getItem('currentUser');
   }
 
 
   login(){
 	  //debugger;
-	  console.log(tokenNotExpired());
-    //return tokenNotExpired();
+	 
+    const token = localStorage.getItem('id_token');
+	const user = localStorage.getItem('currentUser');
+	this.authToken= token;
+	this.student= user; 
 	if(this.authToken != null || this.student != null)
 	{
-		return false;
+		return true;
 	}else 
 	{
-		return true;
+		return false;
 	}
   }
 
@@ -80,9 +87,9 @@ export class AuthService {
     this.student = null;
     localStorage.clear();
 	localStorage.removeItem('id_token');
-	localStorage.removeItem('http://localhost:3777/student');
+	localStorage.removeItem('currentUser');
 
-	console.log(tokenNotExpired());
+	
   }
   
   registerEvent(event){
@@ -153,11 +160,50 @@ GetEventOrganizerByEventID(id){
                 .map(res => res.json());
 }  
 
+GetEventOrganizationByEventID(id){
+	
+	let headers = new Headers();
+  	headers.append('EventID',id);
+	return this.http.get('http://localhost:3777/EventOrganization/GetEventOrganizationByEventID',{headers: headers})
+                .map(res => res.json());
+}  
+
 getOrganizations()
   {
 	  debugger;
 	  return this.http.get('http://localhost:3777/OrganizationMstr/getAllOrganization')
   	.map(res => res.json());
-  }  
+  }
+
+
+updateProfile(student){
+                  debugger;
+                let headers = new Headers();
+                headers.append('Content-Type','application/json');
+
+    //students/update is temporary domain
+                return this.http.post('http://localhost:3777/students/update', student,{headers: headers})
+                .map(res => res.json());
+  }
+
+   getStudentByID(id)
+  {
+                  console.log(id);
+let headers = new Headers();
+                headers.append('id',id);
+                return this.http.get('http://localhost:3777/students/getStudentByID',{headers: headers})
+                .map(res => res.json());
+  }
+  
+    addStudentCategory(studentCategroy){
+                let headers = new Headers();
+                headers.append('Content-Type','application/json');
+   // headers.append('id',id);   
+                
+    //event/register is temporary domain
+                return this.http.post('http://localhost:3777/StudentCategory/addStudentCategory', studentCategroy,{headers: headers})
+                .map(res => res.json());
+  }
+  
 
 }

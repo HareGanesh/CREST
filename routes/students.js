@@ -87,4 +87,57 @@ router.get('/profile', passport.authenticate('jwt', {session:false}), (req, res,
   res.json({students: req.students});
 });
 
+
+//  update Profile
+router.post('/update', (req, res, next) => {
+                //console.log(req.body);
+                //console.log("update");
+  let newStudent2 = new Student({
+
+    Student_Heading:req.body.Student_Heading,
+                Student_Bio:req.body.Student_Bio,
+                Student_Name: req.body.Student_Name,
+                Email_ID: req.body.Email_ID,
+                username: req.body.username,
+                Pwd: req.body.Pwd,
+    Student_ID: req.body.Student_ID,
+    DOB: req.body.DOB,
+    Address: req.body.Address,
+    Mobile_No: req.body.Mobile_No,
+    Orgn_ID: req.body.Orgn_ID,
+    Dept_ID: req.body.Dept_ID
+   
+
+
+                });
+
+  Student.udpateProfile(newStudent2, (err, student2)=> {
+                  
+                                if(err){
+                                                
+      res.json({success: false, msg:'Failed to update '});
+                  console.log(err);            
+    } else {
+      res.json({success: true, msg:'Student updated'});
+    }
+  });
+});
+
+// getStudentByID
+router.get('/getStudentByID', (req, res, next) => {
+	
+  var studentID = req.headers["id"];  
+  console.log(studentID);
+  Student.getStudentById(studentID, (err,studentDetail)=>{
+    if(err) {
+                                throw err;                            
+                }
+     else
+                  {                            
+                                  res.json(studentDetail);
+                  }
+  });  
+}); 
+
+
 module.exports = router;

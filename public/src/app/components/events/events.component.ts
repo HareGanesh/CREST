@@ -12,13 +12,17 @@ import {EventModel} from '../../model/eventsModel';
 })
 export class EventsComponent implements OnInit {
   eventDetails  =new EventModel();
-  public eventRuleArray:any;
-  public eventPrizeArray :any;
-  public eventOrganizerArray :any;
+  public eventRuleArray:Object;
+  public eventPrizeArray :Object;
+  public eventOrganizerArray :Object;
+  public eventOrganizationArray:Object;
    public dayDiff : number;
   public dayHours : number;
   public dayMin : number;
-
+public Organizations = [
+	  {id: 0,  name:"Please select"},
+      
+     ];
 
   constructor(
    private validateService: ValidateService,  
@@ -70,7 +74,33 @@ this.authService.GetEventOrganizerByEventID(eventID).subscribe(organizer => {
       console.log(err);
       return false;
     });	
+	
+	this.authService.GetEventOrganizationByEventID(eventID).subscribe(organization => {
+	debugger;
+	this.eventOrganizationArray=organization;
+},  err => {
+      console.log(err);
+      return false;
+    });
+
+// Get all organization
+	  this.authService.getOrganizations().subscribe(data => {
+		   for(let i=0; i< data.length; i++)
+      this.Organizations.push({id:data[i].OrgnID, name:data[i].OrgnName});
+    },
+    //observable also returns error
+    err => {
+      console.log(err);
+      return false;
+    });	
+	
   }
+  
+  GetName(orgnID)
+  {
+return this.Organizations.find(x=>x.id == orgnID).name;
+  }
+  
   ActiveTab(tab)
   {
                   //document.getElementsByClassName('nav')[0].childNodes;

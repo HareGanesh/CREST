@@ -1,7 +1,76 @@
-<div *ngIf="student">
-  <h2 class="page-header">{{student.Student_Name}}</h2>
-  <ul class="list-group">
-    <li class="list-group-item">Username: {{student.username}}</li>
-    <li class="list-group-item">Email: {{student.Email_ID}}</li>
-  </ul>
+	
+
+	<form  #ProfileForm="ngForm">
+  <div class="modal-dialog" *ngIf="student!=undefined" >
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title" style="color:#73879C;background: #F7F7F7;font-family:inherit;font-size: 30px;font-weight: 400;line-height: 1.471">Student Profile</h4>
+      </div>
+	  <div class="body border">
+<div class="row">
+<div class="two columns">
+<label>Student Name</label>
+<span  class="red">*</span>
 </div>
+<div class="ten columns">
+<div class="input string required user_full_name">
+    <input class="string required"  name="Student_Name" [(ngModel)]="student.Student_Name"   placeholder="Full Name" size="50" type="text" ></div>
+</div>
+</div>
+<div class="row">
+<div class="two columns">
+<label>Student Headline</label>
+</div>
+<div class="ten columns">
+<div class="input string optional user_headline">
+   <input class="string optional" id="Student_Heading" [(ngModel)]="student.Student_Heading"  name="Student_Heading"  placeholder="Describe yourself in less than 6 words" size="50" type="text"></div>
+</div>
+</div>
+<div class="row">
+<div class="two columns">
+<label>Student Bio</label>
+</div>
+<div class="ten columns">
+<div class="input text optional student_bio">
+     <textarea class="student_bio" cols="40" id="Student_Bio" [(ngModel)]="student.Student_Bio" name="Student_Bio" placeholder="A brief description of what you have done, what you are doing, and the kinds of things you are interested in." rows="4"></textarea></div>
+</div>
+</div>
+
+<div class="row">
+<div class="two columns">
+<label for="options">Intersted Category :</label>			
+</div>
+<div class="ten columns">
+ 
+            <div *ngFor="let option of options"> 
+            <label>
+                    <input type="checkbox"
+                           name="options"
+                           value="{{option.CategoryID}}"
+                           [checked]="option.IsChecked"
+						   (change)="option.IsChecked = !option.IsChecked" 
+                           />
+                    {{option.CategoryName}}
+                </label>
+</div>
+</div>
+
+</div>
+<div class="row">
+<input type="button" (click)="updateProfile('close')" class="btn btn-lg btn btn-primary btn-block student_update" value="Udpate">
+
+</div>
+
+        </div>
+      <div class="modal-footer">
+	  
+        <button type="button" class="btn btn-default" id="close" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+
+  </div>
+</form>
+ 

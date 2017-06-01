@@ -25,7 +25,7 @@ const students = require('./routes/students');
 const events = require('./routes/Events');
 const categoryMstr = require('./routes/CategoryMstr');
 const subCategoryMstr = require('./routes/SubCategoryMstr');
-
+const StudentCategory = require('./routes/StudentCategory'); 
 const eventTypeMaster = require('./routes/EventTypeMaster');
 const EventRule = require('./routes/EventRule');
 const EventPrize = require('./routes/EventPrize'); 
@@ -65,6 +65,7 @@ app.use('/EventPrize', EventPrize);
 app.use('/OrganizationMstr', organizationMstr); 
 app.use('/EventOrganization', EventOrganization); 
 app.use('/EventOrganizer', EventOrganizer); 
+app.use('/StudentCategory', StudentCategory); 
 //app.use('/events', events);
 // app.use('/students', function(students, res, next) {
 // var _send = res.send;

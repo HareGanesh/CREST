@@ -1,6 +1,9 @@
+<ng-container *ngIf="authService.login();">
+<app-navbar></app-navbar> 
 
         <!-- page content -->
         <div class="right_col" role="main">
+		
           <div class="">
 
             <div class="page-title">
@@ -10,7 +13,7 @@
 
               <div class="title_right">
 			  
-			  <div *ngIf="!authService.login()" [routerLinkActive]="['active']"   [routerLinkActiveOptions] = "{exact:true}"><a  class="big-red-button" [routerLink]="['/eventinfo/0']">Register Event</a>
+			  <div [routerLinkActive]="['active']"   [routerLinkActiveOptions] = "{exact:true}"><a  class="big-red-button" [routerLink]="['/eventinfo/0']">Register Event</a>
 			  </div>
                 <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
                   <div class="input-group">
@@ -47,7 +50,7 @@
 							  <small>&nbsp;{{item.Location}}</small>
 							  
 							  </h3>
-							  <div *ngIf="!authService.login()" [routerLinkActive]="['active']"   [routerLinkActiveOptions] = "{exact:true}"><a style="float:right" [routerLink]="['/eventinfo/', item.EventID]">Edit</a></div>
+							  <!-- <div [routerLinkActive]="['active']"   [routerLinkActiveOptions] = "{exact:true}"><a style="float:right" [routerLink]="['/eventinfo/', item._id]">Edit</a></div> -->
                               <p>{{item.Description}}...</p>
 							  
                             </div>
@@ -69,5 +72,8 @@
           </div>
         </div>
         <!-- /page content -->
-
+</ng-container>
+<ng-container *ngIf="!authService.login();">
+    <app-login></app-login>
+</ng-container> 
  

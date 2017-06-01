@@ -1,4 +1,4 @@
-<div class="container body">
+<div class="container body" *ngIf="authService.login()">
       <div class="main_container">
         <div class="col-md-3 left_col">
           <div class="left_col scroll-view">
@@ -9,7 +9,7 @@
             <div class="clearfix"></div>
 
             <!-- menu profile quick info -->
-            <div class="profile clearfix" *ngIf="!authService.login()">
+            <div class="profile clearfix">
               <div class="profile_pic">
                 <img src="#" alt="..." class="img-circle profile_img">
               </div>
@@ -27,7 +27,7 @@
             <br>
 
             <!-- sidebar menu -->
-            <div id="sidebar-menu" class="main_menu_side hidden-print main_menu" *ngIf="!authService.login()">
+            <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
               <div class="menu_section">
                 <h3>General</h3>
                 <ul class="nav side-menu">
@@ -90,19 +90,20 @@
               </div>
 
               <ul class="nav navbar-nav navbar-right">
-			  <li *ngIf="authService.login()" [routerLinkActive]="['active']"   [routerLinkActiveOptions] = "{exact:true}"><a  [routerLink]="['/login']">Login</a></li> 
-			   <li *ngIf="!authService.login()" [routerLinkActive]="['active']"   [routerLinkActiveOptions] = "{exact:true}"><a href="#"  (click)="onLogoutClick()">Logout</a></li>
+			  <!-- <li *ngIf="authService.login()" [routerLinkActive]="['active']"   [routerLinkActiveOptions] = "{exact:true}"><a  [routerLink]="['/login']">Login</a></li>  -->
+			   <!-- <li *ngIf="!authService.login()" [routerLinkActive]="['active']"   [routerLinkActiveOptions] = "{exact:true}"><a href="#"  (click)="onLogoutClick()">Logout</a></li> -->
                 
+				<!-- <li *ngIf="!authService.login()" [routerLinkActive]="['active']"   [routerLinkActiveOptions] = "{exact:true}"><a  [routerLink]="['/login']">Login</a></li>  -->
+			   <!-- <li ><a href="#"  (click)="onLogoutClick()">Logout</a></li> --> 
 				
-				
-				<li *ngIf="!authService.login()">
+				<li>
                   <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
                     <img src="#" alt="">User
                     <span class=" fa fa-angle-down"></span>
                   </a>
                   <ul class="dropdown-menu dropdown-usermenu pull-right">
                     <li><a data-toggle="modal" data-target="#ProfileModal"> Profile</a></li>                  
-                    <li><a href="login.html"><i class="fa fa-sign-out pull-right"></i> Log Out</a></li>
+                    <li *ngIf="authService.login()" [routerLinkActive]="['active']"   [routerLinkActiveOptions] = "{exact:true}"><a href="login.html" (click)="onLogoutClick()"><i class="fa fa-sign-out pull-right"></i> Log Out</a></li> 
                   </ul>
                 </li>
 
@@ -180,28 +181,31 @@
         <!-- /footer content -->
       </div>
     </div>
-	
 	<div id="ProfileModal" class="modal fade" role="dialog">
-  <div class="modal-dialog">
+	<app-profile></app-profile>
 
-    <!-- Modal content-->
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title" style="color:#73879C;background: #F7F7F7;font-family:inherit;font-size: 30px;font-weight: 400;line-height: 1.471">profile</h4>
-      </div>
-      <div class="modal-body">
-        <p style="color:black;font-size:26px;"><b>Student Name:</b> {{this.student.Student_Name}}</p>
-		<p style="color:black;font-size:26px;"><b>Student Email:</b> {{this.student.Email_ID}}</p>
-		<p style="color:black;font-size:26px;"><b>Student ID:</b> {{this.student.Student_ID}}</p>
-		<p style="color:black;font-size:26px;"><b>Student Contact:</b> {{this.student.Mobile_No}}</p>
-		<p style="color:black;font-size:26px;"><b>Student Address:</b> {{this.student.Address}}</p>
+  </div> 
+	<!-- <div id="ProfileModal" class="modal fade" role="dialog"> -->
+  <!-- <div class="modal-dialog"> -->
+
+    <!-- <!-- Modal content--> -->
+    <!-- <div class="modal-content"> -->
+      <!-- <div class="modal-header"> -->
+        <!-- <button type="button" class="close" data-dismiss="modal">&times;</button> -->
+        <!-- <h4 class="modal-title" style="color:#73879C;background: #F7F7F7;font-family:inherit;font-size: 30px;font-weight: 400;line-height: 1.471">profile</h4> -->
+      <!-- </div> -->
+      <!-- <div class="modal-body"> -->
+        <!-- <p style="color:black;font-size:26px;"><b>Student Name:</b> {{this.student.Student_Name}}</p> -->
+		<!-- <p style="color:black;font-size:26px;"><b>Student Email:</b> {{this.student.Email_ID}}</p> -->
+		<!-- <p style="color:black;font-size:26px;"><b>Student ID:</b> {{this.student.Student_ID}}</p> -->
+		<!-- <p style="color:black;font-size:26px;"><b>Student Contact:</b> {{this.student.Mobile_No}}</p> -->
+		<!-- <p style="color:black;font-size:26px;"><b>Student Address:</b> {{this.student.Address}}</p> -->
 		
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-      </div>
-    </div>
+      <!-- </div> -->
+      <!-- <div class="modal-footer"> -->
+        <!-- <button type="button" class="btn btn-default" data-dismiss="modal">Close</button> -->
+      <!-- </div> -->
+    <!-- </div> -->
 
-  </div>
-</div>
+  <!-- </div> -->
+<!-- </div> -->

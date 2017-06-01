@@ -379,7 +379,7 @@ readFile(file, reader, callback){
   reader.onload = () => {
     callback(reader.result);
     this.model.Event_Logo=reader.result;
-    console.log(reader.result);
+    
   }
 
   reader.readAsDataURL(file);
@@ -599,10 +599,10 @@ OnPrevClick(input, count,li1, li2)
     this.authService.registerEvent(this.model).subscribe(data => {
 		debugger;
       if(data.success){
-        this.flashMessage.show('Event has been registered', {cssClass: 'alert-success', timeout: 3000});
-        this.router.navigate(['/']);
+        //this.flashMessage.show('Event has been registered', {cssClass: 'alert-success', timeout: 3000});
+        this.router.navigate(['']);
       } else {
-        this.flashMessage.show('Something went wrong', {cssClass: 'alert-danger', timeout: 3000});
+        //this.flashMessage.show('Something went wrong', {cssClass: 'alert-danger', timeout: 3000});
         this.router.navigate(['/EventInfo']);
       }
     });

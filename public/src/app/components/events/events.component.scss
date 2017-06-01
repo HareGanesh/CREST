@@ -60,6 +60,20 @@ margin-bottom:10px;
     font-size: 26px;
     /* height: 71px; */
 } 
+
+#OrganizationTab   .ebgins {
+    background-color: #fff;
+    margin: 10px auto;
+    border: 1px solid #e5e5e5;
+    padding: 10px;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+    position: relative;
+    width: 100%;
+}
+
+
 .left {
     float: left;
 }
@@ -596,6 +610,25 @@ li.active .content{background:#fff;display:block;border-left:1px solid #e9e9e9;b
 }
 
 
+
+#event_users .row .directory .results .network_cell, #users-network-wrapper .row .directory .results .network_cell {
+    background-color: #fff;
+    margin: 10px 0 16px 0;
+    border: 1px solid #e5e5e5;
+    padding: 10px;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+    position: relative;
+}
+
+
+#event_users .row .directory .results .network_cell .network_pic, #users-network-wrapper .row .directory .results .network_cell .network_pic {
+    width: auto;
+    padding: 0;
+    position: initial;
+    float: none;
+}
 
 
 

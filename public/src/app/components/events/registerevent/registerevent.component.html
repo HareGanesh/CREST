@@ -8,9 +8,10 @@
 <!-- </div> -->
 
 
+<ng-container *ngIf="authService.login();">
+<app-navbar></app-navbar> 
 
-
-<div class="container">
+<div class="container">  
 
   <div class="row">
     <div class="col-am-6 col-md-4 col-md-offset-4" style="width:100%">
@@ -247,10 +248,9 @@
         </div>
 	</div>
 	
-	
-	<a id="btnFinal" class="big-red-button floatRight" style="margin-left:5px;" [class.disabled]="isDisabled()" (click)=onEventSubmit()>Finish All</a>
+	<a id="btnFinal" class="big-red-button" style="margin-left:5px;" [class.disabled]="isDisabled()" (click)=onEventSubmit()>Finish All</a>
 	<!-- <button (click)="onEventSubmit()" class="big-red-button floatRight" [disabled]="!EventForm.form.valid" >Finish</button> -->
-	<a id="Next" class="big-red-button floatRight" data-toggle="tab" [class.disabled]="isDisabled()" (click)=OnNextClick(input,1,firstLI,secondLI) #input>Next</a>
+	<a id="Next" class="big-red-button" data-toggle="tab" [class.disabled]="isDisabled()" (click)=OnNextClick(input,1,firstLI,secondLI) #input>Next</a>
 	<!-- <input type="submit" class="btn btn-lg btn btn-primary btnNext" value="Next"> -->
 </div> 
 
@@ -335,17 +335,16 @@
         </div>
         </div>	
 		
-		<label>Contact Number <span class="red">*</span></label>	
+		<label>Contact Number</label>	
 	<div class="input-group">
      <span class="input-group-addon"><i class="fa fa-address-book">{{i+1}}</i></span>
 		
-		<input required type="text" [(ngModel)]="model.Organizers[i].OrganizerContact" name="ContactNo{{i}}" ngControl="ContactNo"  class="form-control" placeholder="Contact No"
+		<input type="text" [(ngModel)]="model.Organizers[i].OrganizerContact" name="ContactNo{{i}}" ngControl="ContactNo"  class="form-control" placeholder="Contact No"
 		autofocus="true" id="#ContactNo" #ContactNo="ngModel" pattern="[0-9]*" minlength="10" maxlength="10" 
 >
 		<div [hidden]="ContactNo.valid || ContactNo.pristine"
              class="alert alert-danger">
-          <div [hidden]="!ContactNo.hasError('minlength')">Mobile number should be 10 digit</div>
-      <div [hidden]="!ContactNo.hasError('required')">Mobile number is required</div>
+          <div [hidden]="!ContactNo.hasError('minlength')">Mobile number should be 10 digit</div>      
       <div [hidden]="!ContactNo.hasError('pattern')">Mobile number should be only numbers</div>
 
         </div>
@@ -366,10 +365,10 @@
 <div id="OrganizationsTab" class="tab-pane fade ">
 
 <div class="AddMoreDiv">
-<label>Organizations to be invite:</label>
-<div>
+<label>Please invite:</label>
+
 <ss-multiselect-dropdown id ="orgn" name="Organizations" [options]="myOptions" [texts]="myTexts" (ngModelChange)="onOrganizationChange($event)" [settings]="mySettings" [ngModel]="model.Organizations" style="width:200px !important;"></ss-multiselect-dropdown>
-</div>
+
 </div>
 	
 
@@ -386,33 +385,14 @@
 
 </div>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-		
-		
-	
-
-
-	
-
-
 </form>
 </div>
+</div>
+</div>
+</div>
+</div>
 
+</ng-container>
+<ng-container *ngIf="!authService.login();">
+    <app-login></app-login>
+</ng-container> 
