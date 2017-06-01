@@ -20,7 +20,7 @@ export class EventsComponent implements OnInit {
   public dayHours : number;
   public dayMin : number;
 public Organizations = [
-	  {id: 0,  name:"Please select"},
+	  {id: 0,  name:"Please select",title:"", address:"",country:""},
       
      ];
 
@@ -86,7 +86,7 @@ this.authService.GetEventOrganizerByEventID(eventID).subscribe(organizer => {
 // Get all organization
 	  this.authService.getOrganizations().subscribe(data => {
 		   for(let i=0; i< data.length; i++)
-      this.Organizations.push({id:data[i].OrgnID, name:data[i].OrgnName});
+      this.Organizations.push({id:data[i].OrgnID, name:data[i].OrgnName,title:data[i].OrgnTitle, address:data[i].OrgnAddress, country:data[i].OrgnCountry});
     },
     //observable also returns error
     err => {
@@ -98,7 +98,20 @@ this.authService.GetEventOrganizerByEventID(eventID).subscribe(organizer => {
   
   GetName(orgnID)
   {
+	  debugger;
 return this.Organizations.find(x=>x.id == orgnID).name;
+  }
+  
+  GetTitle(orgnID)
+  {
+	  debugger;
+return this.Organizations.find(x=>x.id == orgnID).title;
+  }
+  
+  GetAddress(orgnID)
+  {
+	  debugger;
+return this.Organizations.find(x=>x.id == orgnID).address+"," + this.Organizations.find(x=>x.id == orgnID).country;
   }
   
   ActiveTab(tab)

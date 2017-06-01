@@ -188,6 +188,7 @@ updateProfile(student){
 
    getStudentByID(id)
   {
+	  debugger;
                   console.log(id);
 let headers = new Headers();
                 headers.append('id',id);

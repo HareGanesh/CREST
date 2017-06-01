@@ -150,9 +150,9 @@ Prizes
 
 <div class="ebgins">
 <h2>Organization</h2>
-<div *ngFor="let rule of eventOrganizerArray; let i=index;"> 
+<div *ngFor="let organization of eventOrganizationArray; let i=index;"> 
 
-<div class="not-available" *ngIf="i == 0"> <i class="icon-exclamation-sign"></i> <a href="mailto:{{eventOrganizerArray[i].OrganizerEmail}}">{{eventOrganizerArray[i].OrganizerEmail}}</a></div>
+<div class="not-available" *ngIf="i == 0"> <i class="icon-exclamation-sign"></i> {{GetName(eventOrganizationArray[i].OrgnID)}}</div>
 <a class="footerlink" *ngIf="i == 0" data-toggle="tab" (click)="ActiveTab('OrganizersTab')" href="#OrganizersTab">More</a>
 </div>
 
@@ -212,7 +212,7 @@ Prizes
 
 </div>
 
-<div id="ChatTab" class="tab-pane fade"><h3>Chate
+<div id="ChatTab" class="tab-pane fade"><h3>Chat
 </h3>
 </div>
 
@@ -244,33 +244,33 @@ Prizes
 </h3>
 
 
-<div class="eventcheck border border2">
+<div class="eventcheck border border2" *ngFor="let organization of eventOrganizationArray; let i=index">
 <div class="ebgins">
 <div class="row network_cell">
 <div class="col-md-1">
-<a class="user-pic-large round-button" href="/rahul92"><img src="..\..\src\img\Remove.png" ></a>
+<a class="user-pic-large round-button" href="/rahul92"><img src="..\..\src\img\Organization_DefaultLogo.png" width="100px" height="100px"></a>
 
 </div>
 <div class="col-md-6 col-md-offset-2 ">
 <div class="row">
 <h5>
-<a href="/rahul92">PSDC</a>
+{{GetName(organization.OrgnID)}}
 </h5>
 </div>
 <div class="row">
-Penang state development center
+{{GetTitle(organization.OrgnID)}}
 </div>
 <div class="row">
-Bayan lepas, Penang
+{{GetAddress(organization.OrgnID)}}
 </div>
 <div class="row">
 
 </div>
 </div>
-<div class="col-md-9 col-md-offset-2 ">
+<div class="col-md-9 col-md-offset-1 ">
 <div class="row">
 <div class="msg">
-<a href="/conversations?member_ids%5B%5D=60218" class="big-red-button" style="float:right;" rel="nofollow">Details</a>
+<a href="#" class="big-red-button" style="float:right;" rel="nofollow">Details</a>
 </div>
 </div>
 </div>
@@ -278,57 +278,6 @@ Bayan lepas, Penang
 </div>
 </div>
  </div>
-<div class="eventcheck border border2">
-<div class="ebgins">
-<div class="row network_cell">
-<div class="col-md-1">
-<a class="user-pic-large round-button" href="/rahul92"><img src="..\..\src\img\Remove.png" ></a>
-
-</div>
-<div class="col-md-6 col-md-offset-2 ">
-<div class="row">
-<h5>
-<a href="/rahul92">AEON </a>
-</h5>
-</div>
-<div class="row">
-Technical university
-</div>
-<div class="row">
-Bayan Baru, Penang
-</div>
-<div class="row">
-
-</div>
-</div>
-<div class="col-md-9 col-md-offset-2 ">
-<div class="row">
-<div class="msg">
-<a href="/conversations?member_ids%5B%5D=60218" class="big-red-button" style="float:right;" rel="nofollow">Details</a>
-</div>
-</div>
-</div>
-
-</div>
-</div>
- </div>
-<!-- <ul class="block-grid one-up" *ngFor="let organization of eventOrganizationArray">  -->
-<!-- <li><div class="pane"> -->
-<!-- <div class="header"> -->
-<!-- <div class="pane-title">Invited organization</div> -->
-<!-- </div> -->
-<!-- <div class="body"> -->
-<!-- <!-- <div class="not-available"> <i class="icon-exclamation-sign"></i> GetName({{organization}})</div> -->
-
-<!-- </div> -->
-<!-- </div> -->
-<!-- </li> -->
-<!-- </ul> -->
-
-
-
-
-
 
 
 
