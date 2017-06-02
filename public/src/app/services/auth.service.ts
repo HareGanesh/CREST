@@ -206,5 +206,13 @@ let headers = new Headers();
                 .map(res => res.json());
   }
   
+  GetEventByOrgID(id){
+	debugger;
+	let headers = new Headers();
+  	headers.append('id',id);
+	return this.http.get('http://localhost:3777/EventOrganization/getEventOrganizerByOrgNo',{headers: headers})
+                .map(res => res.json());
+   }   
+  
 
 }

@@ -27,10 +27,70 @@
             </div>
 
             <div class="clearfix"></div>
+<div id="tabs">
+<div class="row">
 
-            <div class="row">
+<ul class="nav nav-tabs">
+<li class="active" >
+<a href="#OverviewTab" data-toggle="tab">Future Event</a>
+</li>
+<li style="display:none;">
+<a href="#ScheduleTab" data-toggle="tab">Show All</a>
+</li>
+
+</ul>
+
+<div class="tab-content x_panel">
+<div id="OverviewTab" class="tab-pane fade in active">
+
+ <div class="row">
               <div class="col-md-12">
-                <div class="x_panel">
+                <div>
+            
+                  <div class="x_content">
+                    <div class="row">
+                      <div class="col-md-12 mail_list_column" *ngFor="let item of OrgEventModel; ">
+                      
+                        <a href="#" id="{{item._id}}">
+                          <div class="mail_list">
+                            <div class="left">
+                              <i class="fa icon-time"></i>  &nbsp;{{item.RemainDay}} days
+							  <!-- <a href="../eventDetails/{{item.EventID}}" style="background-image: url('http://www.hackathon.io/assets/icns/avatar/event.png');"></a> -->
+                            </div>
+							
+                            <div class="right">						
+
+                              <h3><a [routerLink]="['/eventDetails/', item._id]">{{item.EventTitle}}</a> 
+							  
+							  <small>&nbsp;{{item.Location}}</small>
+							  
+							  </h3>
+							  <!-- <div [routerLinkActive]="['active']"   [routerLinkActiveOptions] = "{exact:true}"><a style="float:right" [routerLink]="['/eventinfo/', item._id]">Edit</a></div> -->
+                              <p>{{item.Description}}...</p>
+							  
+                            </div>
+                          </div>
+                        </a>
+                        
+                    
+                      </div>
+                      <!-- /MAIL LIST -->
+
+                      <!-- CONTENT MAIL -->
+                     
+                      <!-- /CONTENT MAIL -->
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+</div>
+
+
+<div id="ScheduleTab" class="tab-pane fade">
+ <div class="row">
+              <div class="col-md-12">
+                <div>
             
                   <div class="x_content">
                     <div class="row">
@@ -69,6 +129,13 @@
                 </div>
               </div>
             </div>
+</div> 
+
+
+</div>
+</div>
+</div>
+           
           </div>
         </div>
         <!-- /page content -->

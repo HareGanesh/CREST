@@ -116,5 +116,18 @@ router.get('/GetEventOrganizationByEventID', (req, res) => {
   });  
 }); 
 
+router.get('/getEventOrganizerByOrgNo', (req, res) => {
+  var OrganizationID = req.headers["id"];  
+  console.log(OrganizationID);
+  EventOrganization.getEventOrganizerByOrgNo(OrganizationID, (err,EventOrganization)=>{
+    if(err) {
+		throw err;		
+	}
+     else
+	  {		 
+		  res.json(EventOrganization);
+	  }
+  });  
+}); 
 
 module.exports = router;

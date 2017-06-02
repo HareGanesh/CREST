@@ -64,5 +64,8 @@ module.exports.DeleteEventOrganizationByEventID = function(EventID, callback){
 var query = { EventID: EventID };
 EventOrganization.update(query, {Active: false}, callback);}
 
+module.exports.getEventOrganizerByOrgNo = function(OrganizerNo, callback){
+	const query = {OrgnID: OrganizerNo}
+	EventOrganization.find(query,callback);} 
 
 

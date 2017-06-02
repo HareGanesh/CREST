@@ -68,7 +68,8 @@ router.post('/authenticate', (req, res, next) => {
 			Student_ID: student.Student_ID,
 			Mobile_No: student.Mobile_No,
 			DOB:student.DOB,
-			Address:student.Address
+			Address:student.Address,
+			Orgn_ID:student.Orgn_ID 
           }
         });     
 

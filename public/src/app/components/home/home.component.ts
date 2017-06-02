@@ -10,7 +10,7 @@ import {Router} from '@angular/router';
 export class HomeComponent implements OnInit {
 
 eventModel:EventModel[];
-  
+OrgEventModel:EventModel[];
  searchFilter:any;
   constructor(
    private validateService: ValidateService,  
@@ -39,6 +39,8 @@ ngOnInit() {
   bindGrid()
   {
 	  	var modelData=[];
+		var OrgData=[];
+	    var filterEvent=[];
     this.authService.getEvents().subscribe(event => {
       modelData= event;
 	  for(var i=0;i<modelData.length;i++)
@@ -54,14 +56,39 @@ ngOnInit() {
       console.log(err);
       return false;
     });
+  	var student=JSON.parse(this.authService.getStudent());
+		//{{ksdf.Orgn_ID}}
+		this.authService.GetEventByOrgID(student.Orgn_ID).subscribe(org => {			
+			OrgData=org;
+			 if(this.eventModel.length>0 && OrgData.length >0)
+  {
+	    for(var j=0; j < OrgData.length;j++)
+		  {
+			 for(var i=0;i < this.eventModel.length;i++)
+	          {
+				 // var m=this.eventModel[i];
+		         if(OrgData[j].EventID ==this.eventModel[i]._id)
+				{
+					filterEvent.push(this.eventModel[i]);
+					
+				}
+	          }
+		   }
+	 
+	  this.OrgEventModel=filterEvent;
   }
+		});
+  
+
+ 
+}
 dayDiff(format){
 	
 	var oneDay = 24*60*60*1000; // hours*minutes*seconds*milliseconds
 var firstDate = new Date();
 var secondDate = new Date(format);
 
-var diffDays = Math.round(Math.abs((firstDate.getTime() - secondDate.getTime())/(oneDay)));
+var diffDays = Math.round(Math.abs((secondDate.getTime() - firstDate.getTime())/(oneDay)));
 return diffDays;
 }
 
@@ -70,16 +97,28 @@ public open() {
 	if(this.searchFilter !=undefined && this.searchFilter !='')
 	{
 	var modelData=this.eventModel;
+	var orgData=this.OrgEventModel;
 	var filterData=[];
+	var orgFilterData=[];
 	
 	  for(var i=0;i<modelData.length;i++)
 	 {
-		  if(modelData[i].Location.toString().toLowerCase().indexOf(this.searchFilter.toLowerCase())!=-1 || modelData[i].Description.toString().toLowerCase().indexOf(this.searchFilter.toLowerCase())!=-1)
+		  if(modelData[i].Location.toString().toLowerCase().indexOf(this.searchFilter.toLowerCase())!=-1 || modelData[i].EventTitle.toString().toLowerCase().indexOf(this.searchFilter.toLowerCase())!=-1)
 		  {
 			  filterData.push(modelData[i]);
 		  }
 	 }
 	 this.eventModel=filterData;
+	 
+	 for(var i=0;i<orgData.length;i++)
+	 {
+		 debugger;
+		  if(orgData[i].Location.toString().toLowerCase().indexOf(this.searchFilter.toLowerCase())!=-1 || orgData[i].EventTitle.toString().toLowerCase().indexOf(this.searchFilter.toLowerCase())!=-1)
+		  {
+			  orgFilterData.push(orgData[i]);
+		  }
+	 }
+	 this.OrgEventModel=orgFilterData;
 	}
 	else
 	{
@@ -93,6 +132,7 @@ public open() {
 }
 export class EventModel
 {
+_id:{type:String};
 EventID:Number  ;
 EventTitle:{type: String};
 Description:{type: String};
