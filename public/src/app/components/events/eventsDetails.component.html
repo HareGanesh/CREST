@@ -108,7 +108,7 @@ Prizes
 <div *ngFor="let rule of eventPrizeArray; let i=index;"> 
 
 <div class="not-available" *ngIf="i == 0"> <i class="icon-exclamation-sign"></i> {{eventPrizeArray[i].PrizeDescription}}</div>
-<a class="footerlink" *ngIf="i == 0" data-toggle="tab" href="#">More</a>
+<!-- <a class="footerlink" *ngIf="i == 0" data-toggle="tab" href="#">More</a> -->
 </div>
 
 
@@ -132,7 +132,7 @@ Prizes
 <div *ngFor="let rule of eventRuleArray; let i=index;"> 
 
 <div class="not-available" *ngIf="i == 0"> <i class="icon-exclamation-sign"></i> {{eventRuleArray[i].RuleDescription}}</div>
-<a class="footerlink" *ngIf="i == 0" data-toggle="tab" (click)="ActiveTab('RulesTab')" href="#RulesTab">More</a>
+<!-- <a class="footerlink" *ngIf="i == 0" data-toggle="tab" (click)="ActiveTab('RulesTab')" href="#RulesTab">More</a> -->
 </div>
 
 </div>
@@ -144,7 +144,7 @@ Prizes
 <div *ngFor="let rule of eventOrganizerArray; let i=index;"> 
 
 <div class="not-available" *ngIf="i == 0"> <i class="icon-exclamation-sign"></i> <a href="mailto:{{eventOrganizerArray[i].OrganizerEmail}}">{{eventOrganizerArray[i].OrganizerEmail}}</a></div>
-<a class="footerlink"  *ngIf="i == 0" data-toggle="tab" (click)="ActiveTab('OrganizersTab')" href="#OrganizersTab">More</a>
+<!-- <a class="footerlink"  *ngIf="i == 0" data-toggle="tab" (click)="ActiveTab('OrganizersTab')" href="#OrganizersTab">More</a> -->
 </div>
 </div>
 
@@ -153,7 +153,7 @@ Prizes
 <div *ngFor="let organization of eventOrganizationArray; let i=index;"> 
 
 <div class="not-available" *ngIf="i == 0"> <i class="icon-exclamation-sign"></i> {{GetName(eventOrganizationArray[i].OrgnID)}}</div>
-<a class="footerlink" *ngIf="i == 0" data-toggle="tab" (click)="ActiveTab('OrganizersTab')" href="#OrganizersTab">More</a>
+<!-- <a class="footerlink" *ngIf="i == 0" data-toggle="tab" (click)="ActiveTab('OrganizersTab')" href="#OrganizersTab">More</a> -->
 </div>
 
   
@@ -248,7 +248,7 @@ Prizes
 <div class="ebgins">
 <div class="row network_cell">
 <div class="col-md-1">
-<a class="user-pic-large round-button" href="/rahul92"><img src="..\..\src\img\Organization_DefaultLogo.png" width="100px" height="100px"></a>
+<img src="../../src/img/{{GetOrganizationLogo(organization.OrgnID)}}" width="100px" height="100px">
 
 </div>
 <div class="col-md-6 col-md-offset-2 ">
@@ -269,8 +269,28 @@ Prizes
 </div>
 <div class="col-md-9 col-md-offset-1 ">
 <div class="row">
-<div class="msg">
-<a href="#" class="big-red-button" style="float:right;" rel="nofollow">Details</a>
+<div>
+<a class="big-red-button" style="float:right;">Details</a>
+<!-- <div id="OrganizationModal" class="modal fade" role="dialog"> -->
+	<!-- <div class="modal-dialog"> -->
+
+    <!-- <!-- Modal content-->
+    <!-- <div class="modal-content"> -->
+      <!-- <div class="modal-header"> -->
+        <!-- <button type="button" class="close" data-dismiss="modal">&times;</button> -->
+        <!-- <h4 class="modal-title">Modal Header</h4> -->
+      <!-- </div> -->
+      <!-- <div class="modal-body"> -->
+        <!-- <p>Some text in the modal.</p> -->
+      <!-- </div> -->
+      <!-- <div class="modal-footer"> -->
+        <!-- <button type="button" class="btn btn-default" data-dismiss="modal">Close</button> -->
+      <!-- </div> -->
+    <!-- </div> -->
+
+  <!-- </div> -->
+
+  <!-- </div>  -->
 </div>
 </div>
 </div>

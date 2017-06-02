@@ -12,6 +12,7 @@ import { RegisterComponent } from './components/register/register.component';
 import { HomeComponent } from './components/home/home.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { ProfileComponent } from './components/profile/profile.component';
+//import { OrganizationComponent } from './components/organization/organization.component';
 
 import {EventsComponent} from './components/events/events.component';
 

@@ -28,7 +28,7 @@ optionsChecked = [];
   ngOnInit() {
 	  	 debugger;
 	 // console.log(this.authService.studentID);
-	  this.authService.getStudentByID(this.authService.studentID).subscribe(data => {
+	  this.authService.getStudentByID(JSON.parse(this.authService.getStudent()).id).subscribe(data => {
 		  this.student =data;
 	  });
 	   
