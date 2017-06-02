@@ -7,5 +7,50 @@
 
 .col-md-offset-4
 {
-margin-left:30%
+
+}
+
+.pane, .tile {
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    -ms-border-radius: 3px;
+    -o-border-radius: 3px;
+    border-radius: 3px;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    background-color: #fff;
+    border: 1px solid #e5e5e5;
+}
+
+.pane>div:first-child, .tile>div:first-child {
+    -moz-border-radius-topleft: 3px;
+    -webkit-border-top-left-radius: 3px;
+    border-top-left-radius: 3px;
+    -moz-border-radius-topright: 3px;
+    -webkit-border-top-right-radius: 3px;
+    border-top-right-radius: 3px;
+}
+
+.pane .header, .tile .header {
+    background-color: #fcfcfc;
+    border-bottom: 1px solid #e5e5e5;
+}
+
+.pane .header, .tile .header, .pane .body, .tile .body, .pane .footer, .tile .footer {
+    position: relative;
+}
+
+.pane .header .pane-title, .tile .header .pane-title {
+    padding: 16px;
+    line-height: 17px;
+    text-shadow: 0px -1px #fff;
+    color: #8C8C8C;
+    font-weight: bold;
+}
+
+.pane .body, .tile .body {
+    padding: 17px;
+    background-color: #fff;
+    line-height: 27px;
 }
