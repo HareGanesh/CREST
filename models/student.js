@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
-const bcrypt = require('bcryptjs');
+// const bcrypt = require('bcryptjs');
 const config = require('../config/database');
-
+var bcrypt = require('bcrypt');
 //Schema
 const StudentSchema = mongoose.Schema({
 
@@ -87,7 +87,7 @@ const StudentSchema = mongoose.Schema({
 });
 
 const Student = module.exports = mongoose.model('Student', StudentSchema,'Student');
-
+const saltRounds = 10;
 module.exports.getStudentById = function(id, callback){
 	console.log(id);
 	Student.findById(id, callback);
@@ -104,9 +104,14 @@ module.exports.getStudentByUsername = function(username,callback){
 }
 
 module.exports.addStudent = function(newStudent, callback){
- console.log(newStudent);
-  newStudent.save(callback);
- // if(err) throw err;
+// To Create a hash value with the password entered in the form to store in DB - hareganx - 06/06/17	
+	bcrypt.genSalt(saltRounds, function(err, salt) {
+    bcrypt.hash(newStudent.Pwd, salt, function(err, hash) {
+		newStudent.Pwd=hash;
+		newStudent.save(callback);
+    });
+});
+  if(err) throw err;
 }
 
 module.exports.comparePwd = function(candidatePwd, hash, callback){
