@@ -175,6 +175,53 @@ getOrganizations()
   	.map(res => res.json());
   }
 
+  getAllUniversity()
+  {
+	  debugger;
+	  return this.http.get('http://localhost:3777/UniversityMstr/getAllUniversity')
+  	.map(res => res.json());
+  }
+  
+  getUniversityRoles()
+  {
+	  debugger;
+	  return this.http.get('http://localhost:3777/UniversityRoleMstr/getAllUniversityRole')
+  	.map(res => res.json());
+  }
+  
+  getAllTranscationType()
+  {
+	  debugger;
+	  return this.http.get('http://localhost:3777/TranscationTypeMstr/getAllTranscationType')
+  	.map(res => res.json());
+  }
+  
+  getAllTranscationTypeWithRolesAndPriority(univid, trantypeid)
+  {
+	  debugger;
+	  let headers = new Headers();
+      headers.append('univid',univid);
+	  headers.append('transcationtypeid',trantypeid);
+	  return this.http.get('http://localhost:3777/UnivTranscationTypeDetail/GetUnivTranscationTypeDetailByUnivIDAndTransType',{headers: headers})
+  	.map(res => res.json());
+  }
+  
+  getMaxTranMapID()
+  {
+	  debugger;
+	  return this.http.get('http://localhost:3777/UnivTranscationTypeDetail/getMaxTransMapID')
+  	.map(res => res.json());
+  }
+  
+  AddUnivTranscationTypeDetail(UniversityTranscation){
+  	let headers = new Headers();
+  	headers.append('Content-Type','application/json');
+
+	
+    //UniversityTranscation/register is temporary domain
+  	return this.http.post('http://localhost:3777/UnivTranscationTypeDetail/AddUnivTranscationTypeDetail', UniversityTranscation,{headers: headers})
+  	.map(res => res.json());
+  }
 
 updateProfile(student){
                   debugger;
