@@ -32,7 +32,12 @@ const EventPrize = require('./routes/EventPrize');
 const EventOrganizer = require('./routes/EventOrganizer');
 const organizationMstr = require('./routes/OrganizationMstr'); 
 const EventOrganization = require('./routes/EventOrganization'); 
-//const events = require('./routes/Events');
+const UniversityRoleMstr = require('./routes/UniversityRoleMstr'); 
+const UniversityMstr = require('./routes/UniversityMstr');
+const TranscationTypeMstr = require('./routes/TranscationTypeMstr');
+const UnivTranscationTypeDetail = require('./routes/UnivTranscationTypeDetail');
+const UnivTranscationMaskDetail = require('./routes/UnivTranscationMaskDetail');
+const UnivTranscationMapDetail = require('./routes/UnivTranscationMapDetail');
 
 //MIDDLEWARE
 app.use(cors());//run on diff port
@@ -66,6 +71,14 @@ app.use('/OrganizationMstr', organizationMstr);
 app.use('/EventOrganization', EventOrganization); 
 app.use('/EventOrganizer', EventOrganizer); 
 app.use('/StudentCategory', StudentCategory); 
+app.use('/UniversityMstr', UniversityMstr); 
+app.use('/UniversityRoleMstr', UniversityRoleMstr); 
+
+app.use('/TranscationTypeMstr', TranscationTypeMstr); 
+app.use('/UnivTranscationTypeDetail', UnivTranscationTypeDetail); 
+app.use('/UnivTranscationMaskDetail', UnivTranscationMaskDetail);
+app.use('/UnivTranscationMapDetail', UnivTranscationMapDetail);
+
 //app.use('/events', events);
 // app.use('/students', function(students, res, next) {
 // var _send = res.send;

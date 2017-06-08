@@ -16,7 +16,7 @@ import { ProfileComponent } from './components/profile/profile.component';
 
 import {EventsComponent} from './components/events/events.component';
 
-
+import {UniversityTransMappingComponent} from './components/UniversityTransMap/UniversityTransMapping.component';
 
 import {ValidateService} from './services/validate.service';
 import {AuthService} from './services/auth.service';
@@ -47,10 +47,10 @@ const appRoutes: Routes = [
   {path:'organization', component: OrganizationComponent},
   {path:'eventinfo/:id', component: RegistereventComponent},
   {path: 'eventDetails/:id', component: EventsComponent },
+{path:'UniversityTransMapping', component: UniversityTransMappingComponent},
 
-
-  {path:'eventinfo/:id', component: RegistereventComponent},
-  {path: 'eventDetails/:id', component: EventsComponent }	
+  // {path:'eventinfo/:id', component: RegistereventComponent},
+  // {path: 'eventDetails/:id', component: EventsComponent }	
 
 ]
 
@@ -71,7 +71,8 @@ const appRoutes: Routes = [
 
 	RegistereventComponent,
 	EqualValidator,
-	EventsComponent
+	EventsComponent,
+	UniversityTransMappingComponent
 
   ],
   imports: [
