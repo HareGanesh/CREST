@@ -7,188 +7,188 @@
 
 <!-- </div> -->
 
-<div class="pane">
-<div class="header">
-<div class="pane-title"><h1 class="text-center" syle="text-align:left!important;">Register to continue to CREST</h1></div>
-</div>
-</div>
-<div class="container">
-  <div class="row">
-    <div class="col-am-6 col-md-4 col-md-offset-4">
-	
+<div class="col-md-4 col-md-offset-4 col-sm-6 col-sm-offset-3">
+ <div class="panel panel-info">
+	<div class="panel-heading">
+	<div class="pane-title">Register to continue to CREST</div>
+	</div>
       
-      <div class="account-wall">
-<div [hidden]="submitted">
-<form (submit)="onRegisterSubmit()" #RegisterForm="ngForm">
+	<div class="panel-body">
+		<div [hidden]="submitted">
+			<form (submit)="onRegisterSubmit()" #RegisterForm="ngForm">
 
-	<label>Username <span class="red">*</span></label>
-	<div class="input-group">
-     <span class="input-group-addon"><i class="fa fa-address-card"></i></span>
-		
-		<input required type="text" [(ngModel)]="model.username" name="username" ngControl="username"  class="form-control" placeholder="User name"
-		autofocus="true" id="#username" #username="ngModel">
-		<div [hidden]="username.valid || username.pristine"
-             class="alert alert-danger">
-          User Name is required
-        </div>	
+				<label>Username <span class="red">*</span></label>
+				<div class="input-group">
+				 <span class="input-group-addon"><i class="fa fa-address-card"></i></span>
+					
+					<input required type="text" [(ngModel)]="model.username" name="username" ngControl="username"  class="form-control" placeholder="User name"
+					autofocus="true" id="#username" #username="ngModel">
+					<div [hidden]="username.valid || username.pristine"
+						 class="alert alert-danger">
+					  User Name is required
+					</div>	
+				</div>
+
+
+				<label>Password <span class="red">*</span></label>
+				<div class="input-group">
+				 <span class="input-group-addon"><i class="fa fa-key"></i></span>
+					
+					<input required type="password" [(ngModel)]="model.Pwd" name="Pwd" ngControl="Pwd"  class="form-control" placeholder="Password"
+					autofocus="true" id="#Pwd" #Pwd="ngModel" pattern="^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$">
+					<div [hidden]="Pwd.valid || Pwd.pristine"
+						 class="alert alert-danger">
+					  <div [hidden]="!Pwd.hasError('required')">Password is required</div>
+			   <div [hidden]="!Pwd.hasError('pattern')">Password should be minimum 8 characters at least 1 Alphabet and 1 Number
+				 
+			   </div>
+					</div>
+				</div>
+				<label>Confirm Password <span class="red">*</span></label>
+				<div class="input-group">
+				 <span class="input-group-addon"><i class="fa fa-key"></i></span>
+					
+					
+					<input type="password" class="form-control" id="ConfirmPwd"
+			   required
+			   validateEqual="Pwd"
+			   [(ngModel)]="model.ConfirmPwd" name="ConfirmPwd" placeholder="Confirm Password"
+			   #ConfirmPwd="ngModel">
+			   <div [hidden]="ConfirmPwd.valid || ConfirmPwd.pristine"
+				  class="alert alert-danger">
+				  Passwords did not match
+			   </div>
+				</div>
+
+				<label>Email <span class="red">*</span></label>
+				<div class="input-group">
+				 <span class="input-group-addon"><i class="fa fa-envelope"></i></span>
+					
+					<input required type="text" [(ngModel)]="model.Email_ID" name="Email_ID" ngControl="email"  class="form-control" placeholder="Email"
+					autofocus="true" id="#email" #email="ngModel" pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$">
+					<div [hidden]="email.valid || email.pristine"
+						 class="alert alert-danger">
+					  <div [hidden]="!email.hasError('required')">Email is required</div>
+			   <div [hidden]="!email.hasError('pattern')">Email format should be 
+				  <small><b>joe@abc.com</b></small>
+			   </div>
+
+					</div>
+					
+				</div>
+
+
+				<label>Student ID <span class="red">*</span></label>
+				<div class="input-group">
+				 <span class="input-group-addon"><i class="fa fa-id-badge"></i></span>
+					
+					<input required type="text" [(ngModel)]="model.Student_ID" name="Student_ID" ngControl="StudentID"  class="form-control" placeholder="StudentID"
+					autofocus="true" id="#StudentID" #StudentID="ngModel">
+					<div [hidden]="StudentID.valid || StudentID.pristine"
+						 class="alert alert-danger">
+					  Student ID is required
+					</div>
+				</div>
+				 <label>Student Name <span class="red">*</span></label>
+				<div class="input-group">
+				 <span class="input-group-addon"><i class="fa fa-address-book"></i></span>
+					
+					<input required type="text" [(ngModel)]="model.Student_Name" name="Student_Name" ngControl="Student_Name"  class="form-control" placeholder="Student name"
+					autofocus="true" id="#studentname" #studentname="ngModel">
+				<div [hidden]="studentname.valid || studentname.pristine"
+						 class="alert alert-danger">
+					  Student Name is required
+					</div>	
+				</div>
+
+				 <label>Date of Birth <span class="red">*</span></label> <div class="input-group">
+				<span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+				
+					<input required type="date" [(ngModel)]="model.DOB" name="DOB" ngControl="DOB"  class="form-control" placeholder="DD/MM/YYYY"
+					autofocus="true" id="#DOB" #DOB="ngModel">
+					<div [hidden]="DOB.valid || DOB.pristine" class="alert alert-danger">
+					  
+				  <div [hidden]="!DOB.hasError('required')">DOB is required</div>
+				  <!-- <div [hidden]="!DOB.hasError('pattern')">DOB should be in DD/MM/YYYY format</div> -->
+					</div>
+				</div>
+
+
+				<label>Address <span class="red">*</span></label>
+				<div class="input-group">
+				 <span class="input-group-addon"><i class="fa fa-map-marker"></i></span>
+					
+					<input required type="text" [(ngModel)]="model.Address" name="Address" ngControl="Address"  class="form-control" placeholder="Address"
+					autofocus="true" id="#Address" #Address="ngModel">
+					<div [hidden]="Address.valid || Address.pristine"
+						 class="alert alert-danger">
+					  Address is required
+					</div>
+				</div>
+
+
+				<label>Mobile Number <span class="red">*</span></label>	
+				<div class="input-group">
+				 <span class="input-group-addon"><i class="fa fa-mobile"></i></span>
+					
+					<input required type="text" [(ngModel)]="model.Mobile_No" name="Mobile_No" ngControl="MobileNo"  class="form-control" placeholder="Mobile No"
+					autofocus="true" id="#MobileNo" #MobileNo="ngModel" pattern="[0-9]*" minlength="10" maxlength="10" 
+			>
+					<div [hidden]="MobileNo.valid || MobileNo.pristine"
+						 class="alert alert-danger">
+					  <div [hidden]="!MobileNo.hasError('minlength')">Mobile number should be 10 digit</div>
+				  <div [hidden]="!MobileNo.hasError('required')">Mobile number is required</div>
+				  <div [hidden]="!MobileNo.hasError('pattern')">Mobile number should be only numbers</div>
+
+					</div>
+				</div>
+
+
+				<label>Organization <span class="red">*</span></label>
+				<div class="input-group">
+				 <span class="input-group-addon"><i class="fa fa-users"></i></span>
+					
+					<select id="#Orgn_ID" [(ngModel)]="model.Orgn_ID"  #Orgn_ID="ngModel" name="Orgn_ID" ngControl="Orgn_ID"  class="form-control" >
+					 
+					<option *ngFor="let org of Organizations" [value]="org.id" >  
+					{{org.name}}
+					</option>
+				</select>
+					
+					<!-- <input type="text" [(ngModel)]="model.Orgn_ID" name="Orgn_ID" ngControl="Orgn_ID"  class="form-control" placeholder="Organization" -->
+					<!-- autofocus="true" id="#Orgn_ID" #Orgn_ID="ngModel"> -->
+					<!-- <div [hidden]="Orgn_ID.valid || Orgn_ID.pristine" -->
+						 <!-- class="alert alert-danger"> -->
+					  <!-- Organization is required -->
+					<!-- </div> -->
+				</div>
+
+
+				<label>Department <span class="red">*</span></label>
+				<div class="input-group">
+				 <span class="input-group-addon"><i class="fa fa-building"></i></span>
+					
+					<select id="#Dept_ID" [(ngModel)]="model.Dept_ID"  #Dept_ID="ngModel" name="Dept_ID" ngControl="Dept_ID"  class="form-control" >
+					 
+					<option *ngFor="let dpt of Departsments" [value]="dpt.id" >  
+					{{dpt.name}}
+					</option>
+				</select>
+					
+					<!-- <input type="text" [(ngModel)]="model.Dept_ID" name="Dept_ID" ngControl="Department"  class="form-control" placeholder="Department" -->
+					<!-- autofocus="true" id="#Department" #Department="ngModel"> -->
+					<!-- <div [hidden]="Department.valid || Department.pristine" -->
+						 <!-- class="alert alert-danger"> -->
+					  <!-- Department is required -->
+					<!-- </div> -->
+				</div>
+
+
+			<input type="submit" class="btn btn-lg btn btn-primary btn-block" value="Register Me!" [disabled]="!RegisterForm.form.valid">
+
+			</form>
+		</div>
 	</div>
-
-
-	<label>Password <span class="red">*</span></label>
-	<div class="input-group">
-     <span class="input-group-addon"><i class="fa fa-key"></i></span>
-		
-		<input required type="password" [(ngModel)]="model.Pwd" name="Pwd" ngControl="Pwd"  class="form-control" placeholder="Password"
-		autofocus="true" id="#Pwd" #Pwd="ngModel" pattern="^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$">
-		<div [hidden]="Pwd.valid || Pwd.pristine"
-             class="alert alert-danger">
-          <div [hidden]="!Pwd.hasError('required')">Password is required</div>
-   <div [hidden]="!Pwd.hasError('pattern')">Password should be minimum 8 characters at least 1 Alphabet and 1 Number
-     
-   </div>
-        </div>
-	</div>
-    <label>Confirm Password <span class="red">*</span></label>
-	<div class="input-group">
-     <span class="input-group-addon"><i class="fa fa-key"></i></span>
-		
-		
-		<input type="password" class="form-control" id="ConfirmPwd"
-   required
-   validateEqual="Pwd"
-   [(ngModel)]="model.ConfirmPwd" name="ConfirmPwd" placeholder="Confirm Password"
-   #ConfirmPwd="ngModel">
-   <div [hidden]="ConfirmPwd.valid || ConfirmPwd.pristine"
-      class="alert alert-danger">
-      Passwords did not match
-   </div>
-	</div>
-
-	<label>Email <span class="red">*</span></label>
-	<div class="input-group">
-     <span class="input-group-addon"><i class="fa fa-envelope"></i></span>
-		
-		<input required type="text" [(ngModel)]="model.Email_ID" name="Email_ID" ngControl="email"  class="form-control" placeholder="Email"
-		autofocus="true" id="#email" #email="ngModel" pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$">
-		<div [hidden]="email.valid || email.pristine"
-             class="alert alert-danger">
-          <div [hidden]="!email.hasError('required')">Email is required</div>
-   <div [hidden]="!email.hasError('pattern')">Email format should be 
-      <small><b>joe@abc.com</b></small>
-   </div>
-
-        </div>
-		
-	</div>
-
-
-	<label>Student ID <span class="red">*</span></label>
-	<div class="input-group">
-     <span class="input-group-addon"><i class="fa fa-id-badge"></i></span>
-		
-		<input required type="text" [(ngModel)]="model.Student_ID" name="Student_ID" ngControl="StudentID"  class="form-control" placeholder="StudentID"
-		autofocus="true" id="#StudentID" #StudentID="ngModel">
-		<div [hidden]="StudentID.valid || StudentID.pristine"
-             class="alert alert-danger">
-          Student ID is required
-        </div>
-	</div>
-     <label>Student Name <span class="red">*</span></label>
-	<div class="input-group">
-     <span class="input-group-addon"><i class="fa fa-address-book"></i></span>
-		
-		<input required type="text" [(ngModel)]="model.Student_Name" name="Student_Name" ngControl="Student_Name"  class="form-control" placeholder="Student name"
-		autofocus="true" id="#studentname" #studentname="ngModel">
-	<div [hidden]="studentname.valid || studentname.pristine"
-             class="alert alert-danger">
-          Student Name is required
-        </div>	
-	</div>
-
-	 <label>Date of Birth <span class="red">*</span></label> <div class="input-group">
-	<span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-	
-		<input required type="date" [(ngModel)]="model.DOB" name="DOB" ngControl="DOB"  class="form-control" placeholder="DD/MM/YYYY"
-		autofocus="true" id="#DOB" #DOB="ngModel">
-		<div [hidden]="DOB.valid || DOB.pristine" class="alert alert-danger">
-          
-      <div [hidden]="!DOB.hasError('required')">DOB is required</div>
-      <!-- <div [hidden]="!DOB.hasError('pattern')">DOB should be in DD/MM/YYYY format</div> -->
-        </div>
-	</div>
-
-
-	<label>Address <span class="red">*</span></label>
-	<div class="input-group">
-     <span class="input-group-addon"><i class="fa fa-map-marker"></i></span>
-		
-		<input required type="text" [(ngModel)]="model.Address" name="Address" ngControl="Address"  class="form-control" placeholder="Address"
-		autofocus="true" id="#Address" #Address="ngModel">
-		<div [hidden]="Address.valid || Address.pristine"
-             class="alert alert-danger">
-          Address is required
-        </div>
-	</div>
-
-
-	<label>Mobile Number <span class="red">*</span></label>	
-	<div class="input-group">
-     <span class="input-group-addon"><i class="fa fa-mobile"></i></span>
-		
-		<input required type="text" [(ngModel)]="model.Mobile_No" name="Mobile_No" ngControl="MobileNo"  class="form-control" placeholder="Mobile No"
-		autofocus="true" id="#MobileNo" #MobileNo="ngModel" pattern="[0-9]*" minlength="10" maxlength="10" 
->
-		<div [hidden]="MobileNo.valid || MobileNo.pristine"
-             class="alert alert-danger">
-          <div [hidden]="!MobileNo.hasError('minlength')">Mobile number should be 10 digit</div>
-      <div [hidden]="!MobileNo.hasError('required')">Mobile number is required</div>
-      <div [hidden]="!MobileNo.hasError('pattern')">Mobile number should be only numbers</div>
-
-        </div>
-	</div>
-
-
-	<label>Organization <span class="red">*</span></label>
-	<div class="input-group">
-     <span class="input-group-addon"><i class="fa fa-users"></i></span>
-		
-		<select id="#Orgn_ID" [(ngModel)]="model.Orgn_ID"  #Orgn_ID="ngModel" name="Orgn_ID" ngControl="Orgn_ID"  class="form-control" >
-         
-		<option *ngFor="let org of Organizations" [value]="org.id" >  
-        {{org.name}}
-        </option>
-    </select>
-		
-		<!-- <input type="text" [(ngModel)]="model.Orgn_ID" name="Orgn_ID" ngControl="Orgn_ID"  class="form-control" placeholder="Organization" -->
-		<!-- autofocus="true" id="#Orgn_ID" #Orgn_ID="ngModel"> -->
-		<!-- <div [hidden]="Orgn_ID.valid || Orgn_ID.pristine" -->
-             <!-- class="alert alert-danger"> -->
-          <!-- Organization is required -->
-        <!-- </div> -->
-	</div>
-
-
-	<label>Department <span class="red">*</span></label>
-	<div class="input-group">
-     <span class="input-group-addon"><i class="fa fa-building"></i></span>
-		
-		<select id="#Dept_ID" [(ngModel)]="model.Dept_ID"  #Dept_ID="ngModel" name="Dept_ID" ngControl="Dept_ID"  class="form-control" >
-         
-		<option *ngFor="let dpt of Departsments" [value]="dpt.id" >  
-        {{dpt.name}}
-        </option>
-    </select>
-		
-		<!-- <input type="text" [(ngModel)]="model.Dept_ID" name="Dept_ID" ngControl="Department"  class="form-control" placeholder="Department" -->
-		<!-- autofocus="true" id="#Department" #Department="ngModel"> -->
-		<!-- <div [hidden]="Department.valid || Department.pristine" -->
-             <!-- class="alert alert-danger"> -->
-          <!-- Department is required -->
-        <!-- </div> -->
-	</div>
-
-
-<input type="submit" class="btn btn-lg btn btn-primary btn-block" value="Register Me!" [disabled]="!RegisterForm.form.valid">
-
-</form>
+ </div>
 </div>
+  

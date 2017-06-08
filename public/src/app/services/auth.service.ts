@@ -14,7 +14,7 @@ export class AuthService {
   registerStudent(student){
   	let headers = new Headers();
   	headers.append('Content-Type','application/json');
-
+debugger
     //students/register is temporary domain
   	return this.http.post('http://localhost:3777/students/register', student,{headers: headers})
   	.map(res => res.json());
