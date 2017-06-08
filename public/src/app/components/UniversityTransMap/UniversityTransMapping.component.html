@@ -1,0 +1,172 @@
+<!-- <div class="showcase"> -->
+<!-- <div class="jumbotron-register"> -->
+  <!-- <h1>Welcome to LinkUS Registration page!</h1> -->
+  <!-- <p> -->
+    
+  <!-- </p> -->
+
+<!-- </div> -->
+
+
+<ng-container *ngIf="authService.login();">
+<app-navbar></app-navbar> 
+
+<div class="container">  
+
+  <div class="row">
+    <div class="col-am-6 col-md-4 col-md-offset-4" style="width:100%">
+      <h1 class="text-left">University Transcation Mapping</h1>
+      <br>
+      <div class="account-wall" style="width:50%">
+	  
+	  
+	  
+	  
+<div [hidden]="submitted">
+
+
+
+<form #EventForm="ngForm" enctype="multipart/form-data">
+
+<div id="tabs">
+<div class="row">
+
+<ul class="nav nav-tabs" id="wheel-tab">
+<li class="active " #firstLI>
+<a href="#OverviewTab" data-toggle="tab">Mapping</a>
+</li>
+
+
+
+</ul>
+
+<div class="tab-content x_panel">
+<div id="OverviewTab" class="tab-pane fade in active">
+
+<div>
+<ul>
+<li class="red" *ngFor="let a of this.ErrorList; let index = index">
+{{ErrorList[index]}}
+</li>
+</ul>
+</div>
+
+
+
+ 
+	
+	<label>University<span class="red">*</span></label>
+	<div class="input-group">
+     <span class="input-group-addon"><i class="fa fa-key"></i></span>
+	
+		<select id="#UniversityID"  (ngModelChange)="onChange($event)" [(ngModel)]="model.UniversityID"  #UniversityID="ngModel" name="UniversityID" ngControl="CategoriesMstr"  class="form-control" >
+         
+		<option *ngFor="let univ of Universities" [value]="univ.Univ_ID" >  
+        {{univ.Univ_Name}}
+        </option>
+    </select>
+		<div [hidden]="UniversityID.valid || UniversityID.pristine"
+             class="alert alert-danger">
+          University is required 
+		  </div>
+	
+	</div>
+	
+	 <label>Transcation Type <span class="red">*</span></label>
+	<div class="input-group">
+     <span class="input-group-addon"><i class="fa fa-key"></i></span>
+		<select [(ngModel)]="model.TransTypeID" name="TransTypeID" ngControl="TransTypeID"  class="form-control" placeholder="Event Type"
+		autofocus="true" id="#TransTypeID" #TransTypeID="ngModel" (ngModelChange)="onChangeTransType($event)">		
+		 <option *ngFor="let tt of TranscationTypeList" [value]="tt.Tran_Type_ID" >  
+        {{tt.Tran_Type_Name}}
+        </option>
+		</select>
+		<div [hidden]="TransTypeID.valid || TransTypeID.pristine"
+             class="alert alert-danger">
+          Trans Type is required 
+		  </div>
+	</div>
+<div class="AddMoreDiv">
+
+<label>Add Level<span class="red">*</span></label>
+	<div class="" style="width:10%">
+    
+		<div style="width:80%;float:left;">
+		<input required type="text" [(ngModel)]="model.NoOfLevel" name="NoOfLevel" ngControl="NoOfLevel"  class="form-control"
+		autofocus="true" id="#NoOfLevel" #NoOfLevel="ngModel" max="{{UniversityRoles.length}}"> 
+		</div>
+		<div style="width:20%;float:right;">
+		<a id="addMore" class=""(click)=AddMoreRoles() [class.disabled]="isDisabled()"><img src="..\..\src\img\AddMore.png" height="30px" width="30px" ></a>
+		</div>
+		<div [hidden]="NoOfLevel.valid || NoOfLevel.pristine"
+             class="alert alert-danger">
+          no of level is required
+        </div>	
+	</div>
+
+
+</div>
+<table class="table table-bordered" *ngIf="model.Roles.length != 0">
+    <thead>
+      <tr>
+        <th>S.NO</th>
+        <th>Role</th>
+        <th>Priority</th>
+		<th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let role of model.Roles;let i = index">
+        <td>{{i+1}}</td>
+        <td>
+		<select id="#UniversityRoleID" #UniversityRoleID="ngModel" [(ngModel)]="role.RoleID"   name="UniversityRoleID{{i}}" class="form-control" >         
+			<option *ngFor="let univRole of UniversityRoles" [value]="univRole.Univ_RoleID" >  
+				{{univRole.Univ_RoleName}}
+			</option>
+        </select>	
+	</td>
+        <td>P - {{model.Roles[i].Priority}}</td>
+		<td *ngIf="model.Roles.length == i+1 && model.Roles.length !=1">
+		<a id="Remove" class="" (click)=RemoveRoles()><img src="..\..\src\img\Remove.png" height="30px" width="30px"></a>
+		</td>
+		
+      </tr>
+  </tbody>
+  </table>
+	 <!-- <div *ngFor="let role of model.Roles;let i = index"> -->
+      
+	  
+	 
+		<!--  -->
+	
+	<!-- </div> -->
+		
+	
+	<!-- <!-- <button (click)="onEventSubmit()" class="big-red-button floatRight" [disabled]="!EventForm.form.valid" >Finish</button> -->
+	<!-- <a id="Next" class="big-red-button" data-toggle="tab" (click)=OnNextClick(input,1,firstLI,secondLI) #input>Next</a> -->
+	<!-- <!-- <input type="submit" class="btn btn-lg btn btn-primary btnNext" value="Next"> -->
+</div> 
+
+
+
+<div>
+	<a id="btnFinal" class="big-red-button floatRight" (click)=onSubmit()>Save</a>
+	</div>
+
+</div>
+
+</div>
+
+</div>
+
+</form>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+</ng-container>
+<ng-container *ngIf="!authService.login();">
+    <app-login></app-login>
+</ng-container> 
