@@ -82,7 +82,7 @@ public EventTypes = [
     model={  	
     UniversityID:'0',  
     TransTypeID:'0',
-	NoOfLevel:0,
+	NoOfLevel:1,
 	TransMapID:'',	
     Roles:[],
 	TransMask:[],
