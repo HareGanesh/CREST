@@ -106,8 +106,8 @@
 
 
 </div>
-<table class="table table-bordered" *ngIf="model.Roles.length != 0">
-    <thead>
+<table class="table table-bordered" *ngIf="model.Roles.length != 0" style="border: 0px solid #ddd;">
+    <thead class="table-bordered">
       <tr>
         <th>S.NO</th>
         <th>Role</th>
@@ -126,8 +126,9 @@
         </select>	
 	</td>
         <td>P - {{model.Roles[i].Priority}}</td>
-		<td *ngIf="model.Roles.length == i+1 && model.Roles.length !=1">
-		<a id="Remove" class="" (click)=RemoveRoles()><img src="..\..\src\img\Remove.png" height="30px" width="30px"></a>
+		<!-- <td *ngIf="model.Roles.length == i+1 && model.Roles.length !=1" style="border:none;"> -->
+		<td>
+		<a id="Remove" class="" (click)=RemoveRoles(model.Roles[i].Priority)><img src="..\..\src\img\Remove.png" height="30px" width="30px"></a>
 		</td>
 		
       </tr>

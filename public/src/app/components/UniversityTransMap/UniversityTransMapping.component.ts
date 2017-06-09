@@ -115,12 +115,13 @@ submitted = false;
 	//document.getElementsByClassName('AddMoreDiv').cssClass='show';
        this.UniversityRoles = this.UniversityRolesWithUniversity.filter(x=>x.Univ_ID ==univID);
 	   this.UniversityRoles.push(this.UniversityRolesWithUniversity[0]);
-	   
+	   this.UniversityRoles = this.UniversityRoles.sort(x=>x.Univ_RoleID);
 		if(this.model.TransTypeID != '0')
 			{
 				this.authService.getAllTranscationTypeWithRolesAndPriority(parseInt(univID), parseInt(this.model.TransTypeID)).subscribe(data => {
 					if(data.length > 0)
 					{
+						this.model.TransMapID = data[0].Tran_Map_ID;
 						for(let i=0; i< data.length; i++)
 						{
 							this.isUpdate = true;
@@ -131,13 +132,14 @@ submitted = false;
 						this.isUpdate = false;
 					}
 			},
-		//observable also returns error
-		err => {
-		console.log(err);
-		return false;
-		});
+				//observable also returns error
+					err => {
+					console.log(err);
+					return false;
+				});
+			}
 		}
-		}
+		
 	onChangeTransType(TransTypeID) {
 	debugger;
 	//document.getElementsByClassName('AddMoreDiv').cssClass='show';
@@ -147,6 +149,7 @@ submitted = false;
 	this.authService.getAllTranscationTypeWithRolesAndPriority(parseInt(this.model.UniversityID), parseInt(TransTypeID)).subscribe(data => {
 		   if(data.length > 0)
 					{
+						this.model.TransMapID = data[0].Tran_Map_ID;
 						for(let i=0; i< data.length; i++)
 						{
 							this.isUpdate = true;
@@ -304,12 +307,23 @@ submitted = false;
 	  }
   }
   
-  RemoveRoles()
+  RemoveRoles(priority)
   {
 	  debugger
-	 
+	  let role = this.model.Roles.filter(x=>x.Priority == priority);
+	  let index= this.model.Roles.indexOf(role);
+	  this.model.Roles.splice(priority-1, 1)
+	  //this.model.Roles.pop();
+	  this.resetPriority();
 	  
-	  this.model.Roles.pop();
+  }
+  
+  resetPriority()
+  {
+	 for(let i=0; i< this.model.Roles.length;i++)
+	  {
+		  this.model.Roles[i].Priority = i+1;
+	  }
   }
   
   

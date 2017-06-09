@@ -48,7 +48,7 @@ const UnivTranscationMapDetailMaster = module.exports = mongoose.model('Univ_Tra
 module.exports.getUnivTranscationMapDetailByID = function(tranmapID, callback){
 	const query = {'Tran_Map_ID': tranmapID}
 	console.log(query);
-	UnivTranscationMapDetailMaster.find(query, callback);
+	UnivTranscationMapDetailMaster.find(query, callback).sort({Priority : 1});
 }
 
 module.exports.getUnivTranscationMapDetailMstrByName = function(CategoryName,callback){
