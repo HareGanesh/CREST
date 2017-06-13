@@ -4,6 +4,7 @@ import {AuthService} from '../../../services/auth.service'
 import {FlashMessagesService} from 'angular2-flash-messages';
 import {Router} from '@angular/router';
 import { NG_VALIDATORS,Validator,Validators,AbstractControl,ValidatorFn } from '@angular/forms';
+import { UniversityTransApproval } from './UniversityTransApproval';
 
 
 
@@ -22,11 +23,15 @@ export class RegisterstudentComponent implements OnInit {
     Student_ID: String;
     Address: String;
     Mobile_No: String;
-    Orgn_ID: Number;
+    Univ_ID: Number;
     Dept_ID: Number;
+	TransApprovalMapping:UniversityTransApproval[]=[];
     model:Object;
 	submitted = false;
-	public Organizations = [
+	public ErrorList:string[]=[];
+	public UserNameErrorList:string[]=[];
+	public StuErrorList:string[]=[];
+	public Universities = [
 	  {id: 0,  name:"Please select"}
             
      ];
@@ -52,9 +57,9 @@ export class RegisterstudentComponent implements OnInit {
   ngOnInit() {
 	  
 	  // Get all organization
-	  this.authService.getOrganizations().subscribe(data => {
+	  this.authService.getAllUniversity().subscribe(data => {
 		   for(let i=0; i< data.length; i++)
-      this.Organizations.push({id:data[i].OrgnID, name:data[i].OrgnName});
+      this.Universities.push({id:data[i].Univ_ID, name:data[i].Univ_Name});
     },
     //observable also returns error
     err => {
@@ -67,29 +72,134 @@ export class RegisterstudentComponent implements OnInit {
   	Student_Name: '',
   	Email_ID: '',
   	username: '',
+	TransApprovalMapping:[],	
   	Pwd: '',
 	ConfirmPwd:'',
     Student_ID: '',
     DOB: '',
     Address: '',
     Mobile_No: '',
-    Orgn_ID: '0',
+    Univ_ID: '0',
     Dept_ID: '0'
    
   	}
   }
+  
+  emailChange()
+  {
+	  debugger;
+	  let length = this.ErrorList.length;
+		for(let i=0; i< length;i++)
+		{
+		this.ErrorList.pop();
+		}
+	  this.authService.getStudentByEmail(this.model).subscribe(data => {
+		   if(data != null)
+		   {
+			   this.ErrorList.push("Email id is duplicate");
+			   
+		   }
+       },
+		//observable also returns error
+		err => {
+			console.log(err);
+			return false;
+    });
+	
+	
+  }
+  
+  userNameChange()
+  {
+	  debugger;
+	  let length = this.UserNameErrorList.length;
+		for(let i=0; i< length;i++)
+		{
+		this.UserNameErrorList.pop();
+		}
+	  this.authService.getStudentByUserName(this.model).subscribe(data => {
+		   if(data != null)
+		   {
+			   this.UserNameErrorList.push("user name is duplicate");
+			   
+		   }
+       },
+		//observable also returns error
+		err => {
+			console.log(err);
+			return false;
+    });
+	
+  }
+  
+  StudentIDChange()
+  {
+	debugger;
+	  let length = this.StuErrorList.length;
+		for(let i=0; i< length;i++)
+		{
+		this.StuErrorList.pop();
+		}
+	  this.authService.getStudentByStudentID(this.model).subscribe(data => {
+		   if(data != null)
+		   {
+			   this.StuErrorList.push("Student ID is duplicate");
+			   
+		   }
+       },
+		//observable also returns error
+		err => {
+			console.log(err);
+			return false;
+    });  
+  }
+  
+  onChange(univID) {
+		debugger;
+		
+       this.TransApprovalMapping=[];
+	   let TransApprovalID=1;
+	   let transDt='';
+	   this.authService.getMaxTranApprovalID().subscribe(data => {
+		   if(data.length > 0)
+		   {
+		    TransApprovalID = data[0].Tran_Approval_ID +1;
+		   }
+		},
+		//observable also returns error
+		err => {
+		console.log(err);
+		return false;
+		});
+		
+		this.authService.getAllTranscationTypeWithRolesAndPriority(parseInt(univID), 2).subscribe(data => {
+					if(data.length > 0)
+					{
+						for(let i=0; i< data.length; i++)
+						{							
+							this.TransApprovalMapping.push({TransMapID : data[i].Tran_Map_ID, NextApproverRoleID:data[i].Role_ID,
+							Priority:data[i].Priority,MaskID:Math.pow(2, data[i].Priority), Status:false, 
+							UniversityID:parseInt(univID), TransApprovalID:TransApprovalID, TransDt:transDt, StudentID:this.Student_ID});
+						}
+					}
+			},
+				//observable also returns error
+					err => {
+					console.log(err);
+					return false;
+				});		
+				
+		}
+  
 
   onRegisterSubmit(){
 
 
-	  debugger;
-	  this.submitted = true;
-	  
+	  debugger;	  
 
 
-	  debugger;
+	 
 	  this.submitted = true;
-	  
 
   	const student = {
 
@@ -102,10 +212,14 @@ export class RegisterstudentComponent implements OnInit {
     DOB: this.DOB,
     Address: this.Address,
     Mobile_No: this.Mobile_No,
-    Orgn_ID: this.Orgn_ID,
+    Univ_ID: this.Univ_ID,
     Dept_ID: this.Dept_ID
    
   	}
+	
+	// Trans mappping logic
+	//this.TransMapping.sort(x=>x.Priority);
+	
   	 // Required Fields
     if(!this.validateService.validateRegister(this.model)){
       this.flashMessage.show('Please fill in all fields', {cssClass: 'alert-danger', timeout: 3000});
@@ -119,7 +233,7 @@ export class RegisterstudentComponent implements OnInit {
     //}
 
   // Register user
-    this.authService.registerStudent(this.model).subscribe(data => {
+    this.authService.registerStudent(this.model, this.TransApprovalMapping).subscribe(data => {
 		debugger;
       if(data.success){
         //this.flashMessage.show('You are now registered and can log in', {cssClass: 'alert-success', timeout: 3000});
@@ -129,6 +243,7 @@ export class RegisterstudentComponent implements OnInit {
         this.router.navigate(['/register']);
       }
     });
+	  
 
   }
 

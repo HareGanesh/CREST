@@ -55,7 +55,7 @@
 
  
 	
-	<label>University<span class="red">*</span></label>
+	<label>University <span class="red">*</span></label>
 	<div class="input-group">
      <span class="input-group-addon"><i class="fa fa-key"></i></span>
 	
@@ -88,7 +88,7 @@
 	</div>
 <div class="AddMoreDiv">
 
-<label>Add Level<span class="red">*</span></label>
+<label>Add Level <span class="red">*</span></label>
 	<div class="" style="width:10%">
     
 		<div style="width:80%;float:left;">
@@ -119,8 +119,9 @@
       <tr *ngFor="let role of model.Roles;let i = index">
         <td>{{i+1}}</td>
         <td>
-		<select id="#UniversityRoleID" #UniversityRoleID="ngModel" [(ngModel)]="role.RoleID"   name="UniversityRoleID{{i}}" class="form-control" >         
-			<option *ngFor="let univRole of UniversityRoles" [value]="univRole.Univ_RoleID" >  
+		
+		<select id="#UniversityRoleID{{i}}" #UniversityRoleID{{i}}="ngModel" [(ngModel)]="role.RoleID"   name="UniversityRoleID{{i}}" class="form-control" >         
+			<option *ngFor="let univRole of UniversityRoles" [ngValue]="univRole.Univ_RoleID">
 				{{univRole.Univ_RoleName}}
 			</option>
         </select>	

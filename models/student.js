@@ -49,10 +49,12 @@ const StudentSchema = mongoose.Schema({
     type: String
   },
 
-  Orgn_ID:{
+  Univ_ID:{
     type: Number
   },
-
+Orgn_ID:{
+    type: Number
+  },
    Dept_ID:{
     type: Number
   },
@@ -98,8 +100,18 @@ module.exports.profile = function(id, callback){
 	Student.findById(id, callback);
 }
 
-module.exports.getStudentByUsername = function(username,callback){
+module.exports.getStudentByUserName = function(username,callback){
 	const query = {username: username}
+	Student.findOne(query,callback);
+}
+
+module.exports.getStudentByEmail = function(emailID,callback){
+	const query = {Email_ID: emailID}
+	Student.findOne(query,callback);
+}
+
+module.exports.getStudentByStudentID = function(studentID,callback){
+	const query = {Student_ID: studentID}
 	Student.findOne(query,callback);
 }
 
@@ -111,7 +123,7 @@ module.exports.addStudent = function(newStudent, callback){
 		newStudent.save(callback);
     });
 });
-  if(err) throw err;
+  //if(err) throw err;
 }
 
 module.exports.comparePwd = function(candidatePwd, hash, callback){

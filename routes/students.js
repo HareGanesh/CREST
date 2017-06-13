@@ -4,11 +4,13 @@ const passport = require('passport');
 const jwt = require('jsonwebtoken');
 const config = require('../config/database');
 const Student = require('../models/student');
+const UnivTranscationApprovalDetail = require('../models/UnivTranscationApprovalDetail');
 var bcrypt = require('bcrypt');
 
 /// Register
 router.post('/register', (req, res, next) => {
-	console.log(req.body);
+	
+	TransApprovalMappingInfo = req.body.TransApprovalMapping;
   let newStudent = new Student({
 
   	Student_Name: req.body.Student_Name,
@@ -19,8 +21,7 @@ router.post('/register', (req, res, next) => {
     DOB: req.body.DOB,
     Address: req.body.Address,
     Mobile_No: req.body.Mobile_No,
-    Orgn_ID: req.body.Orgn_ID,
-    Dept_ID: req.body.Dept_ID
+    Univ_ID: req.body.Univ_ID
     
   	});
 
@@ -30,6 +31,23 @@ router.post('/register', (req, res, next) => {
       res.json({success: false, msg:'Failed to register '});
 	  console.log(err);	
     } else {
+			
+		if(TransApprovalMappingInfo != null)
+                                {
+                                  var  univTranscationApprovalDetail= new UnivTranscationApprovalDetail();
+                                  univTranscationApprovalDetail.Tran_Approval_ID= TransApprovalMappingInfo.TransApprovalID;
+								  univTranscationApprovalDetail.Univ_ID=TransApprovalMappingInfo.UniversityID;
+                                  univTranscationApprovalDetail.Student_ID=req.body.Student_ID;     
+								  univTranscationApprovalDetail.Tran_Map_ID= TransApprovalMappingInfo.TransMapID;
+								  univTranscationApprovalDetail.Prev_Approver_RID=0;
+                                  univTranscationApprovalDetail.Next_Approver_RID=TransApprovalMappingInfo.NextApproverRoleID; 
+								  univTranscationApprovalDetail.Status=TransApprovalMappingInfo.Status; 
+                                  univTranscationApprovalDetail.Tran_Dt=""; 								  
+                                  UnivTranscationApprovalDetail.AddUnivTranscationApprovalDetail(univTranscationApprovalDetail, (err, univTranscationApproval)=> {
+                                             
+                                            }); 
+                                }
+		
       res.json({success: true, msg:'Student registered'});
     }
   });
@@ -41,7 +59,7 @@ router.post('/authenticate', (req, res, next) => {
 	
   const username = req.body.username;
   const Pwd = req.body.Pwd;
-  Student.getStudentByUsername(username, (err,student)=>{
+  Student.getStudentByUserName(username, (err,student)=>{
     if(err) throw err;
 		if(!student){
 		  return res.json({success: false, msg: 'User not found!'})
@@ -142,5 +160,52 @@ router.get('/getStudentByID', (req, res, next) => {
   });  
 }); 
 
+// Get student by user name
+router.get('/getStudentByUserName', (req, res, next) => {
+	
+  var username = req.headers["username"];  
+  
+  Student.getStudentByUserName(username, (err,studentDetail)=>{
+    if(err) {
+                                throw err;                            
+                }
+     else
+                  {                            
+                                  res.json(studentDetail);
+                  }
+  });  
+}); 
+
+// Get student by StudentID
+router.get('/getStudentByStudentID', (req, res, next) => {
+	
+  var studentID = req.headers["studentid"];  
+  
+  Student.getStudentByStudentID(studentID, (err,studentDetail)=>{
+    if(err) {
+                                throw err;                            
+                }
+     else
+                  {                            
+                                  res.json(studentDetail);
+                  }
+  });  
+}); 
+
+// Get student by Email
+router.get('/getStudentByEmail', (req, res, next) => {
+	
+  var Email = req.headers["emailid"];  
+  console.log(Email);
+  Student.getStudentByEmail(Email, (err,studentDetail)=>{
+    if(err) {
+                                throw err;                            
+                }
+     else
+                  {                            
+                                  res.json(studentDetail);
+                  }
+  });  
+}); 
 
 module.exports = router;

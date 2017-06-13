@@ -181,7 +181,10 @@ submitted = false;
 	  debugger;
 	  
 	  this.authService.getMaxTranMapID().subscribe(data => {
+		  if(data.length > 0)
+		  {
 		  this.model.TransMapID = data[0].Tran_Map_ID;
+		  }
     },
     //observable also returns error
     err => {
@@ -301,10 +304,18 @@ submitted = false;
 	  for(let i=0; i< levelNo;i++)
 	  {
 		  let length = this.model.Roles.length+1;
-
+		  let universityRole:UniversityRole;
 		  this.universityRole = { Priority:length, RoleID:0};
 	  this.model.Roles.push(this.universityRole);
+	  
+	  
+	   console.log(this.UniversityRoles);
 	  }
+	  
+	  //this.model.Roles.sort(x=>x.RoleID);
+		  
+	  
+	  debugger;
   }
   
   RemoveRoles(priority)
@@ -403,47 +414,7 @@ checkValidation()
 			{
 				this.ErrorList.push("Duplicate role selected.");
 			}
-	}
-	
-	// if(this.file_srcs.length == 0)
-	// {
-		// this.ErrorList.push("Event Logo is required");
-	// }
-	
-	// if(this.model.CategoriesMstr == "")
-	// {
-		// this.ErrorList.push("Please select the event category");
-	// }
-	
-	// if(this.model.EventType == "")
-	// {
-		// this.ErrorList.push("Please select the event type");
-	// }
-	
-	// if(this.model.StartDt == undefined)
-	// {
-		// this.ErrorList.push("Event Start Datet is required");
-	// }
-	
-	// if(this.model.EndDt == "")
-	// {
-		// this.ErrorList.push("Event end date is required");
-	// }
-	
-	// if(this.model.EventRegisterEndDt == "")
-	// {
-		// this.ErrorList.push("Event registration date is required");
-	// }
-	
-	// if(this.model.Location == "")
-	// {
-		// this.ErrorList.push("Event location is required");
-	// }
-	
-	// if(this.model.POCRequired != "" && this.model.POCRequired == "Yes" && this.model.POCDeadLine == "")
-	// {
-		// this.ErrorList.push("POC deadline is required");
-	// }
+	}	
 	
 	// this.compareDates();
 	if(this.ErrorList.length > 0)

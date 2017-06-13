@@ -7,7 +7,7 @@ export class ValidateService {
 
   validateRegister(student){
 	  
-    if(student.Student_Name == undefined || student.Email_ID == undefined || student.username == undefined || student.Pwd == undefined || student.Student_ID == undefined || student.DOB == undefined || student.Address == undefined || student.Mobile_No == undefined || student.Orgn_ID == undefined || student.Dept_ID == undefined){
+    if(student.Student_Name == undefined || student.Email_ID == undefined || student.username == undefined || student.Pwd == undefined || student.Student_ID == undefined || student.DOB == undefined || student.Address == undefined || student.Mobile_No == undefined || student.Univ_ID == undefined){
       return false;
     } else {
       return true;

@@ -22,11 +22,14 @@
 				 <span class="input-group-addon"><i class="fa fa-address-card"></i></span>
 					
 					<input required type="text" [(ngModel)]="model.username" name="username" ngControl="username"  class="form-control" placeholder="User name"
-					autofocus="true" id="#username" #username="ngModel">
+					autofocus="true" id="#username" #username="ngModel" (focusout)="userNameChange()">
 					<div [hidden]="username.valid || username.pristine"
 						 class="alert alert-danger">
 					  User Name is required
 					</div>	
+					<div class="alert alert-danger" *ngIf="UserNameErrorList.length != 0">
+				 <small><b>{{UserNameErrorList[0]}}</b></small>
+				</div>
 				</div>
 
 
@@ -65,29 +68,45 @@
 				 <span class="input-group-addon"><i class="fa fa-envelope"></i></span>
 					
 					<input required type="text" [(ngModel)]="model.Email_ID" name="Email_ID" ngControl="email"  class="form-control" placeholder="Email"
-					autofocus="true" id="#email" #email="ngModel" pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$">
+					autofocus="true" id="#email" #email="ngModel" pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$" (focusout)="emailChange()">
 					<div [hidden]="email.valid || email.pristine"
 						 class="alert alert-danger">
 					  <div [hidden]="!email.hasError('required')">Email is required</div>
 			   <div [hidden]="!email.hasError('pattern')">Email format should be 
 				  <small><b>joe@abc.com</b></small>
-			   </div>
+			   </div>			
 
 					</div>
+				<div class="alert alert-danger" *ngIf="ErrorList.length != 0">
+				 <small><b>{{ErrorList[0]}}</b></small>
+				</div>
+				</div>
+				<label>University <span class="red">*</span></label>
+				<div class="input-group">
+				 <span class="input-group-addon"><i class="fa fa-users"></i></span>
+					
+					<select id="#Univ_ID" [(ngModel)]="model.Univ_ID"  #Univ_ID="ngModel" name="Univ_ID" ngControl="Univ_ID"  class="form-control" (ngModelChange)="onChange($event)">
+					 
+					<option *ngFor="let unv of Universities" [value]="unv.id" >  
+					{{unv.name}}
+					</option>
+				</select>					
 					
 				</div>
-
 
 				<label>Student ID <span class="red">*</span></label>
 				<div class="input-group">
 				 <span class="input-group-addon"><i class="fa fa-id-badge"></i></span>
 					
 					<input required type="text" [(ngModel)]="model.Student_ID" name="Student_ID" ngControl="StudentID"  class="form-control" placeholder="StudentID"
-					autofocus="true" id="#StudentID" #StudentID="ngModel">
+					autofocus="true" id="#StudentID" #StudentID="ngModel" (focusout)="StudentIDChange()">
 					<div [hidden]="StudentID.valid || StudentID.pristine"
 						 class="alert alert-danger">
 					  Student ID is required
 					</div>
+					<div class="alert alert-danger" *ngIf="StuErrorList.length != 0">
+				 <small><b>{{StuErrorList[0]}}</b></small>
+				</div>
 				</div>
 				 <label>Student Name <span class="red">*</span></label>
 				<div class="input-group">
@@ -114,6 +133,22 @@
 				</div>
 
 
+				
+
+				<label>Mobile Number <span class="red">*</span></label>	
+				<div class="input-group">
+				 <span class="input-group-addon"><i class="fa fa-mobile"></i></span>
+					
+					<input required type="text" [(ngModel)]="model.Mobile_No" name="Mobile_No" ngControl="MobileNo"  class="form-control" placeholder="Mobile No"
+					autofocus="true" id="#MobileNo" #MobileNo="ngModel" pattern="[0-9]*" minlength="10" maxlength="10">
+					<div [hidden]="MobileNo.valid || MobileNo.pristine"
+						 class="alert alert-danger">
+					  <div [hidden]="!MobileNo.hasError('minlength')">Mobile number should be 10 digit</div>
+				  <div [hidden]="!MobileNo.hasError('required')">Mobile number is required</div>
+				  <div [hidden]="!MobileNo.hasError('pattern')">Mobile number should be only numbers</div>
+
+					</div>
+				</div>
 				<label>Address <span class="red">*</span></label>
 				<div class="input-group">
 				 <span class="input-group-addon"><i class="fa fa-map-marker"></i></span>
@@ -124,67 +159,11 @@
 						 class="alert alert-danger">
 					  Address is required
 					</div>
-				</div>
+				</div>			
+				
 
 
-				<label>Mobile Number <span class="red">*</span></label>	
-				<div class="input-group">
-				 <span class="input-group-addon"><i class="fa fa-mobile"></i></span>
-					
-					<input required type="text" [(ngModel)]="model.Mobile_No" name="Mobile_No" ngControl="MobileNo"  class="form-control" placeholder="Mobile No"
-					autofocus="true" id="#MobileNo" #MobileNo="ngModel" pattern="[0-9]*" minlength="10" maxlength="10" 
-			>
-					<div [hidden]="MobileNo.valid || MobileNo.pristine"
-						 class="alert alert-danger">
-					  <div [hidden]="!MobileNo.hasError('minlength')">Mobile number should be 10 digit</div>
-				  <div [hidden]="!MobileNo.hasError('required')">Mobile number is required</div>
-				  <div [hidden]="!MobileNo.hasError('pattern')">Mobile number should be only numbers</div>
-
-					</div>
-				</div>
-
-
-				<label>Organization <span class="red">*</span></label>
-				<div class="input-group">
-				 <span class="input-group-addon"><i class="fa fa-users"></i></span>
-					
-					<select id="#Orgn_ID" [(ngModel)]="model.Orgn_ID"  #Orgn_ID="ngModel" name="Orgn_ID" ngControl="Orgn_ID"  class="form-control" >
-					 
-					<option *ngFor="let org of Organizations" [value]="org.id" >  
-					{{org.name}}
-					</option>
-				</select>
-					
-					<!-- <input type="text" [(ngModel)]="model.Orgn_ID" name="Orgn_ID" ngControl="Orgn_ID"  class="form-control" placeholder="Organization" -->
-					<!-- autofocus="true" id="#Orgn_ID" #Orgn_ID="ngModel"> -->
-					<!-- <div [hidden]="Orgn_ID.valid || Orgn_ID.pristine" -->
-						 <!-- class="alert alert-danger"> -->
-					  <!-- Organization is required -->
-					<!-- </div> -->
-				</div>
-
-
-				<label>Department <span class="red">*</span></label>
-				<div class="input-group">
-				 <span class="input-group-addon"><i class="fa fa-building"></i></span>
-					
-					<select id="#Dept_ID" [(ngModel)]="model.Dept_ID"  #Dept_ID="ngModel" name="Dept_ID" ngControl="Dept_ID"  class="form-control" >
-					 
-					<option *ngFor="let dpt of Departsments" [value]="dpt.id" >  
-					{{dpt.name}}
-					</option>
-				</select>
-					
-					<!-- <input type="text" [(ngModel)]="model.Dept_ID" name="Dept_ID" ngControl="Department"  class="form-control" placeholder="Department" -->
-					<!-- autofocus="true" id="#Department" #Department="ngModel"> -->
-					<!-- <div [hidden]="Department.valid || Department.pristine" -->
-						 <!-- class="alert alert-danger"> -->
-					  <!-- Department is required -->
-					<!-- </div> -->
-				</div>
-
-
-			<input type="submit" class="btn btn-lg btn btn-primary btn-block" value="Register Me!" [disabled]="!RegisterForm.form.valid">
+			<input type="submit" class="btn btn-lg btn btn-primary btn-block" value="Register Me!" [disabled]="!RegisterForm.form.valid || ErrorList.length >0 || UserNameErrorList.length >0 || StuErrorList.length > 0">
 
 			</form>
 		</div>

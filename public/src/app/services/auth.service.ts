@@ -11,12 +11,20 @@ export class AuthService {
 
   constructor(private http:Http) { }
 //connect to backend
-  registerStudent(student){
+  registerStudent(student, TransMapping){
   	let headers = new Headers();
   	headers.append('Content-Type','application/json');
-debugger
+	if(TransMapping.length > 0)
+    student.TransApprovalMapping = (TransMapping.sort(x=>x.Priority))[TransMapping.length-1];	  
     //students/register is temporary domain
   	return this.http.post('http://localhost:3777/students/register', student,{headers: headers})
+  	.map(res => res.json());
+  }
+  
+  getMaxTranApprovalID()
+  {
+	  debugger;
+	  return this.http.get('http://localhost:3777/UnivTranscationApprovalDetail/getMaxTransApprovalID')
   	.map(res => res.json());
   }
 
@@ -61,6 +69,32 @@ debugger
   getStudent()
   {
 	  return localStorage.getItem('currentUser');
+  }
+  
+  getStudentByEmail(student)
+  {
+	  debugger;
+	  let headers = new Headers();
+  	headers.append('emailid',student.Email_ID);
+	console.log(student.Email_ID);
+	return this.http.get('http://localhost:3777/students/getStudentByEmail',{headers: headers})
+                .map(res => res.json());
+  }
+  
+  getStudentByUserName(student)
+  {
+	  let headers = new Headers();
+  	headers.append('username',student.username);
+	return this.http.get('http://localhost:3777/students/getStudentByUserName',{headers: headers})
+                .map(res => res.json());
+  }
+  
+  getStudentByStudentID(student)
+  {
+	  let headers = new Headers();
+  	headers.append('studentid',student.Student_ID);
+	return this.http.get('http://localhost:3777/students/getStudentByStudentID',{headers: headers})
+                .map(res => res.json());
   }
 
 
