@@ -1,0 +1,60 @@
+.border
+{
+background-color: #fff;
+    margin: 10px auto;
+    border: 1px solid #e5e5e5;
+    padding: 10px;
+    border-radius: 3px;
+    position: relative;
+    width: 90%;
+}
+.modal-dialog {
+    position: relative;
+    width: 60% !important;
+   
+}
+.row {
+    width: 940px;
+    max-width: 100%;
+    min-width: 768px;
+    margin: 0 auto;
+}
+.twelve, .row .twelve {
+    width: 100%;
+}
+.column.centered, .columns.centered {
+    float: none;
+    margin: 0 auto;
+}
+.column, .columns {
+    float: left;
+    min-height: 1px;
+    padding: 0 10px;
+    position: relative;
+}
+.ten, .row .ten {
+    width: 83.33333%;
+}
+.two, .row .two {
+    width: 16.66667%;
+}
+.pane .body, .tile .body {
+    padding: 17px;
+    background-color: #fff;
+    line-height: 27px;
+}
+input[type="text"], input[type="password"], input[type="date"], 
+input[type="textarea"] input[type="datetime"], input[type="email"], input[type="number"], input[type="search"], input[type="tel"], input[type="time"], input[type="url"] {
+    height: 38px;
+    padding: 12px;
+	margin:0 0 12px 0;
+}
+.student_bio{
+	width:404px;
+	margin-bottom:10px;
+}
+.student_update
+{
+	width: 90px !important;
+    float: right;
+}

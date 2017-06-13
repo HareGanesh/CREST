@@ -30,16 +30,20 @@ model:Object;
   onLoginSubmit(){
 	// //  this.submitted = true;
    
+  this.crestLogin(this.model);
 
-    this.authService.authenticateStudent(this.model).subscribe(data => {
-      if(data.success){
-        this.authService.storeStudentData(data.token, data.student);
-        // this.flashMessage.show('You are now logged in', {
-          // cssClass: 'alert-success',
-          // timeout: 5000});
-		 // this.parentRouter = Router;
-		
-        this.router.navigate(['']);
+
+  }
+  
+
+
+  crestLogin(model)
+   
+  {
+	      this.authService.authenticateAppRoleMaster(model).subscribe(data => {
+		debugger;
+      if(data.success){       
+        this.router.navigate(['/university']);
 	      // this.router.navigate(['/dashboard']);
       } else {
 		   // this.submitted = false;
@@ -50,5 +54,4 @@ model:Object;
       }
     });
   }
-
 }

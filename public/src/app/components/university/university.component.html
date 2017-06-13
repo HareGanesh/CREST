@@ -1,0 +1,192 @@
+<ng-container>
+<app-navbar></app-navbar> 
+<div style="margin-left:230px">
+      <nav class="navbar ">
+  <div class="container-fluid">
+    
+	<div class="nav navbar-nav navbar-right">
+	  <a data-toggle="modal" class="btn btn-primary pull-right navbar-btn" (click)="clearModel();" data-target="#vv">Add University</a>
+    </div>
+  </div>
+</nav>
+
+ <div class="row">
+              <div class="col-md-12">
+                <div>
+            
+                  <div class="x_content">
+				   <div class="row">
+                      <div class="col-md-12 mail_list_column">
+                      
+                     <div class="header">  
+                    <ul >
+					<li><a>University Name</a></li>
+					<li><a>Address</a></li>
+					<li><a>EmailID</a></li>
+					<li><a>Contact No</a></li>					
+					<li><a>Active</a></li>
+					<li></li>
+					</ul>
+					</div>
+					<div class="item"> 
+					 <ul class="col-md-12 mail_list_column mail_list" *ngFor="let item of universityList; ">
+                      <li> {{item.UniversityName}}</li>
+					  <li> {{item.Address}}</li>
+                      <li>{{item.EmailID}} </li>
+                      <li> {{item.ContactNo}}</li>
+                      <li> <input type="checkbox" checked="checked"> </li>
+					  <li>
+					  <a class="btn btn-primary pull-right" style="width:66px;" (click)="deleteUniverity(item._id)"  data-toggle="modal" data-target="#deleteDiv">Delete</a>
+					  <a class="btn btn-primary pull-right" style="width:66px;" (click)="showPopup(item._id)" data-toggle="modal" data-target="#vv">Edit</a> 
+					  
+					  </li>
+</ul>
+                      </div> </div>
+					  
+                      <!-- /MAIL LIST -->
+
+                      <!-- CONTENT MAIL -->
+                     
+                      <!-- /CONTENT MAIL -->
+                    </div>
+                    
+                  </div>
+                </div>
+              </div>
+            </div>
+</div>
+
+<div id="deleteDiv" class="modal fade" role="dialog" >
+<div class="modal-dialog" style="width:30% !important" >
+
+<div class="modal-content" >
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title" style="color:#73879C;background: #F7F7F7;font-family:inherit;font-size: 30px;font-weight: 400;line-height: 1.471">Delete University </h4>
+      </div>
+	  <div class="body border">
+	   <div class="row">
+	   <input type="hidden"  name="deleteID"  [(ngModel)]="univeritymodel.deleteID">
+	   <h2> Do you really  want to delete university ? </h2>
+	   </div>
+	  <div class="row" >
+<input type="button" class="btn btn-lg btn btn-primary btn-block student_update" id="close2" data-dismiss="modal" value="Cancel" style="margin-top:4px;">
+<input type="button" (click)="deleteItem()" class="btn btn-lg btn btn-primary btn-block student_update" value="Delete" >
+
+</div>
+	  </div>
+</div>
+</div>
+</div>
+	<div id="vv" class="modal fade" role="dialog">
+	
+<!-- <app-add-university></app-add-university> -->
+
+
+	
+	
+     	<form  #AddUniversityForm="ngForm" novalidate>
+  <div class="modal-dialog" >
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title" style="color:#73879C;background: #F7F7F7;font-family:inherit;font-size: 30px;font-weight: 400;line-height: 1.471">{{Action}} University </h4>
+      </div>
+	  <div class="body border">
+<div class="row">
+<div class="two columns">
+<label>University Name</label>	
+<span  class="red">*</span>
+</div>
+<div class="ten columns">
+<div class="input string required user_full_name">
+
+    <input required class="string required"  name="UniversityName" [(ngModel)]="univeritymodel.UniversityName"  size="50" type="text" id="#UniversityName" #UniversityName="ngModel">
+</div>
+<div  [hidden]="errorMsg.length<=0" class="alert alert-danger " style="width:48%">{{errorMsg}}</div>
+<div [hidden]="UniversityName.valid || UniversityName.pristine"
+             class="alert alert-danger " style="width:48%">
+          University Name is required
+        </div>	
+</div>
+</div>
+<div class="row">
+<div class="two columns">
+<label>University Address</label>
+<span  class="red">*</span>
+</div>
+<div class="ten columns">
+<div class="input string optional user_headline">
+   <input class="string optional" required  [(ngModel)]="univeritymodel.Address"  name="Address"   size="50" type="text" id="#Address" #Address="ngModel"></div>
+
+<div [hidden]="Address.valid || Address.pristine"
+             class="alert alert-danger " style="width:48%">
+          University Address is required
+        </div>	
+</div>
+</div>
+<div class="row">
+<div class="two columns">
+<label>University Email</label>
+<span  class="red">*</span>
+</div>
+<div class="ten columns">
+<div class="input string optional user_headline">
+   <input class="string optional" required id="#EmailID"  [(ngModel)]="univeritymodel.EmailID"  name="EmailID" #EmailID="ngModel"  size="50" type="text"
+   pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$"></div>
+   <div [hidden]="EmailID.valid || EmailID.pristine"
+             class="alert alert-danger " style="width:48%">
+          
+		      <div [hidden]="!EmailID.hasError('required')">University EmailID is required</div>
+   <div [hidden]="!EmailID.hasError('pattern')">Email format should be 
+      <small><b>joe@abc.com</b></small>
+   </div>
+        </div>	
+   
+</div>
+</div>
+<div class="row">
+<div class="two columns">
+<label>University Contact</label>
+<span  class="red">*</span>
+</div>
+<div class="ten columns">
+<div class="input string optional user_headline">
+    <input class="string optional" required id="#ContactNo" [(ngModel)]="univeritymodel.ContactNo"   name="ContactNo" #ContactNo="ngModel"  size="50" type="text"></div>
+	
+	<div [hidden]="ContactNo.valid || ContactNo.pristine"
+             class="alert alert-danger " style="width:48%">
+          University ContactNo is required
+        </div>	
+</div>
+</div>
+
+<!-- <div class="row"> -->
+<!-- <div class="two columns"> -->
+<!-- <label> RoleID</label> -->
+<!-- </div> -->
+<!-- <div class="ten columns"> -->
+<!-- <div class="input string optional student_bio"> -->
+     <!-- <input class="string optional" id="Student_Heading" [(ngmodel)]="univeritymodel.UniversityName"   name="Student_Heading"   size="50" type="text"></div> -->
+<!-- </div> -->
+<!-- </div> -->
+
+<div class="row">
+<input type="button" class="btn btn-lg btn btn-primary btn-block student_update" id="close" data-dismiss="modal" value="Close" style="margin-top:4px;">
+<input type="button" (click)="updateProfile()" class="btn btn-lg btn btn-primary btn-block student_update" value="Save" [disabled]="!AddUniversityForm.form.valid">
+
+</div>
+
+        </div>
+     
+    </div>
+
+  </div>
+</form>
+ 
+
+
+  </div> 
+</ng-container>

@@ -2,64 +2,96 @@ const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
 const config = require('../config/database');
 
+//Schema
+const UniversityMasterSchema = mongoose.Schema({
 
 
-const UniversityMstrSchema = mongoose.Schema({
-
-  Univ_ID:{
-  type: Number
-  },
-
-  Univ_Name:{
-    type: String
-  },
-
-	Active:{
-		type: Boolean
+    id:{
+		type: String
 	},
-	
-   CreatedOn:{
-    type: Date
-  },
 
-   Createdby:{
+	UniversityName:{
+		type: String
+	},
+
+	EmailID:{
+		type: String,
+		required: true
+	},
+
+	UserName:{
+		type: String
+		
+	},
+
+	 Pwd:{
+		type: String
+		
+
+	},
+
+   Address:{
     type: String
   },
 
-   ModifiedOn:{
+  ContactNo:{
+    type: String
+  },
+
+   Active:{
+    type: Boolean
+  },
+
+   Created_On:{
     type: Date
   },
 
-   Modifiedby:{
+   Created_by:{
+    type: String
+  },
+
+   Modified_On:{
+    type: Date
+  },
+
+   Modified_by:{
     type: String
   }
 
-
 });
 
-const UniversityMaster = module.exports = mongoose.model('UniversityMaster', UniversityMstrSchema,'UniversityMaster');
+const UniversityMaster = module.exports = mongoose.model('UniversityMaster', UniversityMasterSchema,'UniversityMaster');
 
-module.exports.getUniversityMstrById = function(id, callback){
-	UniversityMaster.findById(id, callback);
+module.exports.getUniversity = function(callback){	
+const query = {Active: 1};
+	UniversityMaster.find(query,callback);
 }
 
-module.exports.getUniversityMstrByName = function(CategoryName,callback){
-	const query = {CategoryName: CategoryName}
-	UniversityMaster.findOne(query,callback);}
-
-module.exports.AddUniversityMstr = function(newUniversityMstr, callback){ 
-	console.log(newUniversityMstr);
-      newUniversityMstr.save(callback);
+ module.exports.getUniversityById = function(id,callback){
+	const query = {_id: id};
+	UniversityMaster.findOne(query, callback);	
 }
+
+ module.exports.getUniversityByName = function(name,callback){
+	const query = {UniversityName: name};
+	UniversityMaster.findOne(query, callback);	
+}
+module.exports.addUnivesity = function(univesity, callback){
+ //console.log(univesity);
+  univesity.save(callback);
+ // if(err) throw err;
+}
+module.exports.deleteUniversity = function(id, callback){ 
+var query = { _id: id };
+console.log("db" + id);
+UniversityMaster.update(query, {Active:0}, callback);
+} 
 
 module.exports.getAllUniversity = function(callback){	
 	UniversityMaster.find("",callback);}
 
-module.exports.DeleteUniversityById = function(OrgnID, callback){ 
-var query = { OrgnID: OrgnID };
-UniversityMaster.update(query, {Active: false}, callback);}
-
-
-
-
+module.exports.updateUniversity = function(university, callback){ 
+var query = { _id: university.id };
+UniversityMaster.update(query, {UniversityName: university.UniversityName,EmailID:university.EmailID,Address:university.Address,ContactNo:university.ContactNo}, callback);
+} 
 

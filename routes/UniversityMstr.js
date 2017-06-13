@@ -3,45 +3,149 @@ const router = express.Router();
 const passport = require('passport');
 const jwt = require('jsonwebtoken');
 const config = require('../config/database');
-const University = require('../models/UniversityMstr');
+const univesityMaster = require('../models/UniversityMstr');
+//const nodemailer =require('nodemailer');
+//const smtpTransport  =require('nodemailer-smtp-transport');
+//const SendMail = require('../models/SendMail');
+router.get('/getAllUniversity', (req, res) => {  
+  univesityMaster.getUniversity((err,university)=>{
+    if(err) {             
+                                throw err;
+                }
+     else
+                  {                            
+                                  res.json(university);
+                  }
+  });  
+});
 
-router.post('/AddUniversity', (req, res, next) => {
+var sendMail= function(msgBody)
+{
+	console.log("Mail body" + msgBody);
+		// create reusable transporter object using the default SMTP transport
+var transporter = nodemailer.createTransport({
+   service: "Gmail",  // sets automatically host, port and connection security settings
+   auth: {
+       user: "anay9213@gmail.com",
+       pass: ""// to passowrd access
+   }
+});
+// setup email data with unicode symbols
+let mailOptions = {
+    from: 'anay9213@gmail.com', // sender address
+    to: 'anaykumar.rai@ust-global.com', // list of receivers
+    subject: 'CREST TEST MAIL ', // Subject line
+    text: 'Hello world ?', // plain text body
+    html: '<b>Hello world ?</b>' // html body
+};
+
+// send mail with defined transport object
+transporter.sendMail(mailOptions, (error, info) => {
+    if (error) {
+        return console.log(error);
+    }
+    console.log('Message  sent: %s', info.messageId, info.response);
+});
+};
+/// Register
+router.post('/register', (req, res, next) => {
 	
-	 console.log(req.body);
+//sendMail(req);
 	
-  let newUniversity = new University({
-  	Univ_ID: req.body.UnivID,
-  	Univ_Name: req.body.UnivName,
-  	Active: req.body.Active,  
-	Created_On: req.body.Created_On,
-	Created_by: req.body.Created_by,
-	Modified_On: req.body.Modified_On,
-    Modified_by: req.body.Modified_by
+	
+  let university = new univesityMaster({
+
+  	UniversityName: req.body.UniversityName,
+  	EmailID: req.body.EmailID,
+  	Address: req.body.Address,
+  	Pwd: req.body.Pwd,
+    ContactNo: req.body.ContactNo,
+    UserName:req.body.EmailID,
+	Pwd:req.body.Pwd,	
+    Active:1
+
+
   	});
-  University.AddUniversityMstr(newUniversity, (err, University)=> {
-	  console.log(newUniversity);
+  univesityMaster.getUniversityByName(req.body.UniversityName, (err,Getuni)=>{
+	  console.log(Getuni);
+	 if(Getuni ==undefined)
+	 {
+		   univesityMaster.addUnivesity(university, (err, univ)=> {
+	  
   		if(err){
-      res.json({success: false, msg:'Failed to University Creation.'});
+			
+      res.json({success: false, msg:'Failed to register '});
+	  console.log(err);	
     } else {
-      res.json({success: true, msg:'University Created.'});
+      res.json({success: true, msg:'University registered'});
+    }
+  });
+	 }
+	 else
+	 {
+		  res.json({success: false, msg:'University already exists!'});
+	 }
+  });
+
+});
+
+router.get('/GetUniversityByID', (req, res) => {
+	console.log(req.headers);
+  var id = req.headers["id"];  
+ 
+  univesityMaster.getUniversityById(id, (err,uni)=>{
+    if(err) {
+                                throw err;                            
+                }
+     else
+                  {                     
+			  
+                                  res.json(uni);
+                  }
+  });  
+});
+
+router.post('/updateUniversity', (req, res, next) => {
+	
+		console.log("routes" + req.body);
+  let university = new univesityMaster({
+
+  	UniversityName: req.body.UniversityName,
+  	EmailID: req.body.EmailID,
+  	Address: req.body.Address,
+  	Pwd: req.body.Pwd,
+    ContactNo: req.body.ContactNo,
+    UserName:req.body.EmailID,
+	Pwd:req.body.Pwd,
+    id:req.body._id
+
+
+  	});
+  univesityMaster.updateUniversity(university, (err, univ)=> {
+                  
+                                if(err){
+                                                
+      res.json({success: false, msg:'Failed to update '});
+                  console.log(err);            
+    } else {
+      res.json({success: true, msg:'University updated'});
     }
   });
 });
 
-router.get('/GetUniversityByID', (req, res) => {
-  var UniversityID = req.headers["UniversityID"];  
-  University.getUniversityIDMstrById(UniversityID, (err,University)=>{
-    if(err) {
-		throw err;		
-	}
-     else
-	  {		 
-		  res.json(University);
-	  }
-  });  
+router.post('/deleteUniversity', (req, res, next) => {
+	
+  univesityMaster.deleteUniversity(req.body._id, (err, univ)=> {
+                  
+                                if(err){
+                                                
+      res.json({success: false, msg:'Failed to update '});
+                  console.log(err);            
+    } else {
+      res.json({success: true, msg:'University updated'});
+    }
+  });
 });
-
-
 
 router.get('/getAllUniversity', (req, res) => {
 
@@ -52,20 +156,6 @@ console.log("Test");
 	}
      else
 	  {		console.log(University); 
-		  res.json(University);
-	  }
-  });  
-});
-
-router.post('/RemoveUniversityByID', (req, res) => {
-  var UniversityID = req.headers["UniversityID"]; 
-console.log(CategoryID);  
-  University.DeleteUniversityById(UniversityID, (err,University)=>{
-    if(err) {
-		throw err;		
-	}
-     else
-	  {	console.log(University);	 
 		  res.json(University);
 	  }
   });  

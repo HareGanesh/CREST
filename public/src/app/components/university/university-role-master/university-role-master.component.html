@@ -1,0 +1,86 @@
+<ng-container>
+<app-navbar></app-navbar> 
+
+<div class="container">  
+
+  <div class="row">
+    <div class="col-am-6 col-md-4 col-md-offset-4" style="width:100%">
+      <h1 class="text-left">University Role Master</h1>
+      <br>
+      <div class="account-wall" style="width:50%">
+	  
+	  
+	  
+	  
+<div [hidden]="submitted">
+
+
+
+<form #EventForm="ngForm" enctype="multipart/form-data">
+
+<div id="tabs">
+<div class="row">
+
+
+<div class="tab-content x_panel">
+
+
+ 
+	
+	<label>University <span class="red">*</span></label>
+	<div class="input-group" style="width:93%">
+     <span class="input-group-addon"><i class="fa fa-key"></i></span>
+	
+		<select id="#Univ_ID"    [(ngModel)]="model.Univ_ID"  #Univ_ID="ngModel" (ngModel)="Univ_ID"   name="Univ_ID" ngControl="CategoriesMstr"  class="form-control" >
+         
+		<option *ngFor="let univ of Universities" [value]="univ._id" >  
+        {{univ.UniversityName}}
+        </option>
+    </select>
+		<div [hidden]="Univ_ID.valid || Univ_ID.pristine"
+             class="alert alert-danger">
+          University is required 
+		  </div>
+	
+	</div>
+	
+
+
+<div class="AddMoreDiv">
+
+<label>Role Name <span class="red">*</span></label>
+	<div class="input-group" style="width:95%;">
+    
+		<div style="width:98%;float:left; margin-bottom:10px;" *ngFor="let role of model.Univ_RoleName;let i = index">		
+		<input required type="text" [(ngModel)]="role.Univ_RoleName" name="Univ_RoleName{{i}}" ngControl="Univ_RoleName"  class="form-control"
+		autofocus="true" id="#Univ_RoleName" #Univ_RoleName="ngModel"> 
+		</div>
+		<div style="width:2%;float:right;">
+		<a id="addMore" class=""(click)=AddMoreRoles()><img src="..\..\src\img\AddMore.png" height="30px" width="30px" ></a>
+		</div>
+	
+	</div>
+
+
+</div>
+
+
+
+<div>
+	<a id="btnFinal" class="big-red-button btn btn-primary floatRight" (click)=onSubmit()>Save</a>
+	</div>
+
+</div>
+
+</div>
+
+</div>
+
+</form>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+</ng-container>

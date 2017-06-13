@@ -178,7 +178,7 @@ export class RegisterstudentComponent implements OnInit {
 						for(let i=0; i< data.length; i++)
 						{							
 							this.TransApprovalMapping.push({TransMapID : data[i].Tran_Map_ID, NextApproverRoleID:data[i].Role_ID,
-							Priority:data[i].Priority,MaskID:Math.pow(2, data[i].Priority), Status:false, 
+							Priority:data[i].Priority,MaskID:Math.pow(2, data[i].Priority), Status:0, 
 							UniversityID:parseInt(univID), TransApprovalID:TransApprovalID, TransDt:transDt, StudentID:this.Student_ID});
 						}
 					}

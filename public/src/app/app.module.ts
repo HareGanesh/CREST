@@ -31,6 +31,9 @@ import { OrganizationComponent } from './components/organization/organization.co
 
 
 import { EqualValidator } from './services/password.match.directive';
+import { AddUniversityComponent } from './components/university/add-university/add-university.component';
+import { UniversityRoleMasterComponent } from './components/university//university-role-master/university-role-master.component';
+import { UniversityComponent } from './components/university/university.component'; 
 
 
 
@@ -48,6 +51,9 @@ const appRoutes: Routes = [
   {path:'eventinfo/:id', component: RegistereventComponent},
   {path: 'eventDetails/:id', component: EventsComponent },
 {path:'UniversityTransMapping', component: UniversityTransMappingComponent},
+{path: 'university', component: UniversityComponent },	
+  
+  {path: 'universityrole', component: UniversityRoleMasterComponent } 
 
   // {path:'eventinfo/:id', component: RegistereventComponent},
   // {path: 'eventDetails/:id', component: EventsComponent }	
@@ -72,7 +78,10 @@ const appRoutes: Routes = [
 	RegistereventComponent,
 	EqualValidator,
 	EventsComponent,
-	UniversityTransMappingComponent
+	UniversityTransMappingComponent,
+	UniversityComponent,
+	AddUniversityComponent,
+	UniversityRoleMasterComponent 
 
   ],
   imports: [

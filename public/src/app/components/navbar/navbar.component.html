@@ -1,4 +1,4 @@
-<div class="container body" *ngIf="authService.login()">
+<div class="container body">
       <div class="main_container">
         <div class="col-md-3 left_col">
           <div class="left_col scroll-view">
@@ -35,7 +35,7 @@
                   </li>
 				  <li><a [routerLink]="['/UniversityTransMapping']"><i class="fa fa-home"></i> UniversityTransMapping <span class="fa fa-chevron-down"></span></a>                 
                   </li>
-                  <li><a><i class="fa fa-edit"></i> Master <span class="fa fa-chevron-down"></span></a>
+                    <li><a [routerLink]="['/universityrole']"><i class="fa fa-edit"></i> Master <span class="fa fa-chevron-down"></span></a> 
                  
                   </li>
                   <li><a><i class="fa fa-desktop"></i> Profile <span class="fa fa-chevron-down"></span></a>

@@ -293,7 +293,60 @@ let headers = new Headers();
   	headers.append('id',id);
 	return this.http.get('http://localhost:3777/EventOrganization/getEventOrganizerByOrgNo',{headers: headers})
                 .map(res => res.json());
-   }   
+   }
+
+authenticateUser(user){
+    let headers = new Headers();
+    headers.append('Content-Type','application/json');
+    return this.http.post('http://localhost:3777/User/authenticate', user,{headers: headers})
+    .map(res => res.json());
+  }
+  
+    getUniversity(){
+                return this.http.get('http://localhost:3777/UniversityMstr/getAllUniversity')
+                .map(res => res.json());
+} 
+  //connect to backend
+  addUniversity(university){
+                let headers = new Headers();
+                headers.append('Content-Type','application/json');
+
+    //students/register is temporary domain
+                return this.http.post('http://localhost:3777/UniversityMstr/register', university,{headers: headers})
+                .map(res => res.json());
+  }
+   updateUniversity(university){
+                let headers = new Headers();
+                headers.append('Content-Type','application/json');
+
+    //students/register is temporary domain
+                return this.http.post('http://localhost:3777/UniversityMstr/updateUniversity', university,{headers: headers})
+                .map(res => res.json());
+  }
+  
+  getUniversityById(id){
+                debugger;
+                let headers = new Headers();
+                headers.append('id',id);
+                return this.http.get('http://localhost:3777/UniversityMstr/GetUniversityByID',{headers: headers})
+                .map(res => res.json());
+} 
+   deleteUniversity(university){
+                let headers = new Headers();
+                //headers.append('id',id);
+    //students/register is temporary domain
+                return this.http.post('http://localhost:3777/UniversityMstr/deleteUniversity',university,{headers: headers})
+                .map(res => res.json());
+   }
+   
+    authenticateAppRoleMaster(user){
+	 debugger;
+    let headers = new Headers();
+    headers.append('Content-Type','application/json');
+    return this.http.post('http://localhost:3777/AppRoleMaster/authenticate', user,{headers: headers})
+    .map(res => res.json());
+  } 
+
   
 
 }
