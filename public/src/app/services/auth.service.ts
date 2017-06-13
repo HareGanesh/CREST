@@ -11,7 +11,7 @@ export class AuthService {
 
   constructor(private http:Http) { }
 //connect to backend
-  registerStudent(student, TransMapping){
+  registerStudent(student, TransMapping){	 
   	let headers = new Headers();
   	headers.append('Content-Type','application/json');
 	if(TransMapping.length > 0)

@@ -29,10 +29,10 @@ router.post('/register', (req, res, next) => {
   		if(err){
 			
       res.json({success: false, msg:'Failed to register '});
-	  console.log(err);	
+	 	
     } else {
 			
-		if(TransApprovalMappingInfo != null)
+		if(TransApprovalMappingInfo !='')
                                 {
                                   var  univTranscationApprovalDetail= new UnivTranscationApprovalDetail();
                                   univTranscationApprovalDetail.Tran_Approval_ID= TransApprovalMappingInfo.TransApprovalID;
