@@ -9,8 +9,10 @@ const UniversityMasterSchema = mongoose.Schema({
     id:{
 		type: String
 	},
-
-	UniversityName:{
+Univ_ID:{
+  type: Number
+  }, 
+	Univ_Name:{
 		type: String
 	},
 
@@ -62,11 +64,15 @@ const UniversityMasterSchema = mongoose.Schema({
 
 const UniversityMaster = module.exports = mongoose.model('UniversityMaster', UniversityMasterSchema,'UniversityMaster');
 
-module.exports.getUniversity = function(callback){	
+module.exports.getAllUniversity = function(callback){	
 const query = {Active: 1};
 	UniversityMaster.find(query,callback);
 }
 
+module.exports.universityId = function(callback){	
+
+	UniversityMaster.find("",callback).count();
+}
  module.exports.getUniversityById = function(id,callback){
 	const query = {_id: id};
 	UniversityMaster.findOne(query, callback);	
@@ -77,7 +83,7 @@ const query = {Active: 1};
 	UniversityMaster.findOne(query, callback);	
 }
 module.exports.addUnivesity = function(univesity, callback){
- //console.log(univesity);
+
   univesity.save(callback);
  // if(err) throw err;
 }
@@ -86,9 +92,6 @@ var query = { _id: id };
 console.log("db" + id);
 UniversityMaster.update(query, {Active:0}, callback);
 } 
-
-module.exports.getAllUniversity = function(callback){	
-	UniversityMaster.find("",callback);}
 
 module.exports.updateUniversity = function(university, callback){ 
 var query = { _id: university.id };

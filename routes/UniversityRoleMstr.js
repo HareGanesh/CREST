@@ -8,25 +8,32 @@ const UniversityRole = require('../models/UniversityRoleMstr');
 router.post('/AddUniversityRole', (req, res, next) => {
 	
 	 console.log(req.body);
-	
+	for(var i=0;i<req.body.Univ_RoleName.length;i++)
+	{
+		let maxRoleID=0;
   let newUniversityRole = new UniversityRole({
-  	Univ_ID: req.body.UnivID,
-  	Univ_Name: req.body.UnivName,
+  	Univ_ID: req.body.Univ_ID,
+  	Univ_RoleName: req.body.Univ_RoleName[i].Univ_RoleName,
 	Univ_RoleID:req.body.UnivRoleID,
-  	Active: req.body.Active,  
+  	Active: 1,  
 	Created_On: req.body.Created_On,
 	Created_by: req.body.Created_by,
 	Modified_On: req.body.Modified_On,
     Modified_by: req.body.Modified_by
   	});
-  UniversityRole.AddUniversityRoleMstr(newUniversityRole, (err, UniversityRole)=> {
+	
+	  UniversityRole.getAllUniversityRole((err, roleCount)=> {
+		  newUniversityRole.Univ_RoleID=roleCount.length+1;
+		  
+	   UniversityRole.AddUniversityRoleMstr(newUniversityRole, (err, UniversityRole)=> {
 	  console.log(newUniversityRole);
-  		if(err){
-      res.json({success: false, msg:'Failed to UniversityRole Creation.'});
-    } else {
-      res.json({success: true, msg:'UniversityRole Created.'});
-    }
+  	
   });
+  	
+  });
+
+  }
+  res.json({success: true, msg:'UniversityRole Created.'});
 });
 
 router.get('/GetUniversityRoleByID', (req, res) => {

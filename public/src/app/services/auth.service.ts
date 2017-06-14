@@ -47,6 +47,15 @@ export class AuthService {
     .map(res => res.json());
 
   }
+  
+  addUniversityRole(universityRole){
+  	let headers = new Headers();
+  	headers.append('Content-Type','application/json');
+
+    //students/register is temporary domain
+  	return this.http.post('http://localhost:3777/UniversityRoleMstr/AddUniversityRole', universityRole,{headers: headers})
+  	.map(res => res.json());
+  } 
 
   storeStudentData(token, student){
 	  //let student_id String;

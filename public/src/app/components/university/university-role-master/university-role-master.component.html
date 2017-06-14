@@ -33,8 +33,8 @@
 	
 		<select id="#Univ_ID"    [(ngModel)]="model.Univ_ID"  #Univ_ID="ngModel" (ngModel)="Univ_ID"   name="Univ_ID" ngControl="CategoriesMstr"  class="form-control" >
          
-		<option *ngFor="let univ of Universities" [value]="univ._id" >  
-        {{univ.UniversityName}}
+		<option *ngFor="let univ of Universities" [value]="univ.Univ_ID" >  
+        {{univ.Univ_Name}}
         </option>
     </select>
 		<div [hidden]="Univ_ID.valid || Univ_ID.pristine"

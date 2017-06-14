@@ -32,7 +32,7 @@ model={
     )
 	{}
 	public Universities = [
-	  {Univ_ID: 0,  UniversityName:"Please select"}
+	  {Univ_ID: 0,  Univ_Name:"Please select"}
          
      ];
 	 
@@ -41,7 +41,7 @@ model={
 	  // Get all organization
 	  this.authService.getAllUniversity().subscribe(data => {
 		   for(let i=0; i< data.length; i++)
-       this.Universities.push({Univ_ID:data[i]._id,UniversityName:data[i].UniversityName});
+       this.Universities.push({Univ_ID:data[i].Univ_ID,Univ_Name:data[i].Univ_Name});
     },
     //observable also returns error
     err => {
@@ -54,7 +54,15 @@ model={
   onSubmit()
   {
 	  debugger;
-	 var item=this.model;
+	   this.authService.addUniversityRole(this.model).subscribe(data => {
+		  
+		    },
+    //observable also returns error
+    err => {
+      console.log(err);
+      return false;
+    });
+	 
   }
   
   AddMoreRoles()

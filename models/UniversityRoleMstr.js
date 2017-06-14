@@ -17,7 +17,7 @@ const UniversityRoleMstrSchema = mongoose.Schema({
     type: String
   },
 
-	Active:{
+	Status:{
 		type: Boolean
 	},
 	

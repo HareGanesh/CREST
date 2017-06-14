@@ -4,11 +4,11 @@ const passport = require('passport');
 const jwt = require('jsonwebtoken');
 const config = require('../config/database');
 const univesityMaster = require('../models/UniversityMstr');
-//const nodemailer =require('nodemailer');
-//const smtpTransport  =require('nodemailer-smtp-transport');
-//const SendMail = require('../models/SendMail');
+// const nodemailer =require('nodemailer');
+// const smtpTransport  =require('nodemailer-smtp-transport');
+// const SendMail = require('../models/SendMail');
 router.get('/getAllUniversity', (req, res) => {  
-  univesityMaster.getUniversity((err,university)=>{
+  univesityMaster.getAllUniversity((err,university)=>{
     if(err) {             
                                 throw err;
                 }
@@ -55,21 +55,26 @@ router.post('/register', (req, res, next) => {
 	
   let university = new univesityMaster({
 
-  	UniversityName: req.body.UniversityName,
+  	Univ_Name: req.body.UniversityName,
   	EmailID: req.body.EmailID,
   	Address: req.body.Address,
   	Pwd: req.body.Pwd,
     ContactNo: req.body.ContactNo,
     UserName:req.body.EmailID,
 	Pwd:req.body.Pwd,	
-    Active:1
-
+    Active:1,
+    Univ_ID:0
 
   	});
   univesityMaster.getUniversityByName(req.body.UniversityName, (err,Getuni)=>{
 	  console.log(Getuni);
 	 if(Getuni ==undefined)
 	 {
+		 univesityMaster.universityId((err,res2)=>{
+			university.Univ_ID=res2.length+1;
+			//console.log("coun" + cnt);
+
+		
 		   univesityMaster.addUnivesity(university, (err, univ)=> {
 	  
   		if(err){
@@ -80,6 +85,7 @@ router.post('/register', (req, res, next) => {
       res.json({success: true, msg:'University registered'});
     }
   });
+  		});
 	 }
 	 else
 	 {
@@ -110,7 +116,7 @@ router.post('/updateUniversity', (req, res, next) => {
 		console.log("routes" + req.body);
   let university = new univesityMaster({
 
-  	UniversityName: req.body.UniversityName,
+  	Univ_Name: req.body.UniversityName,
   	EmailID: req.body.EmailID,
   	Address: req.body.Address,
   	Pwd: req.body.Pwd,
@@ -145,20 +151,6 @@ router.post('/deleteUniversity', (req, res, next) => {
       res.json({success: true, msg:'University updated'});
     }
   });
-});
-
-router.get('/getAllUniversity', (req, res) => {
-
-console.log("Test");	
-  University.getAllUniversity((err,University)=>{
-    if(err) {	
-		throw err;
-	}
-     else
-	  {		console.log(University); 
-		  res.json(University);
-	  }
-  });  
 });
 
 
