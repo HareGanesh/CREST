@@ -7,7 +7,7 @@ const config = require('../config/database');
 const UnivTranscationApprovalDetailMstrSchema = mongoose.Schema({
 
   Tran_Approval_ID:{
-  type: Number
+  type: String
   },
   
   Univ_ID:{
@@ -82,22 +82,31 @@ module.exports.AddUnivTranscationApprovalDetail = function(newUnivTranscationApp
 module.exports.getAllUnivTranscationApprovalDetail = function(callback){	
 	UnivTranscationApprovalDetailMaster.find("",callback);}
 	
+	module.exports.getAllUnivTranscationApprovalDetailByUnivID = function(univID, maskID, callback)
+	{	 
+	var query = { Univ_ID: univID, Mask_ID: {$lte:maskID}};
+	console.log(query);
+	UnivTranscationApprovalDetailMaster.find(query,callback);
+	}
+	
 module.exports.getMaxTransApprovalID = function(callback){
 	 
 	 UnivTranscationApprovalDetailMaster.find("",callback).sort({Tran_Approval_ID : -1}).limit(1);
 		}
 	
 	
-// module.exports.UpdateUnivTranscationTypeDetailByTranMapID = function(TransTypeDet, callback)
-// { 
-// var query = { Tran_Map_ID: TransTypeDet.Tran_Map_ID };
-// UnivTranscationTypeDetailMaster.update(query, {No_of_Levels:TransTypeDet.No_of_Levels}, callback);
-// }
+module.exports.UpdateUnivTranscationApprovalDetailByTranApprovalID = function(TransApprovalDt, callback)
+{ 
+var query = { Tran_Approval_ID: TransApprovalDt.Tran_Approval_ID };
+UnivTranscationApprovalDetailMaster.update(query, {Status:TransTypeDet.Status}, callback);
+}
 
-// module.exports.DeleteUnivTranscationTypeDetailById = function(univID, callback){ 
-// var query = { Univ_ID: univID };
-// UnivTranscationTypeDetailMaster.update(query, {Active: false}, callback);}
+module.exports.DeleteUnivTranscationApprovalDetailByApprovalId = function(Tran_Approval_ID, callback){ 
 
+var query = { Tran_Approval_ID: Tran_Approval_ID };
+console.log(query);
+UnivTranscationApprovalDetailMaster.remove(query, callback);
+}
 
 
 

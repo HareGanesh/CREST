@@ -206,19 +206,19 @@ console.log("Test Max");
 });
 
 
-router.get('/getMaxTransMapID', (req, res) => {
+// router.get('/getMaxTransMapID', (req, res) => {
 
-console.log("Test Max");	
-  UnivTranscationTypeDetail.getMaxTransMapID((err,UnivTranscationTypeDetail)=>{
-    if(err) {	
-		throw err;
-	}
-     else
-	  {		console.log(UnivTranscationTypeDetail); 
-		  res.json(UnivTranscationTypeDetail);
-	  }
-  });  
-});
+// console.log("Test Max");	
+  // UnivTranscationTypeDetail.getMaxTransMapID((err,UnivTranscationTypeDetail)=>{
+    // if(err) {	
+		// throw err;
+	// }
+     // else
+	  // {		console.log(UnivTranscationTypeDetail); 
+		  // res.json(UnivTranscationTypeDetail);
+	  // }
+  // });  
+// });
 
 router.post('/RemoveUnivTranscationTypeDetailByID', (req, res) => {
   var UnivTranscationTypeDetailID = req.headers["UnivTranscationTypeDetailID"]; 

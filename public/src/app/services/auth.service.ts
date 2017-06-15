@@ -279,7 +279,7 @@ updateProfile(student){
    getStudentByID(id)
   {
 	  debugger;
-                  console.log(id);
+                  
 let headers = new Headers();
                 headers.append('id',id);
                 return this.http.get('http://localhost:3777/students/getStudentByID',{headers: headers})
@@ -354,8 +354,31 @@ authenticateUser(user){
     headers.append('Content-Type','application/json');
     return this.http.post('http://localhost:3777/AppRoleMaster/authenticate', user,{headers: headers})
     .map(res => res.json());
-  } 
-
+  }
   
+  getAllUnivTranscationApprovalDetail(){
+                return this.http.get('http://localhost:3777/UnivTranscationApprovalDetail/getAllUnivTranscationApprovalDetail')
+                .map(res => res.json());
+}
+
+getAllUnivTranscationApprovalDetailByUnivIDAndMaskID(univID, maskID){
+				let headers = new Headers();
+                headers.append('univid',univID);
+				headers.append('maskid',maskID);
+                return this.http.get('http://localhost:3777/UnivTranscationApprovalDetail/getAllUnivTranscationApprovalDetailByUnivID',{headers: headers})
+                .map(res => res.json());
+}
+
+  addUniversityTransApprovalHistory(model, universityTransApprovalHistory, TransApprovalMapping){
+                let headers = new Headers();
+                headers.append('Content-Type','application/json');
+				if(TransApprovalMapping.length > 0)
+				model.TransApprovalMapping = (TransApprovalMapping.sort(x=>x.Priority))[TransApprovalMapping.length-1];	
+			    model.universityApprovalHistory = universityTransApprovalHistory;
+				
+				//UnivTranscationApprovalHistory/AddUnivTranscationApprovalHistory is temporary domain
+                return this.http.post('http://localhost:3777/UnivTranscationApprovalHistory/AddUnivTranscationApprovalHistory', model,{headers: headers})
+                .map(res => res.json());
+  }
 
 }

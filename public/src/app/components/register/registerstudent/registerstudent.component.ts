@@ -158,12 +158,12 @@ export class RegisterstudentComponent implements OnInit {
 		debugger;
 		
        this.TransApprovalMapping=[];
-	   let TransApprovalID=1;
+	   let TransApprovalID="ReqSA-1";
 	   let transDt='';
 	   this.authService.getMaxTranApprovalID().subscribe(data => {
 		   if(data.length > 0)
 		   {
-		    TransApprovalID = data[0].Tran_Approval_ID +1;
+		    TransApprovalID = "Reqsa-" +(parseInt(((data[0].Tran_Approval_ID).split('-')[1])) +1).toString();
 		   }
 		},
 		//observable also returns error

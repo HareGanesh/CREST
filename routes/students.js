@@ -42,6 +42,7 @@ router.post('/register', (req, res, next) => {
 								  univTranscationApprovalDetail.Prev_Approver_RID=0;
                                   univTranscationApprovalDetail.Next_Approver_RID=TransApprovalMappingInfo.NextApproverRoleID; 
 								  univTranscationApprovalDetail.Status=TransApprovalMappingInfo.Status; 
+								  univTranscationApprovalDetail.Mask_ID=TransApprovalMappingInfo.MaskID; 
                                   univTranscationApprovalDetail.Tran_Dt=""; 								  
                                   UnivTranscationApprovalDetail.AddUnivTranscationApprovalDetail(univTranscationApprovalDetail, (err, univTranscationApproval)=> {
                                              
