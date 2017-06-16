@@ -27,6 +27,13 @@ export class AuthService {
 	  return this.http.get('http://localhost:3777/UnivTranscationApprovalDetail/getMaxTransApprovalID')
   	.map(res => res.json());
   }
+  
+  getMaxTranApprovalNumberID()
+  {
+	  debugger;
+	  return this.http.get('http://localhost:3777/UnivTranscationApprovalDetail/getMaxTransApprovalNumberID')
+  	.map(res => res.json());
+  }
 
 
  authenticateStudent(student){

@@ -45,8 +45,10 @@ export class UniversitydashboardComponent implements OnInit {
   // To bind the grid with university
   bindGrid()
   {
+	  let univID=2;
+	  let maskID=4;
 	  debugger;
-	  	  this.authService.getAllUnivTranscationApprovalDetailByUnivIDAndMaskID(2,2).subscribe(university => {   
+	  	  this.authService.getAllUnivTranscationApprovalDetailByUnivIDAndMaskID(univID, maskID).subscribe(university => {   
 	      this.universityApprovalUserList=university;
 		  
     },
@@ -62,19 +64,54 @@ export class UniversitydashboardComponent implements OnInit {
   
   ApproveStudent(TransApprovalMappingData)
   {
+	  let maskID=4;
+	  let status=0;
+	  let priorityArray=[];
+	  let maskArray=[];
+	  
 	  this.universityApprovalHistory={TranApprovalHistoryID:0,ApprovedBy:"", ApprovedOn:new Date(), MaskID:0,Status:0, Comments:"", TransApprovalID:"" };
 	  this.authService.getAllTranscationTypeWithRolesAndPriority(TransApprovalMappingData.Univ_ID, 1).subscribe(data => {
 					if(data.length > 0)
 					{
+						for(let j=0; j< data.length; j++)
+						{
+							maskArray.push(Math.pow(2, data[j].Priority));
+							priorityArray.push(data[j].Priority);
+						}
+						
+						if( Math.max.apply(null, maskArray) == maskID)
+						 {
+							 status=1;
+						 }
+						 
 						for(let i=0; i< data.length; i++)
 						{					
-						 if(Math.pow(2, data[i].Priority) > TransApprovalMappingData.Mask_ID)
+						 
+							 // if(Math.pow(2, data[i].Priority) == maskID)
+							 // {
+								 // status=1;
+							 // }
+						  if( Math.pow(2, data[i].Priority) > maskID || status == 1)
 						 {
-							this.TransApprovalMapping.push({TransMapID : data[i].Tran_Map_ID, NextApproverRoleID:data[i].Role_ID, PrevApproverRoleID:TransApprovalMappingData.Next_Approver_RID,
-							Priority:data[i].Priority,MaskID:Math.pow(2, data[i].Priority), Status:0, 
+							 if(status == 1)
+							 {
+								 i=data.length;
+								 let dataarray = data.find(x=>x.Priority == Math.max.apply(null, priorityArray));
+								 this.TransApprovalMapping.push({TransMapID : dataarray.Tran_Map_ID, NextApproverRoleID:dataarray.Role_ID, 
+							PrevApproverRoleID:TransApprovalMappingData.Next_Approver_RID,
+							Priority:dataarray.Priority,MaskID:Math.pow(2, dataarray.Priority), Status:status, 
+							UniversityID:TransApprovalMappingData.Univ_ID, TransApprovalID:TransApprovalMappingData.Tran_Approval_ID,
+							TransDt:TransApprovalMappingData.Trans_Dt, StudentID:TransApprovalMappingData.Student_ID});
+							
+							}else 
+							{
+								this.TransApprovalMapping.push({TransMapID : data[i].Tran_Map_ID, NextApproverRoleID:data[i].Role_ID, PrevApproverRoleID:TransApprovalMappingData.Next_Approver_RID,
+							Priority:data[i].Priority,MaskID:Math.pow(2, data[i].Priority), Status:status, 
 							UniversityID:TransApprovalMappingData.Univ_ID, TransApprovalID:TransApprovalMappingData.Tran_Approval_ID, TransDt:TransApprovalMappingData.Trans_Dt, StudentID:TransApprovalMappingData.Student_ID});
+							}
 						 }
 						}
+						
 						
 					 debugger;
 	  this.universityApprovalHistory.ApprovedBy = "amit";
@@ -100,6 +137,7 @@ export class UniversitydashboardComponent implements OnInit {
 					console.log(err);
 					return false;
 				});
+
 				
 	  
   }

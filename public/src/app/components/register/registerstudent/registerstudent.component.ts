@@ -159,11 +159,12 @@ export class RegisterstudentComponent implements OnInit {
 		
        this.TransApprovalMapping=[];
 	   let TransApprovalID="ReqSA-1";
+	   let transApprovalIDNumber=1;
 	   let transDt='';
 	   this.authService.getMaxTranApprovalID().subscribe(data => {
 		   if(data.length > 0)
 		   {
-		    TransApprovalID = "Reqsa-" +(parseInt(((data[0].Tran_Approval_ID).split('-')[1])) +1).toString();
+		    TransApprovalID = "ReqSA-" +(parseInt(((data[0].Tran_Approval_ID).split('-')[1])) +1).toString();
 		   }
 		},
 		//observable also returns error
@@ -172,14 +173,26 @@ export class RegisterstudentComponent implements OnInit {
 		return false;
 		});
 		
-		this.authService.getAllTranscationTypeWithRolesAndPriority(parseInt(univID), 2).subscribe(data => {
+		this.authService.getMaxTranApprovalNumberID().subscribe(data => {
+		   if(data.length > 0)
+		   {
+		    transApprovalIDNumber = data[0].Tran_Approval_IDNumber + 1;
+		   }
+		},
+		//observable also returns error
+		err => {
+		console.log(err);
+		return false;
+		});
+		
+		this.authService.getAllTranscationTypeWithRolesAndPriority(parseInt(univID), 1).subscribe(data => {
 					if(data.length > 0)
 					{
 						for(let i=0; i< data.length; i++)
 						{							
 							this.TransApprovalMapping.push({TransMapID : data[i].Tran_Map_ID, NextApproverRoleID:data[i].Role_ID,
 							Priority:data[i].Priority,MaskID:Math.pow(2, data[i].Priority), Status:0, 
-							UniversityID:parseInt(univID), TransApprovalID:TransApprovalID, TransDt:transDt, StudentID:this.Student_ID});
+							UniversityID:parseInt(univID), TransApprovalID:TransApprovalID, TransDt:transDt, StudentID:this.Student_ID, TransApprovalIDNumber:transApprovalIDNumber});
 						}
 					}
 			},

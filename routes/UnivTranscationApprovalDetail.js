@@ -41,6 +41,7 @@ router.post('/UpdateUnivTranscationTypeDetailByTranMapID', (req, res, next) => {
 	
   let newUnivTranscationApprovalDetail = new UnivTranscationApprovalDetail({
   	Tran_Approval_ID: req.body.TransApprovalID,
+	Tran_Approval_IDNumber: req.body.TransApprovalIDNumber,
 	Univ_ID:req.body.UniversityID,
 	Student_ID:req.body.Student_ID,
   	Tran_Map_ID: req.body.TransMapID,
@@ -110,8 +111,22 @@ console.log("Test");
 
 router.get('/getMaxTransApprovalID', (req, res) => {
 
-console.log("Test Max");	
+
   UnivTranscationApprovalDetail.getMaxTransApprovalID((err,UnivTranscationApprovalDetail)=>{
+    if(err) {	
+		throw err;
+	}
+     else
+	  {		console.log(UnivTranscationApprovalDetail); 
+		  res.json(UnivTranscationApprovalDetail);
+	  }
+  });  
+});
+
+router.get('/getMaxTransApprovalNumberID', (req, res) => {
+
+
+  UnivTranscationApprovalDetail.getMaxTransApprovalNumberID((err,UnivTranscationApprovalDetail)=>{
     if(err) {	
 		throw err;
 	}

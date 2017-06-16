@@ -10,6 +10,10 @@ const UnivTranscationApprovalDetailMstrSchema = mongoose.Schema({
   type: String
   },
   
+  Tran_Approval_IDNumber:{
+  type: Number
+  },
+  
   Univ_ID:{
     type: Number
   },
@@ -84,16 +88,20 @@ module.exports.getAllUnivTranscationApprovalDetail = function(callback){
 	
 	module.exports.getAllUnivTranscationApprovalDetailByUnivID = function(univID, maskID, callback)
 	{	 
-	var query = { Univ_ID: univID, Mask_ID: {$lte:maskID}};
+	var query = { Univ_ID: univID, Mask_ID: {$lte:maskID}, Status:0};
 	console.log(query);
 	UnivTranscationApprovalDetailMaster.find(query,callback);
 	}
 	
 module.exports.getMaxTransApprovalID = function(callback){
 	 
-	 UnivTranscationApprovalDetailMaster.find("",callback).sort({Tran_Approval_ID : -1}).limit(1);
+	 UnivTranscationApprovalDetailMaster.find("",callback).sort({Tran_Approval_IDNumber :-1}).limit(1);
 		}
 	
+module.exports.getMaxTransApprovalNumberID = function(callback){
+	 
+	 UnivTranscationApprovalDetailMaster.find("",callback).sort({Tran_Approval_IDNumber :-1}).limit(1);
+		}
 	
 module.exports.UpdateUnivTranscationApprovalDetailByTranApprovalID = function(TransApprovalDt, callback)
 { 

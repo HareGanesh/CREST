@@ -36,6 +36,7 @@ router.post('/register', (req, res, next) => {
                                 {
                                   var  univTranscationApprovalDetail= new UnivTranscationApprovalDetail();
                                   univTranscationApprovalDetail.Tran_Approval_ID= TransApprovalMappingInfo.TransApprovalID;
+								  univTranscationApprovalDetail.Tran_Approval_IDNumber= TransApprovalMappingInfo.TransApprovalIDNumber;
 								  univTranscationApprovalDetail.Univ_ID=TransApprovalMappingInfo.UniversityID;
                                   univTranscationApprovalDetail.Student_ID=req.body.Student_ID;     
 								  univTranscationApprovalDetail.Tran_Map_ID= TransApprovalMappingInfo.TransMapID;
