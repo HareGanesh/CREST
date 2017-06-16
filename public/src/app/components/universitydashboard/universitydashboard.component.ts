@@ -5,6 +5,7 @@ import {AuthService} from '../../services/auth.service'
 import {Router, ActivatedRoute, Params} from '@angular/router';
 import {universityApprovalHistory} from './universityApprovalHistory';
 import { UniversityTransApproval } from './UniversityTransApproval';
+import { UniversityTransApprovalList } from './UniversityTransactionApprovalList';
 
 @Component({
   selector: 'app-universitydashboard',
@@ -17,12 +18,15 @@ export class UniversitydashboardComponent implements OnInit {
     public Action:String="Edit";
 	public errorMsg:String="";
 	public deleteID:String="";
-	private universityApprovalUserList: Array<Object> = [];
+	private universityApprovalUserList: Array<UniversityTransApprovalList> = [];
 	TransApprovalMapping:UniversityTransApproval[]=[];
 	//universityApprovalHistory:universityApprovalHistory;
 	public universityApprovalHistory:universityApprovalHistory;
 	model:Object;
-    
+    public Students = [
+	  {StudentID: "0",  StudentName:"please select"}
+         
+     ];
 	constructor(
 	private validateService: ValidateService,  
    private authService:AuthService,
@@ -46,11 +50,16 @@ export class UniversitydashboardComponent implements OnInit {
   bindGrid()
   {
 	  let univID=2;
-	  let maskID=4;
+	  let maskID=8;
+	  
 	  debugger;
+	  this.GetAllStudent();
 	  	  this.authService.getAllUnivTranscationApprovalDetailByUnivIDAndMaskID(univID, maskID).subscribe(university => {   
 	      this.universityApprovalUserList=university;
-		  
+		  for(let i=0; i<this.universityApprovalUserList.length;i++)
+		  {
+		  this.universityApprovalUserList[i].Student_Name= this.Students.filter(x=>x.StudentID == this.universityApprovalUserList[i].Student_ID)[0].StudentName;
+		  }
     },
     //observable also returns error
     err => {
@@ -62,13 +71,43 @@ export class UniversitydashboardComponent implements OnInit {
 		
   } 
   
+  GetAllStudent()
+  {
+	  this.authService.getAllStudent().subscribe(data => {
+		     for(let i=0; i< data.length; i++)
+       this.Students.push({StudentID:data[i].Student_ID, StudentName:data[i].Student_Name});
+			   
+		   
+       },
+    //observable also returns error
+    err => {
+      console.log(err);
+      return false;
+    });
+  }
+  
+  
+    
   ApproveStudent(TransApprovalMappingData)
   {
-	  let maskID=4;
+	  
+	  let maskID=8;
 	  let status=0;
 	  let priorityArray=[];
 	  let maskArray=[];
+	  let transApprovalHistoryID=1;
 	  
+	  this.authService.getMaxTransApprovalHistoryID().subscribe(data => {
+		   if(data.length > 0)
+		   {
+		    transApprovalHistoryID = data[0].Tran_Approval_History_ID + 1;
+		   }
+		},
+		//observable also returns error
+		err => {
+		console.log(err);
+		return false;
+		});
 	  this.universityApprovalHistory={TranApprovalHistoryID:0,ApprovedBy:"", ApprovedOn:new Date(), MaskID:0,Status:0, Comments:"", TransApprovalID:"" };
 	  this.authService.getAllTranscationTypeWithRolesAndPriority(TransApprovalMappingData.Univ_ID, 1).subscribe(data => {
 					if(data.length > 0)
@@ -119,7 +158,7 @@ export class UniversitydashboardComponent implements OnInit {
 	  this.universityApprovalHistory.TransApprovalID = TransApprovalMappingData.Tran_Approval_ID;
 	  this.universityApprovalHistory.Status =1;
 	  this.universityApprovalHistory.Comments = "Approved";
-	  this.universityApprovalHistory.TranApprovalHistoryID=1;
+	  this.universityApprovalHistory.TranApprovalHistoryID=transApprovalHistoryID;
 	  this.authService.addUniversityTransApprovalHistory(this.model, this.universityApprovalHistory, this.TransApprovalMapping).subscribe(data => {
 		debugger;
       if(data.success){

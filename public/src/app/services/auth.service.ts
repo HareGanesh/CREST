@@ -28,6 +28,13 @@ export class AuthService {
   	.map(res => res.json());
   }
   
+  getMaxTransApprovalHistoryID()
+  {
+	  debugger;
+	  return this.http.get('http://localhost:3777/UnivTranscationApprovalHistory/getMaxTransApprovalHistoryID')
+  	.map(res => res.json());
+  }
+  
   getMaxTranApprovalNumberID()
   {
 	  debugger;
@@ -112,6 +119,14 @@ export class AuthService {
 	return this.http.get('http://localhost:3777/students/getStudentByStudentID',{headers: headers})
                 .map(res => res.json());
   }
+  
+  getStudentInfoByStudentID(studentID)
+  {
+	  let headers = new Headers();
+  	headers.append('studentid',studentID);
+	return this.http.get('http://localhost:3777/students/getStudentByStudentID',{headers: headers})
+                .map(res => res.json());
+  }
 
 
   login(){
@@ -156,6 +171,13 @@ export class AuthService {
   {
 	  debugger;
 	  return this.http.get('http://localhost:3777/CategoryMstr/getAllCategory')
+  	.map(res => res.json());
+  }
+  
+  getAllStudent()
+  {
+	  debugger;
+	  return this.http.get('http://localhost:3777/students/getAllStudent')
   	.map(res => res.json());
   }
   

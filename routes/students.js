@@ -178,6 +178,33 @@ router.get('/getStudentByUserName', (req, res, next) => {
   });  
 }); 
 
+// router.get('/getAllStudent', (req, res, next) => {
+	
+  // //var username = req.headers["username"];  
+  
+  // Student.getAllStudent(err,studentDetail)=>{
+    // if(err) {
+                                // throw err;                            
+                // }
+     // else
+                  // {                            
+                                  // res.json(studentDetail);
+                  // }
+  // });  
+// }); 
+
+router.get('/getAllStudent', (req, res) => {  
+  Student.getAllStudent((err,student)=>{
+    if(err) {             
+                                throw err;
+                }
+     else
+                  {                            
+                                  res.json(student);
+                  }
+  });  
+});
+
 // Get student by StudentID
 router.get('/getStudentByStudentID', (req, res, next) => {
 	

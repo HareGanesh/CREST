@@ -126,6 +126,10 @@ module.exports.addStudent = function(newStudent, callback){
   //if(err) throw err;
 }
 
+module.exports.getAllStudent = function(callback){	
+	Student.find("",callback);
+}
+
 module.exports.comparePwd = function(candidatePwd, hash, callback){
 	console.log(candidatePwd);
 	console.log(hash);

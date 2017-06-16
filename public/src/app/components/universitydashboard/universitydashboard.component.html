@@ -21,7 +21,7 @@
                      <div class="header">  
                     <ul >
 					<li><a>Req No</a></li>
-					<li><a>University Name</a></li>
+					
 					<li><a>Student name</a></li>
 					<li><a>Next approval</a></li>
 					<li><a>mask id</a></li>					
@@ -32,8 +32,8 @@
 					<div class="item"> 
 					 <ul class="col-md-12 mail_list_column mail_list" *ngFor="let item of universityApprovalUserList; ">
 					 <li>{{item.Tran_Approval_ID}}</li>
-                      <li> {{item.Univ_ID}}</li>
-					  <li> {{item.Student_ID}}</li>
+                     
+					  <li> {{item.Student_Name}}</li>
                       <li>{{item.Next_Approver_RID}} </li>
                       <li> {{item.Mask_ID}}</li>
                      
