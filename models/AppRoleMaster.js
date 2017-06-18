@@ -6,11 +6,8 @@ const config = require('../config/database');
 const AppRoleMasterSchema = mongoose.Schema
 ({
 id :{type: String},
-  RoleID:{
-    Number
-  },
 
-	RoleName:{
+	TagID:{
 		type: String
 	},
 

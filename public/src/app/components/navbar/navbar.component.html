@@ -1,4 +1,4 @@
-<div class="container body">
+<div class="container body" *ngIf="authService.login()" >
       <div class="main_container">
         <div class="col-md-3 left_col">
           <div class="left_col scroll-view">
@@ -19,7 +19,7 @@
 			  
               <div class="profile_info">
                 <span>Welcome,</span>
-                <h2>User</h2>
+                <h2></h2>
               </div>
             </div>
             <!-- /menu profile quick info -->
@@ -31,20 +31,26 @@
               <div class="menu_section">
                 <h3>General</h3>
                 <ul class="nav side-menu">
-                  <li><a [routerLink]="['/']"><i class="fa fa-home"></i> Home <span class="fa fa-chevron-down"></span></a>                 
+                  <li *ngIf="tagID=='U'"><a [routerLink]="['/university']"><i class="fa fa-home"></i> Home <span class="fa fa-chevron-down"></span></a>                 
                   </li>
-				  <li><a [routerLink]="['/UniversityTransMapping']"><i class="fa fa-home"></i> UniversityTransMapping <span class="fa fa-chevron-down"></span></a>                 
+				 
+				   <li *ngIf="tagID=='S'"><a [routerLink]="['/']"><i class="fa fa-home"></i> Home <span class="fa fa-chevron-down"></span></a>                 
                   </li>
-                    <li><a [routerLink]="['/universityrole']"><i class="fa fa-edit"></i> Master <span class="fa fa-chevron-down"></span></a> 
-                 
+				 
+				 <li *ngIf="tagID=='U'"><a [routerLink]="['/UniversityTransMapping']"><i class="fa fa-home"></i> UniversityTransMapping <span class="fa fa-chevron-down"></span></a>                 
                   </li>
-                  <li><a><i class="fa fa-desktop"></i> Profile <span class="fa fa-chevron-down"></span></a>
-                   
+                  
+				  <li *ngIf="tagID=='U'"><a [routerLink]="['/universityrole']"><i class="fa fa-edit"></i> Master <span class="fa fa-chevron-down"></span></a> 
                   </li>
-                  <li><a><i class="fa fa-table"></i> Events Information <span class="fa fa-chevron-down"></span></a>
+				  <li *ngIf="tagID=='U'"><a [routerLink]="['/universitydashboard']"><i class="fa fa-edit"></i> Approve <span class="fa fa-chevron-down"></span></a> 
+                  </li>
+				  
+                  <li *ngIf="tagID=='S'"><a><i class="fa fa-desktop"></i> Profile <span class="fa fa-chevron-down"></span></a>                   
+                  </li>
+                  <li *ngIf="tagID=='S'"><a><i class="fa fa-table"></i> Events Information <span class="fa fa-chevron-down"></span></a>
                     
                   </li>
-                  <li><a><i class="fa fa-bar-chart-o"></i> My Goal <span class="fa fa-chevron-down"></span></a>
+                  <li *ngIf="tagID=='S'"><a><i class="fa fa-bar-chart-o"></i> My Goal <span class="fa fa-chevron-down"></span></a>
                    
                   </li>
 				  
@@ -100,7 +106,7 @@
 				
 				<li>
                   <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                    <img src="#" alt="">User
+                    <img src="#" alt="">
                     <span class=" fa fa-angle-down"></span>
                   </a>
                   <ul class="dropdown-menu dropdown-usermenu pull-right">
@@ -184,7 +190,7 @@
       </div>
     </div>
 	<div id="ProfileModal" class="modal fade" role="dialog">
-	<app-profile></app-profile>
+	<!-- <app-profile></app-profile> -->
 
   </div> 
 	<!-- <div id="ProfileModal" class="modal fade" role="dialog"> -->

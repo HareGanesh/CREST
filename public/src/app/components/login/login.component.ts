@@ -13,7 +13,7 @@ export class LoginComponent implements OnInit {
 username: String;
   Pwd: String;
 submitted = false;
-model:Object;
+public model:Object;
   constructor(
     private authService:AuthService,
     private router:Router,
@@ -21,37 +21,76 @@ model:Object;
   ) { }
 
   ngOnInit() {
-	this.model= {
+	this.model= 
+	{
       username: '',
       Pwd: ''
+	  
     }
   }
 
-  onLoginSubmit(){
-	// //  this.submitted = true;
-   
-  this.crestLogin(this.model);
-
-
+  onLoginSubmit()
+  {
+     this.crestLogin(this.model);
   }
   
 
 
-  crestLogin(model)
-   
+  crestLogin(model)   
   {
-	      this.authService.authenticateAppRoleMaster(model).subscribe(data => {
+	this.authService.authenticateAppRoleMaster(model).subscribe(data => {
 		debugger;
-      if(data.success){       
-        this.router.navigate(['/university']);
-	      // this.router.navigate(['/dashboard']);
-      } else {
-		   // this.submitted = false;
+       if(data.success)
+	   {    
+        //this.model.tagID=data.tagID;   
+		this.loadDashBoard(data.AppRoleMaster.TagID);
+        //this.router.navigate(['/university']);	    
+       } 
+	   else 
+	   {
+		  
         this.flashMessage.show(data.msg, {
-          cssClass: 'alert-danger',
-          timeout: 5000});
-         // this.router.navigate(['/login']);
-      }
+          cssClass: 'alert-danger',timeout: 5000});         
+       }
     });
   }
-}
+
+  loadDashBoard(tagID)
+   {
+     if(tagID=='S')
+	 {
+	  this.authService.authenticateStudent(this.model).subscribe(data => {
+        if(data.success)
+		{
+           this.authService.storeStudentData(data.token, data.student,tagID);
+           this.flashMessage.show('You are now logged in', {
+           cssClass: 'alert-success', timeout: 5000});
+           this.router.navigate(['/']);
+        } 
+		else
+		{
+           this.flashMessage.show(data.msg, {
+           cssClass: 'alert-danger', timeout: 5000});
+           this.router.navigate(['login']);
+        }
+          });
+	  }
+	  else if(tagID=='U')
+		  this.authService.authenticateUniversity(this.model).subscribe(data => {
+        if(data.success)
+		{
+           this.authService.storeStudentData(data.token, data.university,tagID);
+           this.flashMessage.show('You are now logged in', {
+           cssClass: 'alert-success', timeout: 5000});
+           this.router.navigate(['/university']);
+        } 
+		else
+		{
+           this.flashMessage.show(data.msg, {
+           cssClass: 'alert-danger', timeout: 5000});
+           this.router.navigate(['login']);
+        }
+          });
+   }
+  }
+

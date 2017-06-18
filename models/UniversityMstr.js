@@ -78,8 +78,13 @@ module.exports.universityId = function(callback){
 	UniversityMaster.findOne(query, callback);	
 }
 
+module.exports.getUniversityByUserName = function(name,callback){
+	const query = {UserName: name};
+	UniversityMaster.findOne(query, callback);	
+} 
+
  module.exports.getUniversityByName = function(name,callback){
-	const query = {UniversityName: name};
+	const query = {Univ_Name: name};
 	UniversityMaster.findOne(query, callback);	
 }
 module.exports.addUnivesity = function(univesity, callback){
@@ -95,6 +100,6 @@ UniversityMaster.update(query, {Active:0}, callback);
 
 module.exports.updateUniversity = function(university, callback){ 
 var query = { _id: university.id };
-UniversityMaster.update(query, {UniversityName: university.UniversityName,EmailID:university.EmailID,Address:university.Address,ContactNo:university.ContactNo}, callback);
+UniversityMaster.update(query, {Univ_Name: university.Univ_Name,EmailID:university.EmailID,Address:university.Address,ContactNo:university.ContactNo}, callback);
 } 
 

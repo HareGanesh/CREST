@@ -9,18 +9,31 @@ import {FlashMessagesService} from 'angular2-flash-messages';
   styleUrls: ['./navbar.component.css']
 })
 export class NavbarComponent implements OnInit {
-student:Object;
+user:any;
+tagID:String;
+userName:String;
   constructor(
     private authService:AuthService,
     private router:Router,
     private flashMessage:FlashMessagesService) { }
 
   ngOnInit() {
-	  this.student = JSON.parse(this.authService.getStudent());
+	  this.tagID=localStorage.getItem('tagID');
+	  debugger;
+	  this.user = JSON.parse(this.authService.getLoginUser());
+	  if(this.tagID=="S")
+	  {
+		 this.userName=this.user.Student_Name; 
+	  }
+	  else
+	  {
+		   this.userName=this.user.UserName;
+	  }
+	 
   }
 
   onLogoutClick(){
-	  debugger;
+	debugger;
     this.authService.logout();
     
     this.router.navigate(['/login']);

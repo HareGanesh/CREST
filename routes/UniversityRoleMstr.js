@@ -50,6 +50,19 @@ router.get('/GetUniversityRoleByID', (req, res) => {
 });
 
 
+router.get('/getUniversityRoleMstrByUnivID', (req, res) => {
+  var univID = req.headers["univid"];  
+  UniversityRole.getUniversityRoleMstrByUnivID(univID, (err,UniversityRole)=>{
+    if(err) {
+		throw err;		
+	}
+     else
+	  {		 
+		  res.json(UniversityRole);
+	  }
+  });  
+});
+
 
 router.get('/getAllUniversityRole', (req, res) => {
 

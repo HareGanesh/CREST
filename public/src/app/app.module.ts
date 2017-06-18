@@ -36,6 +36,8 @@ import { UniversityRoleMasterComponent } from './components/university//universi
 import { UniversityComponent } from './components/university/university.component';
 import { UniversitydashboardComponent } from './components/universitydashboard/universitydashboard.component';
 
+import {TooltipModule} from "ngx-tooltip";
+
 
 
 
@@ -94,7 +96,8 @@ const appRoutes: Routes = [
     HttpModule,
     RouterModule.forRoot(appRoutes),
     FlashMessagesModule,
-	MultiselectDropdownModule
+	MultiselectDropdownModule,
+	TooltipModule
   ],
   providers: [ValidateService, AuthService, AuthGuard],
   bootstrap: [AppComponent]

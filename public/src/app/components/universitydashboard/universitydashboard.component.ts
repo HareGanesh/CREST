@@ -6,6 +6,7 @@ import {Router, ActivatedRoute, Params} from '@angular/router';
 import {universityApprovalHistory} from './universityApprovalHistory';
 import { UniversityTransApproval } from './UniversityTransApproval';
 import { UniversityTransApprovalList } from './UniversityTransactionApprovalList';
+import {TooltipModule} from "ngx-tooltip";
 
 @Component({
   selector: 'app-universitydashboard',
@@ -27,6 +28,18 @@ export class UniversitydashboardComponent implements OnInit {
 	  {StudentID: "0",  StudentName:"please select"}
          
      ];
+	 public Roles = [
+	  {RoleID: 0,  RoleName:"", Priority:0}
+         
+     ];
+	 
+	 public UniversityRoles = [
+	   {Univ_RoleID: 0,  Univ_RoleName:"Please select", Univ_ID:""}
+         
+     ];
+	 
+	 public univID;
+	 
 	constructor(
 	private validateService: ValidateService,  
    private authService:AuthService,
@@ -37,28 +50,56 @@ export class UniversitydashboardComponent implements OnInit {
   ) {}
   
   @Input()
-  ngOnInit() {	
+   ngOnInit() {	
 	this.model={	
 	TransApprovalMapping:[],	
   	universityApprovalHistory:universityApprovalHistory
   	}
-   this.bindGrid();
+	this.univID = JSON.parse(this.authService.getLoginUser()).Univ_ID;
+	this.GetUniversityRolesByUnivID();
+ this.authService.getAllTranscationTypeWithRolesAndPriority(this.univID, 1).subscribe(data => {
+					if(data.length > 0)
+					{
+						for(let i=0; i< data.length; i++)
+						{
+							this.Roles.push({RoleID:data[i].Role_ID, RoleName:this.UniversityRoles.filter(x=>x.Univ_RoleID == data[i].Role_ID)[0].Univ_RoleName, Priority:data[i].Priority});
+						}
+						
+						this.bindGrid();
+					}
+				 },//observable also returns error
+    err => {
+      console.log(err);
+      return false;
+    });
+   
   }
   
   
   // To bind the grid with university
   bindGrid()
   {
-	  let univID=2;
-	  let maskID=8;
+	  //let univID=2;
+	  let maskID=2;
+	  let rolesArry=[]
+	  debugger;
+	  // Get university
+	  
+	  
+	  
+      
 	  
 	  debugger;
+	  //
 	  this.GetAllStudent();
-	  	  this.authService.getAllUnivTranscationApprovalDetailByUnivIDAndMaskID(univID, maskID).subscribe(university => {   
+	       maskID = Math.pow(2,(this.Roles.filter(x=>x.RoleID == 2)[0].Priority));
+	  	  this.authService.getAllUnivTranscationApprovalDetailByUnivIDAndMaskID(this.univID, maskID).subscribe(university => {   
 	      this.universityApprovalUserList=university;
 		  for(let i=0; i<this.universityApprovalUserList.length;i++)
 		  {
 		  this.universityApprovalUserList[i].Student_Name= this.Students.filter(x=>x.StudentID == this.universityApprovalUserList[i].Student_ID)[0].StudentName;
+		  this.universityApprovalUserList[i].Prev_Approver_RName= this.Roles.filter(x=>x.RoleID == this.universityApprovalUserList[i].Prev_Approver_RID)[0].RoleName;
+		  this.universityApprovalUserList[i].Next_Approver_RName= this.Roles.filter(x=>x.RoleID == this.universityApprovalUserList[i].Next_Approver_RID)[0].RoleName;
 		  }
     },
     //observable also returns error
@@ -69,10 +110,14 @@ export class UniversitydashboardComponent implements OnInit {
 	
 	
 		
-  } 
+  }
+  
+  
   
   GetAllStudent()
   {
+	  
+	
 	  this.authService.getAllStudent().subscribe(data => {
 		     for(let i=0; i< data.length; i++)
        this.Students.push({StudentID:data[i].Student_ID, StudentName:data[i].Student_Name});
@@ -84,6 +129,26 @@ export class UniversitydashboardComponent implements OnInit {
       console.log(err);
       return false;
     });
+	
+	
+	
+  }
+  
+  GetUniversityRolesByUnivID()
+  {
+	  this.authService.getUniversityRolesByUnivID(this.univID).subscribe(data => {
+					if(data.length > 0)
+					{
+						for(let i=0; i< data.length; i++)
+						{
+							this.UniversityRoles.push({Univ_RoleID:data[i].Univ_RoleID, Univ_RoleName:data[i].Univ_RoleName, Univ_ID:this.univID});
+						}
+					}
+				 },//observable also returns error
+    err => {
+      console.log(err);
+      return false;
+    });
   }
   
   
@@ -91,7 +156,7 @@ export class UniversitydashboardComponent implements OnInit {
   ApproveStudent(TransApprovalMappingData)
   {
 	  
-	  let maskID=8;
+	  let maskID=2;
 	  let status=0;
 	  let priorityArray=[];
 	  let maskArray=[];

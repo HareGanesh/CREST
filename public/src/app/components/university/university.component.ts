@@ -80,7 +80,7 @@ export class UniversityComponent implements OnInit {
   // Update university profile
   updateProfile(btn)
 {
-	
+	debugger;
 	if(this.univeritymodel._id==undefined)
 	{
 	this.univeritymodel.Pwd=this.generatePassword();

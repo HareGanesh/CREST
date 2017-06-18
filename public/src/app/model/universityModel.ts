@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 export class universityModel
 {
 	_id:String;
-	UniversityName: String;
+	Univ_Name: String;
 	EmailID: String;
 	username:String;
 	Pwd:String;

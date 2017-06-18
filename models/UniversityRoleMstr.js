@@ -50,6 +50,10 @@ module.exports.getUniversityRoleMstrByName = function(CategoryName,callback){
 	const query = {CategoryName: CategoryName}
 	UniversityRoleMaster.findOne(query,callback);}
 
+module.exports.getUniversityRoleMstrByUnivID = function(Univ_ID,callback){
+	const query = {Univ_ID: Univ_ID, Active:true}
+	UniversityRoleMaster.find(query,callback);}
+
 module.exports.AddUniversityRoleMstr = function(newUniversityRoleMstr, callback){ 
 	console.log(newUniversityRoleMstr);
       newUniversityRoleMstr.save(callback);

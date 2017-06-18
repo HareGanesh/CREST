@@ -47,6 +47,53 @@ transporter.sendMail(mailOptions, (error, info) => {
     console.log('Message  sent: %s', info.messageId, info.response);
 });
 };
+
+// Authenticate
+router.post('/authenticateUniversity', (req, res, next) => {
+                
+  const username = req.body.username;
+  const Pwd = req.body.Pwd;
+  univesityMaster.getUniversityByUserName(username, (err,University)=>{
+    if(err) throw err;
+                                if(!University){
+                                  return res.json({success: false, msg: 'User not found!'})
+                                }
+                                else
+                                {
+                                                // To compare the hash value with the password entered in the form - hareganx - 06/06/17
+                                                //bcrypt.compare(req.body.Pwd, student.Pwd, function(err, result) {
+                                                                
+                                                                if(true==true)
+                                                                {
+                                                                                const token = jwt.sign(University, config.secret,{
+                                                                                  expiresIn: 604800 //1 week
+                                                                                });
+                                                                                //this way is safer coz doesn't inc pass
+                                                                                res.json({
+                                                                                  success: true,
+                                                                                  token: 'JWT '+token,
+                                                                                  university: {
+                                                                                                id: University._id,
+                                                                                                Univ_Name: University.Univ_Name,
+                                                                                                EmailID: University.EmailID,
+                                                                                                UserName: University.UserName,
+                                                                                                ContactNo: University.ContactNo,                                                                                            
+                                                                                                Address:University.Address,
+                                                                                                Univ_ID:University.Univ_ID 
+                                                                                  }
+                                                                                }); 
+                                                                }
+                                                                else
+                                                                {
+                                                                                return res.json({success: false, msg: 'Wrong password'});
+                                                                }
+                                                                
+                                                //});
+                                }
+    });
+  });
+
+
 /// Register
 router.post('/register', (req, res, next) => {
 	
@@ -55,7 +102,7 @@ router.post('/register', (req, res, next) => {
 	
   let university = new univesityMaster({
 
-  	Univ_Name: req.body.UniversityName,
+  	Univ_Name: req.body.Univ_Name,
   	EmailID: req.body.EmailID,
   	Address: req.body.Address,
   	Pwd: req.body.Pwd,
@@ -66,7 +113,7 @@ router.post('/register', (req, res, next) => {
     Univ_ID:0
 
   	});
-  univesityMaster.getUniversityByName(req.body.UniversityName, (err,Getuni)=>{
+  univesityMaster.getUniversityByName(req.body.Univ_Name, (err,Getuni)=>{
 	  console.log(Getuni);
 	 if(Getuni ==undefined)
 	 {
@@ -116,7 +163,7 @@ router.post('/updateUniversity', (req, res, next) => {
 		console.log("routes" + req.body);
   let university = new univesityMaster({
 
-  	Univ_Name: req.body.UniversityName,
+  	Univ_Name: req.body.Univ_Name,
   	EmailID: req.body.EmailID,
   	Address: req.body.Address,
   	Pwd: req.body.Pwd,

@@ -8,7 +8,8 @@ export class AuthService {
 	authToken: any;
 	student: any;
 	studentID:String; 
-
+	tagID:String;
+	university:any;
   constructor(private http:Http) { }
 //connect to backend
   registerStudent(student, TransMapping){	 
@@ -41,6 +42,11 @@ export class AuthService {
 	  return this.http.get('http://localhost:3777/UnivTranscationApprovalDetail/getMaxTransApprovalNumberID')
   	.map(res => res.json());
   }
+  
+  getLoginUser()
+  {
+	  return localStorage.getItem('currentUser');
+  }
 
 
  authenticateStudent(student){
@@ -49,6 +55,8 @@ export class AuthService {
     return this.http.post('http://localhost:3777/students/authenticate', student,{headers: headers})
     .map(res => res.json());
   }
+  
+  
 
   //get the profile--will get unauthorized if the token is not sent
   getProfile(){
@@ -71,15 +79,18 @@ export class AuthService {
   	.map(res => res.json());
   } 
 
-  storeStudentData(token, student){
-	  //let student_id String;
+  storeStudentData(token, user,tagID){
+      this.tagID=tagID;
 	  debugger;
-	  this.studentID= student.id; 
-    localStorage.setItem('id_token',token); //JWT look directly for this in local storage
-    //localStorage.setItem('http://localhost:3777/student',JSON.stringify(student));
+	  if(tagID=="S")
+	  {
+	     this.studentID= user.id; 
+	     this.student = user;
+	  }
+    localStorage.setItem('id_token',token); //JWT look directly for this in local storage    
     this.authToken = token;	
-    this.student = student;
-	localStorage.setItem('currentUser', JSON.stringify(student)); 
+    localStorage.setItem('tagID',tagID);
+	localStorage.setItem('currentUser', JSON.stringify(user)); 
   }
 
 
@@ -92,8 +103,8 @@ export class AuthService {
   getStudent()
   {
 	  return localStorage.getItem('currentUser');
-  }
-  
+  }  
+    
   getStudentByEmail(student)
   {
 	  debugger;
@@ -261,6 +272,15 @@ getOrganizations()
   	.map(res => res.json());
   }
   
+  getUniversityRolesByUnivID(univID)
+  {
+	  debugger;
+	  let headers = new Headers();
+      headers.append('univid',univID);
+	  return this.http.get('http://localhost:3777/UniversityRoleMstr/getAllUniversityRole',{headers: headers})
+  	.map(res => res.json());
+  }
+  
   getAllTranscationType()
   {
 	  debugger;
@@ -337,6 +357,13 @@ authenticateUser(user){
     let headers = new Headers();
     headers.append('Content-Type','application/json');
     return this.http.post('http://localhost:3777/User/authenticate', user,{headers: headers})
+    .map(res => res.json());
+  }
+  
+  authenticateUniversity(university){
+    let headers = new Headers();
+    headers.append('Content-Type','application/json');
+    return this.http.post('http://localhost:3777/UniversityMstr/authenticateUniversity', university,{headers: headers})
     .map(res => res.json());
   }
   

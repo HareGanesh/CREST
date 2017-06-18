@@ -31,8 +31,8 @@ router.post('/authenticate', (req, res, next) => {
           token: 'JWT '+'879jhkjh',
           AppRoleMaster: {
             id: AppRoleMaster._id,
-            RoleName: AppRoleMaster.RoleName,
-            RoleNo: AppRoleMaster.RoleNo
+            TagID: AppRoleMaster.TagID,
+            UserName: AppRoleMaster.UserName
 					
           }
         });     
