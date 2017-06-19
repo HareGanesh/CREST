@@ -103,7 +103,7 @@ export class AuthService {
   getStudent()
   {
 	  return localStorage.getItem('currentUser');
-  }  
+  }
     
   getStudentByEmail(student)
   {
@@ -128,6 +128,14 @@ export class AuthService {
 	  let headers = new Headers();
   	headers.append('studentid',student.Student_ID);
 	return this.http.get('http://localhost:3777/students/getStudentByStudentID',{headers: headers})
+                .map(res => res.json());
+  }
+  
+  SetIsApproveByStudentID(Student_ID)
+  {
+	  let headers = new Headers();
+  	headers.append('studentid',Student_ID);
+	return this.http.get('http://localhost:3777/students/setIsApproved',{headers: headers})
                 .map(res => res.json());
   }
   
@@ -289,6 +297,15 @@ getOrganizations()
   	.map(res => res.json());
   }
   
+  getAllUniversityRolesByUnivID(univID)
+  {
+	  debugger;
+	  let headers = new Headers();
+      headers.append('univid',univID);
+	  return this.http.get('http://localhost:3777/UniversityRoleMstr/getUniversityRoleMstrByUnivID',{headers: headers})
+  	.map(res => res.json());
+  }
+  
   getAllTranscationType()
   {
 	  debugger;
@@ -383,6 +400,13 @@ authenticateUser(user){
     .map(res => res.json());
   }
   
+  authenticateUniversityRoleUser(universityRoleUser){
+    let headers = new Headers();
+    headers.append('Content-Type','application/json');
+    return this.http.post('http://localhost:3777/UniversityRoleUser/authenticateUniversityRole', universityRoleUser,{headers: headers})
+    .map(res => res.json());
+  }
+  
     getUniversity(){
                 return this.http.get('http://localhost:3777/UniversityMstr/getAllUniversity')
                 .map(res => res.json());
@@ -396,6 +420,16 @@ authenticateUser(user){
                 return this.http.post('http://localhost:3777/UniversityMstr/register', university,{headers: headers})
                 .map(res => res.json());
   }
+  
+  addUniversityUserRole(universityUserRole){
+                let headers = new Headers();
+                headers.append('Content-Type','application/json');
+
+    //UniversityRoleUser/register is temporary domain
+                return this.http.post('http://localhost:3777/UniversityRoleUser/register', universityUserRole,{headers: headers})
+                .map(res => res.json());
+  }
+  
    updateUniversity(university){
                 let headers = new Headers();
                 headers.append('Content-Type','application/json');

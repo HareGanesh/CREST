@@ -12,6 +12,7 @@ export class UniversityTransApproval {
 	public PrevApproverRoleID:Number,
 	public NextApproverRoleID:Number,
 	public TransApprovalID: String,
+	public TranApprovalIDNumber:Number,
 	public TransDt:String
 	
 	)

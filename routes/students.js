@@ -21,8 +21,8 @@ router.post('/register', (req, res, next) => {
     DOB: req.body.DOB,
     Address: req.body.Address,
     Mobile_No: req.body.Mobile_No,
-    Univ_ID: req.body.Univ_ID
-    
+    Univ_ID: req.body.Univ_ID,
+    Is_Approved:0
   	});
 
   Student.addStudent(newStudent, (err, student)=> {
@@ -68,6 +68,12 @@ router.post('/authenticate', (req, res, next) => {
 		}
 		else
 		{
+			if(student.Is_Approved == 0)
+			{
+				return res.json({success: false, msg: 'Approval Pending!'})
+			}
+			else if(student.Is_Approved == 1)
+			{
 			// To compare the hash value with the password entered in the form - hareganx - 06/06/17
 			bcrypt.compare(req.body.Pwd, student.Pwd, function(err, result) {
 				
@@ -96,9 +102,10 @@ router.post('/authenticate', (req, res, next) => {
 				else
 				{
 					 return res.json({success: false, msg: 'Wrong password'});
-				}
+				}		
 				
 			});
+			}
 		}
     });
   });
@@ -212,6 +219,22 @@ router.get('/getStudentByStudentID', (req, res, next) => {
   var studentID = req.headers["studentid"];  
   
   Student.getStudentByStudentID(studentID, (err,studentDetail)=>{
+    if(err) {
+                                throw err;                            
+                }
+     else
+                  {                            
+                                  res.json(studentDetail);
+                  }
+  });  
+}); 
+
+//setIsApproved
+router.get('/setIsApproved', (req, res, next) => {
+	
+  var studentID = req.headers["studentid"];  
+  
+  Student.setIsApproved(studentID, (err,studentDetail)=>{
     if(err) {
                                 throw err;                            
                 }

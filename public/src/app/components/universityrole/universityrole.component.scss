@@ -1,0 +1,26 @@
+.big-red-button {
+    font-size: 10pt;
+    padding: 0 20px;
+    height: 38px;
+    line-height: 30px;
+    cursor: pointer;
+    display: inline-block;
+    text-align: center;
+    text-transform: uppercase;
+    border-radius: 5px;
+    color: #fff !important;
+    background-color: #337ab7 	;
+    transition: all .2s ease;
+	font-family: "Montserrat", sans-serif;
+    font-style: normal;
+    
+    line-height: 3em;
+	width:190px;
+	float:right;
+}
+.alert {
+  padding: 15px;
+  margin-bottom: 0px;
+  border: 1px solid transparent;
+  border-radius: 4px;
+}

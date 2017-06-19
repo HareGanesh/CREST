@@ -83,9 +83,9 @@ Orgn_ID:{
     type: String
   },
   Student_Heading:{type: String	},
-  Student_Bio:{	type: String} 
+  Student_Bio:{	type: String},
 
-
+   Is_Approved:{type: Number}
 });
 
 const Student = module.exports = mongoose.model('Student', StudentSchema,'Student');
@@ -142,4 +142,9 @@ module.exports.comparePwd = function(candidatePwd, hash, callback){
 module.exports.udpateProfile = function(newStudent, callback){ 
 var query = { Student_ID: newStudent.Student_ID };
 Student.update(query, {Student_Heading: newStudent.Student_Heading,Student_Bio:newStudent.Student_Bio,Student_Name:newStudent.Student_Name}, callback);
+}
+
+module.exports.setIsApproved = function(Student_ID, callback){ 
+var query = { Student_ID: Student_ID };
+Student.update(query, {Is_Approved: 1}, callback);
 } 

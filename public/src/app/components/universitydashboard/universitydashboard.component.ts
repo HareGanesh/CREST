@@ -19,6 +19,7 @@ export class UniversitydashboardComponent implements OnInit {
     public Action:String="Edit";
 	public errorMsg:String="";
 	public deleteID:String="";
+	tagID:String;
 	private universityApprovalUserList: Array<UniversityTransApprovalList> = [];
 	TransApprovalMapping:UniversityTransApproval[]=[];
 	//universityApprovalHistory:universityApprovalHistory;
@@ -51,13 +52,14 @@ export class UniversitydashboardComponent implements OnInit {
   
   @Input()
    ngOnInit() {	
+   this.tagID=localStorage.getItem('tagID');
 	this.model={	
 	TransApprovalMapping:[],	
   	universityApprovalHistory:universityApprovalHistory
   	}
 	this.univID = JSON.parse(this.authService.getLoginUser()).Univ_ID;
 	this.GetUniversityRolesByUnivID();
- this.authService.getAllTranscationTypeWithRolesAndPriority(this.univID, 1).subscribe(data => {
+	this.authService.getAllTranscationTypeWithRolesAndPriority(this.univID, 1).subscribe(data => {
 					if(data.length > 0)
 					{
 						for(let i=0; i< data.length; i++)
@@ -92,7 +94,10 @@ export class UniversitydashboardComponent implements OnInit {
 	  debugger;
 	  //
 	  this.GetAllStudent();
-	       maskID = Math.pow(2,(this.Roles.filter(x=>x.RoleID == 2)[0].Priority));
+	  if(this.tagID == 'UR')
+	  {
+		  let roleid = JSON.parse(this.authService.getLoginUser()).Role_ID;
+	       maskID = Math.pow(2,(this.Roles.filter(x=>x.RoleID == roleid)[0].Priority));
 	  	  this.authService.getAllUnivTranscationApprovalDetailByUnivIDAndMaskID(this.univID, maskID).subscribe(university => {   
 	      this.universityApprovalUserList=university;
 		  for(let i=0; i<this.universityApprovalUserList.length;i++)
@@ -107,6 +112,23 @@ export class UniversitydashboardComponent implements OnInit {
       console.log(err);
       return false;
     });
+	  }else if(this.tagID == "U"){
+		  maskID = 1024;
+	  	  this.authService.getAllUnivTranscationApprovalDetailByUnivIDAndMaskID(this.univID, maskID).subscribe(university => {   
+	      this.universityApprovalUserList=university;
+		  for(let i=0; i<this.universityApprovalUserList.length;i++)
+		  {
+		  this.universityApprovalUserList[i].Student_Name= this.Students.filter(x=>x.StudentID == this.universityApprovalUserList[i].Student_ID)[0].StudentName;
+		  this.universityApprovalUserList[i].Prev_Approver_RName= this.Roles.filter(x=>x.RoleID == this.universityApprovalUserList[i].Prev_Approver_RID)[0].RoleName;
+		  this.universityApprovalUserList[i].Next_Approver_RName= this.Roles.filter(x=>x.RoleID == this.universityApprovalUserList[i].Next_Approver_RID)[0].RoleName;
+		  }
+    },
+    //observable also returns error
+    err => {
+      console.log(err);
+      return false;
+    });
+	  }
 	
 	
 		
@@ -155,8 +177,11 @@ export class UniversitydashboardComponent implements OnInit {
     
   ApproveStudent(TransApprovalMappingData)
   {
+	  debugger;
 	  
 	  let maskID=2;
+	  let roleid = JSON.parse(this.authService.getLoginUser()).Role_ID;
+	       maskID = Math.pow(2,(this.Roles.filter(x=>x.RoleID == roleid)[0].Priority));
 	  let status=0;
 	  let priorityArray=[];
 	  let maskArray=[];
@@ -205,20 +230,20 @@ export class UniversitydashboardComponent implements OnInit {
 							PrevApproverRoleID:TransApprovalMappingData.Next_Approver_RID,
 							Priority:dataarray.Priority,MaskID:Math.pow(2, dataarray.Priority), Status:status, 
 							UniversityID:TransApprovalMappingData.Univ_ID, TransApprovalID:TransApprovalMappingData.Tran_Approval_ID,
-							TransDt:TransApprovalMappingData.Trans_Dt, StudentID:TransApprovalMappingData.Student_ID});
+							TransDt:TransApprovalMappingData.Trans_Dt, StudentID:TransApprovalMappingData.Student_ID, TranApprovalIDNumber:TransApprovalMappingData.Tran_Approval_IDNumber});
 							
 							}else 
 							{
 								this.TransApprovalMapping.push({TransMapID : data[i].Tran_Map_ID, NextApproverRoleID:data[i].Role_ID, PrevApproverRoleID:TransApprovalMappingData.Next_Approver_RID,
 							Priority:data[i].Priority,MaskID:Math.pow(2, data[i].Priority), Status:status, 
-							UniversityID:TransApprovalMappingData.Univ_ID, TransApprovalID:TransApprovalMappingData.Tran_Approval_ID, TransDt:TransApprovalMappingData.Trans_Dt, StudentID:TransApprovalMappingData.Student_ID});
+							UniversityID:TransApprovalMappingData.Univ_ID, TransApprovalID:TransApprovalMappingData.Tran_Approval_ID, TransDt:TransApprovalMappingData.Trans_Dt, StudentID:TransApprovalMappingData.Student_ID, TranApprovalIDNumber:TransApprovalMappingData.Tran_Approval_IDNumber});
 							}
 						 }
 						}
 						
 						
 					 debugger;
-	  this.universityApprovalHistory.ApprovedBy = "amit";
+	  this.universityApprovalHistory.ApprovedBy = TransApprovalMappingData.Next_Approver_RName;
 	  this.universityApprovalHistory.MaskID = TransApprovalMappingData.Mask_ID; 
 	  this.universityApprovalHistory.TransApprovalID = TransApprovalMappingData.Tran_Approval_ID;
 	  this.universityApprovalHistory.Status =1;

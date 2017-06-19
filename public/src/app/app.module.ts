@@ -37,6 +37,7 @@ import { UniversityComponent } from './components/university/university.componen
 import { UniversitydashboardComponent } from './components/universitydashboard/universitydashboard.component';
 
 import {TooltipModule} from "ngx-tooltip";
+import { UniversityroleComponent } from './components/universityrole/universityrole.component';
 
 
 
@@ -58,7 +59,8 @@ const appRoutes: Routes = [
 {path: 'university', component: UniversityComponent },	
   
   {path: 'universityrole', component: UniversityRoleMasterComponent },
-{path: 'universitydashboard', component: UniversitydashboardComponent }
+{path: 'universitydashboard', component: UniversitydashboardComponent },
+{path: 'adduniversityroledetail', component: UniversityroleComponent },
   // {path:'eventinfo/:id', component: RegistereventComponent},
   // {path: 'eventDetails/:id', component: EventsComponent }	
 
@@ -86,7 +88,8 @@ const appRoutes: Routes = [
 	UniversityComponent,
 	AddUniversityComponent,
 	UniversityRoleMasterComponent,
-	UniversitydashboardComponent
+	UniversitydashboardComponent,
+	UniversityroleComponent
 	 
 
   ],

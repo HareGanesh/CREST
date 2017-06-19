@@ -312,12 +312,12 @@ onUniversityChange(items) {
 }
   isDisabled() {
 	  //debugger;
-         // if(this.validateService.validateEvent(this.model)){
-		    // return false;		 
-		   // }
-          // else{
-		   // return true;
-	      // }
+         if(this.validateService.validateEvent(this.model)){
+		    return false;		 
+		   }
+          else{
+		   return true;
+	      }
   }
   
   onChange(category) {

@@ -82,7 +82,23 @@ public model:Object;
            this.authService.storeStudentData(data.token, data.university,tagID);
            this.flashMessage.show('You are now logged in', {
            cssClass: 'alert-success', timeout: 5000});
-           this.router.navigate(['/university']);
+           this.router.navigate(['/universitydashboard']);
+        } 
+		else
+		{
+           this.flashMessage.show(data.msg, {
+           cssClass: 'alert-danger', timeout: 5000});
+           this.router.navigate(['login']);
+        }
+          });
+	    else if(tagID=='UR')
+		  this.authService.authenticateUniversityRoleUser(this.model).subscribe(data => {
+        if(data.success)
+		{
+           this.authService.storeStudentData(data.token, data.universityRoleUser,tagID);
+           this.flashMessage.show('You are now logged in', {
+           cssClass: 'alert-success', timeout: 5000});
+           this.router.navigate(['/universitydashboard']);
         } 
 		else
 		{

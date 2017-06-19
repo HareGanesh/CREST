@@ -5,6 +5,7 @@ const jwt = require('jsonwebtoken');
 const config = require('../config/database');
 const UnivTranscationApprovalHistory = require('../models/UnivTranscationApprovalHistory');
 const UnivTranscationApprovalDetail = require('../models/UnivTranscationApprovalDetail');
+const Student = require('../models/student');
 
 router.post('/AddUnivTranscationApprovalHistory', (req, res, next) => {
 	
@@ -33,6 +34,7 @@ router.post('/AddUnivTranscationApprovalHistory', (req, res, next) => {
 		
         var  univTranscationApprovalDetail= new UnivTranscationApprovalDetail();
         univTranscationApprovalDetail.Tran_Approval_ID= TransApprovalMappingInfo.TransApprovalID;
+		univTranscationApprovalDetail.Tran_Approval_IDNumber= TransApprovalMappingInfo.TranApprovalIDNumber;
 		univTranscationApprovalDetail.Univ_ID=TransApprovalMappingInfo.UniversityID;
         univTranscationApprovalDetail.Student_ID=TransApprovalMappingInfo.StudentID;     
 		univTranscationApprovalDetail.Tran_Map_ID= TransApprovalMappingInfo.TransMapID;
@@ -44,6 +46,13 @@ router.post('/AddUnivTranscationApprovalHistory', (req, res, next) => {
         UnivTranscationApprovalDetail.AddUnivTranscationApprovalDetail(univTranscationApprovalDetail, (err, univTranscationApproval)=> {
                                              
                                             }); 
+											
+		if(TransApprovalMappingInfo.Status == 1)
+		{
+			Student.setIsApproved(TransApprovalMappingInfo.StudentID, (err, univTranscationApproval)=> {
+                                             
+                                            }); 
+		}
                                 }
       res.json({success: true, msg:'UnivTranscationapprovalHistory Created.'});
     }

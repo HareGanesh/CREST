@@ -23,8 +23,9 @@
 					<li><a>Req No</a></li>
 					
 					<li><a>Student name</a></li>
+					<li *ngIf="tagID=='U'"><a>Prev Approval</a></li>
 					<li><a>Next approval</a></li>
-					<li><a>mask id</a></li>					
+								
 					
 					<li></li>
 					</ul>
@@ -40,10 +41,11 @@
 					 <!-- <li tooltip content="Next Approver : Amit Khandelwal - Principal{{item.Next_Approver_RID}}<br/> PrevApproval: Sumit - Hod{{item.Prev_Approver_RID}}">{{item.Tran_Approval_ID}}</li> -->
                      
 					  <li > {{item.Student_Name}}</li>
+					  <li *ngIf="tagID=='U'">{{item.Prev_Approver_RName}} </li>
                       <li>{{item.Next_Approver_RName}} </li>
-                      <li> {{item.Mask_ID}}</li>
+                      
                      
-					  <li>
+					  <li *ngIf="tagID=='UR'">
 					  <a class="btn btn-primary pull-right" (click)="ApproveStudent(item)">Approve</a>
 					  <!-- <a class="btn btn-primary pull-right" style="width:66px;" (click)="showPopup(item._id)" data-toggle="modal" data-target="#vv">Edit</a>  -->
 					  
