@@ -249,6 +249,14 @@ GetEventOrganizationByEventID(id){
   	headers.append('EventID',id);
 	return this.http.get('http://localhost:3777/EventOrganization/GetEventOrganizationByEventID',{headers: headers})
                 .map(res => res.json());
+}
+
+GetEventUniversityByEventID(id){
+	
+	let headers = new Headers();
+  	headers.append('EventID',id);
+	return this.http.get('http://localhost:3777/EventUniversity/GetEventUniversityByEventID',{headers: headers})
+                .map(res => res.json());
 }  
 
 getOrganizations()
@@ -350,6 +358,14 @@ let headers = new Headers();
 	let headers = new Headers();
   	headers.append('id',id);
 	return this.http.get('http://localhost:3777/EventOrganization/getEventOrganizerByOrgNo',{headers: headers})
+                .map(res => res.json());
+   }
+   
+   GetEventByUnivID(id){
+	debugger;
+	let headers = new Headers();
+  	headers.append('id',id);
+	return this.http.get('http://localhost:3777/EventUniversity/getEventUniversityByUnivID',{headers: headers})
                 .map(res => res.json());
    }
 

@@ -50,8 +50,9 @@
 </li>
 
 <li #fifthLI>
-<a href="#OrganizationsTab" data-toggle="tab" [class.disabled]="isDisabled()">Organizations</a>
+<a href="#OrganizationsTab" data-toggle="tab" [class.disabled]="isDisabled()">{{orgOrUnivLabel}}</a>
 </li>
+
 
 </ul>
 
@@ -364,13 +365,19 @@
 
 <div id="OrganizationsTab" class="tab-pane fade ">
 
-<div class="AddMoreDiv">
+<div class="AddMoreDiv" *ngIf="tagID=='O'">
 <label>Please invite:</label>
 
 <ss-multiselect-dropdown id ="orgn" name="Organizations" [options]="myOptions" [texts]="myTexts" (ngModelChange)="onOrganizationChange($event)" [settings]="mySettings" [ngModel]="model.Organizations" style="width:200px !important;"></ss-multiselect-dropdown>
 
 </div>
-	
+
+<div class="AddMoreDiv" *ngIf="tagID=='U'">
+<label>Please invite:</label>
+
+<ss-multiselect-dropdown id ="univ" name="Universities" [options]="myUnivOptions" [texts]="myUnivTexts" (ngModelChange)="onUniversityChange($event)" [settings]="mySettings" [ngModel]="model.Universities" style="width:200px !important;"></ss-multiselect-dropdown>
+
+</div>
 
 	
 	<a id="Prev4" class="big-red-button" data-toggle="tab" (click)=OnPrevClick(inputao,5,fifthLI,forthLI) #inputao>Prev</a>

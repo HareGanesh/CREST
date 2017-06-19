@@ -16,11 +16,18 @@ export class EventsComponent implements OnInit {
   public eventPrizeArray :Object;
   public eventOrganizerArray :Object;
   public eventOrganizationArray:Object;
+  public eventUniversityArray:Object;
+  tagID:String;
+  orgOrUnivLabel:String;
    public dayDiff : number;
-  public dayHours : number;
-  public dayMin : number;
-public Organizations = [
+   public dayHours : number;
+   public dayMin : number;
+   public Organizations = [
 	  {id: 0,  name:"Please select",title:"", address:"",country:"",overview:"", state:"",logo:""},
+      
+     ];
+	public Universities = [
+	  {id: 0,  name:"Please select", address:"",ContactNo:"",Email:""},
       
      ];
 
@@ -34,7 +41,16 @@ public Organizations = [
     ) { }
 ngOnInit() 
 {	
-	let eventID
+	  this.tagID=localStorage.getItem('tagID');
+	  if(this.tagID == 'S')
+	  {
+		  this.orgOrUnivLabel = "University";
+	  }else if(this.tagID == 'O')
+	  {
+		  this.orgOrUnivLabel = "Organization";
+	  }
+	
+	 let eventID
 	 this.activatedRoute.params.subscribe((params: Params) => {
          eventID = params['id'];
        
@@ -82,8 +98,16 @@ this.authService.GetEventOrganizerByEventID(eventID).subscribe(organizer => {
       console.log(err);
       return false;
     });
+	
+	this.authService.GetEventUniversityByEventID(eventID).subscribe(university => {
+	debugger;
+	this.eventUniversityArray=university;
+},  err => {
+      console.log(err);
+      return false;
+    });
 
-// Get all organization
+	// Get all organization
 	  this.authService.getOrganizations().subscribe(data => {
 		   for(let i=0; i< data.length; i++)
       this.Organizations.push({id:data[i].OrgnID, name:data[i].OrgnName,title:data[i].OrgnTitle, address:data[i].OrgnAddress, country:data[i].OrgnCountry,overview:data[i].OrgnOverview,state:data[i].OrgnState,logo:data[i].OrgnLogo});
@@ -94,6 +118,43 @@ this.authService.GetEventOrganizerByEventID(eventID).subscribe(organizer => {
       return false;
     });	
 	
+	// Get all university
+	  this.authService.getUniversity().subscribe(data => {
+		   for(let i=0; i< data.length; i++)
+      this.Universities.push({id:data[i].Univ_ID, name:data[i].Univ_Name,address:data[i].Address,Email:data[i].EmailID, ContactNo:data[i].ContactNo});
+    },
+    //observable also returns error
+    err => {
+      console.log(err);
+      return false;
+    });	
+	
+  }
+  
+  onPopupClick()
+  {
+	  debugger;
+	  //document.getElementById('OrganizationModal').modal()
+	  //$("#myModal").modal();
+	  return false;
+  }
+  
+  GetUnivName(univID)
+  {
+	  debugger;
+	return this.Universities.find(x=>x.id == univID).name;
+  }
+  
+  GetUnivAddress(univID)
+  {
+	  debugger;
+	return this.Universities.find(x=>x.id == univID).address;
+  }
+  
+  GetUnivContact(univID)
+  {
+	  debugger;
+	return this.Universities.find(x=>x.id == univID).ContactNo;
   }
   
   GetName(orgnID)
@@ -106,6 +167,12 @@ return this.Organizations.find(x=>x.id == orgnID).name;
   {
 	  debugger;
 return this.Organizations.find(x=>x.id == orgnID).title;
+  }
+  
+  GetOverview(orgnID)
+  {
+	  debugger;
+return this.Organizations.find(x=>x.id == orgnID).overview;
   }
   
   GetAddress(orgnID)

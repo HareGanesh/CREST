@@ -69,7 +69,7 @@
 <a href="#OrganizersTab" data-toggle="tab">Organizers</a>
 </li>
 <li>
-<a href="#OrganizationTab" data-toggle="tab">Organization</a>
+<a href="#OrganizationTab" data-toggle="tab">{{orgOrUnivLabel}}</a>
 </li>
 </ul>
 
@@ -148,7 +148,7 @@ Prizes
 </div>
 </div>
 
-<div class="ebgins">
+<div class="ebgins" *ngIf="tagID=='O'">
 <h2>Organization</h2>
 <div *ngFor="let organization of eventOrganizationArray; let i=index;"> 
 
@@ -160,6 +160,20 @@ Prizes
 
 
 </div>
+
+<div class="ebgins" *ngIf="tagID=='S'">
+<h2>University</h2>
+<div *ngFor="let university of eventUniversityArray; let i=index;"> 
+
+<div class="not-available" *ngIf="i == 0"> <i class="icon-exclamation-sign"></i> {{GetUnivName(eventUniversityArray[i].Univ_ID)}}</div>
+<!-- <a class="footerlink" *ngIf="i == 0" data-toggle="tab" (click)="ActiveTab('OrganizersTab')" href="#OrganizersTab">More</a> -->
+</div>
+
+  
+
+
+</div>
+
 
 </div>
 
@@ -240,48 +254,52 @@ Prizes
 
 </div>
 
-<div id="OrganizationTab" class="tab-pane fade"><h3>Organization
+<div id="OrganizationTab" class="tab-pane fade"><h3>{{orgOrUnivLabel}}
 </h3>
 
+<!-- commenting this one for now -->
+<!-- <div *ngIf="tagID=='O'" class="eventcheck border border2" *ngFor="let organization of eventOrganizationArray; let i=index"> -->
+<!-- <div class="ebgins"> -->
+<!-- <div class="row network_cell"> -->
+<!-- <div class="col-md-1"> -->
+<!-- <img src="../../src/img/{{GetOrganizationLogo(organization.OrgnID)}}" width="100px" height="100px"> -->
 
-<div class="eventcheck border border2" *ngFor="let organization of eventOrganizationArray; let i=index">
-<div class="ebgins">
-<div class="row network_cell">
-<div class="col-md-1">
-<img src="../../src/img/{{GetOrganizationLogo(organization.OrgnID)}}" width="100px" height="100px">
+<!-- </div> -->
+<!-- <div class="col-md-6 col-md-offset-2 "> -->
+<!-- <div class="row"> -->
+<!-- <h5> -->
+<!-- {{GetName(organization.OrgnID)}} -->
+<!-- </h5> -->
+<!-- </div> -->
+<!-- <div class="row"> -->
+<!-- {{GetTitle(organization.OrgnID)}} -->
+<!-- </div> -->
+<!-- <div class="row"> -->
+<!-- {{GetAddress(organization.OrgnID)}} -->
+<!-- </div> -->
+<!-- <div class="row"> -->
 
-</div>
-<div class="col-md-6 col-md-offset-2 ">
-<div class="row">
-<h5>
-{{GetName(organization.OrgnID)}}
-</h5>
-</div>
-<div class="row">
-{{GetTitle(organization.OrgnID)}}
-</div>
-<div class="row">
-{{GetAddress(organization.OrgnID)}}
-</div>
-<div class="row">
+<!-- </div> -->
+<!-- </div> -->
+<!-- <div class="col-md-9 col-md-offset-1 "> -->
+<!-- <div class="row"> -->
+<!-- <div> -->
+<!-- <a class="big-red-button" style="float:right;" data-target="#OrganizationModal" data-toggle="modal" click=onPopupClick() data-id="{{organization.OrgnID}}">Details</a> -->
+<!-- <!-- <div id="OrganizationModal" class="modal fade" role="dialog"> -->
+	<!-- <!-- <app-organization id="{{organization.OrgnID}}"></app-organization> -->
 
-</div>
-</div>
-<div class="col-md-9 col-md-offset-1 ">
-<div class="row">
-<div>
-<a class="big-red-button" style="float:right;">Details</a>
+  <!-- <!-- </div> -->
 <!-- <div id="OrganizationModal" class="modal fade" role="dialog"> -->
 	<!-- <div class="modal-dialog"> -->
 
-    <!-- <!-- Modal content-->
+    
     <!-- <div class="modal-content"> -->
       <!-- <div class="modal-header"> -->
         <!-- <button type="button" class="close" data-dismiss="modal">&times;</button> -->
-        <!-- <h4 class="modal-title">Modal Header</h4> -->
+        <!-- <h4 class="modal-title">Organization</h4> -->
       <!-- </div> -->
       <!-- <div class="modal-body"> -->
-        <!-- <p>Some text in the modal.</p> -->
+        <!-- <p>{{GetOverview(organization.OrgnID)}}</p> -->
       <!-- </div> -->
       <!-- <div class="modal-footer"> -->
         <!-- <button type="button" class="btn btn-default" data-dismiss="modal">Close</button> -->
@@ -291,6 +309,71 @@ Prizes
   <!-- </div> -->
 
   <!-- </div>  -->
+<!-- </div> -->
+<!-- </div> -->
+<!-- </div> -->
+
+<!-- </div> -->
+<!-- </div> -->
+ <!-- </div> -->
+
+ <!-- Commenting this one for now-->
+
+ <!------------------------------->
+ 
+ <div  class="eventcheck border border2" *ngFor="let university of eventUniversityArray; let i=index">
+<div class="ebgins">
+<div class="row network_cell">
+<div class="col-md-1">
+<img src="../../src/img/PSDC_Logo.png" width="100px" height="100px">
+
+</div>
+<div class="col-md-6 col-md-offset-2 ">
+<div class="row">
+<h5>
+{{GetUnivName(university.Univ_ID)}}
+</h5>
+</div>
+<div class="row">
+<b>
+{{GetUnivContact(university.Univ_ID)}}
+</b>
+</div>
+<div class="row">
+{{GetUnivAddress(university.Univ_ID)}}
+</div>
+<div class="row">
+
+</div>
+</div>
+<div class="col-md-9 col-md-offset-1 ">
+<div class="row">
+<div>
+<a class="big-red-button" style="float:right;" data-target="#UniversityModal" data-toggle="modal" click=onPopupClick() data-id="{{university.Univ_ID}}">Details</a>
+<!-- <div id="OrganizationModal" class="modal fade" role="dialog"> -->
+	<!-- <app-organization id="{{organization.OrgnID}}"></app-organization> -->
+
+  <!-- </div> -->
+<div id="UniversityModal" class="modal fade" role="dialog">
+	<div class="modal-dialog">
+
+    
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">University</h4>
+      </div>
+      <div class="modal-body">
+        <p>Dummy text here for now</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+
+  </div>
+
+  </div> 
 </div>
 </div>
 </div>
@@ -298,9 +381,9 @@ Prizes
 </div>
 </div>
  </div>
-
-
-
+ 
+ 
+<!----------------------------------->
 </div>
 
 </div>
@@ -315,7 +398,9 @@ Prizes
 
 
 </div>
+ 
 </ng-container> 
+
 <ng-container *ngIf="!authService.login();">
     <app-login></app-login>
 </ng-container> 

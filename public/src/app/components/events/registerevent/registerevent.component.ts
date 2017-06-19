@@ -24,7 +24,8 @@ import { IMultiSelectTexts } from 'angular-2-dropdown-multiselect';
 export class RegistereventComponent implements OnInit {
 	student:Object;
 	category:Object;
-	
+	tagID:String;
+	orgOrUnivLabel:String;
 	public organizations = [
 	  
          
@@ -65,6 +66,23 @@ export class RegistereventComponent implements OnInit {
      defaultTitle: 'Select Organizations',
     allSelected: 'All selected',
 };
+
+ myUnivTexts: IMultiSelectTexts = {
+     checkAll: 'Select all',
+     uncheckAll: 'Unselect all',
+     checked: 'item selected',
+     checkedPlural: 'items selected',
+     searchPlaceholder: 'University Name',
+     defaultTitle: 'Select University',
+    allSelected: 'All selected',
+};
+
+myUnivOptions: IMultiSelectOption[] = [
+     // { id: 1, name: 'Car brands', isLabel: true },
+     
+     
+    
+ ];
 	  
     path='';
 	public eventId='';
@@ -138,6 +156,7 @@ public EventTypes = [
 	Rules:[],
 	Organizers:[],
 	Organizations:[],
+	Universities:[],
 	Created_On:new Date(),
 	Created_by:'',
 	Modified_On:'',
@@ -163,10 +182,24 @@ onOrganizationChange(items) {
 	debugger;
        this.model.Organizations = items;
     }
+	
+onUniversityChange(items) {
+	debugger;
+       this.model.Universities = items;
+    }
 
   ngOnInit() {
 	  debugger;
 	  
+	  this.tagID=localStorage.getItem('tagID');
+	  if(this.tagID == 'U')
+	  {
+		  this.orgOrUnivLabel = "University";
+	  }else if(this.tagID == 'O')
+	  {
+		  this.orgOrUnivLabel = "Organization";
+	  }
+		  
 	  // Get all organization
 	  this.authService.getOrganizations().subscribe(data => {
 		   for(let i=0; i< data.length; i++)
@@ -178,7 +211,15 @@ onOrganizationChange(items) {
       return false;
     });
  
-   
+	this.authService.getAllUniversity().subscribe(data => {
+		   for(let i=0; i< data.length; i++)
+      this.myUnivOptions.push({id:data[i].Univ_ID, name:data[i].Univ_Name});
+    },
+    //observable also returns error
+    err => {
+      console.log(err);
+      return false;
+    });
 
 	  // Logged in user
 	this.student = JSON.parse(this.authService.getStudent());
@@ -271,12 +312,12 @@ onOrganizationChange(items) {
 }
   isDisabled() {
 	  //debugger;
-         if(this.validateService.validateEvent(this.model)){
-		    return false;		 
-		   }
-          else{
-		   return true;
-	      }
+         // if(this.validateService.validateEvent(this.model)){
+		    // return false;		 
+		   // }
+          // else{
+		   // return true;
+	      // }
   }
   
   onChange(category) {
@@ -600,7 +641,7 @@ OnPrevClick(input, count,li1, li2)
 		debugger;
       if(data.success){
         //this.flashMessage.show('Event has been registered', {cssClass: 'alert-success', timeout: 3000});
-        this.router.navigate(['']);
+        this.router.navigate(['/university']);
       } else {
         //this.flashMessage.show('Something went wrong', {cssClass: 'alert-danger', timeout: 3000});
         this.router.navigate(['/EventInfo']);

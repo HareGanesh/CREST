@@ -8,7 +8,7 @@ import {Router} from '@angular/router';
   styleUrls: ['./home.component.scss','./custom.min.css']
 })
 export class HomeComponent implements OnInit {
-
+tagID:String;
 eventModel:EventModel[];
 OrgEventModel:EventModel[];
  searchFilter:any;
@@ -22,9 +22,16 @@ OrgEventModel:EventModel[];
     ) { }
 ngOnInit() {
 	debugger;
+	this.tagID=localStorage.getItem('tagID');
 	if(this.authService.login())
 	{
+		if(this.tagID == 'O')
+		{
 		this.bindGrid();
+		}else if(this.tagID == 'S')
+		{
+			this.bindGridUniverties();
+		}
 		return;
 	}
 	else{
@@ -57,6 +64,7 @@ ngOnInit() {
       return false;
     });
   	var student=JSON.parse(this.authService.getStudent());
+	debugger;
 		//{{ksdf.Orgn_ID}}
 		this.authService.GetEventByOrgID(student.Orgn_ID).subscribe(org => {			
 			OrgData=org;
@@ -82,6 +90,55 @@ ngOnInit() {
 
  
 }
+
+ bindGridUniverties()
+  {
+	  	var modelData=[];
+		var UnivData=[];
+	    var filterEvent=[];
+    this.authService.getEvents().subscribe(event => {
+      modelData= event;
+	  for(var i=0;i<modelData.length;i++)
+	 {
+		  var m =this.dayDiff(modelData[i].StartDt);
+		  
+		  modelData[i].RemainDay=m;
+	 }
+	 this.eventModel=modelData;
+    },
+    //observable also returns error
+    err => {
+      console.log(err);
+      return false;
+    });
+  	var student=JSON.parse(this.authService.getStudent());
+	debugger;
+		//{{ksdf.Orgn_ID}}
+		this.authService.GetEventByUnivID(student.Univ_ID).subscribe(univ => {			
+			UnivData=univ;
+			 if(this.eventModel.length>0 && UnivData.length >0)
+  {
+	    for(var j=0; j < UnivData.length;j++)
+		  {
+			 for(var i=0;i < this.eventModel.length;i++)
+	          {
+				 // var m=this.eventModel[i];
+		         if(UnivData[j].EventID ==this.eventModel[i]._id)
+				{
+					filterEvent.push(this.eventModel[i]);
+					
+				}
+	          }
+		   }
+	 
+	  this.OrgEventModel=filterEvent;
+  }
+		});
+  
+
+ 
+}
+
 dayDiff(format){
 	
 	var oneDay = 24*60*60*1000; // hours*minutes*seconds*milliseconds

@@ -41,6 +41,7 @@ const UnivTranscationMapDetail = require('./routes/UnivTranscationMapDetail');
 const UnivTranscationApprovalDetail = require('./routes/UnivTranscationApprovalDetail');
 const AppRoleMaster = require('./routes/AppRoleMaster'); 
 const UnivTranscationApprovalHistory = require('./routes/UnivTranscationApprovalHistory'); 
+const EventUniversity = require('./routes/EventUniversity'); 
 
 //MIDDLEWARE
 app.use(cors());//run on diff port
@@ -84,6 +85,9 @@ app.use('/UnivTranscationMaskDetail', UnivTranscationMaskDetail);
 app.use('/UnivTranscationMapDetail', UnivTranscationMapDetail);
 app.use('/UnivTranscationApprovalDetail', UnivTranscationApprovalDetail);
 app.use('/UnivTranscationApprovalHistory', UnivTranscationApprovalHistory);
+
+app.use('/EventUniversity', EventUniversity);
+
 //app.use('/events', events);
 // app.use('/students', function(students, res, next) {
 // var _send = res.send;
