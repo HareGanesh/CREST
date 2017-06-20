@@ -641,7 +641,7 @@ OnPrevClick(input, count,li1, li2)
 		debugger;
       if(data.success){
         //this.flashMessage.show('Event has been registered', {cssClass: 'alert-success', timeout: 3000});
-        this.router.navigate(['/university']);
+        this.router.navigate(['/universitydashboard']);
       } else {
         //this.flashMessage.show('Something went wrong', {cssClass: 'alert-danger', timeout: 3000});
         this.router.navigate(['/EventInfo']);

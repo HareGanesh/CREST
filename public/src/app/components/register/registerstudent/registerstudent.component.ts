@@ -93,7 +93,7 @@ export class RegisterstudentComponent implements OnInit {
 		{
 		this.ErrorList.pop();
 		}
-	  this.authService.getStudentByEmail(this.model).subscribe(data => {
+	  this.authService.getUserByEmail(this.model).subscribe(data => {
 		   if(data != null)
 		   {
 			   this.ErrorList.push("Email id is duplicate");
@@ -117,7 +117,7 @@ export class RegisterstudentComponent implements OnInit {
 		{
 		this.UserNameErrorList.pop();
 		}
-	  this.authService.getStudentByUserName(this.model).subscribe(data => {
+	  this.authService.getUserByUserName(this.model).subscribe(data => {
 		   if(data != null)
 		   {
 			   this.UserNameErrorList.push("user name is duplicate");

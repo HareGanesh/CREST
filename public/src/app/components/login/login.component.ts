@@ -38,71 +38,81 @@ public model:Object;
 
   crestLogin(model)   
   {
-	this.authService.authenticateAppRoleMaster(model).subscribe(data => {
-		debugger;
+                this.authService.authenticateAppRoleMaster(model).subscribe(data => {
+                                debugger;
        if(data.success)
-	   {    
+                   {    
         //this.model.tagID=data.tagID;   
-		this.loadDashBoard(data.AppRoleMaster.TagID);
-        //this.router.navigate(['/university']);	    
+                                this.loadDashBoard(data);
+        //this.router.navigate(['/university']);                
        } 
-	   else 
-	   {
-		  
+                   else 
+                   {
+                                  
         this.flashMessage.show(data.msg, {
           cssClass: 'alert-danger',timeout: 5000});         
        }
     });
   }
 
-  loadDashBoard(tagID)
+  loadDashBoard(data)
    {
-     if(tagID=='S')
-	 {
-	  this.authService.authenticateStudent(this.model).subscribe(data => {
-        if(data.success)
-		{
-           this.authService.storeStudentData(data.token, data.student,tagID);
+     if(data.user.TagID=='C')
+                {
+                                   this.authService.storeStudentData(data.token, data.user,data.user.TagID);
+           this.flashMessage.show('You are now logged in', {
+           cssClass: 'alert-success', timeout: 5000});
+           this.router.navigate(['/']);
+         
+                 }
+    else if(data.user.TagID=='S')
+                {
+                  this.authService.authenticateStudent(this.model).subscribe(student => {
+        if(student.success)
+                                {
+           this.authService.storeStudentData(student.token, student.student,data.user.TagID);
            this.flashMessage.show('You are now logged in', {
            cssClass: 'alert-success', timeout: 5000});
            this.router.navigate(['/']);
         } 
-		else
-		{
-           this.flashMessage.show(data.msg, {
+                                else
+                                {
+           this.flashMessage.show(student.msg, {
            cssClass: 'alert-danger', timeout: 5000});
            this.router.navigate(['login']);
         }
           });
-	  }
-	  else if(tagID=='U')
-		  this.authService.authenticateUniversity(this.model).subscribe(data => {
-        if(data.success)
+                  }
+                  else if(data.user.TagID=='U')
+                  {
+                                  this.authService.authenticateUniversity(this.model).subscribe(univ => {
+        if(univ.success)
+                                {
+           this.authService.storeStudentData(univ.token, univ.university,data.user.TagID);
+           this.flashMessage.show('You are now logged in', {
+           cssClass: 'alert-success', timeout: 5000});
+           this.router.navigate(['/universitydashboard']);
+        } 
+                                else
+                                {
+           this.flashMessage.show(univ.msg, {
+           cssClass: 'alert-danger', timeout: 5000});
+           this.router.navigate(['login']);
+        }
+          });
+                  }
+	    else if(data.user.TagID=='UR')
+		  this.authService.authenticateUniversityRoleUser(this.model).subscribe(RoleUser => {
+        if(RoleUser.success)
 		{
-           this.authService.storeStudentData(data.token, data.university,tagID);
+           this.authService.storeStudentData(RoleUser.token, RoleUser.universityRoleUser,data.user.TagID);
            this.flashMessage.show('You are now logged in', {
            cssClass: 'alert-success', timeout: 5000});
            this.router.navigate(['/universitydashboard']);
         } 
 		else
 		{
-           this.flashMessage.show(data.msg, {
-           cssClass: 'alert-danger', timeout: 5000});
-           this.router.navigate(['login']);
-        }
-          });
-	    else if(tagID=='UR')
-		  this.authService.authenticateUniversityRoleUser(this.model).subscribe(data => {
-        if(data.success)
-		{
-           this.authService.storeStudentData(data.token, data.universityRoleUser,tagID);
-           this.flashMessage.show('You are now logged in', {
-           cssClass: 'alert-success', timeout: 5000});
-           this.router.navigate(['/universitydashboard']);
-        } 
-		else
-		{
-           this.flashMessage.show(data.msg, {
+           this.flashMessage.show(RoleUser.msg, {
            cssClass: 'alert-danger', timeout: 5000});
            this.router.navigate(['login']);
         }

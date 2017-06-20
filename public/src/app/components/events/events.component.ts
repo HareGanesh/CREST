@@ -42,7 +42,7 @@ export class EventsComponent implements OnInit {
 ngOnInit() 
 {	
 	  this.tagID=localStorage.getItem('tagID');
-	  if(this.tagID == 'S')
+	  if(this.tagID == 'S' || this.tagID == 'C')
 	  {
 		  this.orgOrUnivLabel = "University";
 	  }else if(this.tagID == 'O')

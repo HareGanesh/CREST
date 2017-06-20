@@ -31,6 +31,9 @@ ngOnInit() {
 		}else if(this.tagID == 'S')
 		{
 			this.bindGridUniverties();
+		}else if(this.tagID == 'C')
+		{
+			this.bindEvents();
 		}
 		return;
 	}
@@ -40,6 +43,45 @@ ngOnInit() {
 	} 
 	
   }
+  
+   approveEvent(id)
+  {
+	var  model=
+	  {
+         _id: ''  
+      }
+	  model._id=id;
+	  debugger;
+	  this.authService.approveEvent(model).subscribe(event => {
+		  if(event.success)
+		  {
+			  this.bindEvents();
+		  }
+	  });
+  } 
+  bindEvents()
+  {
+	var modelData=[];
+	var OrgData=[];
+	var filterEvent=[];
+    this.authService.getEvents().subscribe(event => {
+		debugger;
+      modelData= event.filter((E) => E.IsApproved == false);
+	  for(var i=0;i<modelData.length;i++)
+	 {
+		  var m =this.dayDiff(modelData[i].StartDt);		  
+		  modelData[i].RemainDay=m;
+	 }
+	 this.OrgEventModel=modelData;
+    },
+    //observable also returns error
+    err => {
+      console.log(err);
+      return false;
+    }); 
+
+ 
+   } 
   
   
 
@@ -97,7 +139,7 @@ ngOnInit() {
 		var UnivData=[];
 	    var filterEvent=[];
     this.authService.getEvents().subscribe(event => {
-      modelData= event;
+      modelData= event.filter((E) => E.IsApproved == true);
 	  for(var i=0;i<modelData.length;i++)
 	 {
 		  var m =this.dayDiff(modelData[i].StartDt);

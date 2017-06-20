@@ -73,6 +73,12 @@ module.exports.universityId = function(callback){
 
 	UniversityMaster.find("",callback).count();
 }
+
+module.exports.maxuniversityId = function(callback){	
+
+	UniversityMaster.find("",callback).sort({Univ_ID :-1}).limit(1);
+}
+
  module.exports.getUniversityById = function(id,callback){
 	const query = {_id: id};
 	UniversityMaster.findOne(query, callback);	

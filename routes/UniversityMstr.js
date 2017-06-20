@@ -4,6 +4,8 @@ const passport = require('passport');
 const jwt = require('jsonwebtoken');
 const config = require('../config/database');
 const univesityMaster = require('../models/UniversityMstr');
+const userLogin = require('../models/UserLogin'); 
+
 // const nodemailer =require('nodemailer');
 // const smtpTransport  =require('nodemailer-smtp-transport');
 // const SendMail = require('../models/SendMail');
@@ -96,51 +98,66 @@ router.post('/authenticateUniversity', (req, res, next) => {
 
 /// Register
 router.post('/register', (req, res, next) => {
-	
+                
 //sendMail(req);
-	
-	
+                
+  let userDetail = new userLogin(
+  {
+                                
+    PWD: req.body.Pwd,    
+    UserName:req.body.EmailID, 
+	EmailID:req.body.EmailID, 
+    Active:1,
+    TagID:'U'
+  });
   let university = new univesityMaster({
 
-  	Univ_Name: req.body.Univ_Name,
-  	EmailID: req.body.EmailID,
-  	Address: req.body.Address,
-  	Pwd: req.body.Pwd,
-    ContactNo: req.body.ContactNo,
-    UserName:req.body.EmailID,
-	Pwd:req.body.Pwd,	
-    Active:1,
-    Univ_ID:0
+                Univ_Name: req.body.Univ_Name,
+                EmailID: req.body.EmailID,
+                Address: req.body.Address,
+                Pwd: req.body.Pwd,
+				ContactNo: req.body.ContactNo,
+				UserName:req.body.EmailID,
+                Pwd:req.body.Pwd,        
+				Active:1,
+				Univ_ID:0
 
-  	});
+                });
   univesityMaster.getUniversityByName(req.body.Univ_Name, (err,Getuni)=>{
-	  console.log(Getuni);
-	 if(Getuni ==undefined)
-	 {
-		 univesityMaster.universityId((err,res2)=>{
-			university.Univ_ID=res2.length+1;
-			//console.log("coun" + cnt);
+                  console.log(Getuni);
+                if(Getuni ==undefined)
+                {
+                                univesityMaster.maxuniversityId((err,res2)=>{
+									console.log(res2);
+									if(res2.length > 0)
+									{
+                                        university.Univ_ID=res2[0].Univ_ID+1;
+									}
+                                                //console.log("coun" + cnt);
 
-		
-		   univesityMaster.addUnivesity(university, (err, univ)=> {
-	  
-  		if(err){
-			
+                                
+                                   univesityMaster.addUnivesity(university, (err, univ)=> {
+									userLogin.addUser(userDetail,(err,user)=>{
+                                                   if(err){res.json({success: false, msg:'Failed to register in userLogin'});}
+                                   });
+                                if(err){
+                                                
       res.json({success: false, msg:'Failed to register '});
-	  console.log(err);	
+                 console.log(err);            
     } else {
       res.json({success: true, msg:'University registered'});
     }
   });
-  		});
-	 }
-	 else
-	 {
-		  res.json({success: false, msg:'University already exists!'});
-	 }
+                                });
+                }
+                else
+                {
+                                  res.json({success: false, msg:'University already exists!'});
+                }
   });
 
 });
+
 
 router.get('/GetUniversityByID', (req, res) => {
 	console.log(req.headers);

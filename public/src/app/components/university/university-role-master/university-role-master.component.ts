@@ -55,7 +55,10 @@ model={
   {
 	  debugger;
 	   this.authService.addUniversityRole(this.model).subscribe(data => {
-		  
+		  if(data.success)
+		  {
+			  this.router.navigate(['/']);
+		  }
 		    },
     //observable also returns error
     err => {

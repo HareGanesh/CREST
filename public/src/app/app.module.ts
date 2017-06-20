@@ -56,7 +56,7 @@ const appRoutes: Routes = [
   {path:'eventinfo/:id', component: RegistereventComponent},
   {path: 'eventDetails/:id', component: EventsComponent },
 {path:'UniversityTransMapping', component: UniversityTransMappingComponent},
-{path: 'university', component: UniversityComponent },	
+{path: 'university/:id', component: UniversityComponent },	
   
   {path: 'universityrole', component: UniversityRoleMasterComponent },
 {path: 'universitydashboard', component: UniversitydashboardComponent },

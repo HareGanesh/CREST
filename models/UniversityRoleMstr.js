@@ -51,12 +51,17 @@ module.exports.getUniversityRoleMstrByName = function(CategoryName,callback){
 	UniversityRoleMaster.findOne(query,callback);}
 
 module.exports.getUniversityRoleMstrByUnivID = function(Univ_ID,callback){
-	const query = {Univ_ID: Univ_ID, Status:true}
+	const query = {Univ_ID: Univ_ID}
 	UniversityRoleMaster.find(query,callback);}
 
 module.exports.AddUniversityRoleMstr = function(newUniversityRoleMstr, callback){ 
 	console.log(newUniversityRoleMstr);
       newUniversityRoleMstr.save(callback);
+}
+
+module.exports.maxuniversityroleId = function(callback){	
+
+	UniversityRoleMaster.find("",callback).sort({Univ_RoleID :-1}).limit(1);
 }
 
 module.exports.getAllUniversityRole = function(callback){	

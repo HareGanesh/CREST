@@ -87,6 +87,12 @@ const EventSchema = mongoose.Schema({
 
    Modified_by:{
     type: String
+  },
+  
+  IsApproved:{
+    type: Boolean,
+	default:0
+  
   }
 
 });
@@ -113,4 +119,11 @@ module.exports.getAllEvent = function(callback){
 module.exports.addEvent = function(newEvent, callback){
   newEvent.save(callback);
 }
+
+module.exports.approveEvent = function(eventdata, callback){
+	console.log(eventdata._id );
+ var query = { _id: eventdata._id };
+Event.update(query, {IsApproved:1}, callback);
+
+} 
 

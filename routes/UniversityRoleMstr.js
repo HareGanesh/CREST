@@ -8,13 +8,20 @@ const UniversityRole = require('../models/UniversityRoleMstr');
 router.post('/AddUniversityRole', (req, res, next) => {
 	
 	 console.log(req.body);
+	 let maxRoleID=0;
+	 UniversityRole.maxuniversityroleId((err,res2)=>{
+									
+									if(res2.length > 0)
+									{
+                                        maxRoleID=res2[0].Univ_RoleID+1;
+									
 	for(var i=0;i<req.body.Univ_RoleName.length;i++)
 	{
-		let maxRoleID=0;
+		
   let newUniversityRole = new UniversityRole({
-  	Univ_ID: req.body.Univ_ID,
+  	Univ_ID: parseInt(req.body.Univ_ID),
   	Univ_RoleName: req.body.Univ_RoleName[i].Univ_RoleName,
-	Univ_RoleID:req.body.UnivRoleID,
+	Univ_RoleID:maxRoleID++,
   	Active: 1,  
 	Created_On: req.body.Created_On,
 	Created_by: req.body.Created_by,
@@ -22,17 +29,19 @@ router.post('/AddUniversityRole', (req, res, next) => {
     Modified_by: req.body.Modified_by
   	});
 	
-	  UniversityRole.getAllUniversityRole((err, roleCount)=> {
-		  newUniversityRole.Univ_RoleID=roleCount.length+1;
+	  // UniversityRole.getAllUniversityRole((err, roleCount)=> {
+		  // newUniversityRole.Univ_RoleID=roleCount.length+1;
 		  
 	   UniversityRole.AddUniversityRoleMstr(newUniversityRole, (err, UniversityRole)=> {
 	  console.log(newUniversityRole);
   	
   });
   	
-  });
+  //});
 
   }
+  }
+	 });
   res.json({success: true, msg:'UniversityRole Created.'});
 });
 

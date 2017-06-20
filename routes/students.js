@@ -6,6 +6,7 @@ const config = require('../config/database');
 const Student = require('../models/student');
 const UnivTranscationApprovalDetail = require('../models/UnivTranscationApprovalDetail');
 var bcrypt = require('bcrypt');
+const userLogin = require('../models/UserLogin'); 
 
 /// Register
 router.post('/register', (req, res, next) => {
@@ -49,7 +50,20 @@ router.post('/register', (req, res, next) => {
                                              
                                             }); 
                                 }
+	
+		let userDetail = new userLogin(
+		{
+                                
+        PWD: req.body.ConfirmPwd,    
+		UserName:req.body.username, 
+		EmailID:req.body.Email_ID,
+		Active:1,
+		TagID:'S'
+		});
 		
+		userLogin.addUser(userDetail,(err,user)=>{
+                    if(err){res.json({success: false, msg:'Failed to register in userLogin'});}
+                                   });
       res.json({success: true, msg:'Student registered'});
     }
   });

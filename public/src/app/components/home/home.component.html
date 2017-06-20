@@ -58,7 +58,7 @@
 							  <!-- <a href="../eventDetails/{{item.EventID}}" style="background-image: url('http://www.hackathon.io/assets/icns/avatar/event.png');"></a> -->
                             </div>
 							
-                            <div class="right">						
+                            <div class="right" style="width:80%">						
 
                               <h3><a [routerLink]="['/eventDetails/', item._id]">{{item.EventTitle}}</a> 
 							  
@@ -69,6 +69,9 @@
                               <p>{{item.Description}}...</p>
 							  
                             </div>
+							<div style="float:right;" *ngIf="tagID=='C'">
+							     <input type="button" value="Approve" class="btn btn-primary" (click)="approveEvent(item._id);"/>
+							  </div> 
                           </div>
                         </a>
                         

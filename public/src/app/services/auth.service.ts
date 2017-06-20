@@ -105,23 +105,24 @@ export class AuthService {
 	  return localStorage.getItem('currentUser');
   }
     
-  getStudentByEmail(student)
+  getUserByEmail(student)
   {
 	  debugger;
 	  let headers = new Headers();
   	headers.append('emailid',student.Email_ID);
 	console.log(student.Email_ID);
-	return this.http.get('http://localhost:3777/students/getStudentByEmail',{headers: headers})
+	return this.http.get('http://localhost:3777/UserLogin/getUserByEmail',{headers: headers})
                 .map(res => res.json());
   }
   
-  getStudentByUserName(student)
+  getUserByUserName(student)
   {
 	  let headers = new Headers();
   	headers.append('username',student.username);
-	return this.http.get('http://localhost:3777/students/getStudentByUserName',{headers: headers})
+	return this.http.get('http://localhost:3777/UserLogin/getUserByUserName',{headers: headers})
                 .map(res => res.json());
-  }
+  } 
+  
   
   getStudentByStudentID(student)
   {
@@ -306,6 +307,14 @@ getOrganizations()
   	.map(res => res.json());
   }
   
+  approveEvent(event){
+                let headers = new Headers();
+                headers.append('Content-Type','application/json');
+
+                return this.http.post('http://localhost:3777/events/ApproveEvent', event,{headers: headers})
+                .map(res => res.json());
+  }
+  
   getAllTranscationType()
   {
 	  debugger;
@@ -454,13 +463,13 @@ authenticateUser(user){
                 .map(res => res.json());
    }
    
-    authenticateAppRoleMaster(user){
+   authenticateAppRoleMaster(user){
 	 debugger;
     let headers = new Headers();
     headers.append('Content-Type','application/json');
-    return this.http.post('http://localhost:3777/AppRoleMaster/authenticate', user,{headers: headers})
+    return this.http.post('http://localhost:3777/UserLogin/authenticate', user,{headers: headers})
     .map(res => res.json());
-  }
+   } 
   
   getAllUnivTranscationApprovalDetail(){
                 return this.http.get('http://localhost:3777/UnivTranscationApprovalDetail/getAllUnivTranscationApprovalDetail')

@@ -138,6 +138,19 @@ router.post('/AddEvent', (req, res, next) => {
   });
 });
 
+router.post('/ApproveEvent', (req, res, next) => {
+	console.log("route" + req.body);
+  Event.approveEvent(req.body,(err,Event)=>{
+    if(err) {             
+                                throw err;
+                }
+     else
+                  {                            
+                                  res.json({success: true, msg:'Event Approved.'});
+                  }
+  });  
+}); 
+
 router.get('/GetEventByID', (req, res) => {
 	console.log(req.headers);
   var EventID = req.headers["id"];  

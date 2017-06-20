@@ -4,6 +4,7 @@ const passport = require('passport');
 const jwt = require('jsonwebtoken');
 const config = require('../config/database');
 const UniversityRoleUser = require('../models/UniversityRoleUser');
+const userLogin = require('../models/UserLogin'); 
 
 //var bcrypt = require('bcrypt');
 
@@ -24,6 +25,18 @@ router.post('/register', (req, res, next) => {
     Univ_ID: req.body.Univ_ID,
     Role_ID: req.body.RoleID
   	});
+	
+	let userDetail = new userLogin(
+		{
+                                
+        PWD: req.body.Password,    
+		UserName:req.body.username, 
+		EmailID:req.body.Email_ID, 
+		Active:1,
+		TagID:'UR'
+		});
+		
+		
 
   UniversityRoleUser.addUniversityRoleUser(newUniversityRoleUser, (err, UniversityRoleUser)=> {
   		if(err){
@@ -31,7 +44,9 @@ router.post('/register', (req, res, next) => {
       res.json({success: false, msg:'Failed to register '});
 	 	
     } else {
-		
+		userLogin.addUser(userDetail,(err,user)=>{
+                    if(err){res.json({success: false, msg:'Failed to register in userLogin'});}
+                                   });
       res.json({success: true, msg:'UniversityRoleUser registered'});
     }
   });
