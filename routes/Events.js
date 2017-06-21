@@ -149,7 +149,20 @@ router.post('/ApproveEvent', (req, res, next) => {
                                   res.json({success: true, msg:'Event Approved.'});
                   }
   });  
-}); 
+});
+
+router.post('/RejectEvent', (req, res, next) => {
+	console.log("route" + req.body);
+  Event.rejectEvent(req.body,(err,Event)=>{
+    if(err) {             
+                                throw err;
+                }
+     else
+                  {                            
+                                  res.json({success: true, msg:'Event Approved.'});
+                  }
+  });  
+});  
 
 router.get('/GetEventByID', (req, res) => {
 	console.log(req.headers);

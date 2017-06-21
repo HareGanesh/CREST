@@ -58,7 +58,24 @@ ngOnInit() {
 			  this.bindEvents();
 		  }
 	  });
-  } 
+  }
+  
+  rejectEvent(id)
+  {
+	var  model=
+	  {
+         _id: ''  
+      }
+	  model._id=id;
+	  debugger;
+	  this.authService.rejectEvent(model).subscribe(event => {
+		  if(event.success)
+		  {
+			  this.bindEvents();
+		  }
+	  });
+  }
+  
   bindEvents()
   {
 	var modelData=[];
@@ -66,7 +83,7 @@ ngOnInit() {
 	var filterEvent=[];
     this.authService.getEvents().subscribe(event => {
 		debugger;
-      modelData= event.filter((E) => E.IsApproved == false);
+      modelData= event.filter((E) => E.IsApproved == false || E.IsRejected == false);
 	  for(var i=0;i<modelData.length;i++)
 	 {
 		  var m =this.dayDiff(modelData[i].StartDt);		  
@@ -139,7 +156,7 @@ ngOnInit() {
 		var UnivData=[];
 	    var filterEvent=[];
     this.authService.getEvents().subscribe(event => {
-      modelData= event.filter((E) => E.IsApproved == true);
+      modelData= event.filter((E) => E.IsApproved == true && E.IsRejected == false);
 	  for(var i=0;i<modelData.length;i++)
 	 {
 		  var m =this.dayDiff(modelData[i].StartDt);

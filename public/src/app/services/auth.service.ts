@@ -315,6 +315,14 @@ getOrganizations()
                 .map(res => res.json());
   }
   
+  rejectEvent(event){
+                let headers = new Headers();
+                headers.append('Content-Type','application/json');
+
+                return this.http.post('http://localhost:3777/events/RejectEvent', event,{headers: headers})
+                .map(res => res.json());
+  }
+  
   getAllTranscationType()
   {
 	  debugger;

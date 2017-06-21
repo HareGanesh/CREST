@@ -116,6 +116,10 @@ router.post('/authenticate', (req, res, next) => {
 			  res.json({success: false, msg:'Failed to register in userLogin'});
 		  }else 
 		  {
+			  if(req.body.TagID == 'C')
+			  {
+				  return res.json({success: true, msg: 'Password changed.'});
+			  }
 			  if(req.body.TagID == 'U')
 			  {
 			  univesityMaster.updatePassword(userDetail,(err,user)=>
@@ -128,7 +132,7 @@ router.post('/authenticate', (req, res, next) => {
 					//sendMail();
 			  return res.json({success: true, msg: 'Password changed.'});   
 				}
-        });
+				});
 			  }else if(req.body.TagID == 'S')
 			  {
 			  Student.updatePassword(userDetail,(err,user)=>
@@ -141,7 +145,7 @@ router.post('/authenticate', (req, res, next) => {
 					//sendMail();
 			  return res.json({success: true, msg: 'Password changed.'});   
 				}
-        });
+				});
 			  }else if(req.body.TagID == 'UR')
 			  {
 			  UniversityRoleUser.updatePassword(userDetail,(err,user)=>
@@ -201,14 +205,14 @@ var sendMail= function(msgBody)
 var transporter = nodemailer.createTransport({
    service: "Gmail",  // sets automatically host, port and connection security settings
    auth: {
-       user: "anay9213@gmail.com",
+       user: "ust smtp server",
        pass: ""// to passowrd access
    }
 });
 // setup email data with unicode symbols
 let mailOptions = {
     from: 'anay9213@gmail.com', // sender address
-    to: 'anay9213@gmail.com', // list of receivers
+    to: 'amitkhandelwal.eca@gmail.com', // list of receivers
     subject: 'CREST TEST MAIL ', // Subject line
     text: 'Hello world ?', // plain text body
     html: '<b>Hello world ?</b>' // html body

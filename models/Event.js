@@ -93,6 +93,12 @@ const EventSchema = mongoose.Schema({
     type: Boolean,
 	default:0
   
+  },
+  
+  IsRejected:{
+    type: Boolean,
+	default:0
+  
   }
 
 });
@@ -127,3 +133,9 @@ Event.update(query, {IsApproved:1}, callback);
 
 } 
 
+module.exports.rejectEvent = function(eventdata, callback){
+	console.log(eventdata._id );
+ var query = { _id: eventdata._id };
+Event.update(query, {IsRejected:1}, callback);
+
+} 
