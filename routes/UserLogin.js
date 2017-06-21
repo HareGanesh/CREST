@@ -1,11 +1,16 @@
 const express = require('express');
+const nodemailer = require('nodemailer');
 const router = express.Router();
 const passport = require('passport');
 const jwt = require('jsonwebtoken');
 const config = require('../config/database');
 const UserLogin = require('../models/UserLogin');
-
-
+const univesityMaster = require('../models/UniversityMstr');
+const Student = require('../models/student');
+const UniversityRoleUser = require('../models/UniversityRoleUser');
+ const mailSender = require('../models/mailSender');
+ 
+ 
 // router.post('/AddUser', (req, res, next) => {
 	
 	 // console.log(req.body);
@@ -71,6 +76,91 @@ router.post('/authenticate', (req, res, next) => {
       }
     });
   });
+  
+  router.post('/authenticateEmailAndPwd', (req, res, next) => {
+  const emailid = req.body.Email_ID;
+  const Pwd = req.body.OldPwd;
+  console.log(req.body);
+  UserLogin.getUserByEmail(emailid, (err,user)=>{
+    if(err) throw err;
+    if(!user){
+      return res.json({success: false, msg: 'User not found!'})
+    }	
+	console.log(user);
+    if(Pwd == user.PWD)
+	{   
+		return res.json({success: true, msg: 'Valid user'});    
+
+      }
+	  else {
+        return res.json({success: false, msg: 'Wrong password'});
+      }
+    });
+  });
+  
+  router.post('/updatePassword', (req, res, next) => {
+	
+	
+	
+		let userDetail = new Object(
+		{
+                                
+        PWD: req.body.Pwd,
+		EmailID:req.body.Email_ID	
+		});
+		
+		UserLogin.updatePassword(userDetail,(err,user)=>
+		{
+          if(err)
+		  {
+			  res.json({success: false, msg:'Failed to register in userLogin'});
+		  }else 
+		  {
+			  if(req.body.TagID == 'U')
+			  {
+			  univesityMaster.updatePassword(userDetail,(err,user)=>
+				{
+				if(err)
+				{
+			  res.json({success: false, msg:'Failed to register in userLogin'});
+				}else 
+				{
+					//sendMail();
+			  return res.json({success: true, msg: 'Password changed.'});   
+				}
+        });
+			  }else if(req.body.TagID == 'S')
+			  {
+			  Student.updatePassword(userDetail,(err,user)=>
+				{
+				if(err)
+				{
+			  res.json({success: false, msg:'Failed to register in userLogin'});
+				}else 
+				{
+					//sendMail();
+			  return res.json({success: true, msg: 'Password changed.'});   
+				}
+        });
+			  }else if(req.body.TagID == 'UR')
+			  {
+			  UniversityRoleUser.updatePassword(userDetail,(err,user)=>
+				{
+				if(err)
+				{
+			  res.json({success: false, msg:'Failed to register in userLogin'});
+				}else 
+				{
+					//sendMail();
+			  return res.json({success: true, msg: 'Password changed.'});   
+				}
+        });
+			  }
+		  }
+        });
+      
+    
+});
 
 
 router.get('/getUserByUserName', (req, res, next) => {
@@ -102,5 +192,35 @@ router.get('/getUserByEmail', (req, res, next) => {
                   }
   });  
 }); 
+
+
+var sendMail= function(msgBody)
+{
+	//console.log("Mail body" + msgBody);
+		// create reusable transporter object using the default SMTP transport
+var transporter = nodemailer.createTransport({
+   service: "Gmail",  // sets automatically host, port and connection security settings
+   auth: {
+       user: "anay9213@gmail.com",
+       pass: ""// to passowrd access
+   }
+});
+// setup email data with unicode symbols
+let mailOptions = {
+    from: 'anay9213@gmail.com', // sender address
+    to: 'anay9213@gmail.com', // list of receivers
+    subject: 'CREST TEST MAIL ', // Subject line
+    text: 'Hello world ?', // plain text body
+    html: '<b>Hello world ?</b>' // html body
+};
+
+// send mail with defined transport object
+transporter.sendMail(mailOptions, (error, info) => {
+    if (error) {
+        return console.log(error);
+    }
+    console.log('Message  sent: %s', info.messageId, info.response);
+});
+};
 
 module.exports = router;

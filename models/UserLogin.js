@@ -70,6 +70,11 @@ module.exports.getUserLogin = function(username,callback){
 	UserLogin.findOne(query,callback);
 }
 
+module.exports.updatePassword = function(user, callback){ 
+var query = { EmailID	: user.EmailID };
+UserLogin.update(query, {PWD: user.PWD}, callback);
+}
+
 
 module.exports.addUser = function(user, callback){	
 	user.save( callback);

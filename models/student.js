@@ -147,4 +147,9 @@ Student.update(query, {Student_Heading: newStudent.Student_Heading,Student_Bio:n
 module.exports.setIsApproved = function(Student_ID, callback){ 
 var query = { Student_ID: Student_ID };
 Student.update(query, {Is_Approved: 1}, callback);
-} 
+}
+
+module.exports.updatePassword = function(user, callback){ 
+var query = { Email_ID	: user.EmailID };
+Student.update(query, {pwd: user.PWD}, callback);
+}

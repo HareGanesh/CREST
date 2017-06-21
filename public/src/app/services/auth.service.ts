@@ -402,6 +402,23 @@ authenticateUser(user){
     .map(res => res.json());
   }
   
+  authenticateEmailAndPwd(user)
+  {
+	let headers = new Headers();
+    headers.append('Content-Type','application/json');
+    return this.http.post('http://localhost:3777/UserLogin/authenticateEmailAndPwd', user,{headers: headers})
+    .map(res => res.json());
+  }
+  
+  updatePassword(model)
+  {
+	let headers = new Headers();
+    headers.append('Content-Type','application/json');
+	model.TagID = localStorage.getItem('tagID');
+    return this.http.post('http://localhost:3777/UserLogin/updatePassword', model,{headers: headers})
+    .map(res => res.json());
+  }
+  
   authenticateUniversity(university){
     let headers = new Headers();
     headers.append('Content-Type','application/json');

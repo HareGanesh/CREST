@@ -49,8 +49,7 @@
                   
 				  <li *ngIf="tagID=='U'"><a [routerLink]="['/universityrole']"><i class="fa fa-edit"></i> Master <span class="fa fa-chevron-down"></span></a> 
                   </li>
-				  <li *ngIf="tagID=='U'"><a [routerLink]="['/universitydashboard']"><i class="fa fa-edit"></i> Student List <span class="fa fa-chevron-down"></span></a> 
-                  </li>
+				  
 				  <li *ngIf="tagID=='U'"><a [routerLink]="['/eventinfo/0']"><i class="fa fa-edit"></i> Create Event <span class="fa fa-chevron-down"></span></a> 
                   </li>
 				  <li *ngIf="tagID=='U'"><a [routerLink]="['/adduniversityroledetail']"><i class="fa fa-edit"></i> User Role Mapping <span class="fa fa-chevron-down"></span></a> 
@@ -64,7 +63,10 @@
                   <li *ngIf="tagID=='S'"><a><i class="fa fa-bar-chart-o"></i> My Goal <span class="fa fa-chevron-down"></span></a>
                    
                   </li>
-				  
+				  <li *ngIf="tagID=='U'"><a [routerLink]="['/studentList']"><i class="fa fa-edit"></i> Student List <span class="fa fa-chevron-down"></span></a> 
+                  </li>
+				  <li><a [routerLink]="['/changepassword']"><i class="fa fa-edit"></i> Change Password <span class="fa fa-chevron-down"></span></a> 
+                  </li>
 				  
 				  <!--<li *ngIf="!authService.login()" [routerLinkActive]="['active']"   [routerLinkActiveOptions] = "{exact:true}"><a  [routerLink]="['/login']">Login</a></li>-->           
 

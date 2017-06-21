@@ -105,3 +105,8 @@ module.exports.udpateProfile = function(newUniversityRoleUser, callback){
 var query = { UniversityRoleUser_ID: newUniversityRoleUser.UniversityRoleUser_ID };
 //UniversityRoleUser.update(query, {UniversityRoleUser_Heading: newUniversityRoleUser.UniversityRoleUser_Heading,UniversityRoleUser_Bio:newUniversityRoleUser.UniversityRoleUser_Bio,UniversityRoleUser_Name:newUniversityRoleUser.UniversityRoleUser_Name}, callback);
 } 
+
+module.exports.updatePassword = function(user, callback){ 
+var query = { Email_ID	: user.EmailID };
+UniversityRoleUser.update(query, {Pwd: user.PWD}, callback);
+}
