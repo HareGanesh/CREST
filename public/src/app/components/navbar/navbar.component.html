@@ -41,6 +41,8 @@
                   </li>
 				  <li *ngIf="tagID=='C'"><a [routerLink]="['/universityrole']"><i class="fa fa-edit"></i> University Role Mapping <span class="fa fa-chevron-down"></span></a> 
                   </li>
+				  <li *ngIf="tagID=='C'"><a [routerLink]="['/UniversityTransMapping']"><i class="fa fa-home"></i> UniversityTransMapping <span class="fa fa-chevron-down"></span></a>                 
+                  </li>
 				   <li *ngIf="tagID=='S'"><a [routerLink]="['/']"><i class="fa fa-home"></i> Home <span class="fa fa-chevron-down"></span></a>                 
                   </li>
 				 
@@ -123,7 +125,7 @@
                     <span class=" fa fa-angle-down"></span>
                   </a>
                   <ul class="dropdown-menu dropdown-usermenu pull-right">
-                    <li><a data-toggle="modal" data-target="#ProfileModal"> Profile</a></li>                  
+                    <li><a > Profile</a></li>                  
                     <li *ngIf="authService.login()" [routerLinkActive]="['active']"   [routerLinkActiveOptions] = "{exact:true}"><a href="login.html" (click)="onLogoutClick()"><i class="fa fa-sign-out pull-right"></i> Log Out</a></li> 
                   </ul>
                 </li>
