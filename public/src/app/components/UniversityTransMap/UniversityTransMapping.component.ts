@@ -237,7 +237,7 @@ submitted = false;
     // });
 	
 	
-	// Load sub categories
+	// Load roles
 	this.authService.getUniversityRoles().subscribe(data => {
 		   for(let i=0; i< data.length; i++)
 			   if(data.length > 0)

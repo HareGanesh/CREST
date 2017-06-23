@@ -209,7 +209,7 @@ return diffDays;
 }
 
 public open() {
-	
+	debugger;
 	if(this.searchFilter !=undefined && this.searchFilter !='')
 	{
 	var modelData=this.eventModel;
@@ -217,6 +217,8 @@ public open() {
 	var filterData=[];
 	var orgFilterData=[];
 	
+	if(this.tagID == '0' || this.tagID == 'S')
+	{
 	  for(var i=0;i<modelData.length;i++)
 	 {
 		  if(modelData[i].Location.toString().toLowerCase().indexOf(this.searchFilter.toLowerCase())!=-1 || modelData[i].EventTitle.toString().toLowerCase().indexOf(this.searchFilter.toLowerCase())!=-1)
@@ -225,6 +227,7 @@ public open() {
 		  }
 	 }
 	 this.eventModel=filterData;
+	}
 	 
 	 for(var i=0;i<orgData.length;i++)
 	 {
@@ -238,7 +241,20 @@ public open() {
 	}
 	else
 	{
+		if(this.tagID == 'C')
+		{
+		this.bindEvents();
+		}
+		
+		if(this.tagID == 'O')
+		{
 		this.bindGrid();
+		}
+		
+		if(this.tagID == 'S')
+		{
+		this.bindGridUniverties();
+		}
 	}
     //alert(filterData);
   }

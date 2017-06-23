@@ -50,7 +50,7 @@
 </li>
 
 <li #fifthLI>
-<a href="#OrganizationsTab" data-toggle="tab" [class.disabled]="isDisabled()">{{orgOrUnivLabel}}</a>
+<a href="#OrganizationsTab" data-toggle="tab" [class.disabled]="isDisabled()">Invite</a>
 </li>
 
 
@@ -365,15 +365,15 @@
 
 <div id="OrganizationsTab" class="tab-pane fade ">
 
-<div class="AddMoreDiv" *ngIf="tagID=='O'">
-<label>Please invite:</label>
+<div class="AddMoreDiv">
+<label style="margin-right:10px;">Please invite Organizations:</label>
 
 <ss-multiselect-dropdown id ="orgn" name="Organizations" [options]="myOptions" [texts]="myTexts" (ngModelChange)="onOrganizationChange($event)" [settings]="mySettings" [ngModel]="model.Organizations" style="width:200px !important;"></ss-multiselect-dropdown>
 
 </div>
 
-<div class="AddMoreDiv" *ngIf="tagID=='U'">
-<label>Please invite:</label>
+<div class="AddMoreDiv">
+<label style="margin-right:23px;">Please invite Universities:</label>
 
 <ss-multiselect-dropdown id ="univ" name="Universities" [options]="myUnivOptions" [texts]="myUnivTexts" (ngModelChange)="onUniversityChange($event)" [settings]="mySettings" [ngModel]="model.Universities" style="width:200px !important;"></ss-multiselect-dropdown>
 

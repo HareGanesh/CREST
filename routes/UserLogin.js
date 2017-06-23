@@ -205,8 +205,8 @@ var sendMail= function(msgBody)
 var transporter = nodemailer.createTransport({
    service: "Gmail",  // sets automatically host, port and connection security settings
    auth: {
-       user: "ust smtp server",
-       pass: ""// to passowrd access
+       user: "amitkhandelwal.eca@gmail.com",
+       pass: "patodia@25"// to passowrd access
    }
 });
 // setup email data with unicode symbols
@@ -216,6 +216,7 @@ let mailOptions = {
     subject: 'CREST TEST MAIL ', // Subject line
     text: 'Hello world ?', // plain text body
     html: '<b>Hello world ?</b>' // html body
+	
 };
 
 // send mail with defined transport object
