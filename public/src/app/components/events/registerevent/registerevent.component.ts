@@ -147,6 +147,7 @@ public EventTypes = [
 	EventRegisterEndDt:'',
     EventType:'0',
     POCRequired:'No',
+	TotalAllowedParticipant:0,
     POCDeadLine:'',
     Location:'',
     Status:'Yes',
@@ -509,6 +510,11 @@ checkValidation()
 	if(this.model.EventTitle == "")
 	{
 		this.ErrorList.push("Event title is required");
+	}
+	
+	if(this.model.TotalAllowedParticipant == 0)
+	{
+		this.ErrorList.push("Total Allowed Participant is required");
 	}
 
 	if(this.model.Description == "")

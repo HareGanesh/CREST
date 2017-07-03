@@ -2,6 +2,9 @@ import { Injectable } from '@angular/core';
 import { Http, Headers} from '@angular/http';
 import 'rxjs/add/operator/map';
 import { tokenNotExpired } from 'angular2-jwt';
+import 'rxjs/add/operator/timeout'
+
+
 
 @Injectable()
 export class AuthService {
@@ -402,6 +405,16 @@ let headers = new Headers();
 	return this.http.get('http://localhost:3777/EventUniversity/getEventUniversityByUnivID',{headers: headers})
                 .map(res => res.json());
    }
+   
+   getAllEventUniversityByUnivID(id){
+	debugger;
+	let headers = new Headers();
+  	headers.append('id',id);
+	return this.http.get('http://localhost:3777/EventUniversity/getAllEventUniversityByUnivID',{headers: headers})
+                .map(res => res.json());
+   }
+   
+   
 
 authenticateUser(user){
     let headers = new Headers();
@@ -509,6 +522,14 @@ getAllUnivTranscationApprovalDetailByUnivIDAndMaskID(univID, maskID){
                 .map(res => res.json());
 }
 
+getAllUnivTranscationEventApprovalDetailByUnivIDAndMaskID(univID, maskID){
+				let headers = new Headers();
+                headers.append('univid',univID);
+				headers.append('maskid',maskID);
+                return this.http.get('http://localhost:3777/UnivTranscationEventApprovalDetail/getAllUnivTranscationEventApprovalDetailByUnivID',{headers: headers})
+                .map(res => res.json());
+}
+
   addUniversityTransApprovalHistory(model, universityTransApprovalHistory, TransApprovalMapping){
                 let headers = new Headers();
                 headers.append('Content-Type','application/json');
@@ -520,5 +541,96 @@ getAllUnivTranscationApprovalDetailByUnivIDAndMaskID(univID, maskID){
                 return this.http.post('http://localhost:3777/UnivTranscationApprovalHistory/AddUnivTranscationApprovalHistory', model,{headers: headers})
                 .map(res => res.json());
   }
+  
+  addUniversityTransEventApprovalHistory(model, universityTransEventApprovalHistory, TransEventApprovalMapping){
+                let headers = new Headers();
+                headers.append('Content-Type','application/json');
+				if(TransEventApprovalMapping.length > 0)
+				model.TransEventApprovalMapping = TransEventApprovalMapping;//.sort(x=>x.Priority))[TransEventApprovalMapping.length-1];	
+			    model.universityApprovalHistory = universityTransEventApprovalHistory;
+				
+				//UnivTranscationApprovalHistory/AddUnivTranscationApprovalHistory is temporary domain
+                return this.http.post('http://localhost:3777/UnivTranscationEventApprovalHistory/AddUnivTranscationEventApprovalHistory', model,{headers: headers})
+				.timeout(3000)
+                .map(res => res.json());
+  }
+  
+  // Event approval
+  
+  getMaxTranEventApprovalID()
+  {
+	  debugger;
+	  return this.http.get('http://localhost:3777/UnivTranscationEventApprovalDetail/getMaxTransApprovalID')
+  	.map(res => res.json());
+  }
+  
+  getMaxTransEventApprovalHistoryID()
+  {
+	  debugger;
+	  return this.http.get('http://localhost:3777/UnivTranscationEventApprovalHistory/getMaxTransEventApprovalHistoryID')
+  	.map(res => res.json());
+  }
+  
+  getMaxTranEventApprovalNumberID()
+  {
+	  debugger;
+	  return this.http.get('http://localhost:3777/UnivTranscationEventApprovalDetail/getMaxTransApprovalNumberID')
+  	.map(res => res.json());
+  }
+  
+  getEventStudentApproved()
+  {
+	debugger;
+    //let headers = new Headers();
+    //headers.append('eventid',eventid);
+    return this.http.get('http://localhost:3777/EventStudent/getEventStudentApproved')
+     .map(res => res.json());
+  }
+  
+  GetApprovedEventStudentByEventID(eventId)
+  {
+	debugger;
+    let headers = new Headers();
+    headers.append('eventid',eventId);
+    return this.http.get('http://localhost:3777/EventStudent/GetApprovedEventStudentByEventID', {headers:headers})
+     .map(res => res.json());
+  }
+  
+  addUniversityTransEventApprovalDetail(TransMapping){	 
+  	let headers = new Headers();
+  	headers.append('Content-Type','application/json');
+	if(TransMapping.length > 0)
+    TransMapping = (TransMapping.sort(x=>x.Priority))[TransMapping.length-1];	  
+    //students/register is temporary domain
+  	return this.http.post('http://localhost:3777/UnivTranscationEventApprovalDetail/AddUnivTranscationEventApprovalDetail', TransMapping,{headers: headers})
+  	.map(res => res.json());
+  }
+  
+  addIntoEventStudent(eventStudent){	 
+  	let headers = new Headers();
+  	headers.append('Content-Type','application/json');
+		  
+    //students/register is temporary domain
+  	return this.http.post('http://localhost:3777/EventStudent/EventStudent', eventStudent,{headers: headers})
+  	.map(res => res.json());
+  }
+  
+  GetEventStudentByEventIDAndStudentID(eventID, studentID)
+  {
+	  let headers = new Headers();
+                headers.append('eventid',eventID);
+				headers.append('studentid',studentID);
+                return this.http.get('http://localhost:3777/EventStudent/getEventStudentByEventIDAndStudentID',{headers: headers})
+                .map(res => res.json());
+  }
+  
+  // GetEventStudentByEventIDAndStudentID(eventID, studentID)
+  // {
+	  // let headers = new Headers();
+                // headers.append('eventid',eventID);
+				// headers.append('studentid',studentID);
+                // return this.http.get('http://localhost:3777/EventStudent/getEventStudentByEventIDAndStudentIDWithStudent',{headers: headers})
+                // .map(res => res.json());
+  // }
 
 }

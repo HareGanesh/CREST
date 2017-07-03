@@ -94,6 +94,21 @@
           Event Description is required
         </div>
 	</div>
+	
+	<label>Total no of participant <span class="red">*</span></label>
+	<div class="input-group">
+     <span class="input-group-addon"><i class="fa fa-address-book"></i></span>
+		
+		<input required type="text" [(ngModel)]="model.TotalAllowedParticipant" name="TotalAllowedParticipant" ngControl="TotalAllowedParticipant"  class="form-control" placeholder="Number"
+		autofocus="true" id="#TotalAllowedParticipant" #TotalAllowedParticipant="ngModel" pattern="^[0-9]+$">
+		<div [hidden]="TotalAllowedParticipant.valid || TotalAllowedParticipant.pristine"
+             class="alert alert-danger">
+			 <div [hidden]="!TotalAllowedParticipant.hasError('required')">Total number of participant allowed is required</div>
+			   <div [hidden]="!TotalAllowedParticipant.hasError('pattern')">Only numbers allowed in Total number of participant field.		 
+			   </div>
+          
+        </div>	
+	</div>
 
  <label>Event Logo <span class="red">*</span></label>
 	<div class="input-group">

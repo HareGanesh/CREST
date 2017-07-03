@@ -4,6 +4,7 @@ const passport = require('passport');
 const jwt = require('jsonwebtoken');
 const config = require('../config/database');
 const EventUniversity = require('../models/EventUniversity');
+const Event = require('../models/Event');
 
 router.post('/EventUniversity', (req, res, next) => {
 	
@@ -126,6 +127,46 @@ router.get('/getEventUniversityByUnivID', (req, res) => {
      else
 	  {		 
 		  res.json(EventUniversity);
+	  }
+  });  
+}); 
+
+router.get('/getAllEventUniversityByUnivID', (req, res) => {
+  var UniversityID = req.headers["id"];  
+  //Array<Object> eventlist = new Array<Object>();
+  let eventlist = [];
+ // eventlist: Array<Object> = [];
+  console.log(UniversityID);
+  EventUniversity.getEventUniversityByUnivID(UniversityID, (err,EventUniversity)=>{
+    if(err) {
+		throw err;		
+	}
+     else
+	  {		 for(let i=0; i<EventUniversity.length;i++)
+		  {
+          Event.getEventById(EventUniversity[i].EventID, (err,evt)=>{
+			if(err) {
+				throw err;		
+			}
+			else
+			{
+				//console.log(evt);
+				eventlist.push(evt);
+				//console.log("lit......");
+				console.log(eventlist);
+			}
+				
+		  });
+		  }
+		 
+		 console.log("lit after");
+		 console.log(eventlist);
+		 console.log(eventlist.length);
+		 // res.json(EventUniversity);
+		 if(eventlist.length == EventUniversity.length)
+		 {
+		 res.json(eventlist);
+		 }
 	  }
   });  
 }); 

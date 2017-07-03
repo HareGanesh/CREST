@@ -39,9 +39,9 @@ import { UniversitydashboardComponent } from './components/universitydashboard/u
 import {TooltipModule} from "ngx-tooltip";
 import { UniversityroleComponent } from './components/universityrole/universityrole.component';
 import { StudentListComponent } from './components//student-list/student-list.component';
-import { ChangepasswordComponent } from './components/changepassword/changepassword.component'; 
-
-
+import { ChangepasswordComponent } from './components/changepassword/changepassword.component';
+import { EventstudentapprovallistComponent } from './components/universitydashboard/eventstudentapprovallist/eventstudentapprovallist.component'; 
+import {AccordionModule} from "ng2-accordion";
 
 const appRoutes: Routes = [
 
@@ -63,6 +63,7 @@ const appRoutes: Routes = [
 {path: 'universitydashboard', component: UniversitydashboardComponent },
 {path: 'adduniversityroledetail', component: UniversityroleComponent },
 {path: 'changepassword', component: ChangepasswordComponent },
+	{path:'eventstudentapprovallist', component: EventstudentapprovallistComponent}
   // {path:'eventinfo/:id', component: RegistereventComponent},
   // {path: 'eventDetails/:id', component: EventsComponent }	
 
@@ -93,7 +94,8 @@ const appRoutes: Routes = [
 	UniversitydashboardComponent,
 	UniversityroleComponent,
 	StudentListComponent,
-	ChangepasswordComponent
+	ChangepasswordComponent,
+	EventstudentapprovallistComponent
 	 
 
   ],
@@ -104,7 +106,8 @@ const appRoutes: Routes = [
     RouterModule.forRoot(appRoutes),
     FlashMessagesModule,
 	MultiselectDropdownModule,
-	TooltipModule
+	TooltipModule,
+	AccordionModule
   ],
   providers: [ValidateService, AuthService, AuthGuard],
   bootstrap: [AppComponent]

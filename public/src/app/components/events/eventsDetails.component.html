@@ -13,6 +13,9 @@
 <div class="twelve columns">
 <div class="pic left" style="background-image: url('http://hackathon.io.s3.amazonaws.com/profiles/images/000/082/329/thumb/oculus_rift_3.jpg?1489763175');"></div>
 <div class="wrapper left">
+<a id="backBtn" class="big-red-button" *ngIf="tagID=='UR'" style="margin-top:15px;" [routerLink]="['/eventstudentapprovallist']">Back To List</a>
+<a id="backBtn" class="big-red-button" *ngIf="tagID=='C'" style="margin-top:15px;" [routerLink]="['/']">Back To List</a>
+<a id="backBtn" class="big-red-button" *ngIf="tagID=='S'" style="margin-top:15px;" [routerLink]="['/']">Back To List</a>
 <div class="info">
 <h1 class="title">{{eventDetails.EventTitle}}</h1>
 <p class="heading">{{eventDetails.Description}}...</p>
@@ -81,8 +84,14 @@
 
 <div class="eventcheck border border2">
 <div class="ebgins">
-<div class="joinEvent">
-<a href="#" class="big-red-button">JOIN EVENT</a>
+<div class="joinEvent" *ngIf="tagID == 'S'">
+
+<div class="joinEvent" *ngIf="isJoinBtnDisabled == true">
+<input type="button" class="big-red-button" value="Join Event" (click)="onJoinEvent($event)" disabled style="background-color: #aaa;color: grey; cursor: not-allowed;">
+</div>
+<div class="joinEvent" *ngIf="isJoinBtnDisabled == false">
+<input type="button" class="big-red-button" value="Join Event" (click)="onJoinEvent($event)">
+</div>
 </div>
 Submission deadline
 <ul>
@@ -204,8 +213,56 @@ Prizes
 
 </div>
 
-<div id="PeopleTab" class="tab-pane fade"><h3>People
+<div id="PeopleTab" class="tab-pane fade"><h3>{{totalPeopleJoined}} people joined.
 </h3>
+
+
+<div>
+
+
+ <div class="row">
+              <div class="col-md-12">
+                <div>
+            
+                  <div class="x_content">
+				   <div class="row">
+                      <div class="col-md-12">
+                      
+                     <div class="header">  
+                    <ul >
+					
+					<li><a>Student name</a></li>
+					<li><a>Email ID</a></li>
+					<li><a>Address</a></li>					
+					<li><a>Mobile No</a></li>
+					
+					
+					</ul>
+					</div>
+					<div class="item"> 
+					 <ul class="col-md-12 mail_list_column mail_list" *ngFor="let item of Students; let i=index">
+	
+                      <li>{{item.Student_Name}}</li>					 
+					  <li > {{item.Email_ID}}</li>
+                      <li>{{item.Address}} </li>
+                      <li> {{item.Mobile_No}}</li>
+                     
+					
+</ul>
+                      </div> </div>
+					  
+                      <!-- /MAIL LIST -->
+
+                      <!-- CONTENT MAIL -->
+                     
+                      <!-- /CONTENT MAIL -->
+                    </div>
+                    
+                  </div>
+                </div>
+              </div>
+            </div>
+</div>
 </div>
 
 <div id="PrizesTab" class="tab-pane fade"><h3>Prizes

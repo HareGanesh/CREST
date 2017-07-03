@@ -28,7 +28,7 @@ ngOnInit() {
 		if(this.tagID == 'O')
 		{
 		this.bindGrid();
-		}else if(this.tagID == 'S')
+		}else if(this.tagID == 'S' || this.tagID == 'U' || this.tagID == 'UR')
 		{
 			this.bindGridUniverties();
 		}else if(this.tagID == 'C')
@@ -217,7 +217,7 @@ public open() {
 	var filterData=[];
 	var orgFilterData=[];
 	
-	if(this.tagID == '0' || this.tagID == 'S')
+	if(this.tagID == '0' || this.tagID == 'S' || this.tagID == 'U' || this.tagID == 'UR')
 	{
 	  for(var i=0;i<modelData.length;i++)
 	 {
@@ -251,7 +251,7 @@ public open() {
 		this.bindGrid();
 		}
 		
-		if(this.tagID == 'S')
+		if(this.tagID == 'S' || this.tagID == 'U' || this.tagID == 'UR')
 		{
 		this.bindGridUniverties();
 		}

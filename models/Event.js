@@ -99,6 +99,17 @@ const EventSchema = mongoose.Schema({
     type: Boolean,
 	default:0
   
+  },
+  
+  TotalAllowedParticipant:
+  {
+	  type:Number,
+	  default:0
+  },
+  
+  TotalConfirmedParticipant:
+  {
+	  type:Number
   }
 
 });
@@ -119,7 +130,6 @@ module.exports.getEventByEventTitle = function(EventTitle,callback){
 module.exports.getAllEvent = function(callback){	
 	Event.find("",callback);
 }
-
 
 
 module.exports.addEvent = function(newEvent, callback){

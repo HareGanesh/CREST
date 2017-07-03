@@ -37,10 +37,12 @@ router.post('/AddEvent', (req, res, next) => {
                 universitiesInfo = req.body.Universities;
   let newEvent = new Event({
                 EventID: req.body.EventID,
+				TotalAllowedParticipant: req.body.TotalAllowedParticipant,
                 EventTitle: req.body.EventTitle,
                 Description: req.body.Description,
                 CategoriesMstr: req.body.CategoriesMstr,
 				CategoriesSubMstr: req.body.CategoriesSubMstr,
+				TotalAllowedParticipant:req.body.TotalAllowedParticipant,
 				StartDt: req.body.StartDt,
 				EndDt: req.body.EndDt,
 				EventRegisterEndDt: req.body.EventRegisterEndDt,
