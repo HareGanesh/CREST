@@ -529,7 +529,8 @@ export class EventModel
 	public EventTitle:String,
 	public TotalAllowedParticipant:Number,
 	public TotalConfirmedParticipant:Number,
-	public university_EventApprovalUserList:Array<UniversityTransEventApprovalList>	
+	public university_EventApprovalUserList:Array<UniversityTransEventApprovalList>,
+	public RemainDay:String
 	)
 	{}
 

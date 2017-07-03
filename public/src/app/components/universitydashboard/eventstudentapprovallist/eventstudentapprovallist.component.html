@@ -57,8 +57,16 @@
 					 
 					  <accordion [showArrows]="true" [closeOthers]="true" [expandAll]="false">
 					   <accordion-group *ngFor="let item1 of UnivEventModel;" style="margin:10px;">
-					   <accordion-heading> <b><a style="text-decoration: underline;" [routerLink]="['/eventDetails/', item1._id]">{{item1.EventTitle}}</a> </b>
-					   
+					   <accordion-heading> 
+					   <div class="mail_listEvent">
+					   <div class="left">
+                              <i class="fa icon-time"></i>  &nbsp;{{item1.RemainDay}} days
+							  <!-- <a href="../eventDetails/{{item.EventID}}" style="background-image: url('http://www.hackathon.io/assets/icns/avatar/event.png');"></a> -->
+                            </div>
+							<div class="right" style="width:80%">
+					   <b><a style="text-decoration: underline;" [routerLink]="['/eventDetails/', item1._id]">{{item1.EventTitle}}</a> </b>
+					   </div>
+					   </div>
 					   </accordion-heading>
 					   
 					   <div class="header">  

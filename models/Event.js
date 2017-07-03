@@ -128,7 +128,8 @@ module.exports.getEventByEventTitle = function(EventTitle,callback){
 }
 
 module.exports.getAllEvent = function(callback){	
-	Event.find("",callback);
+	const query = {StartDt: {$gte:new Date()} }
+	Event.find(query,callback);
 }
 
 

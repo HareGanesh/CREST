@@ -12,6 +12,24 @@ div .caret {
     border-left: 4px solid transparent;
 }
 
+.mail_listEvent {
+    width: 100%;
+    
+    margin-bottom: 2px;
+    display: inline-block;
+}
+
+.mail_listEvent .left {
+    width: 5%;
+    float: left;
+    margin-right: 3%;
+}
+
+.mail_listEvent .right {
+    width: 70%;
+    float: left;
+}
+
 .grid-item {
 	border: solid 1px #ccc;
 }
