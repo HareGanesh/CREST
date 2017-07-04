@@ -69,9 +69,9 @@ export class RegisterstudentComponent implements OnInit {
 	
 	  this.model={
 
-  	Student_Name: '',
-  	Email_ID: '',
+  	Student_Name: '',  	
   	username: '',
+	Email_ID:'',
 	TransApprovalMapping:[],	
   	Pwd: '',
 	ConfirmPwd:'',
@@ -96,7 +96,7 @@ export class RegisterstudentComponent implements OnInit {
 	  this.authService.getUserByEmail(this.model).subscribe(data => {
 		   if(data != null)
 		   {
-			   this.ErrorList.push("Email id is duplicate");
+			   this.ErrorList.push("Alternate Email is duplicate");
 			   
 		   }
        },
@@ -108,6 +108,7 @@ export class RegisterstudentComponent implements OnInit {
 	
 	
   }
+
   
   userNameChange()
   {
@@ -120,7 +121,7 @@ export class RegisterstudentComponent implements OnInit {
 	  this.authService.getUserByUserName(this.model).subscribe(data => {
 		   if(data != null)
 		   {
-			   this.UserNameErrorList.push("user name is duplicate");
+			   this.UserNameErrorList.push("Email is duplicate");
 			   
 		   }
        },
@@ -203,6 +204,18 @@ export class RegisterstudentComponent implements OnInit {
 				});		
 				
 		}
+		
+	generatePassword() 
+                {
+        var length = 6,
+        charset = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789",
+       retVal = "";
+        for (var i = 0, n = charset.length; i < length; ++i) 
+                                {
+           retVal += charset.charAt(Math.floor(Math.random() * n));
+        }
+    return retVal;
+  }
   
 
   onRegisterSubmit(){

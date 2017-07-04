@@ -81,7 +81,7 @@ router.post('/authenticate', (req, res, next) => {
   const emailid = req.body.Email_ID;
   const Pwd = req.body.OldPwd;
   console.log(req.body);
-  UserLogin.getUserByEmail(emailid, (err,user)=>{
+  UserLogin.getUserByUserName(emailid, (err,user)=>{
     if(err) throw err;
     if(!user){
       return res.json({success: false, msg: 'User not found!'})

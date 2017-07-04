@@ -15,9 +15,12 @@ export class AuthService {
 	university:any;
   constructor(private http:Http) { }
 //connect to backend
+
   registerStudent(student, TransMapping){	 
   	let headers = new Headers();
   	headers.append('Content-Type','application/json');
+	student.Pwd = this.generatePassword();
+	student.ConfirmPwd = student.Pwd;
 	if(TransMapping.length > 0)
     student.TransApprovalMapping = (TransMapping.sort(x=>x.Priority))[TransMapping.length-1];	  
     //students/register is temporary domain
@@ -57,6 +60,18 @@ export class AuthService {
     headers.append('Content-Type','application/json');
     return this.http.post('http://localhost:3777/students/authenticate', student,{headers: headers})
     .map(res => res.json());
+  }
+  
+  generatePassword() 
+                {
+        var length = 6,
+        charset = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789",
+       retVal = "";
+        for (var i = 0, n = charset.length; i < length; ++i) 
+                                {
+           retVal += charset.charAt(Math.floor(Math.random() * n));
+        }
+    return retVal;
   }
   
   

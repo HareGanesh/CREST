@@ -18,8 +18,8 @@ const StudentSchema = mongoose.Schema({
 	},
 
 	Email_ID:{
-		type: String,
-		required: true
+		type: String
+		
 	},
 
 	username:{
@@ -115,6 +115,17 @@ module.exports.getStudentByStudentID = function(studentID,callback){
 	Student.findOne(query,callback);
 }
 
+module.exports.getStudentByUnivID = function(univID,callback){
+	const query = {Univ_ID: univID, Is_Approved:true}
+	Student.find(query,callback);
+}
+
+module.exports.getPendingStudentByUnivID = function(univID,callback){
+	const query = {Univ_ID: univID, Is_Approved:false}
+	Student.find(query,callback);
+}
+
+
 module.exports.addStudent = function(newStudent, callback){
 // To Create a hash value with the password entered in the form to store in DB - hareganx - 06/06/17	
 	bcrypt.genSalt(saltRounds, function(err, salt) {
@@ -150,6 +161,12 @@ Student.update(query, {Is_Approved: 1}, callback);
 }
 
 module.exports.updatePassword = function(user, callback){ 
-var query = { Email_ID	: user.EmailID };
-Student.update(query, {pwd: user.PWD}, callback);
+var query = { username	: user.EmailID };
+
+bcrypt.genSalt(saltRounds, function(err, salt) {
+    bcrypt.hash(user.PWD, salt, function(err, hash) {
+		user.PWD=hash;
+		Student.update(query, {Pwd: user.PWD}, callback);
+	});
+});
 }

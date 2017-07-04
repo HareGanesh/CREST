@@ -22,9 +22,9 @@ const UserLoginSchema = mongoose.Schema
 
 	},
 	
-	EmailID:{
-		type: String
-	},
+	// EmailID:{
+		// type: String
+	// },
 
    Active:{
     type: Boolean
@@ -71,7 +71,7 @@ module.exports.getUserLogin = function(username,callback){
 }
 
 module.exports.updatePassword = function(user, callback){ 
-var query = { EmailID	: user.EmailID };
+var query = { UserName	: user.EmailID };
 UserLogin.update(query, {PWD: user.PWD}, callback);
 }
 

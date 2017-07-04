@@ -17,62 +17,62 @@
 		<div [hidden]="submitted">
 			<form (submit)="onRegisterSubmit()" #RegisterForm="ngForm">
 
-				<label>Username <span class="red">*</span></label>
-				<div class="input-group">
-				 <span class="input-group-addon"><i class="fa fa-address-card"></i></span>
+				<!-- <label>Username <span class="red">*</span></label> -->
+				<!-- <div class="input-group"> -->
+				 <!-- <span class="input-group-addon"><i class="fa fa-address-card"></i></span> -->
 					
-					<input required type="text" [(ngModel)]="model.username" name="username" ngControl="username"  class="form-control" placeholder="User name"
-					autofocus="true" id="#username" #username="ngModel" (focusout)="userNameChange()">
-					<div [hidden]="username.valid || username.pristine"
-						 class="alert alert-danger">
-					  User Name is required
-					</div>	
-					<div class="alert alert-danger" *ngIf="UserNameErrorList.length != 0">
-				 <small><b>{{UserNameErrorList[0]}}</b></small>
-				</div>
-				</div>
+					<!-- <input required type="text" [(ngModel)]="model.username" name="username" ngControl="username"  class="form-control" placeholder="User name" -->
+					<!-- autofocus="true" id="#username" #username="ngModel" (focusout)="userNameChange()"> -->
+					<!-- <div [hidden]="username.valid || username.pristine" -->
+						 <!-- class="alert alert-danger"> -->
+					  <!-- User Name is required -->
+					<!-- </div>	 -->
+					<!-- <div class="alert alert-danger" *ngIf="UserNameErrorList.length != 0"> -->
+				 <!-- <small><b>{{UserNameErrorList[0]}}</b></small> -->
+				<!-- </div> -->
+				<!-- </div> -->
 
 
-				<label>Password <span class="red">*</span></label>
-				<div class="input-group">
-				 <span class="input-group-addon"><i class="fa fa-key"></i></span>
+				<!-- <label>Password <span class="red">*</span></label> -->
+				<!-- <div class="input-group"> -->
+				 <!-- <span class="input-group-addon"><i class="fa fa-key"></i></span> -->
 					
-					<input required type="password" [(ngModel)]="model.Pwd" name="Pwd" ngControl="Pwd"  class="form-control" placeholder="Password"
-					autofocus="true" id="#Pwd" #Pwd="ngModel" pattern="^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$">
-					<div [hidden]="Pwd.valid || Pwd.pristine"
-						 class="alert alert-danger">
-					  <div [hidden]="!Pwd.hasError('required')">Password is required</div>
-			   <div [hidden]="!Pwd.hasError('pattern')">Password should be minimum 8 characters at least 1 Alphabet and 1 Number
+					<!-- <input required type="password" [(ngModel)]="model.Pwd" name="Pwd" ngControl="Pwd"  class="form-control" placeholder="Password" -->
+					<!-- autofocus="true" id="#Pwd" #Pwd="ngModel" pattern="^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$"> -->
+					<!-- <div [hidden]="Pwd.valid || Pwd.pristine" -->
+						 <!-- class="alert alert-danger"> -->
+					  <!-- <div [hidden]="!Pwd.hasError('required')">Password is required</div> -->
+			   <!-- <div [hidden]="!Pwd.hasError('pattern')">Password should be minimum 8 characters at least 1 Alphabet and 1 Number -->
 				 
-			   </div>
-					</div>
-				</div>
-				<label>Confirm Password <span class="red">*</span></label>
-				<div class="input-group">
-				 <span class="input-group-addon"><i class="fa fa-key"></i></span>
+			   <!-- </div> -->
+					<!-- </div> -->
+				<!-- </div> -->
+				<!-- <label>Confirm Password <span class="red">*</span></label> -->
+				<!-- <div class="input-group"> -->
+				 <!-- <span class="input-group-addon"><i class="fa fa-key"></i></span> -->
 					
 					
-					<input type="password" class="form-control" id="ConfirmPwd"
-			   required
-			   validateEqual="Pwd"
-			   [(ngModel)]="model.ConfirmPwd" name="ConfirmPwd" placeholder="Confirm Password"
-			   #ConfirmPwd="ngModel">
-			   <div [hidden]="ConfirmPwd.valid || ConfirmPwd.pristine"
-				  class="alert alert-danger">
-				  Passwords did not match
-			   </div>
-				</div>
+					<!-- <input type="password" class="form-control" id="ConfirmPwd" -->
+			   <!-- required -->
+			   <!-- validateEqual="Pwd" -->
+			   <!-- [(ngModel)]="model.ConfirmPwd" name="ConfirmPwd" placeholder="Confirm Password" -->
+			   <!-- #ConfirmPwd="ngModel"> -->
+			   <!-- <div [hidden]="ConfirmPwd.valid || ConfirmPwd.pristine" -->
+				  <!-- class="alert alert-danger"> -->
+				  <!-- Passwords did not match -->
+			   <!-- </div> -->
+				<!-- </div> -->
 
 				<label>Email <span class="red">*</span></label>
 				<div class="input-group">
 				 <span class="input-group-addon"><i class="fa fa-envelope"></i></span>
 					
-					<input required type="text" [(ngModel)]="model.Email_ID" name="Email_ID" ngControl="email"  class="form-control" placeholder="Email"
-					autofocus="true" id="#email" #email="ngModel" pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$" (focusout)="emailChange()">
-					<div [hidden]="email.valid || email.pristine"
+					<input required type="text" [(ngModel)]="model.username" name="username" ngControl="email"  class="form-control" placeholder="Email"
+					autofocus="true" id="#username" #username="ngModel" pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$" (focusout)="userNameChange()">
+					<div [hidden]="username.valid || username.pristine"
 						 class="alert alert-danger">
-					  <div [hidden]="!email.hasError('required')">Email is required</div>
-			   <div [hidden]="!email.hasError('pattern')">Email format should be 
+					  <div [hidden]="!username.hasError('required')">Email is required</div>
+			   <div [hidden]="!username.hasError('pattern')">Email format should be 
 				  <small><b>joe@abc.com</b></small>
 			   </div>			
 
@@ -81,6 +81,26 @@
 				 <small><b>{{ErrorList[0]}}</b></small>
 				</div>
 				</div>
+				
+				<label>Alternative Email</label>
+				<div class="input-group">
+				 <span class="input-group-addon"><i class="fa fa-envelope"></i></span>
+					
+					<input type="text" [(ngModel)]="model.Email_ID" name="Email_ID" ngControl="email"  class="form-control" placeholder="Email"
+					autofocus="true" id="#EmailID" #EmailID="ngModel" pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$" (focusout)="emailChange()">
+					<div [hidden]="EmailID.valid || EmailID.pristine"
+						 class="alert alert-danger">					  
+			   <div [hidden]="!EmailID.hasError('pattern')">Email format should be 
+				  <small><b>joe@abc.com</b></small>
+			   </div>			
+
+					</div>
+				<div class="alert alert-danger" *ngIf="ErrorList.length != 0">
+				 <small><b>{{ErrorList[0]}}</b></small>
+				</div>
+				</div>
+				
+				
 				<label>University <span class="red">*</span></label>
 				<div class="input-group">
 				 <span class="input-group-addon"><i class="fa fa-users"></i></span>

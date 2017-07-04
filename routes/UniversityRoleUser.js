@@ -31,7 +31,7 @@ router.post('/register', (req, res, next) => {
                                 
         PWD: req.body.Password,    
 		UserName:req.body.username, 
-		EmailID:req.body.Email_ID, 
+		//EmailID:req.body.Email_ID, 
 		Active:1,
 		TagID:'UR'
 		});

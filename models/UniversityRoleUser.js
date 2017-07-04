@@ -107,6 +107,6 @@ var query = { UniversityRoleUser_ID: newUniversityRoleUser.UniversityRoleUser_ID
 } 
 
 module.exports.updatePassword = function(user, callback){ 
-var query = { Email_ID	: user.EmailID };
+var query = { username	: user.EmailID  };
 UniversityRoleUser.update(query, {Pwd: user.PWD}, callback);
 }
