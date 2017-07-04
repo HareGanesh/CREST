@@ -4,6 +4,7 @@ const passport = require('passport');
 const jwt = require('jsonwebtoken');
 const config = require('../config/database');
 const EventStudent = require('../models/EventStudent');
+const Student = require('../models/student');
 
 router.post('/EventStudent', (req, res, next) => {
 	
@@ -104,13 +105,23 @@ router.get('/GetEventStudentByEventIDAndStudentID', (req, res) => {
 router.get('/getEventStudentByEventIDAndStudentIDWithStudent', (req, res) => {
   //var EventID = req.headers["eventid"];  
   var StudentID = req.headers["studentid"];
+  booksReloaded=[];
   EventStudent.getEventStudentByEventIDAndStudentIDWithStudent(StudentID, (err,EventStudent)=>{
     if(err) {
 		throw err;		
 	}
      else
 	  {		 
-		  res.json(EventStudent);
+         EventStudent.forEach(
+    function (stu) {
+        stu.Student = Student.getStudentByStudentID(stu.Student_ID);
+        
+        booksReloaded.push(stu);
+		res.json(stu);
+    }
+);
+
+		 // res.json(booksReloaded);
 	  }
   });  
 });

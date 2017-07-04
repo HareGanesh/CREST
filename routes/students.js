@@ -243,6 +243,36 @@ router.get('/getStudentByStudentID', (req, res, next) => {
   });  
 }); 
 
+router.get('/getStudentByUnivID', (req, res, next) => {
+	
+  var univID = req.headers["univid"];  
+  
+  Student.getStudentByUnivID(univID, (err,studentDetail)=>{
+    if(err) {
+                                throw err;                            
+                }
+     else
+                  {                            
+                                  res.json(studentDetail);
+                  }
+  });  
+}); 
+
+router.get('/getPendingStudentByUnivID', (req, res, next) => {
+	
+  var univID = req.headers["univid"];  
+  
+  Student.getPendingStudentByUnivID(univID, (err,studentDetail)=>{
+    if(err) {
+                                throw err;                            
+                }
+     else
+                  {                            
+                                  res.json(studentDetail);
+                  }
+  });  
+}); 
+
 //setIsApproved
 router.get('/setIsApproved', (req, res, next) => {
 	

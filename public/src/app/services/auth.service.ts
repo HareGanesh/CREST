@@ -380,6 +380,22 @@ let headers = new Headers();
                 .map(res => res.json());
   }
   
+  getStudentByUnivID(univID)
+  {
+	  let headers = new Headers();
+                headers.append('univid',univID);
+                return this.http.get('http://localhost:3777/students/getStudentByUnivID',{headers: headers})
+                .map(res => res.json());
+  }
+  
+  getPendingStudentByUnivID(univID)
+  {
+	  let headers = new Headers();
+                headers.append('univid',univID);
+                return this.http.get('http://localhost:3777/students/getPendingStudentByUnivID',{headers: headers})
+                .map(res => res.json());
+  }
+  
     addStudentCategory(studentCategroy){
                 let headers = new Headers();
                 headers.append('Content-Type','application/json');

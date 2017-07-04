@@ -23,16 +23,16 @@ public univID;
   ) {}
 
   ngOnInit() {
-	  this.GetAllStudent();
 	  this.univID = JSON.parse(this.authService.getLoginUser()).Univ_ID;
+	  this.GetAllStudent();	  
   }
 GetAllStudent()
   {
 	  
 	
-	  this.authService.getAllStudent().subscribe(data => {
+	  this.authService.getStudentByUnivID(this.univID).subscribe(data => {
 		    // for(let i=0; i< data.length; i++)
-       this.Students=data.filter((E) => E.Univ_ID == this.univID);
+       this.Students=data;//.filter((E) => E.Univ_ID == this.univID);
 		   
        },
     //observable also returns error

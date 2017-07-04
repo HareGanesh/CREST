@@ -51,10 +51,22 @@ module.exports.getEventStudentByEventIDAndStudentID = function(EventID, StudentI
 
 	
 module.exports.getEventStudentByEventIDAndStudentIDWithStudent= function(StudentID,callback){
-	const query = {Student_ID:StudentID};
-	EventStudent.find(query).populate('Student'),callback;}
-
-
+	//const query = {Student_ID:StudentID};
+	EventStudent.aggregate([
+	{ $match: {
+            Student_ID: StudentID
+        }},
+    {
+      $lookup:
+        {
+          from: "Student",
+          localField: "Student_ID",
+          foreignField: "Student_ID",
+          as: "Student_Info"
+        }
+   }
+], callback);}
+	//EventStudent.find(query,callback);}
 
 module.exports.AddEventStudent = function(newEventStudent, callback){ 
 	newEventStudent.save(callback);

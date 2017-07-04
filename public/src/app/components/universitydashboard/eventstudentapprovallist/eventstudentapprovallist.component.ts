@@ -190,9 +190,9 @@ export class EventstudentapprovallistComponent implements OnInit {
   
   GetAllStudent()
   {
-	  
+	  debugger;
 	
-	  this.authService.getAllStudent().subscribe(data => {
+	  this.authService.getStudentByUnivID(this.univID).subscribe(data => {
 		     for(let i=0; i< data.length; i++)
        this.Students.push({StudentID:data[i].Student_ID, StudentName:data[i].Student_Name});
 			   

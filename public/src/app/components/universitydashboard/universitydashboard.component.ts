@@ -139,8 +139,8 @@ export class UniversitydashboardComponent implements OnInit {
   GetAllStudent()
   {
 	  
-	
-	  this.authService.getAllStudent().subscribe(data => {
+	debugger;
+	  this.authService.getPendingStudentByUnivID(this.univID).subscribe(data => {
 		     for(let i=0; i< data.length; i++)
        this.Students.push({StudentID:data[i].Student_ID, StudentName:data[i].Student_Name});
 			   
