@@ -86,13 +86,9 @@ ngOnInit() {
 	var OrgData=[];
 	var filterEvent=[];
     this.authService.getEvents().subscribe(event => {
-<<<<<<< HEAD
-		
-      modelData= event.filter((E) => E.IsApproved == false);
-=======
 		debugger;
       modelData= event.filter((E) => E.IsApproved == false && E.IsRejected == false);
->>>>>>> 11094209a651fc76cdb35a695bca2488197c4854
+
 	  for(var i=0;i<modelData.length;i++)
 	 {
 		  var m =this.dayDiff(modelData[i].StartDt);		  

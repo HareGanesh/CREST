@@ -507,52 +507,27 @@ this.authService.GetEventOrganizerByEventID(eventID).subscribe(organizer => {
   
   GetUnivName(univID)
   {
-<<<<<<< HEAD
-
-=======
-	  
->>>>>>> 11094209a651fc76cdb35a695bca2488197c4854
 	return this.Universities.find(x=>x.id == univID).name;
   }
   
   GetUnivAddress(univID)
   {
-<<<<<<< HEAD
-	
-=======
-	  
->>>>>>> 11094209a651fc76cdb35a695bca2488197c4854
 	return this.Universities.find(x=>x.id == univID).address;
   }
   
   GetUnivContact(univID)
   {
-<<<<<<< HEAD
-	
-=======
-	  
->>>>>>> 11094209a651fc76cdb35a695bca2488197c4854
 	return this.Universities.find(x=>x.id == univID).ContactNo;
   }
   
   GetName(orgnID)
   {
-<<<<<<< HEAD
-	 
-=======
-	  
->>>>>>> 11094209a651fc76cdb35a695bca2488197c4854
-return this.Organizations.find(x=>x.id == orgnID).name;
+	return this.Organizations.find(x=>x.id == orgnID).name;
   }
   
   GetTitle(orgnID)
   {
-<<<<<<< HEAD
-	
-=======
-	  
->>>>>>> 11094209a651fc76cdb35a695bca2488197c4854
-return this.Organizations.find(x=>x.id == orgnID).title;
+	return this.Organizations.find(x=>x.id == orgnID).title;
   }
   
   GetOverview(orgnID)
@@ -563,11 +538,8 @@ return this.Organizations.find(x=>x.id == orgnID).overview;
   
   GetAddress(orgnID)
   {
-<<<<<<< HEAD
-	  
-=======
->>>>>>> 11094209a651fc76cdb35a695bca2488197c4854
-return this.Organizations.find(x=>x.id == orgnID).address  +"," + this.Organizations.find(x=>x.id == orgnID).state +"," + this.Organizations.find(x=>x.id == orgnID).country;
+
+	return this.Organizations.find(x=>x.id == orgnID).address  +"," + this.Organizations.find(x=>x.id == orgnID).state +"," + this.Organizations.find(x=>x.id == orgnID).country;
   }
   
   GetOrganizationLogo(orgnID)

@@ -370,13 +370,8 @@ export class UniversitydashboardComponent implements OnInit {
     
   ApproveStudent(TransApprovalMappingData)
   {
-<<<<<<< HEAD
-	
-	  
-=======
 	  debugger;
 	  this.Comments="";
->>>>>>> 11094209a651fc76cdb35a695bca2488197c4854
 	  let maskID=2;
 	  let roleid = JSON.parse(this.authService.getLoginUser()).Role_ID;
 	       maskID = Math.pow(2,(this.Roles.filter(x=>x.RoleID == roleid)[0].Priority));
@@ -453,10 +448,7 @@ export class UniversitydashboardComponent implements OnInit {
 	  this.universityApprovalHistory.Status =1;
 	  this.universityApprovalHistory.Comments = "Approved";
 	  this.universityApprovalHistory.TranApprovalHistoryID=transApprovalHistoryID;
-<<<<<<< HEAD
-	  this.authService.addUniversityTransApprovalHistory(this.model, this.universityApprovalHistory, this.TransApprovalMapping).subscribe(data => {
-		
-=======
+
 	  // this.authService.addUniversityTransApprovalHistory(this.model, this.universityApprovalHistory, this.TransApprovalMapping).subscribe(data => {
 		// debugger;
       // if(data.success){
@@ -485,7 +477,6 @@ export class UniversitydashboardComponent implements OnInit {
 	this.universityApprovalHistory.Comments = this.Comments;
                 this.authService.addUniversityTransApprovalHistory(this.model, this.universityApprovalHistory, this.TransApprovalMapping).subscribe(data => {
 		debugger;
->>>>>>> 11094209a651fc76cdb35a695bca2488197c4854
       if(data.success){
         //this.flashMessage.show('You are now registered and can log in', {cssClass: 'alert-success', timeout: 3000});
         document.getElementById('close2').click();

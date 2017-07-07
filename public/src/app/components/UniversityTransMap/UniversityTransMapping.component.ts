@@ -180,10 +180,7 @@ submitted = false;
 	      }
   }
   ngOnInit() {
-<<<<<<< HEAD
-	
-	  
-=======
+
 	  debugger;
 	  this.tagID=localStorage.getItem('tagID');
 	  if(this.tagID == 'U')
@@ -192,7 +189,6 @@ submitted = false;
 		  this.model.UniversityID = this.univID.toString();		  
 	  }
 	  	  
->>>>>>> 11094209a651fc76cdb35a695bca2488197c4854
 	  this.authService.getMaxTranMapID().subscribe(data => {
 		  if(data.length > 0)
 		  {

@@ -312,23 +312,14 @@ onUniversityChange(items) {
     }
 }
   isDisabled() {
-<<<<<<< HEAD
-	  
-         if(this.validateService.validateEvent(this.model)){
-		    return false;		 
-		   }
-          else{
-		   return true;
-	      }
-=======
-	  //debugger;
-         // if(this.validateService.validateEvent(this.model)){
-		    // return false;		 
-		   // }
-          // else{
-		   // return true;
-	      // }
->>>>>>> 11094209a651fc76cdb35a695bca2488197c4854
+  
+	 if(this.validateService.validateEvent(this.model)){
+		return false;		 
+	   }
+	  else{
+	   return true;
+	  }
+
   }
   
   onChange(category) {
@@ -338,7 +329,6 @@ onUniversityChange(items) {
 	 
 	
   }
-  
   
 
   

@@ -181,9 +181,6 @@ onChange(univID) {
   
   onSubmit()
   {
-<<<<<<< HEAD
-	 
-=======
 	  debugger;
 	  if(!this.checkValidation())
 	  {
@@ -191,7 +188,6 @@ onChange(univID) {
 	  }
   else {
 	  debugger;
->>>>>>> 11094209a651fc76cdb35a695bca2488197c4854
 	   this.authService.addUniversityRole(this.model).subscribe(data => {
 		  if(data.success)
 		  {

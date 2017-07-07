@@ -69,17 +69,11 @@
                               <p>{{item.Description}}...</p>
 							 
                             </div>
-<<<<<<< HEAD
-							 <div style="float:right;" *ngIf="tagID=='C'">
-							     <input type="button" value="Approve" class="btn btn-primary" (click)="approveEvent(item._id);"/>
-							  </div>
-=======
 							<div style="float:right;" *ngIf="tagID=='C'">
 							<a class="btn btn-primary" [routerLink]="['/eventDetails/', item._id]">Action</a> 
 							     <!-- <input type="button" value="Action" class="btn btn-primary" (click)="approveEvent(item._id);"/> -->
 								  <!-- <input type="button" value="Reject" class="btn btn-primary" (click)="rejectEvent(item._id);"/> -->
 							  </div> 
->>>>>>> 11094209a651fc76cdb35a695bca2488197c4854
                           </div>
                         </a>
                         
