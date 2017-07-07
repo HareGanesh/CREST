@@ -71,9 +71,14 @@ public model:Object;
         if(student.success)
                                 {
            this.authService.storeStudentData(student.token, student.student,data.user.TagID);
+		   if(!JSON.parse(this.authService.getLoginUser()).isPasswordChanged )
+			{
+				document.getElementById("openModalButton").click();
+			}else {
             // this.flashMessage.show('You are now logged in', {
             // cssClass: 'alert-success'});
            this.router.navigate(['/']);
+			}
         } 
                                 else
                                 {
@@ -89,9 +94,15 @@ public model:Object;
         if(univ.success)
                                 {
            this.authService.storeStudentData(univ.token, univ.university,data.user.TagID);
+		   if(!JSON.parse(this.authService.getLoginUser()).isPasswordChanged)
+			{
+				document.getElementById("openModalButton").click();
+			}
+			else {
             // this.flashMessage.show('You are now logged in', {
             // cssClass: 'alert-success'});
            this.router.navigate(['/universitydashboard']);
+			}
         } 
                                 else
                                 {
@@ -106,9 +117,14 @@ public model:Object;
         if(RoleUser.success)
 		{
            this.authService.storeStudentData(RoleUser.token, RoleUser.universityRoleUser,data.user.TagID);
+		   if(!JSON.parse(this.authService.getLoginUser()).isPasswordChanged)
+			{
+			document.getElementById("openModalButton").click();
+			}else {
             // this.flashMessage.show('You are now logged in', {
             // cssClass: 'alert-success'});
            this.router.navigate(['/universitydashboard']);
+			}
         } 
 		else
 		{

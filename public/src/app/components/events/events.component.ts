@@ -4,6 +4,9 @@ import {AuthService} from '../../services/auth.service'
 import {Router, ActivatedRoute, Params} from '@angular/router';
 import {EventModel} from '../../model/eventsModel';
 import { UniversityTransEventApproval } from './UniversityTransEventApproval';
+import { IMultiSelectOption } from 'angular-2-dropdown-multiselect';
+import { IMultiSelectSettings } from 'angular-2-dropdown-multiselect';
+import { IMultiSelectTexts } from 'angular-2-dropdown-multiselect';
 
 @Component({
   selector: 'app-home',
@@ -12,6 +15,68 @@ import { UniversityTransEventApproval } from './UniversityTransEventApproval';
   providers : [EventModel]
 })
 export class EventsComponent implements OnInit {
+	
+	public SuccessMessage='';
+	public DangerMessage='';
+  // Invite init
+  public organizations = [
+	  
+         
+     ];
+
+	  optionsModel: number[] = [1, 2];
+ public selectedTexts: any[] = [];
+
+// // Settings configuration
+
+
+// // Labels / Parents
+ myOptions: IMultiSelectOption[] = [
+     // { id: 1, name: 'Car brands', isLabel: true },
+     
+     
+    
+ ];
+
+
+ mySettings: IMultiSelectSettings = {
+     enableSearch: true,
+     checkedStyle: 'fontawesome',
+     buttonClasses: 'btn btn-block',
+     dynamicTitleMaxItems: 3,
+     displayAllSelectedText: true,
+	 showCheckAll:true,
+	 showUncheckAll:true
+ };
+
+// // Text configuration
+ myTexts: IMultiSelectTexts = {
+     checkAll: 'Select all',
+     uncheckAll: 'Unselect all',
+     checked: 'item selected',
+     checkedPlural: 'items selected',
+     searchPlaceholder: 'Organization Name',
+     defaultTitle: 'Select Organizations',
+    allSelected: 'All selected',
+};
+
+ myUnivTexts: IMultiSelectTexts = {
+     checkAll: 'Select all',
+     uncheckAll: 'Unselect all',
+     checked: 'item selected',
+     checkedPlural: 'items selected',
+     searchPlaceholder: 'University Name',
+     defaultTitle: 'Select University',
+    allSelected: 'All selected',
+};
+
+myUnivOptions: IMultiSelectOption[] = [
+     // { id: 1, name: 'Car brands', isLabel: true },
+     
+     
+    
+ ];
+  
   eventDetails  =new EventModel();
   public eventRuleArray:Object;
   public eventPrizeArray :Object;
@@ -21,6 +86,7 @@ export class EventsComponent implements OnInit {
   tagID:String;
   eventid:String;
   orgOrUnivLabel:String;
+  Comments:string;
   univID:Number;
   StudentID:String;
   totalPeopleJoined:number;
@@ -40,6 +106,14 @@ export class EventsComponent implements OnInit {
 	  {id: 0,  name:"Please select", address:"",ContactNo:"",Email:""},
       
      ];
+	 
+	 model={  	
+    
+	Organizations:[],
+	Universities:[],
+	eventID:''
+	
+     	};
 
   constructor(
    private validateService: ValidateService,  
@@ -49,8 +123,43 @@ export class EventsComponent implements OnInit {
   
 
     ) { }
+	
+
+	
+  onOrganizationChange(items) {
+	debugger;
+       this.model.Organizations = items;
+    }
+	
+onUniversityChange(items) {
+	debugger;
+       this.model.Universities = items;
+    }
+	
 ngOnInit() 
 {	
+      // Invite on init
+	  // Get all organization
+	  this.authService.getOrganizations().subscribe(data => {
+		   for(let i=0; i< data.length; i++)
+      this.myOptions.push({id:data[i].OrgnID, name:data[i].OrgnName});
+    },
+    //observable also returns error
+    err => {
+      console.log(err);
+      return false;
+    });
+ 
+	this.authService.getAllUniversity().subscribe(data => {
+		   for(let i=0; i< data.length; i++)
+      this.myUnivOptions.push({id:data[i].Univ_ID, name:data[i].Univ_Name});
+    },
+    //observable also returns error
+    err => {
+      console.log(err);
+      return false;
+    });
+	
 	  this.tagID=localStorage.getItem('tagID');
 	  if(this.tagID == 'S' || this.tagID == 'C')
 	  {
@@ -192,6 +301,50 @@ this.authService.GetEventOrganizerByEventID(eventID).subscribe(organizer => {
 		
   }
   
+  onEventInviteSubmit(){
+	  debugger;
+	  if(this.model.Organizations.length == 0 || this.model.Universities.length == 0)
+	  {
+		  this.DangerMessage="Please select any organization or university to invite.";
+		  return;
+	  }else
+	  {
+		  this.DangerMessage ='';
+	  }
+	  
+	  
+  	this.model.eventID = this.eventid.toString();
+  	 // Required Fields
+    // if(this.validateService.validateEvent(this.model)){     
+	  // this.flashMessage.show('Please fill in all fields', {cssClass: 'alert-danger', timeout: 3000});
+	 // // this.ErrorList.push("Name required");
+	  // this.submitted = false;
+      // return false;
+    // }
+
+    // Validate Email
+    //if(!this.validateService.validateEmail(this.model.Email_ID)){
+     //this.flashMessage.show('Please use a valid email', {cssClass: 'alert-danger', timeout: 3000});
+      //return false;
+    //}
+
+  // Register user
+    this.authService.registerEventInvite(this.model).subscribe(data => {
+		debugger;
+      if(data.success){
+		  this.model.Organizations =[];
+		  this.model.Universities=[]; 
+		  this.SuccessMessage = "Selected universities and organizations successfully invited."
+       // this.flashMessage.show('univer has been registered', {cssClass: 'alert-success', timeout: 3000});
+        //this.router.navigate(['/universitydashboard']);
+      } else {
+        //this.flashMessage.show('Something went wrong', {cssClass: 'alert-danger', timeout: 3000});
+        //this.router.navigate(['/EventInfo']);
+      }
+    });
+
+  }
+  
   LoadTransMapping()
   {
 	  debugger;
@@ -242,9 +395,58 @@ this.authService.GetEventOrganizerByEventID(eventID).subscribe(organizer => {
 			
   }
   
+  clearComments()
+  {
+	  this.Comments='';
+  }
+  
+  approveEvent()
+  {	
+	var  model=
+	  {
+         _id: '',
+		 comments:''
+      }
+	  model._id=this.eventid.toString();
+	  model.comments = this.Comments;
+	  debugger;
+	  this.authService.approveEvent(model).subscribe(event => {
+		  if(event.success)
+		  {
+			  document.getElementById('close').click();
+			  this.router.navigate(['/']);
+			  
+		  }
+	  });
+  }
+  
+  rejectEvent()
+  {	
+	var  model=
+	  {
+         _id: '' ,
+		 comments:''
+      }
+	  model._id = this.eventid.toString();
+	  model.comments = this.Comments;
+	  debugger;
+	  this.authService.rejectEvent(model).subscribe(event => {
+		  if(event.success)
+		  {
+			  document.getElementById('close2').click();
+			  this.router.navigate(['/']);
+		  }
+	  });
+  }
+  
   isDisabled()
   {
-	  
+	  if(this.tagID == 'S')
+	  {
+		  return true;
+	  }else {
+		  return false;
+	  }
   }
   
   GetStudent(studentId)
@@ -253,7 +455,7 @@ this.authService.GetEventOrganizerByEventID(eventID).subscribe(organizer => {
 	  this.authService.getStudentInfoByStudentID(studentId).subscribe(data1 => {
 		    // for(let i=0; i< data.length; i++)
 				
-       this.Students.push({Student_Name: data1.Student_Name ,Email_ID: data1.Email_ID, Address:data1.Address, Mobile_No:data1.Mobile_No});
+       this.Students.push({Student_Name: data1.Student_Name ,Email_ID: data1.username, Address:data1.Address, Mobile_No:data1.Mobile_No});
 				
 		   
        },

@@ -110,6 +110,12 @@ const EventSchema = mongoose.Schema({
   TotalConfirmedParticipant:
   {
 	  type:Number
+  },
+  
+  ActionComments:
+  {
+	  type:String,
+	  default:''
   }
 
 });
@@ -139,14 +145,15 @@ module.exports.addEvent = function(newEvent, callback){
 
 module.exports.approveEvent = function(eventdata, callback){
 	console.log(eventdata._id );
+	console.log(eventdata.comments);
  var query = { _id: eventdata._id };
-Event.update(query, {IsApproved:1}, callback);
+Event.update(query, {IsApproved:1, ActionComments : eventdata.comments}, callback);
 
 } 
 
 module.exports.rejectEvent = function(eventdata, callback){
 	console.log(eventdata._id );
  var query = { _id: eventdata._id };
-Event.update(query, {IsRejected:1}, callback);
+Event.update(query, {IsRejected:1, ActionComments : eventdata.comments}, callback);
 
 } 

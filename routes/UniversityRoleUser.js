@@ -81,7 +81,8 @@ router.post('/authenticateUniversityRole', (req, res, next) => {
                              Email_ID: UniversityRoleUser.Email_ID,                             
                              Mobile_No: UniversityRoleUser.Mobile_No,                                                                                            
                              Role_ID:UniversityRoleUser.Role_ID,
-                             Univ_ID:UniversityRoleUser.Univ_ID 
+                             Univ_ID:UniversityRoleUser.Univ_ID,
+							 isPasswordChanged: UniversityRoleUser.isPasswordChanged
                               }
                            }); 
                     }

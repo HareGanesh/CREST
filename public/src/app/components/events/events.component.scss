@@ -723,6 +723,39 @@ body {
    
 }
 
+.AddMoreDiv
+{
+margin-bottom:15px;
+}
+
+ .dropdown-inline
+{
+width:40% !important;
+}
+
+.dropdown-menu > li > a {
+    display: block;
+    padding: 3px 20px;
+    clear: both;
+    font-weight: normal;
+    line-height: 1.42857143;
+    color: #333;
+    white-space: nowrap;
+}
+
+label {
+    display: inline-block;
+    max-width: 100%;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+a.disabled, a.disabled:visited {
+   pointer-events: none;
+   cursor: default;
+   color: gray;
+}
+
 #PeopleTab .item li {
     float: left;
 }

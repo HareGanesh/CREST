@@ -60,6 +60,11 @@ const UnivTranscationApprovalDetailMstrSchema = mongoose.Schema({
 
    Modifiedby:{
     type: String
+  },
+  
+  TransactionStatus:{
+	  type: String,
+	  default:'O'
   }
 
 
@@ -88,7 +93,7 @@ module.exports.getAllUnivTranscationApprovalDetail = function(callback){
 	
 	module.exports.getAllUnivTranscationApprovalDetailByUnivID = function(univID, maskID, callback)
 	{	 
-	var query = { Univ_ID: univID, Mask_ID: {$lte:maskID}, Status:0};
+	var query = { Univ_ID: univID, Mask_ID: {$lte:maskID}, Status:0, TransactionStatus:{$ne:'R'}};
 	console.log(query);
 	UnivTranscationApprovalDetailMaster.find(query,callback);
 	}
@@ -109,6 +114,12 @@ module.exports.UpdateUnivTranscationApprovalDetailByTranApprovalID = function(Tr
 { 
 var query = { Tran_Approval_ID: TransApprovalDt.Tran_Approval_ID };
 UnivTranscationApprovalDetailMaster.update(query, {Status:TransTypeDet.Status}, callback);
+}
+
+module.exports.UpdateUnivTranscationStatusByTranApprovalID = function(TransApprovalDt, callback)
+{ 
+var query = { Tran_Approval_ID: TransApprovalDt };
+UnivTranscationApprovalDetailMaster.update(query, {TransactionStatus:'R'}, callback);
 }
 
 module.exports.DeleteUnivTranscationApprovalDetailByApprovalId = function(Tran_Approval_ID, callback){ 

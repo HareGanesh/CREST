@@ -27,6 +27,10 @@ const UniversityRoleUserSchema = mongoose.Schema({
 
 	},
 	
+	isPasswordChanged:{
+	  type: Boolean,
+	  default:false
+  },
 
   Mobile_No:{
     type: String
@@ -108,5 +112,5 @@ var query = { UniversityRoleUser_ID: newUniversityRoleUser.UniversityRoleUser_ID
 
 module.exports.updatePassword = function(user, callback){ 
 var query = { username	: user.EmailID  };
-UniversityRoleUser.update(query, {Pwd: user.PWD}, callback);
+UniversityRoleUser.update(query, {Pwd: user.PWD, isPasswordChanged: user.isPasswordChanged}, callback);
 }

@@ -168,15 +168,20 @@ export class AuthService {
 
 
   login(){
-	  //debugger;
+	  debugger;
 	 
     const token = localStorage.getItem('id_token');
 	const user = localStorage.getItem('currentUser');
 	this.authToken= token;
 	this.student= user; 
-	if(this.authToken != null || this.student != null)
+	if(this.authToken != null || this.student != null )
 	{
+		if(JSON.parse(this.student).isPasswordChanged || JSON.parse(this.student).TagID == 'C')
+		{
 		return true;
+		}else {
+			return false;
+		}
 	}else 
 	{
 		return false;
@@ -202,6 +207,16 @@ export class AuthService {
 	
     //event/register is temporary domain
   	return this.http.post('http://localhost:3777/events/AddEvent', event,{headers: headers})
+  	.map(res => res.json());
+  }
+  
+  registerEventInvite(event){
+  	let headers = new Headers();
+  	headers.append('Content-Type','application/json');
+
+	
+    //event/register is temporary domain
+  	return this.http.post('http://localhost:3777/events/AddEventInvite', event,{headers: headers})
   	.map(res => res.json());
   }
   
@@ -583,6 +598,55 @@ getAllUnivTranscationEventApprovalDetailByUnivIDAndMaskID(univID, maskID){
 				//UnivTranscationApprovalHistory/AddUnivTranscationApprovalHistory is temporary domain
                 return this.http.post('http://localhost:3777/UnivTranscationEventApprovalHistory/AddUnivTranscationEventApprovalHistory', model,{headers: headers})
 				.timeout(3000)
+                .map(res => res.json());
+  }
+  
+  addUniversityTransApprovalHistoryArray(model, universityTransApprovalHistory, TransApprovalMapping){
+                let headers = new Headers();
+                headers.append('Content-Type','application/json');
+				if(TransApprovalMapping.length > 0)
+				model.TransApprovalMapping = TransApprovalMapping;//.sort(x=>x.Priority))[TransEventApprovalMapping.length-1];	
+			    model.universityApprovalHistory = universityTransApprovalHistory;
+				
+				//UnivTranscationApprovalHistory/AddUnivTranscationApprovalHistory is temporary domain
+                return this.http.post('http://localhost:3777/UnivTranscationApprovalHistory/AddUnivAllTranscationApprovalHistory', model,{headers: headers})				
+                .map(res => res.json());
+  }
+  
+  
+  addUniversityTransRejectionHistory(model, universityTransApprovalHistory, TransApprovalMapping){
+                let headers = new Headers();
+                headers.append('Content-Type','application/json');
+				
+				model.TransApprovalMapping = TransApprovalMapping;	
+			    model.universityApprovalHistory = universityTransApprovalHistory;
+				
+				//UnivTranscationApprovalHistory/AddUnivTranscationApprovalHistory is temporary domain
+                return this.http.post('http://localhost:3777/UnivTranscationApprovalHistory/AddUnivTranscationRejectionHistory', model,{headers: headers})
+                .map(res => res.json());
+  }
+  
+  addUniversityTransRejectionHistoryArray(model, universityTransApprovalHistory, TransApprovalMapping){
+                let headers = new Headers();
+                headers.append('Content-Type','application/json');
+				if(TransApprovalMapping.length > 0)
+				model.TransApprovalMapping = TransApprovalMapping;//.sort(x=>x.Priority))[TransEventApprovalMapping.length-1];	
+			    model.universityApprovalHistory = universityTransApprovalHistory;
+				
+				//UnivTranscationApprovalHistory/AddUnivTranscationApprovalHistory is temporary domain
+                return this.http.post('http://localhost:3777/UnivTranscationApprovalHistory/AddUnivAllTranscationRejectionHistory', model,{headers: headers})				
+                .map(res => res.json());
+  }
+  
+  addUniversityEventTransRejectionHistoryArray(model, universityTransApprovalHistory, TransApprovalMapping){
+                let headers = new Headers();
+                headers.append('Content-Type','application/json');
+				if(TransApprovalMapping.length > 0)
+				model.TransEventApprovalMapping = TransApprovalMapping;//.sort(x=>x.Priority))[TransEventApprovalMapping.length-1];	
+			    model.universityApprovalHistory = universityTransApprovalHistory;
+				
+				//UnivTranscationApprovalHistory/AddUnivTranscationApprovalHistory is temporary domain
+                return this.http.post('http://localhost:3777/UnivTranscationEventApprovalHistory/AddUnivTranscationEventRejectionHistory', model,{headers: headers})				
                 .map(res => res.json());
   }
   

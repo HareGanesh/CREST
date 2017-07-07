@@ -6,13 +6,13 @@ import {FlashMessagesService} from 'angular2-flash-messages';
 import {Router, ActivatedRoute, Params} from '@angular/router';
 
 @Component({
-  selector: 'app-changepassword',
-  templateUrl: './changepassword.component.html',
-  styleUrls: ['./changepassword.component.scss']
+  selector: 'app-changepasswordPopup',
+  templateUrl: './changepasswordPopup.component.html',
+  styleUrls: ['./changepasswordPopup.component.scss']
 })
-export class ChangepasswordComponent implements OnInit {
+export class ChangepasswordPopupComponent implements OnInit {
 
-  public univID;
+  public emailID;
   public SuccessMessage='';
 	public ErrorList:string[]=[];
 	public UserNameErrorList:string[]=[];
@@ -23,7 +23,7 @@ export class ChangepasswordComponent implements OnInit {
 	private activatedRoute:ActivatedRoute,
 	private changeDetectorRef: ChangeDetectorRef) { }
     model={  	
-	OldPwd:'',
+	//OldPwd:'',
     Pwd:'', 
     ConfirmPwd:'',
 	Email_ID:'',
@@ -35,7 +35,10 @@ export class ChangepasswordComponent implements OnInit {
   
   ngOnInit() {
 	  debugger;
-	  // this.univID = JSON.parse(this.authService.getLoginUser()).Univ_ID;
+	  if(this.authService.login())
+	  {
+	   this.emailID = JSON.parse(this.authService.getLoginUser()).username;
+	  }
 	  
 	  // // Get roles for an universityrole
 	  // this.authService.getAllUniversityRolesByUnivID(this.univID).subscribe(data => {
@@ -52,21 +55,21 @@ export class ChangepasswordComponent implements OnInit {
   onPasswordSubmit(){
 	  debugger;
 	  this.submitted = true; 	
-    
+    this.model.Email_ID = JSON.parse(this.authService.getLoginUser()).username;
   // Register user
-    this.authService.authenticateEmailAndPwd(this.model).subscribe(data => {
-		debugger;
-      if(data.success){
+    // this.authService.authenticateEmailAndPwd(this.model).subscribe(data => {
+		// debugger;
+      // if(data.success){
 		  this.authService.updatePassword(this.model).subscribe(data => {
 		debugger;
       if(data.success){
 		  //document.getElementById('close').click();
-		  this.SuccessMessage= "Password changed successfully. Please click close to continue."
+		  //this.SuccessMessage= "Password changed successfully. Please click close to continue."
 		  //document.getElementById(btn).click();
-		  //this.authService.logout();
+		  this.authService.logout();
 		  
         //this.flashMessage.show('You are now registered and can log in', {cssClass: 'alert-success', timeout: 3000});
-        //this.router.navigate(['/login']);
+        this.router.navigate(['/login']);
 		
       } else {
         //this.flashMessage.show('Something went wrong', {cssClass: 'alert-danger', timeout: 3000});
@@ -75,20 +78,21 @@ export class ChangepasswordComponent implements OnInit {
     });
         //this.flashMessage.show('You are now registered and can log in', {cssClass: 'alert-success', timeout: 3000});
         //this.router.navigate(['/changepassword']);
-      } else 
-	  {
-		  let length = this.ErrorList.length;
-			for(let i=0; i< length;i++)
-			{
-			this.ErrorList.pop();
-		   }
+      //} 
+	  // else 
+	  // {
+		  // let length = this.ErrorList.length;
+			// for(let i=0; i< length;i++)
+			// {
+			// this.ErrorList.pop();
+		   // }
 	
-	    this.ErrorList.push("User not found.");
+	    // this.ErrorList.push("User not found.");
 	
-        //this.flashMessage.show('Something went wrong', {cssClass: 'alert-danger', timeout: 3000});
-        //this.router.navigate(['/changepassword']);
-      }
-    });
+        // //this.flashMessage.show('Something went wrong', {cssClass: 'alert-danger', timeout: 3000});
+        // //this.router.navigate(['/changepassword']);
+      // }
+    //});
 	  
 
   }

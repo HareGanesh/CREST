@@ -52,6 +52,7 @@ router.post('/AddUnivTranscationEventApprovalHistory', (req, res, next) => {
 		univTranscationEventApprovalDetail.Prev_Approver_RID=TransApprovalMappingInfo[n].PrevApproverRoleID;
         univTranscationEventApprovalDetail.Next_Approver_RID=TransApprovalMappingInfo[n].NextApproverRoleID; 
 		univTranscationEventApprovalDetail.Status=TransApprovalMappingInfo[n].Status; 
+		univTranscationEventApprovalDetail.TranscationStatus=TransApprovalMappingInfo[n].TranscationStatus; 
 		univTranscationEventApprovalDetail.Mask_ID=TransApprovalMappingInfo[n].MaskID; 
 		univTranscationEventApprovalDetail.EventID=TransApprovalMappingInfo[n].EventID;
         univTranscationEventApprovalDetail.Tran_Dt=""; 								  
@@ -65,6 +66,75 @@ router.post('/AddUnivTranscationEventApprovalHistory', (req, res, next) => {
                                              
                                             }); 
 				}
+                        }
+                                                
+					}
+		 
+        }
+      res.json({success: true, msg:'UnivTranscationEventApprovalHistory Created.'});
+    
+});
+
+
+router.post('/AddUnivTranscationEventRejectionHistory', (req, res, next) => {
+	
+	
+	TransApprovalMappingInfo = req.body.TransEventApprovalMapping;
+	TransApprovalMappingHistoryInfo = req.body.universityApprovalHistory;
+	if(TransApprovalMappingHistoryInfo.length>0)
+        {
+            for(var i=0;i < TransApprovalMappingHistoryInfo.length; i++)
+                {
+					var newUnivTranscationEventApprovalHistory = new UnivTranscationEventApprovalHistory();
+	newUnivTranscationEventApprovalHistory.Tran_Approval_History_ID=TransApprovalMappingHistoryInfo[i].TranApprovalHistoryID;
+  	newUnivTranscationEventApprovalHistory.Tran_Approval_ID= TransApprovalMappingHistoryInfo[i].TransApprovalID;
+	newUnivTranscationEventApprovalHistory.Approved_By=TransApprovalMappingHistoryInfo[i].ApprovedBy;
+	newUnivTranscationEventApprovalHistory.Approved_On=TransApprovalMappingHistoryInfo[i].ApprovedOn;
+	newUnivTranscationEventApprovalHistory.Mask_ID=TransApprovalMappingHistoryInfo[i].MaskID;
+  	newUnivTranscationEventApprovalHistory.Status= TransApprovalMappingHistoryInfo[i].Status;  
+	
+	newUnivTranscationEventApprovalHistory.Comments=TransApprovalMappingHistoryInfo[i].Comments;  	
+	UnivTranscationEventApprovalHistory.AddUnivTranscationEventApprovalHistory(newUnivTranscationEventApprovalHistory, (err, UnivTranscationEventApprovalHistory)=> {
+  
+     });
+				}
+		}
+					
+  
+	if(TransApprovalMappingInfo !='')
+        {
+									//console.log(UnivTranscationEventApprovalDetail);
+			if(TransApprovalMappingInfo.length>0)
+                    {
+                     for(var n=0;n < TransApprovalMappingInfo.length; n++)
+                        {
+                             UnivTranscationEventApprovalDetail.UpdateUnivEventTranscationStatusByTranApprovalID(TransApprovalMappingInfo[n], (err, TransApprovalMapping1)=> {
+                                                                                
+                                });
+																
+		
+        // var  univTranscationEventApprovalDetail= new UnivTranscationEventApprovalDetail();
+        // univTranscationEventApprovalDetail.Tran_Approval_ID= TransApprovalMappingInfo[n].TransApprovalID;
+		// univTranscationEventApprovalDetail.Tran_Approval_IDNumber= TransApprovalMappingInfo[n].TranApprovalIDNumber;
+		// univTranscationEventApprovalDetail.Univ_ID=TransApprovalMappingInfo[n].UniversityID;
+        // univTranscationEventApprovalDetail.Student_ID=TransApprovalMappingInfo[n].StudentID;     
+		// univTranscationEventApprovalDetail.Tran_Map_ID= TransApprovalMappingInfo[n].TransMapID;
+		// univTranscationEventApprovalDetail.Prev_Approver_RID=TransApprovalMappingInfo[n].PrevApproverRoleID;
+        // univTranscationEventApprovalDetail.Next_Approver_RID=TransApprovalMappingInfo[n].NextApproverRoleID; 
+		// univTranscationEventApprovalDetail.Status=TransApprovalMappingInfo[n].Status; 
+		// univTranscationEventApprovalDetail.Mask_ID=TransApprovalMappingInfo[n].MaskID; 
+		// univTranscationEventApprovalDetail.EventID=TransApprovalMappingInfo[n].EventID;
+        // univTranscationEventApprovalDetail.Tran_Dt=""; 								  
+        // UnivTranscationEventApprovalDetail.AddUnivTranscationEventApprovalDetail(univTranscationEventApprovalDetail, (err, univTranscationApproval)=> {
+                                             
+                                            // }); 
+											
+		// if(TransApprovalMappingInfo[n].Status == 1)
+				// {
+			// EventStudent.setIsApproved(TransApprovalMappingInfo[n].StudentID, TransApprovalMappingInfo[n].EventID, (err, univTranscationApproval)=> {
+                                             
+                                            // }); 
+				// }
                         }
                                                 
 					}

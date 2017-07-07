@@ -69,6 +69,11 @@ const UnivTranscationEventApprovalDetailMstrSchema = mongoose.Schema({
 
    Modifiedby:{
     type: String
+  },
+  
+  TranscationStatus:{
+	  type:String,
+	  default:'O'
   }
 
 
@@ -97,7 +102,7 @@ module.exports.getAllUnivTranscationEventApprovalDetail = function(callback){
 	
 	module.exports.getAllUnivTranscationEventApprovalDetailByUnivID = function(univID, maskID, callback)
 	{	 
-	var query = { Univ_ID: univID, Mask_ID: {$lte:maskID}, Status:0};
+	var query = { Univ_ID: univID, Mask_ID: {$lte:maskID}, Status:0, TranscationStatus:{$ne:'R'}};
 	console.log(query);
 	UnivTranscationEventApprovalDetailMaster.find(query,callback);
 	}
@@ -118,6 +123,12 @@ module.exports.UpdateUnivTranscationEventApprovalDetailByTranApprovalID = functi
 { 
 var query = { Tran_Approval_ID: TransApprovalDt.Tran_Approval_ID };
 UnivTranscationEventApprovalDetailMaster.update(query, {Status:TransTypeDet.Status}, callback);
+}
+
+module.exports.UpdateUnivEventTranscationStatusByTranApprovalID = function(TransApprovalDt, callback)
+{ 
+var query = { Tran_Approval_ID: TransApprovalDt };
+UnivTranscationEventApprovalDetailMaster.update(query, {TranscationStatus:'R'}, callback);
 }
 
 module.exports.DeleteUnivTranscationEventApprovalDetailByApprovalId = function(Tran_Approval_ID, callback){ 

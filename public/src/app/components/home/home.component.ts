@@ -76,14 +76,18 @@ ngOnInit() {
 	  });
   }
   
+  
+  
   bindEvents()
   {
+	  debugger;
+	  
 	var modelData=[];
 	var OrgData=[];
 	var filterEvent=[];
     this.authService.getEvents().subscribe(event => {
 		debugger;
-      modelData= event.filter((E) => E.IsApproved == false || E.IsRejected == false);
+      modelData= event.filter((E) => E.IsApproved == false && E.IsRejected == false);
 	  for(var i=0;i<modelData.length;i++)
 	 {
 		  var m =this.dayDiff(modelData[i].StartDt);		  
@@ -190,11 +194,13 @@ ngOnInit() {
 	          }
 		   }
 	 
+	 // if(this.tagID == 'S')
+  // {
+// document.getElementById("openModalButton").click();
+  // }
 	  this.OrgEventModel=filterEvent;
   }
-		});
-  
-
+		});  
  
 }
 

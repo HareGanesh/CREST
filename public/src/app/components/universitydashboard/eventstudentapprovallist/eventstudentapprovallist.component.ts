@@ -21,6 +21,7 @@ export class EventstudentapprovallistComponent implements OnInit {
     public Action:String="Edit";
 	public errorMsg:String="";
 	public deleteID:String="";
+	public Comments:String="";
 	searchFilter:any;
 	UnivEventModel:EventModel[];
 	eventModel:EventModel[];
@@ -29,6 +30,9 @@ export class EventstudentapprovallistComponent implements OnInit {
 	tagID:String;
 	private universityEventApprovalUserList: Array<UniversityTransEventApprovalList> = [];
 	TransEventApprovalMapping:UniversityTransEventApproval[]=[];
+	TransEventApprovalMappingStringArrayGlobal:String[]=[];
+	private TransEventApprovalMappingArrayGlobal:UniversityTransEventApproval[]=[];
+	private universityEventApprovalHistoryArrayGlobal:universityEventApprovalHistory[]=[];
 	//universityApprovalHistory:universityApprovalHistory;
 	public universityEventApprovalHistory:universityEventApprovalHistory;
 	model:Object;
@@ -232,6 +236,8 @@ export class EventstudentapprovallistComponent implements OnInit {
 	  let TransEventApprovalMappingLocal:UniversityTransEventApproval[]=[];
 	  let TransEventApprovalMappingArray:UniversityTransEventApproval[]=[];
 	  let universityEventApprovalHistoryArray:universityEventApprovalHistory[]=[];
+	  this.TransEventApprovalMappingArrayGlobal=[];
+	  this.universityEventApprovalHistoryArrayGlobal=[];
 	  let TransEventApprovalMappingDataList = event.university_EventApprovalUserList.filter(x=>x.isChecked == true);
 	  for(let x=0; x<TransEventApprovalMappingDataList.length;x++)
 	  {
@@ -294,14 +300,14 @@ export class EventstudentapprovallistComponent implements OnInit {
 								 let dataarray = this.Roles.find(x=>x.Priority == Math.max.apply(null, priorityArray));
 								 TransEventApprovalMappingLocal.push({TransMapID : dataarray.Tran_Map_ID, NextApproverRoleID:dataarray.RoleID, 
 							PrevApproverRoleID:TransEventApprovalMappingData.Next_Approver_RID, EventID:TransEventApprovalMappingData.EventID,
-							Priority:dataarray.Priority,MaskID:Math.pow(2, dataarray.Priority), Status:status, 
+							Priority:dataarray.Priority,MaskID:Math.pow(2, dataarray.Priority), Status:status, TranscationStatus:'A',
 							UniversityID:TransEventApprovalMappingData.Univ_ID, TransApprovalID:TransEventApprovalMappingData.Tran_Approval_ID,
 							TransDt:TransEventApprovalMappingData.Trans_Dt, StudentID:TransEventApprovalMappingData.Student_ID, TranApprovalIDNumber:TransEventApprovalMappingData.Tran_Approval_IDNumber});
 							
 							}else 
 							{
 								TransEventApprovalMappingLocal.push({TransMapID : this.Roles[i].Tran_Map_ID, NextApproverRoleID:this.Roles[i].RoleID, PrevApproverRoleID:TransEventApprovalMappingData.Next_Approver_RID,
-							Priority:this.Roles[i].Priority,MaskID:Math.pow(2, this.Roles[i].Priority), Status:status, EventID:TransEventApprovalMappingData.EventID,
+							Priority:this.Roles[i].Priority,MaskID:Math.pow(2, this.Roles[i].Priority), Status:status, EventID:TransEventApprovalMappingData.EventID,TranscationStatus:'P',
 							UniversityID:TransEventApprovalMappingData.Univ_ID, TransApprovalID:TransEventApprovalMappingData.Tran_Approval_ID, TransDt:TransEventApprovalMappingData.Trans_Dt, StudentID:TransEventApprovalMappingData.Student_ID, TranApprovalIDNumber:TransEventApprovalMappingData.Tran_Approval_IDNumber});
 							}
 						 }
@@ -327,18 +333,186 @@ export class EventstudentapprovallistComponent implements OnInit {
 					// return false;
 				// });
 	  }
+	  
+	  this.universityEventApprovalHistoryArrayGlobal = universityEventApprovalHistoryArray;
+	  this.TransEventApprovalMappingArrayGlobal = TransEventApprovalMappingArray;
 
-	this.authService.addUniversityTransEventApprovalHistory(this.model, universityEventApprovalHistoryArray, TransEventApprovalMappingArray).subscribe(data => {
+	// this.authService.addUniversityTransEventApprovalHistory(this.model, universityEventApprovalHistoryArray, TransEventApprovalMappingArray).subscribe(data => {
+		// debugger;
+      // if(data.success){
+        // //this.flashMessage.show('You are now registered and can log in', {cssClass: 'alert-success', timeout: 3000});
+        // this.bindGrid();
+      // } else {
+        // //this.flashMessage.show('Something went wrong', {cssClass: 'alert-danger', timeout: 3000});
+        // this.router.navigate(['/register']);
+      // }
+    // });
+  }
+  
+  SubmitAllApproveItem()
+	{
+	debugger;
+//	let length = this.universityApprovalHistoryArrayGlobal.length;
+	let length = this.universityEventApprovalHistoryArrayGlobal.length;
+			for(let y=0; y< length;y++)
+				{
+				 this.universityEventApprovalHistoryArrayGlobal[y].Comments = this.Comments;
+				}
+        this.authService.addUniversityTransEventApprovalHistory(this.model, this.universityEventApprovalHistoryArrayGlobal, this.TransEventApprovalMappingArrayGlobal).subscribe(data => {
+		
 		debugger;
       if(data.success){
         //this.flashMessage.show('You are now registered and can log in', {cssClass: 'alert-success', timeout: 3000});
-        this.bindGrid();
+        document.getElementById('close').click();
+                                this.bindGrid();
       } else {
         //this.flashMessage.show('Something went wrong', {cssClass: 'alert-danger', timeout: 3000});
         this.router.navigate(['/register']);
       }
-    });
+    });                        
+	}
+	
+	
+	RejectStudent(event)
+  {
+	  let TransEventApprovalMappingLocal:String[]=[];
+	  let TransEventApprovalMappingArray:UniversityTransEventApproval[]=[];
+	  let universityEventApprovalHistoryArray:universityEventApprovalHistory[]=[];
+	  this.TransEventApprovalMappingArrayGlobal=[];
+	  this.universityEventApprovalHistoryArrayGlobal=[];
+	  let TransEventApprovalMappingDataList = event.university_EventApprovalUserList.filter(x=>x.isChecked == true);
+	  for(let x=0; x<TransEventApprovalMappingDataList.length;x++)
+	  {
+		let TransEventApprovalMappingData = TransEventApprovalMappingDataList[x];
+		
+	  debugger;
+	 // return false;
+	  let maskID=2;
+	  let roleid = JSON.parse(this.authService.getLoginUser()).Role_ID;
+	       maskID = Math.pow(2,(this.Roles.filter(x=>x.RoleID == roleid)[0].Priority));
+	  let status=0;
+	  let priorityArray=[];
+	  let maskArray=[];
+	  let transApprovalHistoryID=1;
+	  
+	  this.authService.getMaxTransEventApprovalHistoryID().subscribe(data => {
+		   if(data.length > 0)
+		   {
+		    transApprovalHistoryID = data[0].Tran_Approval_History_ID + 1;
+		   }
+		},
+		//observable also returns error
+		err => {
+		console.log(err);
+		return false;
+		});
+	  this.universityEventApprovalHistory={TranApprovalHistoryID:0,ApprovedBy:"", ApprovedOn:new Date(), MaskID:0,Status:0, Comments:"", TransApprovalID:"" };
+	  //this.authService.getAllTranscationTypeWithRolesAndPriority(TransEventApprovalMappingData.Univ_ID, 2).subscribe(data => {
+					// if(data.length > 0)
+					// {
+						// let length = TransEventApprovalMappingLocal.length;
+						// for(let y=0; y< length;y++)
+						// {
+						// TransEventApprovalMappingLocal.pop();
+						// }
+						
+						for(let j=0; j< this.Roles.length; j++)
+						{
+							maskArray.push(Math.pow(2, this.Roles[j].Priority));
+							priorityArray.push(this.Roles[j].Priority);
+						}
+						
+						// if( Math.max.apply(null, maskArray) == maskID)
+						 // {
+							 // status=1;
+						 // }
+						 
+						// for(let i=0; i< this.Roles.length; i++)
+						// {					
+						 
+							 // // if(Math.pow(2, data[i].Priority) == maskID)
+							 // // {
+								 // // status=1;
+							 // // }
+						  // if( Math.pow(2, this.Roles[i].Priority) > maskID || status == 1)
+						 // {
+							 // if(status == 1)
+							 // {
+								 // i=this.Roles.length;
+								 // let dataarray = this.Roles.find(x=>x.Priority == Math.max.apply(null, priorityArray));
+								 // TransEventApprovalMappingLocal.push({TransMapID : dataarray.Tran_Map_ID, NextApproverRoleID:dataarray.RoleID, 
+							// PrevApproverRoleID:TransEventApprovalMappingData.Next_Approver_RID, EventID:TransEventApprovalMappingData.EventID,
+							// Priority:dataarray.Priority,MaskID:Math.pow(2, dataarray.Priority), Status:status, 
+							// UniversityID:TransEventApprovalMappingData.Univ_ID, TransApprovalID:TransEventApprovalMappingData.Tran_Approval_ID,
+							// TransDt:TransEventApprovalMappingData.Trans_Dt, StudentID:TransEventApprovalMappingData.Student_ID, TranApprovalIDNumber:TransEventApprovalMappingData.Tran_Approval_IDNumber});
+							
+							// }else 
+							// {
+								// TransEventApprovalMappingLocal.push({TransMapID : this.Roles[i].Tran_Map_ID, NextApproverRoleID:this.Roles[i].RoleID, PrevApproverRoleID:TransEventApprovalMappingData.Next_Approver_RID,
+							// Priority:this.Roles[i].Priority,MaskID:Math.pow(2, this.Roles[i].Priority), Status:status, EventID:TransEventApprovalMappingData.EventID,
+							// UniversityID:TransEventApprovalMappingData.Univ_ID, TransApprovalID:TransEventApprovalMappingData.Tran_Approval_ID, TransDt:TransEventApprovalMappingData.Trans_Dt, StudentID:TransEventApprovalMappingData.Student_ID, TranApprovalIDNumber:TransEventApprovalMappingData.Tran_Approval_IDNumber});
+							// }
+						 // }
+						// }
+						TransEventApprovalMappingLocal.push(TransEventApprovalMappingData.Tran_Approval_ID);
+	  //TransEventApprovalMappingArray.push(TransEventApprovalMappingLocal.sort(x=>x.Priority)[TransEventApprovalMappingLocal.length-1]);		
+	  //TransEventApprovalMappingArray.push(TransEventApprovalMappingArray);
+					 debugger;
+	  this.universityEventApprovalHistory.ApprovedBy = this.Roles.filter(x=>x.RoleID == roleid)[0].RoleName;
+	  this.universityEventApprovalHistory.MaskID = TransEventApprovalMappingData.Mask_ID; 
+	  this.universityEventApprovalHistory.TransApprovalID = TransEventApprovalMappingData.Tran_Approval_ID;
+	  this.universityEventApprovalHistory.Status =1;
+	  this.universityEventApprovalHistory.Comments = "Approved";
+	  this.universityEventApprovalHistory.TranApprovalHistoryID=transApprovalHistoryID;
+	  universityEventApprovalHistoryArray.push(this.universityEventApprovalHistory);
+	  debugger;
+	  
+					//}
+			// },
+				// //observable also returns error
+					// err => {
+					// console.log(err);
+					// return false;
+				// });
+	  }
+	  
+	  this.universityEventApprovalHistoryArrayGlobal = universityEventApprovalHistoryArray;
+	  this.TransEventApprovalMappingStringArrayGlobal = TransEventApprovalMappingLocal;
+
+	// this.authService.addUniversityTransEventApprovalHistory(this.model, universityEventApprovalHistoryArray, TransEventApprovalMappingArray).subscribe(data => {
+		// debugger;
+      // if(data.success){
+        // //this.flashMessage.show('You are now registered and can log in', {cssClass: 'alert-success', timeout: 3000});
+        // this.bindGrid();
+      // } else {
+        // //this.flashMessage.show('Something went wrong', {cssClass: 'alert-danger', timeout: 3000});
+        // this.router.navigate(['/register']);
+      // }
+    // });
   }
+  
+  SubmitAllRejectItem()
+	{
+	debugger;
+//	let length = this.universityApprovalHistoryArrayGlobal.length;
+	let length = this.universityEventApprovalHistoryArrayGlobal.length;
+			for(let y=0; y< length;y++)
+				{
+				 this.universityEventApprovalHistoryArrayGlobal[y].Comments = this.Comments;
+				}
+        this.authService.addUniversityEventTransRejectionHistoryArray(this.model, this.universityEventApprovalHistoryArrayGlobal, this.TransEventApprovalMappingStringArrayGlobal).subscribe(data => {
+
+		debugger;
+      if(data.success){
+        //this.flashMessage.show('You are now registered and can log in', {cssClass: 'alert-success', timeout: 3000});
+        document.getElementById('closeR').click();
+                                this.bindGrid();
+      } else {
+        //this.flashMessage.show('Something went wrong', {cssClass: 'alert-danger', timeout: 3000});
+        this.router.navigate(['/register']);
+      }
+    });                        
+	}
   
   check(ev, event, transApprovalId) {
 	  if(this.isSupervisorLoggedIn)

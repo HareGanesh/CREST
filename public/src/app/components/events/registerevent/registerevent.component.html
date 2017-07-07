@@ -49,7 +49,7 @@
 <a href="#OrganizersTab" data-toggle="tab" [class.disabled]="isDisabled()">Organizers</a>
 </li>
 
-<li #fifthLI>
+<li #fifthLI style="display:none;">
 <a href="#OrganizationsTab" data-toggle="tab" [class.disabled]="isDisabled()">Invite</a>
 </li>
 
@@ -370,7 +370,8 @@
 
 	</div>
 <a id="Prev3" class="big-red-button" data-toggle="tab" (click)=OnPrevClick(inputa,4,forthLI,thirdLI) #inputa>Prev</a>
-<a id="Next3" class="big-red-button" data-toggle="tab" (click)=OnNextClick(input4,4,forthLI,fifthLI) #input4>Next</a>
+<button (click)="onEventSubmit()" class="big-red-button" [disabled]="!EventForm.form.valid" >Submit All</button>
+<a style="display:none;" id="Next3" class="big-red-button" data-toggle="tab" (click)=OnNextClick(input4,4,forthLI,fifthLI) #input4>Next</a>
 <!-- <button (click)="onEventSubmit()" class="big-red-button floatRight" [disabled]="!EventForm.form.valid" >Submit All</button> -->
 <!-- <a id="Prev3" class="big-red-button" data-toggle="tab" (click)=OnPrevClick(inputa,4,forthLI,thirdLI) #inputa>Prev</a>	 -->
 
@@ -378,7 +379,7 @@
 
 </div>
 
-<div id="OrganizationsTab" class="tab-pane fade ">
+<div id="OrganizationsTab" class="tab-pane fade " style="display:none;">
 
 <div class="AddMoreDiv">
 <label style="margin-right:10px;">Please invite Organizations:</label>

@@ -108,7 +108,9 @@
 					</ul>
 					<div *ngIf="tagID=='UR'">
 					
-					<a  class="btn btn-primary"  style="margin-top:10px;" (click)="ApproveStudent(item1)">{{ApproveAllOrConfirmAll}}</a>
+					<!-- <a  class="btn btn-primary"  style="margin-top:10px;" (click)="ApproveStudent(item1)">{{ApproveAllOrConfirmAll}}</a> -->
+					<a  class="btn btn-primary"  style="margin-top:10px;" (click)="ApproveStudent(item1)" data-toggle="modal" data-target="#commentAllDiv">{{ApproveAllOrConfirmAll}}</a>
+					<a  class="btn btn-primary"  style="margin-top:10px;" (click)="RejectStudent(item1)" data-toggle="modal" data-target="#RejectCommentAllDiv">Reject All</a>
 					</div>
 					</div>
 					</accordion-group>
@@ -135,6 +137,53 @@
            
           </div>
 		  </div>
+		  <div id="commentAllDiv" class="modal fade" role="dialog" >
+<div class="modal-dialog" style="width:40% !important" >
+
+<div class="modal-content" >
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title" style="color:#73879C;background: #F7F7F7;font-family:inherit;font-size: 30px;font-weight: 400;line-height: 1.471">Approve Student for Event </h4>
+      </div>
+	  <div class="modal-body">
+	   
+	   <textarea [(ngModel)]="Comments" name="Comments" ngControl="Comments"  class="form-control" placeholder="Comments"
+		 autofocus="true" cols="3" rows="3" maxlength="2000"></textarea>
+		 </div>
+	<div class="modal-footer">  
+<input type="button" class="btn btn-lg btn btn-primary btn-block student_update" id="close" data-dismiss="modal" value="Cancel" style="margin-top:4px;">
+<input type="button" (click)="SubmitAllApproveItem()" class="btn btn-lg btn btn-primary btn-block student_update" value="Submit" >
+
+
+	 
+</div>
+</div>
+</div>
+</div>
+
+<div id="RejectCommentAllDiv" class="modal fade" role="dialog" >
+<div class="modal-dialog" style="width:40% !important" >
+
+<div class="modal-content" >
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title" style="color:#73879C;background: #F7F7F7;font-family:inherit;font-size: 30px;font-weight: 400;line-height: 1.471">Reject Student for Event </h4>
+      </div>
+	  <div class="modal-body">
+	   
+	   <textarea [(ngModel)]="Comments" name="Comments" ngControl="Comments"  class="form-control" placeholder="Comments"
+		 autofocus="true" cols="3" rows="3" maxlength="2000"></textarea>
+		 </div>
+	<div class="modal-footer">  
+<input type="button" class="btn btn-lg btn btn-primary btn-block student_update" id="closeR" data-dismiss="modal" value="Cancel" style="margin-top:4px;">
+<input type="button" (click)="SubmitAllRejectItem()" class="btn btn-lg btn btn-primary btn-block student_update" value="Submit" >
+
+
+	 
+</div>
+</div>
+</div>
+</div>
        
 </ng-container>
 <ng-container *ngIf="!authService.login();">

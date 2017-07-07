@@ -66,7 +66,6 @@ router.post('/authenticate', (req, res, next) => {
             id: user._id,
             TagID: user.TagID,
             UserName: user.UserName
-					
           }
         });     
 
@@ -106,7 +105,8 @@ router.post('/authenticate', (req, res, next) => {
 		{
                                 
         PWD: req.body.Pwd,
-		EmailID:req.body.Email_ID	
+		EmailID:req.body.Email_ID,
+        isPasswordChanged:true
 		});
 		
 		UserLogin.updatePassword(userDetail,(err,user)=>

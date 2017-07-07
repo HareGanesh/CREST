@@ -40,6 +40,7 @@ import {TooltipModule} from "ngx-tooltip";
 import { UniversityroleComponent } from './components/universityrole/universityrole.component';
 import { StudentListComponent } from './components//student-list/student-list.component';
 import { ChangepasswordComponent } from './components/changepassword/changepassword.component';
+import { ChangepasswordPopupComponent } from './components/changepasswordPopup/changepasswordPopup.component';
 import { EventstudentapprovallistComponent } from './components/universitydashboard/eventstudentapprovallist/eventstudentapprovallist.component'; 
 import {AccordionModule} from "ng2-accordion";
 
@@ -95,6 +96,7 @@ const appRoutes: Routes = [
 	UniversityroleComponent,
 	StudentListComponent,
 	ChangepasswordComponent,
+	ChangepasswordPopupComponent,
 	EventstudentapprovallistComponent
 	 
 

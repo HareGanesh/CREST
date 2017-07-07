@@ -16,6 +16,12 @@
 <a id="backBtn" class="big-red-button" *ngIf="tagID=='UR'" style="margin-top:15px;" [routerLink]="['/eventstudentapprovallist']">Back To List</a>
 <a id="backBtn" class="big-red-button" *ngIf="tagID=='C'" style="margin-top:15px;" [routerLink]="['/']">Back To List</a>
 <a id="backBtn" class="big-red-button" *ngIf="tagID=='S'" style="margin-top:15px;" [routerLink]="['/']">Back To List</a>
+<div style="float:right;margin-left:5px;"  *ngIf="tagID=='C'">
+<!-- <input type="button" value="Approve Event" style="margin-top:16px;" class="btn btn-primary" (click)="approveEvent();"/> -->
+<!-- <input type="button" value="Reject Event" style="margin-top:16px;" class="btn btn-primary" (click)="rejectEvent();"/> -->
+<a  class="big-red-button"  data-toggle="modal" style="margin-top:16px;"  (click) = "clearComments();" data-target="#commentDiv">Approve</a>
+<a  class="big-red-button"  data-toggle="modal" style="margin-top:16px;" (click) = "clearComments();" data-target="#RejectCommentDiv">Reject</a>
+</div> 
 <div class="info">
 <h1 class="title">{{eventDetails.EventTitle}}</h1>
 <p class="heading">{{eventDetails.Description}}...</p>
@@ -53,29 +59,32 @@
 <a href="#OverviewTab" data-toggle="tab">Overview</a>
 </li>
 <li>
-<a href="#ScheduleTab" data-toggle="tab">Schedule</a>
+<a href="#ScheduleTab" data-toggle="tab" [class.disabled]="isDisabled()">Schedule</a>
 </li>
 <li class="RulesTab">
-<a href="#RulesTab" data-toggle="tab">Rules</a>
+<a href="#RulesTab" data-toggle="tab" [class.disabled]="isDisabled()">Rules</a>
 </li>
 
 <li>
-<a href="#PeopleTab" data-toggle="tab">People</a>
+<a href="#PeopleTab" data-toggle="tab" [class.disabled]="isDisabled()">People</a>
 </li>
 <li>
-<a href="#PrizesTab" data-toggle="tab">Prizes</a>
+<a href="#PrizesTab" data-toggle="tab" [class.disabled]="isDisabled()">Prizes</a>
 </li>
 <li>
-<a href="#ChatTab" data-toggle="tab">Chat</a>
+<a href="#ChatTab" data-toggle="tab" [class.disabled]="isDisabled()">Chat</a>
 </li>
 <li>
-<a href="#OrganizersTab" data-toggle="tab">Organizers</a>
+<a href="#OrganizersTab" data-toggle="tab" [class.disabled]="isDisabled()">Organizers</a>
+</li>
+<li *ngIf="tagID=='C'">
+ <a href="#InviteTab" data-toggle="tab" [class.disabled]="isDisabled()">Invite</a>
 </li>
 <li>
-<a href="#OrganizationTab" data-toggle="tab">Organizations</a>
+<a href="#OrganizationTab" data-toggle="tab" [class.disabled]="isDisabled()">Organizations</a>
 </li>
 <li>
-<a href="#UniversityTab" data-toggle="tab">Universities</a>
+<a href="#UniversityTab" data-toggle="tab" [class.disabled]="isDisabled()">Universities</a>
 </li>
 </ul>
 
@@ -313,6 +322,34 @@ Prizes
 
 
 </div>
+
+<div *ngIf="tagID=='C'" id="InviteTab" class="tab-pane fade">
+
+<div class="alert alert-success" *ngIf="SuccessMessage !=''">
+  <strong>{{SuccessMessage}}</strong>
+</div>
+<div class="alert alert-danger" *ngIf="DangerMessage !=''">
+  <strong>{{DangerMessage}}</strong>
+</div>
+
+<div class="AddMoreDiv">
+<label style="margin-right:10px;">Please invite Organizations:</label>
+
+<ss-multiselect-dropdown id ="orgn" name="Organizations" [options]="myOptions" [texts]="myTexts" (ngModelChange)="onOrganizationChange($event)" [settings]="mySettings" [ngModel]="model.Organizations" style="width:200px !important;"></ss-multiselect-dropdown>
+
+</div>
+
+<div class="AddMoreDiv">
+<label style="margin-right:23px;">Please invite Universities:</label>
+
+<ss-multiselect-dropdown id ="univ" name="Universities" [options]="myUnivOptions" [texts]="myUnivTexts" (ngModelChange)="onUniversityChange($event)" [settings]="mySettings" [ngModel]="model.Universities" style="width:200px !important;"></ss-multiselect-dropdown>
+
+</div>
+
+	
+<button (click)="onEventInviteSubmit()" class="big-red-button">Invite</button>
+
+</div> 
 <div id="OrganizationTab" class="tab-pane fade"><h3>Organizations
 </h3>
 
@@ -587,6 +624,53 @@ Prizes
 
 
 
+</div>
+
+<div id="commentDiv" class="modal fade" role="dialog" >
+<div class="modal-dialog" style="width:40% !important" >
+
+<div class="modal-content" >
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title" style="color:#73879C;background: #F7F7F7;font-family:inherit;font-size: 30px;font-weight: 400;line-height: 1.471">Approve Event </h4>
+      </div>
+	  <div class="modal-body">
+	   
+	   <textarea [(ngModel)]="Comments" name="Comments" ngControl="Comments"  class="form-control" placeholder="Comments"
+		 autofocus="true" cols="3" rows="3" maxlength="2000"></textarea>
+		 </div>
+	<div class="modal-footer">  
+<input type="button" class="btn btn-lg btn btn-primary btn-block student_update" id="close" data-dismiss="modal" value="Cancel" style="margin-top:4px;">
+<input type="button" (click)="approveEvent()" class="btn btn-lg btn btn-primary btn-block student_update" value="Submit" >
+
+
+	 
+</div>
+</div>
+</div>
+</div>
+<div id="RejectCommentDiv" class="modal fade" role="dialog" >
+<div class="modal-dialog" style="width:40% !important" >
+
+<div class="modal-content" >
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title" style="color:#73879C;background: #F7F7F7;font-family:inherit;font-size: 30px;font-weight: 400;line-height: 1.471">Reject Event </h4>
+      </div>
+	  <div class="modal-body">
+	   
+	   <textarea [(ngModel)]="Comments" name="Comments" ngControl="Comments"  class="form-control" placeholder="Comments"
+		 autofocus="true" cols="3" rows="3" maxlength="2000"></textarea>
+		 </div>
+	<div class="modal-footer">  
+<input type="button" class="btn btn-lg btn btn-primary btn-block student_update" id="close2" data-dismiss="modal" value="Cancel" style="margin-top:4px;">
+<input type="button" (click)="rejectEvent()" class="btn btn-lg btn btn-primary btn-block student_update" value="Submit" >
+
+
+	 
+</div>
+</div>
+</div>
 </div>
  
 </ng-container> 

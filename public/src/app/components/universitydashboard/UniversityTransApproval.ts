@@ -4,9 +4,10 @@ export class UniversityTransApproval {
 
     public constructor(
 	public UniversityID:Number,   
-	public Priority:Number,
+	public Priority:number,
 	public MaskID:Number,
 	public Status:Number,	
+	public TransactionStatus:string,
 	public TransMapID:Number,
 	public StudentID:String,
 	public PrevApproverRoleID:Number,

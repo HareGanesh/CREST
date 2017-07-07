@@ -110,7 +110,8 @@ router.post('/authenticate', (req, res, next) => {
 						DOB:student.DOB,
 						Address:student.Address,
 						Orgn_ID:student.Orgn_ID,
-						Univ_ID:student.Univ_ID
+						Univ_ID:student.Univ_ID,
+						isPasswordChanged: student.isPasswordChanged
 					  }
 					}); 
 				}

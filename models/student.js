@@ -40,6 +40,11 @@ const StudentSchema = mongoose.Schema({
    DOB:{
     type: Date
   },
+  
+  isPasswordChanged:{
+	  type: Boolean,
+	  default:false
+  },
 
    Address:{
     type: String
@@ -85,7 +90,7 @@ Orgn_ID:{
   Student_Heading:{type: String	},
   Student_Bio:{	type: String},
 
-   Is_Approved:{type: Number}
+   Is_Approved:{type: Number, default:0}
 });
 
 const Student = module.exports = mongoose.model('Student', StudentSchema,'Student');
@@ -116,12 +121,12 @@ module.exports.getStudentByStudentID = function(studentID,callback){
 }
 
 module.exports.getStudentByUnivID = function(univID,callback){
-	const query = {Univ_ID: univID, Is_Approved:true}
+	const query = {Univ_ID: univID, Is_Approved:1}
 	Student.find(query,callback);
 }
 
 module.exports.getPendingStudentByUnivID = function(univID,callback){
-	const query = {Univ_ID: univID, Is_Approved:false}
+	const query = {Univ_ID: univID, Is_Approved:0}
 	Student.find(query,callback);
 }
 
@@ -166,7 +171,7 @@ var query = { username	: user.EmailID };
 bcrypt.genSalt(saltRounds, function(err, salt) {
     bcrypt.hash(user.PWD, salt, function(err, hash) {
 		user.PWD=hash;
-		Student.update(query, {Pwd: user.PWD}, callback);
+		Student.update(query, {Pwd: user.PWD, isPasswordChanged: user.isPasswordChanged}, callback);
 	});
 });
 }
