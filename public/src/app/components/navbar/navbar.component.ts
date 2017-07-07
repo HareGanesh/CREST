@@ -19,7 +19,7 @@ userName:String;
 
   ngOnInit() {
 	  this.tagID=localStorage.getItem('tagID');
-	  debugger;
+	 
 	  this.user = JSON.parse(this.authService.getLoginUser());
 	  if(this.tagID=="S")
 	  {
@@ -33,7 +33,7 @@ userName:String;
   }
 
   onLogoutClick(){
-	debugger;
+	
     this.authService.logout();
     
     this.router.navigate(['/login']);

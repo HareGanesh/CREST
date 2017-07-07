@@ -38,7 +38,7 @@ export class UniversityroleComponent implements OnInit {
   submitted = false;
   
   ngOnInit() {
-	  debugger;
+
 	  this.univID = JSON.parse(this.authService.getLoginUser()).Univ_ID;
 	  
 	  // Get roles for an universityrole
@@ -55,7 +55,7 @@ export class UniversityroleComponent implements OnInit {
   
   emailChange()
   {
-	  debugger;
+	
 	  let length = this.ErrorList.length;
 		for(let i=0; i< length;i++)
 		{
@@ -112,13 +112,13 @@ export class UniversityroleComponent implements OnInit {
 }
 
 onUserRoleSubmit(){
-	  debugger;
+	
 	  this.submitted = true; 	
     this.model.Univ_ID = this.univID;
 	this.model.Password= this.generatePassword();
   // Register user
     this.authService.addUniversityUserRole(this.model).subscribe(data => {
-		debugger;
+		
       if(data.success){
         //this.flashMessage.show('You are now registered and can log in', {cssClass: 'alert-success', timeout: 3000});
         this.router.navigate(['/universitydashboard']);

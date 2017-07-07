@@ -14,7 +14,7 @@ export class ProfileComponent implements OnInit {
   student:Object;
   isLoading : boolean =  false;
  
-debugger;
+
   constructor(private authService:AuthService, private router:Router) { }
   public options:categoryModel[]=[];
   public studentCategoryList :studentCategoryModel[]=[];
@@ -26,7 +26,7 @@ optionsMap = {
 optionsChecked = [];
   //load user when initialized 
   ngOnInit() {
-	  	 debugger;
+	  	
 	 // console.log(this.authService.studentID);
 	  this.authService.getStudentByID(JSON.parse(this.authService.getStudent()).id).subscribe(data => {
 		  this.student =data;

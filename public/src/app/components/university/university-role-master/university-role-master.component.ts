@@ -53,7 +53,7 @@ model={
   
   onSubmit()
   {
-	  debugger;
+	 
 	   this.authService.addUniversityRole(this.model).subscribe(data => {
 		  if(data.success)
 		  {
@@ -70,7 +70,7 @@ model={
   
   AddMoreRoles()
   {
-	  debugger;
+	  
 	 this.model.Univ_RoleName.push({Univ_RoleName:""}); 
   }
   

@@ -183,16 +183,18 @@
   border-bottom: 1px solid #D9DEE4;
   margin-bottom: 10px;
   width: 100%;
-  position: relative;
+  position: absolute;
+  overflow:hidden;
+  z-index:999;
 }
 @media (min-width: 480px) {
   .nav_menu {
-    position: static;
+ 
   }
 }
 .nav-md .container.body .col-md-3.left_col {
   min-height: 100%;
-  width: 230px;
+  width: 10%;
   padding: 0;
   position: absolute;
   display: flex;
@@ -207,7 +209,6 @@ body .container.body .right_col {
 }
 .nav-md .container.body .right_col {
   padding: 10px 20px 0;
-  margin-left: 230px;
 }
 .nav_title {
   width: 230px;

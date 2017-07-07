@@ -87,7 +87,7 @@ export class RegisterstudentComponent implements OnInit {
   
   emailChange()
   {
-	  debugger;
+	  
 	  let length = this.ErrorList.length;
 		for(let i=0; i< length;i++)
 		{
@@ -111,7 +111,7 @@ export class RegisterstudentComponent implements OnInit {
   
   userNameChange()
   {
-	  debugger;
+	
 	  let length = this.UserNameErrorList.length;
 		for(let i=0; i< length;i++)
 		{
@@ -134,7 +134,7 @@ export class RegisterstudentComponent implements OnInit {
   
   StudentIDChange()
   {
-	debugger;
+	
 	  let length = this.StuErrorList.length;
 		for(let i=0; i< length;i++)
 		{
@@ -155,7 +155,7 @@ export class RegisterstudentComponent implements OnInit {
   }
   
   onChange(univID) {
-		debugger;
+		
 		
        this.TransApprovalMapping=[];
 	   let TransApprovalID="ReqSA-1";
@@ -208,7 +208,7 @@ export class RegisterstudentComponent implements OnInit {
   onRegisterSubmit(){
 
 
-	  debugger;	  
+  
 
 
 	 
@@ -247,7 +247,7 @@ export class RegisterstudentComponent implements OnInit {
 
   // Register user
     this.authService.registerStudent(this.model, this.TransApprovalMapping).subscribe(data => {
-		debugger;
+		
       if(data.success){
         //this.flashMessage.show('You are now registered and can log in', {cssClass: 'alert-success', timeout: 3000});
         this.router.navigate(['/login']);

@@ -179,17 +179,17 @@ submitted = false;
 
 	
 onOrganizationChange(items) {
-	debugger;
+
        this.model.Organizations = items;
     }
 	
 onUniversityChange(items) {
-	debugger;
+
        this.model.Universities = items;
     }
 
   ngOnInit() {
-	  debugger;
+	 
 	  
 	  this.tagID=localStorage.getItem('tagID');
 	  if(this.tagID == 'U')
@@ -223,7 +223,7 @@ onUniversityChange(items) {
 
 	  // Logged in user
 	this.student = JSON.parse(this.authService.getStudent());
-       debugger;
+     
 	   this.authService.getCategories().subscribe(data => {
 		   for(let i=0; i< data.length; i++)
       this.Categories.push(data[i]);
@@ -311,7 +311,7 @@ onUniversityChange(items) {
     }
 }
   isDisabled() {
-	  //debugger;
+	  
          if(this.validateService.validateEvent(this.model)){
 		    return false;		 
 		   }
@@ -321,7 +321,7 @@ onUniversityChange(items) {
   }
   
   onChange(category) {
-	  debugger;
+	  
 	  
 	 this.SubCategories = this.SubCategoriesWithCategory.filter(x=>x.CategoryID ==category);
 	 
@@ -333,7 +333,7 @@ onUniversityChange(items) {
   
   AddMoreRules()
   {
-	  debugger
+	 
 	  let length = this.model.Rules.length+1;
 	  this.eventRule = { RuleNo:length.toString(), RuleDescription:""};
 	  
@@ -342,7 +342,7 @@ onUniversityChange(items) {
   
   RemoveRules()
   {
-	  debugger
+	 
 	 
 	  
 	  this.model.Rules.pop();
@@ -358,7 +358,7 @@ onUniversityChange(items) {
   
   RemovePrize()
   {
-	  debugger
+	 
 	 
 	  
 	  this.model.Prizes.pop();
@@ -373,7 +373,7 @@ onUniversityChange(items) {
   
   RemoveOrganizer()
   {
-	  debugger
+	
 	 
 	  
 	  this.model.Organizers.pop();
@@ -381,7 +381,7 @@ onUniversityChange(items) {
   
  compareDates()
 {
-	debugger;
+
    if(new Date(this.model.EndDt)<new Date(this.model.StartDt))
    {
       
@@ -411,11 +411,11 @@ onUniversityChange(items) {
 // }
   
   fileChange(input){
-	  debugger;
+
   this.readFiles(input.files);
 }
 readFile(file, reader, callback){
-	debugger;
+
 	this.file_srcs.pop();
   reader.onload = () => {
     callback(reader.result);
@@ -499,7 +499,7 @@ resize(img, MAX_WIDTH:number, MAX_HEIGHT:number, callback){
 
 
 checkValidation()
-{	debugger;
+{	
     let length = this.ErrorList.length;
 	for(let i=0; i< length;i++)
 	{
@@ -561,7 +561,7 @@ checkValidation()
 
 OnNextClick(input, count,li1, li2)
 {
-	debugger;
+	
 	this.checkValidation();
 	if(this.ErrorList.length !=0)
 	{
@@ -584,13 +584,13 @@ OnNextClick(input, count,li1, li2)
 	{
 		input.href="#OrganizationsTab"
 	}
-	debugger;
+	
 }
 }
 
 OnPrevClick(input, count,li1, li2)
 {
-	debugger;
+	
 	li1.className=''
 		li2.className ='active';
 		if(count == '5')
@@ -607,12 +607,12 @@ OnPrevClick(input, count,li1, li2)
 	{
 		input.href="#OverviewTab"
 	}
-	debugger;
+	
 	
 }
 
   onEventSubmit(){
-	  debugger;
+
 	  this.submitted = true;
 	  
   	this.model.StartDt = new Date(this.model.StartDt).toISOString();
@@ -638,7 +638,7 @@ OnPrevClick(input, count,li1, li2)
 
   // Register user
     this.authService.registerEvent(this.model).subscribe(data => {
-		debugger;
+		
       if(data.success){
         //this.flashMessage.show('Event has been registered', {cssClass: 'alert-success', timeout: 3000});
         this.router.navigate(['/universitydashboard']);

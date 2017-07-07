@@ -32,12 +32,12 @@ export class UniversityComponent implements OnInit {
   
   @Input()
   ngOnInit() {      
- debugger;
+
 this.activatedRoute.params.subscribe((params: Params) => {
        this.isShow = params['id']==1?true:false;
        
       }); 
-                  debugger;         
+                       
                   if(!this.isShow)
                    {
                                   this.bindUniversity();      
@@ -113,12 +113,12 @@ this.activatedRoute.params.subscribe((params: Params) => {
   // Update university profile
   updateProfile(btn)
 {
-                debugger;
+               
                 if(this.univeritymodel._id==undefined)
                 {
                 this.univeritymodel.Pwd=this.generatePassword();
                 this.authService.addUniversity(this.univeritymodel).subscribe(data => {
-                                debugger;
+                                
                                 if(data.success)
                                 {
                                                 
@@ -134,7 +134,7 @@ this.activatedRoute.params.subscribe((params: Params) => {
                 else
                 {
                                 this.authService.updateUniversity(this.univeritymodel).subscribe(data => {
-                                debugger;
+                                
                                 if(data.success)
                                 {
                      document.getElementById('close').click();

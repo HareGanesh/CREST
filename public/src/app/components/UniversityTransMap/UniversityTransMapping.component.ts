@@ -110,7 +110,7 @@ submitted = false;
 
 	
 	onChange(univID) {
-		debugger;
+	
 		this.model.Roles=[];
 	//document.getElementsByClassName('AddMoreDiv').cssClass='show';
        this.UniversityRoles = this.UniversityRolesWithUniversity.filter(x=>x.Univ_ID ==univID);
@@ -141,7 +141,7 @@ submitted = false;
 		}
 		
 	onChangeTransType(TransTypeID) {
-	debugger;
+	
 	//document.getElementsByClassName('AddMoreDiv').cssClass='show';
 	this.model.Roles=[];
 	if(this.model.UniversityID != '0')
@@ -169,7 +169,7 @@ submitted = false;
        
     }
 	isDisabled() {
-	  //debugger;
+	 
          if(this.model.UniversityID !="0"){
 		    return false;		 
 		   }
@@ -178,7 +178,7 @@ submitted = false;
 	      }
   }
   ngOnInit() {
-	  debugger;
+	
 	  
 	  this.authService.getMaxTranMapID().subscribe(data => {
 		  if(data.length > 0)
@@ -292,7 +292,7 @@ submitted = false;
   
   AddMoreRoles()
   {
-	  debugger
+	
 	  
 	  
 	  let levelNo = this.model.NoOfLevel;
@@ -315,12 +315,12 @@ submitted = false;
 	  //this.model.Roles.sort(x=>x.RoleID);
 		  
 	  
-	  debugger;
+	 
   }
   
   RemoveRoles(priority)
   {
-	  debugger
+	  
 	  let role = this.model.Roles.filter(x=>x.Priority == priority);
 	  let index= this.model.Roles.indexOf(role);
 	  this.model.Roles.splice(priority-1, 1)
@@ -370,7 +370,7 @@ submitted = false;
 // }
   
 checkValidation()
-{	debugger;
+{	
     let length = this.ErrorList.length;
 	for(let i=0; i< length;i++)
 	{
@@ -430,7 +430,7 @@ checkValidation()
 
 
   onSubmit(){
-	  debugger;
+	
 	  if(!this.checkValidation())
 	  {
 		  return false;
@@ -477,7 +477,7 @@ checkValidation()
 	
   // Register user
     this.authService.AddUnivTranscationTypeDetail(this.model).subscribe(data => {
-		debugger;
+		
       if(data.success){
         //this.flashMessage.show('Event has been registered', {cssClass: 'alert-success', timeout: 3000});
         this.router.navigate(['/universitydashboard']);

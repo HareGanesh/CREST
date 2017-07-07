@@ -57,7 +57,6 @@ ngOnInit()
       });
 	  
  this.authService.getEventsById(eventID).subscribe(event => {
-	 debugger;
 this.dayTimeDiff(event.EventRegisterEndDt);
 this.eventDetails=event;
 
@@ -69,14 +68,14 @@ this.eventDetails=event;
     });
   
    this.authService.GetEventRuleByEventID(eventID).subscribe(Rule => {
-	debugger;
+
 	this.eventRuleArray=Rule;
 },  err => {
       console.log(err);
       return false;
     });
 this.authService.GetEventPrizeByEventID(eventID).subscribe(prize => {
-	debugger;
+
 	this.eventPrizeArray=prize;
 },  err => {
       console.log(err);
@@ -84,7 +83,7 @@ this.authService.GetEventPrizeByEventID(eventID).subscribe(prize => {
     });
 
 this.authService.GetEventOrganizerByEventID(eventID).subscribe(organizer => {
-	debugger;
+
 	this.eventOrganizerArray=organizer;
 },  err => {
       console.log(err);
@@ -92,7 +91,7 @@ this.authService.GetEventOrganizerByEventID(eventID).subscribe(organizer => {
     });	
 	
 	this.authService.GetEventOrganizationByEventID(eventID).subscribe(organization => {
-	debugger;
+	
 	this.eventOrganizationArray=organization;
 },  err => {
       console.log(err);
@@ -100,7 +99,7 @@ this.authService.GetEventOrganizerByEventID(eventID).subscribe(organizer => {
     });
 	
 	this.authService.GetEventUniversityByEventID(eventID).subscribe(university => {
-	debugger;
+
 	this.eventUniversityArray=university;
 },  err => {
       console.log(err);
@@ -133,7 +132,7 @@ this.authService.GetEventOrganizerByEventID(eventID).subscribe(organizer => {
   
   onPopupClick()
   {
-	  debugger;
+	
 	  //document.getElementById('OrganizationModal').modal()
 	  //$("#myModal").modal();
 	  return false;
@@ -141,43 +140,43 @@ this.authService.GetEventOrganizerByEventID(eventID).subscribe(organizer => {
   
   GetUnivName(univID)
   {
-	  debugger;
+
 	return this.Universities.find(x=>x.id == univID).name;
   }
   
   GetUnivAddress(univID)
   {
-	  debugger;
+	
 	return this.Universities.find(x=>x.id == univID).address;
   }
   
   GetUnivContact(univID)
   {
-	  debugger;
+	
 	return this.Universities.find(x=>x.id == univID).ContactNo;
   }
   
   GetName(orgnID)
   {
-	  debugger;
+	 
 return this.Organizations.find(x=>x.id == orgnID).name;
   }
   
   GetTitle(orgnID)
   {
-	  debugger;
+	
 return this.Organizations.find(x=>x.id == orgnID).title;
   }
   
   GetOverview(orgnID)
   {
-	  debugger;
+	  
 return this.Organizations.find(x=>x.id == orgnID).overview;
   }
   
   GetAddress(orgnID)
   {
-	  debugger;
+	  
 return this.Organizations.find(x=>x.id == orgnID).address  +"," + this.Organizations.find(x=>x.id == orgnID).state +"," + this.Organizations.find(x=>x.id == orgnID).country;
   }
   

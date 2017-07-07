@@ -21,7 +21,7 @@ OrgEventModel:EventModel[];
 
     ) { }
 ngOnInit() {
-	debugger;
+	
 	this.tagID=localStorage.getItem('tagID');
 	if(this.authService.login())
 	{
@@ -51,7 +51,7 @@ ngOnInit() {
          _id: ''  
       }
 	  model._id=id;
-	  debugger;
+	 
 	  this.authService.approveEvent(model).subscribe(event => {
 		  if(event.success)
 		  {
@@ -65,7 +65,7 @@ ngOnInit() {
 	var OrgData=[];
 	var filterEvent=[];
     this.authService.getEvents().subscribe(event => {
-		debugger;
+		
       modelData= event.filter((E) => E.IsApproved == false);
 	  for(var i=0;i<modelData.length;i++)
 	 {
@@ -106,7 +106,7 @@ ngOnInit() {
       return false;
     });
   	var student=JSON.parse(this.authService.getStudent());
-	debugger;
+	
 		//{{ksdf.Orgn_ID}}
 		this.authService.GetEventByOrgID(student.Orgn_ID).subscribe(org => {			
 			OrgData=org;
@@ -154,7 +154,7 @@ ngOnInit() {
       return false;
     });
   	var student=JSON.parse(this.authService.getStudent());
-	debugger;
+	
 		//{{ksdf.Orgn_ID}}
 		this.authService.GetEventByUnivID(student.Univ_ID).subscribe(univ => {			
 			UnivData=univ;
@@ -211,7 +211,7 @@ public open() {
 	 
 	 for(var i=0;i<orgData.length;i++)
 	 {
-		 debugger;
+		
 		  if(orgData[i].Location.toString().toLowerCase().indexOf(this.searchFilter.toLowerCase())!=-1 || orgData[i].EventTitle.toString().toLowerCase().indexOf(this.searchFilter.toLowerCase())!=-1)
 		  {
 			  orgFilterData.push(orgData[i]);

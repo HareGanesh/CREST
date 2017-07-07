@@ -24,21 +24,21 @@ export class AuthService {
   
   getMaxTranApprovalID()
   {
-	  debugger;
+
 	  return this.http.get('http://localhost:3777/UnivTranscationApprovalDetail/getMaxTransApprovalID')
   	.map(res => res.json());
   }
   
   getMaxTransApprovalHistoryID()
   {
-	  debugger;
+	
 	  return this.http.get('http://localhost:3777/UnivTranscationApprovalHistory/getMaxTransApprovalHistoryID')
   	.map(res => res.json());
   }
   
   getMaxTranApprovalNumberID()
   {
-	  debugger;
+	  
 	  return this.http.get('http://localhost:3777/UnivTranscationApprovalDetail/getMaxTransApprovalNumberID')
   	.map(res => res.json());
   }
@@ -60,7 +60,7 @@ export class AuthService {
 
   //get the profile--will get unauthorized if the token is not sent
   getProfile(){
-	  debugger
+	  
     let headers = new Headers();
     this.loadToken();
     headers.append('Authorization', this.authToken);
@@ -81,7 +81,7 @@ export class AuthService {
 
   storeStudentData(token, user,tagID){
       this.tagID=tagID;
-	  debugger;
+	
 	  if(tagID=="S")
 	  {
 	     this.studentID= user.id; 
@@ -107,7 +107,7 @@ export class AuthService {
     
   getUserByEmail(student)
   {
-	  debugger;
+	 
 	  let headers = new Headers();
   	headers.append('emailid',student.Email_ID);
 	console.log(student.Email_ID);
@@ -167,7 +167,7 @@ export class AuthService {
 
 
   logout(){
-	  debugger;	
+	
     this.authToken = null;
     this.student = null;
     localStorage.clear();
@@ -189,28 +189,28 @@ export class AuthService {
   
   getCategories()
   {
-	  debugger;
+
 	  return this.http.get('http://localhost:3777/CategoryMstr/getAllCategory')
   	.map(res => res.json());
   }
   
   getAllStudent()
   {
-	  debugger;
+
 	  return this.http.get('http://localhost:3777/students/getAllStudent')
   	.map(res => res.json());
   }
   
   getSubCategories()
   {
-	  debugger;
+
 	  return this.http.get('http://localhost:3777/SubCategoryMstr/getAllSubCategory')
   	.map(res => res.json());
   }
   
   getEventTypes()
   {
-	  debugger;
+	
 	  return this.http.get('http://localhost:3777/EventTypeMaster/getAllEventTypeMaster')
   	.map(res => res.json());
   }
@@ -220,7 +220,7 @@ export class AuthService {
 } 
 
 getEventsById(id){
-	debugger;
+
 	
 	let headers = new Headers();
   	headers.append('id',id);
@@ -270,28 +270,28 @@ GetEventUniversityByEventID(id){
 
 getOrganizations()
   {
-	  debugger;
+	  
 	  return this.http.get('http://localhost:3777/OrganizationMstr/getAllOrganization')
   	.map(res => res.json());
   }
 
   getAllUniversity()
   {
-	  debugger;
+	 
 	  return this.http.get('http://localhost:3777/UniversityMstr/getAllUniversity')
   	.map(res => res.json());
   }
   
   getUniversityRoles()
   {
-	  debugger;
+
 	  return this.http.get('http://localhost:3777/UniversityRoleMstr/getAllUniversityRole')
   	.map(res => res.json());
   }
   
   getUniversityRolesByUnivID(univID)
   {
-	  debugger;
+	  
 	  let headers = new Headers();
       headers.append('univid',univID);
 	  return this.http.get('http://localhost:3777/UniversityRoleMstr/getAllUniversityRole',{headers: headers})
@@ -300,7 +300,7 @@ getOrganizations()
   
   getAllUniversityRolesByUnivID(univID)
   {
-	  debugger;
+	 
 	  let headers = new Headers();
       headers.append('univid',univID);
 	  return this.http.get('http://localhost:3777/UniversityRoleMstr/getUniversityRoleMstrByUnivID',{headers: headers})
@@ -317,14 +317,14 @@ getOrganizations()
   
   getAllTranscationType()
   {
-	  debugger;
+	 
 	  return this.http.get('http://localhost:3777/TranscationTypeMstr/getAllTranscationType')
   	.map(res => res.json());
   }
   
   getAllTranscationTypeWithRolesAndPriority(univid, trantypeid)
   {
-	  debugger;
+
 	  let headers = new Headers();
       headers.append('univid',univid);
 	  headers.append('transcationtypeid',trantypeid);
@@ -334,7 +334,7 @@ getOrganizations()
   
   getMaxTranMapID()
   {
-	  debugger;
+
 	  return this.http.get('http://localhost:3777/UnivTranscationTypeDetail/getMaxTransMapID')
   	.map(res => res.json());
   }
@@ -350,7 +350,7 @@ getOrganizations()
   }
 
 updateProfile(student){
-                  debugger;
+                
                 let headers = new Headers();
                 headers.append('Content-Type','application/json');
 
@@ -361,7 +361,7 @@ updateProfile(student){
 
    getStudentByID(id)
   {
-	  debugger;
+	 
                   
 let headers = new Headers();
                 headers.append('id',id);
@@ -380,7 +380,7 @@ let headers = new Headers();
   }
   
   GetEventByOrgID(id){
-	debugger;
+
 	let headers = new Headers();
   	headers.append('id',id);
 	return this.http.get('http://localhost:3777/EventOrganization/getEventOrganizerByOrgNo',{headers: headers})
@@ -388,7 +388,7 @@ let headers = new Headers();
    }
    
    GetEventByUnivID(id){
-	debugger;
+
 	let headers = new Headers();
   	headers.append('id',id);
 	return this.http.get('http://localhost:3777/EventUniversity/getEventUniversityByUnivID',{headers: headers})
@@ -449,7 +449,7 @@ authenticateUser(user){
   }
   
   getUniversityById(id){
-                debugger;
+              
                 let headers = new Headers();
                 headers.append('id',id);
                 return this.http.get('http://localhost:3777/UniversityMstr/GetUniversityByID',{headers: headers})
@@ -464,7 +464,7 @@ authenticateUser(user){
    }
    
    authenticateAppRoleMaster(user){
-	 debugger;
+	
     let headers = new Headers();
     headers.append('Content-Type','application/json');
     return this.http.post('http://localhost:3777/UserLogin/authenticate', user,{headers: headers})

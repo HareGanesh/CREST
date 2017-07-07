@@ -1,10 +1,10 @@
 <ng-container *ngIf="authService.login();">
-<app-navbar></app-navbar> 
+
 
         <!-- page content -->
-        <div class="right_col" role="main">
-		
-          <div class="">
+        <div class="pagecontent" role="main">
+		<app-navbar></app-navbar> 
+          <div class="left-content">
 
             <div class="page-title">
               <div class="title_left">
@@ -27,7 +27,7 @@
             </div>
 
             <div class="clearfix"></div>
-<div id="tabs">
+<div id="tabs" class="tab-layout">
 <div class="row">
 
 <ul class="nav nav-tabs">
@@ -44,7 +44,7 @@
 <div id="OverviewTab" class="tab-pane fade in active">
 
  <div class="row">
-              <div class="col-md-12">
+              <div class="col-xs-18 col-sm-12 col-md-12 col-lg-12">
                 <div>
             
                   <div class="x_content">
@@ -58,7 +58,7 @@
 							  <!-- <a href="../eventDetails/{{item.EventID}}" style="background-image: url('http://www.hackathon.io/assets/icns/avatar/event.png');"></a> -->
                             </div>
 							
-                            <div class="right" style="width:80%">						
+                            <div class="right" style="width:70%">						
 
                               <h3><a [routerLink]="['/eventDetails/', item._id]">{{item.EventTitle}}</a> 
 							  
@@ -67,11 +67,11 @@
 							  </h3>
 							  <!-- <div [routerLinkActive]="['active']"   [routerLinkActiveOptions] = "{exact:true}"><a style="float:right" [routerLink]="['/eventinfo/', item._id]">Edit</a></div> -->
                               <p>{{item.Description}}...</p>
-							  
+							 
                             </div>
-							<div style="float:right;" *ngIf="tagID=='C'">
+							 <div style="float:right;" *ngIf="tagID=='C'">
 							     <input type="button" value="Approve" class="btn btn-primary" (click)="approveEvent(item._id);"/>
-							  </div> 
+							  </div>
                           </div>
                         </a>
                         

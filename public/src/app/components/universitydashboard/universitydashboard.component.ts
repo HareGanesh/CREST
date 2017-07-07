@@ -84,14 +84,14 @@ export class UniversitydashboardComponent implements OnInit {
 	  //let univID=2;
 	  let maskID=2;
 	  let rolesArry=[]
-	  debugger;
+	  
 	  // Get university
 	  
 	  
 	  
       
 	  
-	  debugger;
+
 	  //
 	  this.GetAllStudent();
 	  if(this.tagID == 'UR')
@@ -177,7 +177,7 @@ export class UniversitydashboardComponent implements OnInit {
     
   ApproveStudent(TransApprovalMappingData)
   {
-	  debugger;
+	
 	  
 	  let maskID=2;
 	  let roleid = JSON.parse(this.authService.getLoginUser()).Role_ID;
@@ -242,7 +242,7 @@ export class UniversitydashboardComponent implements OnInit {
 						}
 						
 						
-					 debugger;
+					
 	  this.universityApprovalHistory.ApprovedBy = TransApprovalMappingData.Next_Approver_RName;
 	  this.universityApprovalHistory.MaskID = TransApprovalMappingData.Mask_ID; 
 	  this.universityApprovalHistory.TransApprovalID = TransApprovalMappingData.Tran_Approval_ID;
@@ -250,7 +250,7 @@ export class UniversitydashboardComponent implements OnInit {
 	  this.universityApprovalHistory.Comments = "Approved";
 	  this.universityApprovalHistory.TranApprovalHistoryID=transApprovalHistoryID;
 	  this.authService.addUniversityTransApprovalHistory(this.model, this.universityApprovalHistory, this.TransApprovalMapping).subscribe(data => {
-		debugger;
+		
       if(data.success){
         //this.flashMessage.show('You are now registered and can log in', {cssClass: 'alert-success', timeout: 3000});
         this.bindGrid();
