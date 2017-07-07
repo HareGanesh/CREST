@@ -81,7 +81,8 @@ router.post('/authenticateUniversity', (req, res, next) => {
                                                                                                 UserName: University.UserName,
                                                                                                 ContactNo: University.ContactNo,                                                                                            
                                                                                                 Address:University.Address,
-                                                                                                Univ_ID:University.Univ_ID 
+                                                                                                Univ_ID:University.Univ_ID,
+																								isPasswordChanged: University.isPasswordChanged
                                                                                   }
                                                                                 }); 
                                                                 }

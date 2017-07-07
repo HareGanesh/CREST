@@ -22,6 +22,8 @@ export class UniversityTransMappingComponent implements OnInit {
 	student:Object;
 	category:Object;
 	isUpdate:Boolean;
+	tagID:String;
+	univID:number;
 	public organizations = [
 	  
          
@@ -87,7 +89,7 @@ public EventTypes = [
     Roles:[],
 	TransMask:[],
 	TransMap:[],
-	
+	UniversityName:'',
 	Created_On:new Date(),
 	Created_by:'',
 	Modified_On:'',
@@ -178,8 +180,19 @@ submitted = false;
 	      }
   }
   ngOnInit() {
+<<<<<<< HEAD
 	
 	  
+=======
+	  debugger;
+	  this.tagID=localStorage.getItem('tagID');
+	  if(this.tagID == 'U')
+	  {
+		  this.univID = JSON.parse(this.authService.getLoginUser()).Univ_ID;
+		  this.model.UniversityID = this.univID.toString();		  
+	  }
+	  	  
+>>>>>>> 11094209a651fc76cdb35a695bca2488197c4854
 	  this.authService.getMaxTranMapID().subscribe(data => {
 		  if(data.length > 0)
 		  {
@@ -194,8 +207,18 @@ submitted = false;
 	  
 	  // Get all organization
 	  this.authService.getAllUniversity().subscribe(data => {
+		  if(data.length > 0)
+		  {
 		   for(let i=0; i< data.length; i++)
-      this.Universities.push(data[i]);
+		   {
+            this.Universities.push(data[i]);
+		   }
+		   
+		   if(this.tagID == 'U')
+			{
+		   this.model.UniversityName = this.Universities.filter(x=>x.Univ_ID == this.univID)[0].Univ_Name;
+			}
+		  }
     },
     //observable also returns error
     err => {
@@ -219,10 +242,17 @@ submitted = false;
     // });
 	
 	
-	// Load sub categories
+	// Load roles
 	this.authService.getUniversityRoles().subscribe(data => {
 		   for(let i=0; i< data.length; i++)
-      this.UniversityRolesWithUniversity.push(data[i]);
+			   if(data.length > 0)
+			   {
+				this.UniversityRolesWithUniversity.push(data[i]);
+				if(this.tagID == 'U')
+				{
+				this.onChange(this.univID);
+				}
+			   }
     },
     //observable also returns error
     err => {
@@ -240,6 +270,8 @@ submitted = false;
       console.log(err);
       return false;
     });
+	
+	
 	  
 	  let eventID
 	 this.activatedRoute.params.subscribe((params: Params) => {
@@ -479,8 +511,13 @@ checkValidation()
     this.authService.AddUnivTranscationTypeDetail(this.model).subscribe(data => {
 		
       if(data.success){
+		  if(this.tagID == 'C')
+		  {
         //this.flashMessage.show('Event has been registered', {cssClass: 'alert-success', timeout: 3000});
-        this.router.navigate(['/universitydashboard']);
+        this.router.navigate(['/']);
+		  }else {
+			  this.router.navigate(['/universitydashboard']);
+		  }
       } else {
         //this.flashMessage.show('Something went wrong', {cssClass: 'alert-danger', timeout: 3000});
         this.router.navigate(['/EventInfo']);

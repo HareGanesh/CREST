@@ -22,13 +22,15 @@ const UserLoginSchema = mongoose.Schema
 
 	},
 	
-	EmailID:{
-		type: String
-	},
+	// EmailID:{
+		// type: String
+	// },
 
    Active:{
     type: Boolean
   },
+  
+  
 
    Created_On:{
     type: Date
@@ -68,6 +70,11 @@ module.exports.getUserByEmail = function(emailID, callback){
 module.exports.getUserLogin = function(username,callback){
 	const query = {UserName: username}
 	UserLogin.findOne(query,callback);
+}
+
+module.exports.updatePassword = function(user, callback){ 
+var query = { UserName	: user.EmailID };
+UserLogin.update(query, {PWD: user.PWD}, callback);
 }
 
 

@@ -93,6 +93,29 @@ const EventSchema = mongoose.Schema({
     type: Boolean,
 	default:0
   
+  },
+  
+  IsRejected:{
+    type: Boolean,
+	default:0
+  
+  },
+  
+  TotalAllowedParticipant:
+  {
+	  type:Number,
+	  default:0
+  },
+  
+  TotalConfirmedParticipant:
+  {
+	  type:Number
+  },
+  
+  ActionComments:
+  {
+	  type:String,
+	  default:''
   }
 
 });
@@ -111,9 +134,9 @@ module.exports.getEventByEventTitle = function(EventTitle,callback){
 }
 
 module.exports.getAllEvent = function(callback){	
-	Event.find("",callback);
+	const query = {StartDt: {$gte:new Date()} }
+	Event.find(query,callback);
 }
-
 
 
 module.exports.addEvent = function(newEvent, callback){
@@ -122,8 +145,15 @@ module.exports.addEvent = function(newEvent, callback){
 
 module.exports.approveEvent = function(eventdata, callback){
 	console.log(eventdata._id );
+	console.log(eventdata.comments);
  var query = { _id: eventdata._id };
-Event.update(query, {IsApproved:1}, callback);
+Event.update(query, {IsApproved:1, ActionComments : eventdata.comments}, callback);
 
 } 
 
+module.exports.rejectEvent = function(eventdata, callback){
+	console.log(eventdata._id );
+ var query = { _id: eventdata._id };
+Event.update(query, {IsRejected:1, ActionComments : eventdata.comments}, callback);
+
+} 

@@ -41,9 +41,12 @@ const UnivTranscationMapDetail = require('./routes/UnivTranscationMapDetail');
 const UnivTranscationApprovalDetail = require('./routes/UnivTranscationApprovalDetail');
 const AppRoleMaster = require('./routes/AppRoleMaster'); 
 const UnivTranscationApprovalHistory = require('./routes/UnivTranscationApprovalHistory'); 
+const UnivTranscationEventApprovalHistory = require('./routes/UnivTranscationEventApprovalHistory'); 
+const UnivTranscationEventApprovalDetail = require('./routes/UnivTranscationEventApprovalDetail'); 
 const EventUniversity = require('./routes/EventUniversity'); 
 const UniversityRoleUser = require('./routes/UniversityRoleUser'); 
 const UserLogin = require('./routes/UserLogin'); 
+const EventStudent = require('./routes/EventStudent'); 
 
 //MIDDLEWARE
 app.use(cors());//run on diff port
@@ -87,10 +90,13 @@ app.use('/UnivTranscationMaskDetail', UnivTranscationMaskDetail);
 app.use('/UnivTranscationMapDetail', UnivTranscationMapDetail);
 app.use('/UnivTranscationApprovalDetail', UnivTranscationApprovalDetail);
 app.use('/UnivTranscationApprovalHistory', UnivTranscationApprovalHistory);
+app.use('/UnivTranscationEventApprovalDetail', UnivTranscationEventApprovalDetail);
+app.use('/UnivTranscationEventApprovalHistory', UnivTranscationEventApprovalHistory);
 
 app.use('/EventUniversity', EventUniversity);
 app.use('/UniversityRoleUser', UniversityRoleUser);
 app.use('/UserLogin', UserLogin);
+app.use('/EventStudent', EventStudent);
 
 //app.use('/events', events);
 // app.use('/students', function(students, res, next) {

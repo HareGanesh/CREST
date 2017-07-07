@@ -18,8 +18,8 @@ const StudentSchema = mongoose.Schema({
 	},
 
 	Email_ID:{
-		type: String,
-		required: true
+		type: String
+		
 	},
 
 	username:{
@@ -39,6 +39,11 @@ const StudentSchema = mongoose.Schema({
 
    DOB:{
     type: Date
+  },
+  
+  isPasswordChanged:{
+	  type: Boolean,
+	  default:false
   },
 
    Address:{
@@ -85,7 +90,7 @@ Orgn_ID:{
   Student_Heading:{type: String	},
   Student_Bio:{	type: String},
 
-   Is_Approved:{type: Number}
+   Is_Approved:{type: Number, default:0}
 });
 
 const Student = module.exports = mongoose.model('Student', StudentSchema,'Student');
@@ -114,6 +119,17 @@ module.exports.getStudentByStudentID = function(studentID,callback){
 	const query = {Student_ID: studentID}
 	Student.findOne(query,callback);
 }
+
+module.exports.getStudentByUnivID = function(univID,callback){
+	const query = {Univ_ID: univID, Is_Approved:1}
+	Student.find(query,callback);
+}
+
+module.exports.getPendingStudentByUnivID = function(univID,callback){
+	const query = {Univ_ID: univID, Is_Approved:0}
+	Student.find(query,callback);
+}
+
 
 module.exports.addStudent = function(newStudent, callback){
 // To Create a hash value with the password entered in the form to store in DB - hareganx - 06/06/17	
@@ -147,4 +163,15 @@ Student.update(query, {Student_Heading: newStudent.Student_Heading,Student_Bio:n
 module.exports.setIsApproved = function(Student_ID, callback){ 
 var query = { Student_ID: Student_ID };
 Student.update(query, {Is_Approved: 1}, callback);
-} 
+}
+
+module.exports.updatePassword = function(user, callback){ 
+var query = { username	: user.EmailID };
+
+bcrypt.genSalt(saltRounds, function(err, salt) {
+    bcrypt.hash(user.PWD, salt, function(err, hash) {
+		user.PWD=hash;
+		Student.update(query, {Pwd: user.PWD, isPasswordChanged: user.isPasswordChanged}, callback);
+	});
+});
+}

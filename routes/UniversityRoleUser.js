@@ -31,7 +31,7 @@ router.post('/register', (req, res, next) => {
                                 
         PWD: req.body.Password,    
 		UserName:req.body.username, 
-		EmailID:req.body.Email_ID, 
+		//EmailID:req.body.Email_ID, 
 		Active:1,
 		TagID:'UR'
 		});
@@ -81,7 +81,8 @@ router.post('/authenticateUniversityRole', (req, res, next) => {
                              Email_ID: UniversityRoleUser.Email_ID,                             
                              Mobile_No: UniversityRoleUser.Mobile_No,                                                                                            
                              Role_ID:UniversityRoleUser.Role_ID,
-                             Univ_ID:UniversityRoleUser.Univ_ID 
+                             Univ_ID:UniversityRoleUser.Univ_ID,
+							 isPasswordChanged: UniversityRoleUser.isPasswordChanged
                               }
                            }); 
                     }

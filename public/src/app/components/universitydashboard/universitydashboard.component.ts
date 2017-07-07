@@ -19,9 +19,13 @@ export class UniversitydashboardComponent implements OnInit {
     public Action:String="Edit";
 	public errorMsg:String="";
 	public deleteID:String="";
+	public Comments:String="";
 	tagID:String;
 	private universityApprovalUserList: Array<UniversityTransApprovalList> = [];
 	TransApprovalMapping:UniversityTransApproval[]=[];
+	TransApprovalMappingArrayGlobal:UniversityTransApproval[]=[];
+	TransApprovalMappingStringArrayGlobal:String[]=[];
+	universityApprovalHistoryArrayGlobal:universityApprovalHistory[]=[];
 	//universityApprovalHistory:universityApprovalHistory;
 	public universityApprovalHistory:universityApprovalHistory;
 	model:Object;
@@ -30,7 +34,7 @@ export class UniversitydashboardComponent implements OnInit {
          
      ];
 	 public Roles = [
-	  {RoleID: 0,  RoleName:"", Priority:0}
+	  {RoleID: 0,  RoleName:"", Priority:0, Tran_Map_ID:0}
          
      ];
 	 
@@ -52,6 +56,7 @@ export class UniversitydashboardComponent implements OnInit {
   
   @Input()
    ngOnInit() {	
+   
    this.tagID=localStorage.getItem('tagID');
 	this.model={	
 	TransApprovalMapping:[],	
@@ -64,7 +69,7 @@ export class UniversitydashboardComponent implements OnInit {
 					{
 						for(let i=0; i< data.length; i++)
 						{
-							this.Roles.push({RoleID:data[i].Role_ID, RoleName:this.UniversityRoles.filter(x=>x.Univ_RoleID == data[i].Role_ID)[0].Univ_RoleName, Priority:data[i].Priority});
+							this.Roles.push({RoleID:data[i].Role_ID, RoleName:this.UniversityRoles.filter(x=>x.Univ_RoleID == data[i].Role_ID)[0].Univ_RoleName, Priority:data[i].Priority, Tran_Map_ID: data[i].Tran_Map_ID});
 						}
 						
 						this.bindGrid();
@@ -75,6 +80,7 @@ export class UniversitydashboardComponent implements OnInit {
       return false;
     });
    
+
   }
   
   
@@ -96,6 +102,7 @@ export class UniversitydashboardComponent implements OnInit {
 	  this.GetAllStudent();
 	  if(this.tagID == 'UR')
 	  {
+		  debugger;
 		  let roleid = JSON.parse(this.authService.getLoginUser()).Role_ID;
 	       maskID = Math.pow(2,(this.Roles.filter(x=>x.RoleID == roleid)[0].Priority));
 	  	  this.authService.getAllUnivTranscationApprovalDetailByUnivIDAndMaskID(this.univID, maskID).subscribe(university => {   
@@ -113,6 +120,7 @@ export class UniversitydashboardComponent implements OnInit {
       return false;
     });
 	  }else if(this.tagID == "U"){
+		  debugger;
 		  maskID = 1024;
 	  	  this.authService.getAllUnivTranscationApprovalDetailByUnivIDAndMaskID(this.univID, maskID).subscribe(university => {   
 	      this.universityApprovalUserList=university;
@@ -129,7 +137,11 @@ export class UniversitydashboardComponent implements OnInit {
       return false;
     });
 	  }
-	
+	  
+	  // if(!JSON.parse(this.authService.getLoginUser()).isPasswordChanged)
+	  // {
+	// document.getElementById("openModalButton").click();
+	  // }
 	
 		
   }
@@ -139,8 +151,8 @@ export class UniversitydashboardComponent implements OnInit {
   GetAllStudent()
   {
 	  
-	
-	  this.authService.getAllStudent().subscribe(data => {
+	debugger;
+	  this.authService.getPendingStudentByUnivID(this.univID).subscribe(data => {
 		     for(let i=0; i< data.length; i++)
        this.Students.push({StudentID:data[i].Student_ID, StudentName:data[i].Student_Name});
 			   
@@ -173,12 +185,198 @@ export class UniversitydashboardComponent implements OnInit {
     });
   }
   
+  check(ev, transApprovalId) {
+	  // if(this.isSupervisorLoggedIn)
+	  // {
+	  // debugger;
+    // //this.universityEventApprovalUserList.forEach(x => x.isChecked = ev.target.checked)
+	// let totalAllowed = event.TotalAllowedParticipant;
+	  // let Confirmed = event.TotalConfirmedParticipant;
+	  // let totalChecked = 0;
+	  // totalChecked = event.university_EventApprovalUserList.filter(x => x.isChecked == true).length;
+	  // if(totalAllowed < Confirmed + totalChecked)
+	  // {
+		  // this.flashMessage.show("Total no of participant into this event : " + event.EventTitle + " has been crossed. Not allowed to select more", {
+             // cssClass: 'alert-danger'});
+		  // ev.target.checked = false;
+       // event.university_EventApprovalUserList.filter(x=>x.Tran_Approval_ID == transApprovalId).forEach(x => x.isChecked = ev.target.checked);
+	  // }else
+	  // {
+		// // this.isAllChecked(event); 
+	  // }
+	  // }
+  }
+  
+  checkAll(ev) {
+	  debugger;
+	  // if(this.isSupervisorLoggedIn)
+	  // {
+	  // let totalAllowed = event.TotalAllowedParticipant;
+	  // let Confirmed = event.TotalConfirmedParticipant;
+	  // if(totalAllowed >= event.university_EventApprovalUserList.length + Confirmed)
+	  // {
+       // event.university_EventApprovalUserList.forEach(x => x.isChecked = ev.target.checked);
+	  // }
+	  // else
+	  // {
+		   // this.flashMessage.show('Total no of participant into this event : ' + event.EventTitle + ' has been crossed. Not allowed to select All', {
+             // cssClass: 'alert-danger'});
+		    // ev.target.checked = false;
+			// event.university_EventApprovalUserList.forEach(x => x.isChecked = ev.target.checked);
+		  
+	  // }
+	  // }else {
+		  this.universityApprovalUserList.forEach(x => x.isChecked = ev.target.checked);
+	  //}
+  }
+
+  isAllChecked() {
+	  
+    return this.universityApprovalUserList.every(_ => _.isChecked);
+  }
+  
+  ApproveAllStudent()
+  {
+	  this.TransApprovalMappingArrayGlobal=[];
+	  this.universityApprovalHistoryArrayGlobal=[];
+	  let TransApprovalMappingLocal:UniversityTransApproval[]=[];
+	  let TransApprovalMappingArray:UniversityTransApproval[]=[];
+	  let universityApprovalHistoryArray:universityApprovalHistory[]=[];
+	  let TransApprovalMappingDataList = this.universityApprovalUserList.filter(x=>x.isChecked == true);
+	  for(let x=0; x<TransApprovalMappingDataList.length;x++)
+	  {
+		let TransApprovalMappingData = TransApprovalMappingDataList[x];
+		
+	  debugger;
+	 // return false;
+	  let maskID=2;
+	  let roleid = JSON.parse(this.authService.getLoginUser()).Role_ID;
+	       maskID = Math.pow(2,(this.Roles.filter(x=>x.RoleID == roleid)[0].Priority));
+	  let status=0;
+	  let priorityArray=[];
+	  let maskArray=[];
+	  let transApprovalHistoryID=1;
+	  
+	  // this.authService.getMaxTransApprovalHistoryID().subscribe(data => {
+		   // if(data.length > 0)
+		   // {
+		    // transApprovalHistoryID = data[0].Tran_Approval_History_ID + 1;
+		   // }
+		// },
+		// //observable also returns error
+		// err => {
+		// console.log(err);
+		// return false;
+		// });
+	  this.universityApprovalHistory={TranApprovalHistoryID:0,ApprovedBy:"", ApprovedOn:new Date(), MaskID:0,Status:0, Comments:"", TransApprovalID:"" };
+	  //this.authService.getAllTranscationTypeWithRolesAndPriority(TransEventApprovalMappingData.Univ_ID, 2).subscribe(data => {
+					// if(data.length > 0)
+					// {
+						let length = TransApprovalMappingLocal.length;
+						for(let y=0; y< length;y++)
+						{
+						TransApprovalMappingLocal.pop();
+						}
+						
+						for(let j=0; j< this.Roles.length; j++)
+						{
+							maskArray.push(Math.pow(2, this.Roles[j].Priority));
+							priorityArray.push(this.Roles[j].Priority);
+						}
+						
+						if( Math.max.apply(null, maskArray) == maskID)
+						 {
+							 status=1;
+						 }
+						 
+						for(let i=0; i< this.Roles.length; i++)
+						{					
+						 
+							 // if(Math.pow(2, data[i].Priority) == maskID)
+							 // {
+								 // status=1;
+							 // }
+						  if( Math.pow(2, this.Roles[i].Priority) > maskID || status == 1)
+						 {
+							 if(status == 1)
+							 {
+								 i=this.Roles.length;
+								 let dataarray = this.Roles.find(x=>x.Priority == Math.max.apply(null, priorityArray));
+								 TransApprovalMappingLocal.push({TransMapID : dataarray.Tran_Map_ID, NextApproverRoleID:dataarray.RoleID, 
+							PrevApproverRoleID:TransApprovalMappingData.Next_Approver_RID,
+							Priority:dataarray.Priority,MaskID:Math.pow(2, dataarray.Priority), Status:status, TransactionStatus:'A',
+							UniversityID:this.univID, TransApprovalID:TransApprovalMappingData.Tran_Approval_ID,
+							TransDt:TransApprovalMappingData.Tran_Dt, StudentID:TransApprovalMappingData.Student_ID, TranApprovalIDNumber:TransApprovalMappingData.Tran_Approval_IDNumber});
+							
+							}else 
+							{
+								TransApprovalMappingLocal.push({TransMapID : this.Roles[i].Tran_Map_ID, NextApproverRoleID:this.Roles[i].RoleID, PrevApproverRoleID:TransApprovalMappingData.Next_Approver_RID,
+							Priority:this.Roles[i].Priority,MaskID:Math.pow(2, this.Roles[i].Priority), Status:status, TransactionStatus:'P',
+							UniversityID:this.univID, TransApprovalID:TransApprovalMappingData.Tran_Approval_ID, TransDt:TransApprovalMappingData.Tran_Dt, StudentID:TransApprovalMappingData.Student_ID, TranApprovalIDNumber:TransApprovalMappingData.Tran_Approval_IDNumber});
+							}
+						 }
+						}
+						
+	  TransApprovalMappingArray.push(TransApprovalMappingLocal.sort(x=>x.Priority)[TransApprovalMappingLocal.length-1]);		
+	  //TransEventApprovalMappingArray.push(TransEventApprovalMappingArray);
+					 debugger;
+	  this.universityApprovalHistory.ApprovedBy = this.Roles.filter(x=>x.RoleID == roleid)[0].RoleName;
+	  this.universityApprovalHistory.MaskID = TransApprovalMappingData.Mask_ID; 
+	  this.universityApprovalHistory.TransApprovalID = TransApprovalMappingData.Tran_Approval_ID;
+	  this.universityApprovalHistory.Status =1;
+	  this.universityApprovalHistory.Comments = "Approved";
+	  this.universityApprovalHistory.TranApprovalHistoryID=transApprovalHistoryID;
+	  universityApprovalHistoryArray.push(this.universityApprovalHistory);
+	  debugger;
+	  
+					//}
+			// },
+				// //observable also returns error
+					// err => {
+					// console.log(err);
+					// return false;
+				// });
+	  }
+
+	  this.universityApprovalHistoryArrayGlobal = universityApprovalHistoryArray;
+	  this.TransApprovalMappingArrayGlobal = TransApprovalMappingArray;
+	debugger;
+  }
+  
+  SubmitAllApproveItem()
+	{
+	debugger;
+//	let length = this.universityApprovalHistoryArrayGlobal.length;
+	let length = this.universityApprovalHistoryArrayGlobal.length;
+			for(let y=0; y< length;y++)
+				{
+				 this.universityApprovalHistoryArrayGlobal[y].Comments = this.Comments;
+				}
+        this.authService.addUniversityTransApprovalHistoryArray(this.model, this.universityApprovalHistoryArrayGlobal, this.TransApprovalMappingArrayGlobal).subscribe(data => {
+		
+		debugger;
+      if(data.success){
+        //this.flashMessage.show('You are now registered and can log in', {cssClass: 'alert-success', timeout: 3000});
+        document.getElementById('close').click();
+                                this.bindGrid();
+      } else {
+        //this.flashMessage.show('Something went wrong', {cssClass: 'alert-danger', timeout: 3000});
+        this.router.navigate(['/register']);
+      }
+    });                        
+	}
+  
   
     
   ApproveStudent(TransApprovalMappingData)
   {
+<<<<<<< HEAD
 	
 	  
+=======
+	  debugger;
+	  this.Comments="";
+>>>>>>> 11094209a651fc76cdb35a695bca2488197c4854
 	  let maskID=2;
 	  let roleid = JSON.parse(this.authService.getLoginUser()).Role_ID;
 	       maskID = Math.pow(2,(this.Roles.filter(x=>x.RoleID == roleid)[0].Priority));
@@ -199,13 +397,19 @@ export class UniversitydashboardComponent implements OnInit {
 		return false;
 		});
 	  this.universityApprovalHistory={TranApprovalHistoryID:0,ApprovedBy:"", ApprovedOn:new Date(), MaskID:0,Status:0, Comments:"", TransApprovalID:"" };
-	  this.authService.getAllTranscationTypeWithRolesAndPriority(TransApprovalMappingData.Univ_ID, 1).subscribe(data => {
-					if(data.length > 0)
-					{
-						for(let j=0; j< data.length; j++)
+	  // this.authService.getAllTranscationTypeWithRolesAndPriority(TransApprovalMappingData.Univ_ID, 1).subscribe(data => {
+					// if(data.length > 0)
+					// {
+						let length = this.TransApprovalMapping.length;
+						for(let y=0; y< length;y++)
 						{
-							maskArray.push(Math.pow(2, data[j].Priority));
-							priorityArray.push(data[j].Priority);
+						this.TransApprovalMapping.pop();
+						}
+						
+						for(let j=0; j< this.Roles.length; j++)
+						{
+							maskArray.push(Math.pow(2, this.Roles[j].Priority));
+							priorityArray.push(this.Roles[j].Priority);
 						}
 						
 						if( Math.max.apply(null, maskArray) == maskID)
@@ -213,29 +417,29 @@ export class UniversitydashboardComponent implements OnInit {
 							 status=1;
 						 }
 						 
-						for(let i=0; i< data.length; i++)
+						for(let i=0; i< this.Roles.length; i++)
 						{					
 						 
 							 // if(Math.pow(2, data[i].Priority) == maskID)
 							 // {
 								 // status=1;
 							 // }
-						  if( Math.pow(2, data[i].Priority) > maskID || status == 1)
+						  if( Math.pow(2, this.Roles[i].Priority) > maskID || status == 1)
 						 {
 							 if(status == 1)
 							 {
-								 i=data.length;
-								 let dataarray = data.find(x=>x.Priority == Math.max.apply(null, priorityArray));
-								 this.TransApprovalMapping.push({TransMapID : dataarray.Tran_Map_ID, NextApproverRoleID:dataarray.Role_ID, 
+								 i=this.Roles.length;
+								 let dataarray = this.Roles.find(x=>x.Priority == Math.max.apply(null, priorityArray));
+								 this.TransApprovalMapping.push({TransMapID : dataarray.Tran_Map_ID, NextApproverRoleID:dataarray.RoleID, 
 							PrevApproverRoleID:TransApprovalMappingData.Next_Approver_RID,
-							Priority:dataarray.Priority,MaskID:Math.pow(2, dataarray.Priority), Status:status, 
+							Priority:dataarray.Priority,MaskID:Math.pow(2, dataarray.Priority), Status:status, TransactionStatus:'A',
 							UniversityID:TransApprovalMappingData.Univ_ID, TransApprovalID:TransApprovalMappingData.Tran_Approval_ID,
 							TransDt:TransApprovalMappingData.Trans_Dt, StudentID:TransApprovalMappingData.Student_ID, TranApprovalIDNumber:TransApprovalMappingData.Tran_Approval_IDNumber});
 							
 							}else 
 							{
-								this.TransApprovalMapping.push({TransMapID : data[i].Tran_Map_ID, NextApproverRoleID:data[i].Role_ID, PrevApproverRoleID:TransApprovalMappingData.Next_Approver_RID,
-							Priority:data[i].Priority,MaskID:Math.pow(2, data[i].Priority), Status:status, 
+								this.TransApprovalMapping.push({TransMapID : this.Roles[i].Tran_Map_ID, NextApproverRoleID:this.Roles[i].RoleID, PrevApproverRoleID:TransApprovalMappingData.Next_Approver_RID,
+							Priority:this.Roles[i].Priority,MaskID:Math.pow(2, this.Roles[i].Priority), Status:status, TransactionStatus:'P',
 							UniversityID:TransApprovalMappingData.Univ_ID, TransApprovalID:TransApprovalMappingData.Tran_Approval_ID, TransDt:TransApprovalMappingData.Trans_Dt, StudentID:TransApprovalMappingData.Student_ID, TranApprovalIDNumber:TransApprovalMappingData.Tran_Approval_IDNumber});
 							}
 						 }
@@ -249,27 +453,298 @@ export class UniversitydashboardComponent implements OnInit {
 	  this.universityApprovalHistory.Status =1;
 	  this.universityApprovalHistory.Comments = "Approved";
 	  this.universityApprovalHistory.TranApprovalHistoryID=transApprovalHistoryID;
+<<<<<<< HEAD
 	  this.authService.addUniversityTransApprovalHistory(this.model, this.universityApprovalHistory, this.TransApprovalMapping).subscribe(data => {
 		
-      if(data.success){
-        //this.flashMessage.show('You are now registered and can log in', {cssClass: 'alert-success', timeout: 3000});
-        this.bindGrid();
-      } else {
-        //this.flashMessage.show('Something went wrong', {cssClass: 'alert-danger', timeout: 3000});
-        this.router.navigate(['/register']);
-      }
-    });
-					}
-			},
-				//observable also returns error
-					err => {
-					console.log(err);
-					return false;
-				});
+=======
+	  // this.authService.addUniversityTransApprovalHistory(this.model, this.universityApprovalHistory, this.TransApprovalMapping).subscribe(data => {
+		// debugger;
+      // if(data.success){
+        // //this.flashMessage.show('You are now registered and can log in', {cssClass: 'alert-success', timeout: 3000});
+        // this.bindGrid();
+      // } else {
+        // //this.flashMessage.show('Something went wrong', {cssClass: 'alert-danger', timeout: 3000});
+        // this.router.navigate(['/register']);
+      // }
+    // });
+					// }
+			// },
+				// //observable also returns error
+					// err => {
+					// console.log(err);
+					// return false;
+				// });
 
 				
 	  
   }
   
+  SubmitApproveItem()
+	{
+		debugger;
+	this.universityApprovalHistory.Comments = this.Comments;
+                this.authService.addUniversityTransApprovalHistory(this.model, this.universityApprovalHistory, this.TransApprovalMapping).subscribe(data => {
+		debugger;
+>>>>>>> 11094209a651fc76cdb35a695bca2488197c4854
+      if(data.success){
+        //this.flashMessage.show('You are now registered and can log in', {cssClass: 'alert-success', timeout: 3000});
+        document.getElementById('close2').click();
+                                this.bindGrid();
+      } else {
+        //this.flashMessage.show('Something went wrong', {cssClass: 'alert-danger', timeout: 3000});
+        this.router.navigate(['/register']);
+      }
+    });                        
+	}
+	
+	
+	// Reject functionality
+	
+	RejectAllStudent()
+  {
+	  this.TransApprovalMappingArrayGlobal=[];
+	  this.universityApprovalHistoryArrayGlobal=[];
+	  let TransApprovalMappingLocal:String[]=[];
+	  let TransApprovalMappingArray:String[]=[];
+	  let universityApprovalHistoryArray:universityApprovalHistory[]=[];
+	  let TransApprovalMappingDataList = this.universityApprovalUserList.filter(x=>x.isChecked == true);
+	  for(let x=0; x<TransApprovalMappingDataList.length;x++)
+	  {
+		let TransApprovalMappingData = TransApprovalMappingDataList[x];
+		
+	  debugger;
+	 // return false;
+	  let maskID=2;
+	  let roleid = JSON.parse(this.authService.getLoginUser()).Role_ID;
+	       maskID = Math.pow(2,(this.Roles.filter(x=>x.RoleID == roleid)[0].Priority));
+	  let status=0;
+	  let priorityArray=[];
+	  let maskArray=[];
+	  let transApprovalHistoryID=1;
+	  
+	  // this.authService.getMaxTransApprovalHistoryID().subscribe(data => {
+		   // if(data.length > 0)
+		   // {
+		    // transApprovalHistoryID = data[0].Tran_Approval_History_ID + 1;
+		   // }
+		// },
+		// //observable also returns error
+		// err => {
+		// console.log(err);
+		// return false;
+		// });
+	  this.universityApprovalHistory={TranApprovalHistoryID:0,ApprovedBy:"", ApprovedOn:new Date(), MaskID:0,Status:0, Comments:"", TransApprovalID:"" };
+	  //this.authService.getAllTranscationTypeWithRolesAndPriority(TransEventApprovalMappingData.Univ_ID, 2).subscribe(data => {
+					// if(data.length > 0)
+					// {
+						// let length = TransApprovalMappingLocal.length;
+						// for(let y=0; y< length;y++)
+						// {
+						// TransApprovalMappingLocal.pop();
+						// }
+						
+						// for(let j=0; j< this.Roles.length; j++)
+						// {
+							// maskArray.push(Math.pow(2, this.Roles[j].Priority));
+							// priorityArray.push(this.Roles[j].Priority);
+						// }
+						
+						
+						 
+						// for(let i=0; i< this.Roles.length; i++)
+						// {					
+						 
+							 // if(Math.pow(2, this.Roles[i].Priority) == maskID)
+							 // {
+								 // status=1;
+							 // }
+						  // if( Math.pow(2, this.Roles[i].Priority) > maskID || status == 1)
+						 // {
+							 // if(status == 1)
+							 // {
+								 // i=this.Roles.length;
+								 // let dataarray = this.Roles.find(x=>x.Priority == Math.max.apply(null, priorityArray));
+								 // TransApprovalMappingLocal.push({TransMapID : dataarray.Tran_Map_ID, NextApproverRoleID:TransApprovalMappingData.Next_Approver_RID, 
+							// PrevApproverRoleID:TransApprovalMappingData.Prev_Approver_RID,
+							// Priority:TransApprovalMappingData.Priority,MaskID:Math.pow(2, TransApprovalMappingData.Priority), Status:0, TransactionStatus:'R',
+							// UniversityID:this.univID, TransApprovalID:TransApprovalMappingData.Tran_Approval_ID,
+							// TransDt:TransApprovalMappingData.Tran_Dt, StudentID:TransApprovalMappingData.Student_ID, TranApprovalIDNumber:TransApprovalMappingData.Tran_Approval_IDNumber});
+							
+							// }else 
+							// {
+								// TransApprovalMappingLocal.push({TransMapID : this.Roles[i].Tran_Map_ID, NextApproverRoleID:TransApprovalMappingData.Next_Approver_RID, PrevApproverRoleID:TransApprovalMappingData.Prev_Approver_RID,
+							// Priority:TransApprovalMappingData.Priority,MaskID:Math.pow(2, TransApprovalMappingData.Priority), Status:status, TransactionStatus:'R',
+							// UniversityID:TransApprovalMappingData.Univ_ID, TransApprovalID:TransApprovalMappingData.Tran_Approval_ID, TransDt:TransApprovalMappingData.Trans_Dt, StudentID:TransApprovalMappingData.Student_ID, TranApprovalIDNumber:TransApprovalMappingData.Tran_Approval_IDNumber});
+							// }
+						 // }
+						// }
+						TransApprovalMappingLocal.push(TransApprovalMappingData.Tran_Approval_ID);
+	  //TransApprovalMappingArray.push(TransApprovalMappingLocal.sort(x=>x.Priority)[TransApprovalMappingLocal.length-1]);		
+	  //TransEventApprovalMappingArray.push(TransEventApprovalMappingArray);
+					 debugger;
+	  this.universityApprovalHistory.ApprovedBy = this.Roles.filter(x=>x.RoleID == roleid)[0].RoleName;
+	  this.universityApprovalHistory.MaskID = TransApprovalMappingData.Mask_ID; 
+	  this.universityApprovalHistory.TransApprovalID = TransApprovalMappingData.Tran_Approval_ID;
+	  this.universityApprovalHistory.Status =0;
+	  this.universityApprovalHistory.Comments = "Rejected";
+	  this.universityApprovalHistory.TranApprovalHistoryID=transApprovalHistoryID;
+	  universityApprovalHistoryArray.push(this.universityApprovalHistory);
+	  debugger;
+	  
+					//}
+			// },
+				// //observable also returns error
+					// err => {
+					// console.log(err);
+					// return false;
+				// });
+	  }
+
+	  this.universityApprovalHistoryArrayGlobal = universityApprovalHistoryArray;
+	  this.TransApprovalMappingStringArrayGlobal = TransApprovalMappingLocal;
+	debugger;
+  }
+  
+  SubmitAllRejectItem()
+	{
+	debugger;
+//	let length = this.universityApprovalHistoryArrayGlobal.length;
+	let length = this.universityApprovalHistoryArrayGlobal.length;
+			for(let y=0; y< length;y++)
+				{
+				 this.universityApprovalHistoryArrayGlobal[y].Comments = this.Comments;
+				}
+        this.authService.addUniversityTransRejectionHistoryArray(this.model, this.universityApprovalHistoryArrayGlobal, this.TransApprovalMappingStringArrayGlobal).subscribe(data => {
+		
+		debugger;
+      if(data.success){
+        //this.flashMessage.show('You are now registered and can log in', {cssClass: 'alert-success', timeout: 3000});
+        document.getElementById('closeRA').click();
+                                this.bindGrid();
+      } else {
+        //this.flashMessage.show('Something went wrong', {cssClass: 'alert-danger', timeout: 3000});
+        this.router.navigate(['/register']);
+      }
+    });                        
+	}
+  
+  
+    
+  RejectStudent(TransApprovalMappingData)
+  {
+	  debugger;
+	  this.Comments="";
+	  this.TransApprovalMappingStringArrayGlobal=[];
+	  let maskID=2;
+	  let roleid = JSON.parse(this.authService.getLoginUser()).Role_ID;
+	       maskID = Math.pow(2,(this.Roles.filter(x=>x.RoleID == roleid)[0].Priority));
+	  let status=0;
+	  let priorityArray=[];
+	  let maskArray=[];
+	  let transApprovalHistoryID=1;
+	  
+	  this.authService.getMaxTransApprovalHistoryID().subscribe(data => {
+		   if(data.length > 0)
+		   {
+		    transApprovalHistoryID = data[0].Tran_Approval_History_ID + 1;
+		   }
+		},
+		//observable also returns error
+		err => {
+		console.log(err);
+		return false;
+		});
+	  this.universityApprovalHistory={TranApprovalHistoryID:0,ApprovedBy:"", ApprovedOn:new Date(), MaskID:0,Status:0, Comments:"", TransApprovalID:"" };
+	  // this.authService.getAllTranscationTypeWithRolesAndPriority(TransApprovalMappingData.Univ_ID, 1).subscribe(data => {
+					// if(data.length > 0)
+					// {
+						let length = this.TransApprovalMapping.length;
+						for(let y=0; y< length;y++)
+						{
+						this.TransApprovalMapping.pop();
+						}
+						
+						// for(let j=0; j< this.Roles.length; j++)
+						// {
+							// maskArray.push(Math.pow(2, this.Roles[j].Priority));
+							// priorityArray.push(this.Roles[j].Priority);
+						// }
+						
+						
+						 
+						// for(let i=0; i< this.Roles.length; i++)
+						// {					
+						 
+							 // if(Math.pow(2, this.Roles[i].Priority) == maskID)
+							 // {
+								 // status=1;
+							 // }
+						  // if( Math.pow(2, this.Roles[i].Priority) > maskID || status == 1)
+						 // {
+							 // if(status == 1)
+							 // {
+								 // i=this.Roles.length;
+								 // let dataarray = this.Roles.find(x=>x.Priority == Math.max.apply(null, priorityArray));
+								 // this.TransApprovalMapping.push({TransMapID : dataarray.Tran_Map_ID, NextApproverRoleID:TransApprovalMappingData.Next_Approver_RID, 
+							// PrevApproverRoleID:TransApprovalMappingData.Prev_Approver_RID,
+							// Priority:TransApprovalMappingData.Priority,MaskID:Math.pow(2, TransApprovalMappingData.Priority), Status:0, TransactionStatus:'R',
+							// UniversityID:this.univID, TransApprovalID:TransApprovalMappingData.Tran_Approval_ID,
+							// TransDt:TransApprovalMappingData.Tran_Dt, StudentID:TransApprovalMappingData.Student_ID, TranApprovalIDNumber:TransApprovalMappingData.Tran_Approval_IDNumber});
+							
+							// }else 
+							// {
+								// this.TransApprovalMapping.push({TransMapID : this.Roles[i].Tran_Map_ID, NextApproverRoleID:TransApprovalMappingData.Next_Approver_RID, PrevApproverRoleID:TransApprovalMappingData.Prev_Approver_RID,
+							// Priority:TransApprovalMappingData.Priority,MaskID:Math.pow(2, TransApprovalMappingData.Priority), Status:status, TransactionStatus:'R',
+							// UniversityID:TransApprovalMappingData.Univ_ID, TransApprovalID:TransApprovalMappingData.Tran_Approval_ID, TransDt:TransApprovalMappingData.Trans_Dt, StudentID:TransApprovalMappingData.Student_ID, TranApprovalIDNumber:TransApprovalMappingData.Tran_Approval_IDNumber});
+							// }
+						 // }
+						// }
+						
+						this.TransApprovalMappingStringArrayGlobal.push(TransApprovalMappingData.Tran_Approval_ID);
+					 debugger;
+	  this.universityApprovalHistory.ApprovedBy = this.Roles.filter(x=>x.RoleID == roleid)[0].RoleName;
+	  this.universityApprovalHistory.MaskID = TransApprovalMappingData.Mask_ID; 
+	  this.universityApprovalHistory.TransApprovalID = TransApprovalMappingData.Tran_Approval_ID;
+	  this.universityApprovalHistory.Status =0;
+	  this.universityApprovalHistory.Comments = "Rejected";
+	  this.universityApprovalHistory.TranApprovalHistoryID=transApprovalHistoryID;
+	  // this.authService.addUniversityTransApprovalHistory(this.model, this.universityApprovalHistory, this.TransApprovalMapping).subscribe(data => {
+		// debugger;
+      // if(data.success){
+        // //this.flashMessage.show('You are now registered and can log in', {cssClass: 'alert-success', timeout: 3000});
+        // this.bindGrid();
+      // } else {
+        // //this.flashMessage.show('Something went wrong', {cssClass: 'alert-danger', timeout: 3000});
+        // this.router.navigate(['/register']);
+      // }
+    // });
+					// }
+			// },
+				// //observable also returns error
+					// err => {
+					// console.log(err);
+					// return false;
+				// });
+
+				
+	  
+  }
+  
+  SubmitRejectItem()
+	{
+		debugger;
+	this.universityApprovalHistory.Comments = this.Comments;
+                this.authService.addUniversityTransRejectionHistory(this.model, this.universityApprovalHistory, this.TransApprovalMappingStringArrayGlobal[0]).subscribe(data => {
+		debugger;
+      if(data.success){
+        //this.flashMessage.show('You are now registered and can log in', {cssClass: 'alert-success', timeout: 3000});
+        document.getElementById('closeR').click();
+                                this.bindGrid();
+      } else {
+        //this.flashMessage.show('Something went wrong', {cssClass: 'alert-danger', timeout: 3000});
+        this.router.navigate(['/register']);
+      }
+    });                        
+	}
 }
 

@@ -147,6 +147,7 @@ public EventTypes = [
 	EventRegisterEndDt:'',
     EventType:'0',
     POCRequired:'No',
+	TotalAllowedParticipant:0,
     POCDeadLine:'',
     Location:'',
     Status:'Yes',
@@ -311,6 +312,7 @@ onUniversityChange(items) {
     }
 }
   isDisabled() {
+<<<<<<< HEAD
 	  
          if(this.validateService.validateEvent(this.model)){
 		    return false;		 
@@ -318,6 +320,15 @@ onUniversityChange(items) {
           else{
 		   return true;
 	      }
+=======
+	  //debugger;
+         // if(this.validateService.validateEvent(this.model)){
+		    // return false;		 
+		   // }
+          // else{
+		   // return true;
+	      // }
+>>>>>>> 11094209a651fc76cdb35a695bca2488197c4854
   }
   
   onChange(category) {
@@ -509,6 +520,11 @@ checkValidation()
 	if(this.model.EventTitle == "")
 	{
 		this.ErrorList.push("Event title is required");
+	}
+	
+	if(this.model.TotalAllowedParticipant == 0)
+	{
+		this.ErrorList.push("Total Allowed Participant is required");
 	}
 
 	if(this.model.Description == "")

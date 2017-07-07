@@ -37,10 +37,12 @@ router.post('/AddEvent', (req, res, next) => {
                 universitiesInfo = req.body.Universities;
   let newEvent = new Event({
                 EventID: req.body.EventID,
+				TotalAllowedParticipant: req.body.TotalAllowedParticipant,
                 EventTitle: req.body.EventTitle,
                 Description: req.body.Description,
                 CategoriesMstr: req.body.CategoriesMstr,
 				CategoriesSubMstr: req.body.CategoriesSubMstr,
+				TotalAllowedParticipant:req.body.TotalAllowedParticipant,
 				StartDt: req.body.StartDt,
 				EndDt: req.body.EndDt,
 				EventRegisterEndDt: req.body.EventRegisterEndDt,
@@ -138,6 +140,41 @@ router.post('/AddEvent', (req, res, next) => {
   });
 });
 
+router.post('/AddEventInvite', (req, res, next) => {
+                debugger;
+                organizationInfo = req.body.Organizations;
+                universitiesInfo = req.body.Universities;
+				eventID = req.body.eventID;
+  
+				if(organizationInfo.length>0)
+                    {
+                        for(var n=0;n < organizationInfo.length; n++)
+                            {
+                                var  eventOrganization= new EventOrganization();
+                                eventOrganization.EventID= eventID
+								eventOrganization.OrgnID=organizationInfo[n];
+                                EventOrganization.AddEventOrganization(eventOrganization, (err, organizationInfo)=> {
+                                                                     console.log(organizationInfo);
+                                                                });
+                            }                                                
+                    }
+				if(universitiesInfo.length>0)
+                    {
+                        for(var n=0;n < universitiesInfo.length; n++)
+                            {
+                                var  eventUniversity= new EventUniversity();
+                                eventUniversity.EventID= eventID;
+								eventUniversity.Univ_ID=universitiesInfo[n];
+                                EventUniversity.AddEventUniversity(eventUniversity, (err, universityInfo)=> {
+                                                                                console.log(universityInfo);
+                                                                });
+                            }                                                
+                    }
+      res.json({success: true, msg:'Event Created.'});
+    
+  });
+
+
 router.post('/ApproveEvent', (req, res, next) => {
 	console.log("route" + req.body);
   Event.approveEvent(req.body,(err,Event)=>{
@@ -149,7 +186,20 @@ router.post('/ApproveEvent', (req, res, next) => {
                                   res.json({success: true, msg:'Event Approved.'});
                   }
   });  
-}); 
+});
+
+router.post('/RejectEvent', (req, res, next) => {
+	console.log("route" + req.body);
+  Event.rejectEvent(req.body,(err,Event)=>{
+    if(err) {             
+                                throw err;
+                }
+     else
+                  {                            
+                                  res.json({success: true, msg:'Event Approved.'});
+                  }
+  });  
+});  
 
 router.get('/GetEventByID', (req, res) => {
 	console.log(req.headers);

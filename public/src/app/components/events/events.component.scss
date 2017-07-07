@@ -28,6 +28,9 @@
 .joinEvent{
 margin-bottom:10px;
 }
+
+
+
 #OverviewTab   .ebgins ul {
     margin: 10px auto;
     width: 852px;
@@ -62,6 +65,18 @@ margin-bottom:10px;
 } 
 
 #OrganizationTab   .ebgins {
+    background-color: #fff;
+    margin: 10px auto;
+    border: 1px solid #e5e5e5;
+    padding: 10px;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+    position: relative;
+    width: 100%;
+}
+
+#UniversityTab   .ebgins {
     background-color: #fff;
     margin: 10px auto;
     border: 1px solid #e5e5e5;
@@ -630,6 +645,186 @@ li.active .content{background:#fff;display:block;border-left:1px solid #e9e9e9;b
 
 
 
+
+
+
+
+/* People table */
+
+.grid-item {
+	border: solid 1px #ccc;
+}
+
+.handle {
+	width: 100%;
+	height: 50px;
+	background: #eee;
+	color: black;
+	font-weight: 500;
+	padding: 15px;
+	box-sizing: border-box;
+}
+
+.btn {
+	margin-left: 10px;
+}
+
+.box-header-btns {
+    top: 15px;
+    right: 10px;
+    cursor: pointer;
+    position: absolute;
+}
+
+.navbar-default {
+	background: black;
+	border: 0px;
+}
+
+.navbar-default .navbar-brand {
+	color: white;
+}
+
+body {
+	background-color: #f5f2f2;
+}
+#PeopleTab .header ul{
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #333333;
+}
+
+#PeopleTab .header li {
+    float: left;
+	width:25%;
+	
+}
+
+#PeopleTab .header li a {
+    display: block;
+    color: white;   
+    padding: 16px;
+    text-decoration: none;
+	font-weight:16;
+	text-align:left;
+}
+
+#PeopleTab .header li a:hover {
+    background-color: #111111;
+}
+
+#PeopleTab .item ul{
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    
+   
+}
+
+.AddMoreDiv
+{
+margin-bottom:15px;
+}
+
+ .dropdown-inline
+{
+width:40% !important;
+}
+
+.dropdown-menu > li > a {
+    display: block;
+    padding: 3px 20px;
+    clear: both;
+    font-weight: normal;
+    line-height: 1.42857143;
+    color: #333;
+    white-space: nowrap;
+}
+
+label {
+    display: inline-block;
+    max-width: 100%;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+a.disabled, a.disabled:visited {
+   pointer-events: none;
+   cursor: default;
+   color: gray;
+}
+
+#PeopleTab .item li {
+    float: left;
+}
+
+#PeopleTab .item li  {
+    display: block;
+
+    text-align: center;
+    padding: 16px;
+    text-decoration: none;
+	font-weight:16;
+	width:25%;
+	text-align:left;
+}
+.border
+{
+background-color: #fff;
+    margin: 10px auto;
+    border: 1px solid #e5e5e5;
+    padding: 10px;
+    border-radius: 3px;
+    position: relative;
+    width: 90%;
+}
+.modal-dialog {
+    position: relative;
+    width: 60% !important;
+   
+}
+
+.twelve, .row .twelve {
+    width: 100%;
+}
+.column.centered, .columns.centered {
+    float: none;
+    margin: 0 auto;
+}
+.column, .columns {
+    float: left;
+    min-height: 1px;
+    padding: 0 10px;
+    position: relative;
+}
+.ten, .row .ten {
+    width: 83.33333%;
+}
+.two, .row .two {
+    width: 16.66667%;
+}
+.pane .body, .tile .body {
+    padding: 17px;
+    background-color: #fff;
+    line-height: 27px;
+}
+input[type="text"], input[type="password"], input[type="date"], 
+input[type="textarea"] input[type="datetime"], input[type="email"], input[type="number"], input[type="search"], input[type="tel"], input[type="time"], input[type="url"] {
+    height: 38px;
+    padding: 12px;
+	margin:0 0 12px 0;
+}
+.student_bio{
+	width:404px;
+	margin-bottom:10px;
+}
+.student_update
+{
+	width: 90px !important;
+    float: right;
+}
 
 
 

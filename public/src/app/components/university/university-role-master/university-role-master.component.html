@@ -16,22 +16,28 @@
 
 
 
-<form #EventForm="ngForm" enctype="multipart/form-data">
+<form #EventForm="ngForm" (submit)="onSubmit()">
 
 <div id="tabs">
 <div class="row">
 
 
 <div class="tab-content x_panel">
-
+<div>
+<ul>
+<li class="red" *ngFor="let a of this.ErrorList; let index = index">
+{{ErrorList[index]}}
+</li>
+</ul>
+</div>
 
  
 	
 	<label>University <span class="red">*</span></label>
-	<div class="input-group" style="width:93%">
+	<div class="input-group" style="width:93%" *ngIf = "tagID=='C'">
      <span class="input-group-addon"><i class="fa fa-key"></i></span>
 	
-		<select id="#Univ_ID"    [(ngModel)]="model.Univ_ID"  #Univ_ID="ngModel" (ngModel)="Univ_ID"   name="Univ_ID" ngControl="CategoriesMstr"  class="form-control" >
+		<select id="#Univ_ID" (ngModelChange)="onChange($event)"   [(ngModel)]="model.Univ_ID"  #Univ_ID="ngModel" (ngModel)="Univ_ID"   name="Univ_ID" ngControl="CategoriesMstr"  class="form-control" >
          
 		<option *ngFor="let univ of Universities" [value]="univ.Univ_ID" >  
         {{univ.Univ_Name}}
@@ -43,17 +49,30 @@
 		  </div>
 	
 	</div>
-	
+	<div class="input-group" style="width:93%" *ngIf = "tagID=='U'">
+				 <span class="input-group-addon"><i class="fa fa-address-card"></i></span>
+					
+					<input disabled type="text" value="{{universityName}}" name="universityName" ngControl="universityName"  class="form-control">
+					 
+					
+				</div>
 
 
-<div class="AddMoreDiv">
+<div class="AddMoreDivUniv">
 
 <label>Role Name <span class="red">*</span></label>
 	<div class="input-group" style="width:95%;">
     
+		<div style="width:98%;float:left; margin-bottom:10px;" *ngFor="let univrole of UniversityRoles;let i = index">		
+		<input disabled type="text" value="{{univrole.Univ_RoleName}}"  ngControl="Univ_RoleName"  class="form-control"
+		autofocus="true"> 
+		
+		</div>
+		
 		<div style="width:98%;float:left; margin-bottom:10px;" *ngFor="let role of model.Univ_RoleName;let i = index">		
 		<input required type="text" [(ngModel)]="role.Univ_RoleName" name="Univ_RoleName{{i}}" ngControl="Univ_RoleName"  class="form-control"
-		autofocus="true" id="#Univ_RoleName" #Univ_RoleName="ngModel"> 
+		autofocus="true" id="#Univ_RoleName{{i}}" #Univ_RoleName{{i}}="ngModel"> 
+		
 		</div>
 		<div style="width:2%;float:right;">
 		<a id="addMore" class=""(click)=AddMoreRoles()><img src="..\..\src\img\AddMore.png" height="30px" width="30px" ></a>
@@ -67,8 +86,9 @@
 
 
 <div>
-	<a id="btnFinal" class="big-red-button btn btn-primary floatRight" (click)=onSubmit()>Save</a>
+	<input type="submit" class="btn btn-lg btn btn-primary btn-block" style="width:15%;float:right" value="Save" [disabled]="!EventForm.form.valid || model.Univ_ID == 0">
 	</div>
+	
 
 </div>
 

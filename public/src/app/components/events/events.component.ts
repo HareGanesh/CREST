@@ -3,6 +3,10 @@ import {ValidateService} from '../../services/validate.service';
 import {AuthService} from '../../services/auth.service'
 import {Router, ActivatedRoute, Params} from '@angular/router';
 import {EventModel} from '../../model/eventsModel';
+import { UniversityTransEventApproval } from './UniversityTransEventApproval';
+import { IMultiSelectOption } from 'angular-2-dropdown-multiselect';
+import { IMultiSelectSettings } from 'angular-2-dropdown-multiselect';
+import { IMultiSelectTexts } from 'angular-2-dropdown-multiselect';
 
 @Component({
   selector: 'app-home',
@@ -11,6 +15,68 @@ import {EventModel} from '../../model/eventsModel';
   providers : [EventModel]
 })
 export class EventsComponent implements OnInit {
+	
+	public SuccessMessage='';
+	public DangerMessage='';
+  // Invite init
+  public organizations = [
+	  
+         
+     ];
+
+	  optionsModel: number[] = [1, 2];
+ public selectedTexts: any[] = [];
+
+// // Settings configuration
+
+
+// // Labels / Parents
+ myOptions: IMultiSelectOption[] = [
+     // { id: 1, name: 'Car brands', isLabel: true },
+     
+     
+    
+ ];
+
+
+ mySettings: IMultiSelectSettings = {
+     enableSearch: true,
+     checkedStyle: 'fontawesome',
+     buttonClasses: 'btn btn-block',
+     dynamicTitleMaxItems: 3,
+     displayAllSelectedText: true,
+	 showCheckAll:true,
+	 showUncheckAll:true
+ };
+
+// // Text configuration
+ myTexts: IMultiSelectTexts = {
+     checkAll: 'Select all',
+     uncheckAll: 'Unselect all',
+     checked: 'item selected',
+     checkedPlural: 'items selected',
+     searchPlaceholder: 'Organization Name',
+     defaultTitle: 'Select Organizations',
+    allSelected: 'All selected',
+};
+
+ myUnivTexts: IMultiSelectTexts = {
+     checkAll: 'Select all',
+     uncheckAll: 'Unselect all',
+     checked: 'item selected',
+     checkedPlural: 'items selected',
+     searchPlaceholder: 'University Name',
+     defaultTitle: 'Select University',
+    allSelected: 'All selected',
+};
+
+myUnivOptions: IMultiSelectOption[] = [
+     // { id: 1, name: 'Car brands', isLabel: true },
+     
+     
+    
+ ];
+  
   eventDetails  =new EventModel();
   public eventRuleArray:Object;
   public eventPrizeArray :Object;
@@ -18,10 +84,20 @@ export class EventsComponent implements OnInit {
   public eventOrganizationArray:Object;
   public eventUniversityArray:Object;
   tagID:String;
+  eventid:String;
   orgOrUnivLabel:String;
+  Comments:string;
+  univID:Number;
+  StudentID:String;
+  totalPeopleJoined:number;
+  isJoinBtnDisabled:boolean=false;
+  Students=[{Student_Name:"",Email_ID:"", Address:"", Mobile_No:""}];
+  
+  EventStudent=[{EventID:"",StudentID:""}];
    public dayDiff : number;
    public dayHours : number;
    public dayMin : number;
+   TransApprovalMapping:UniversityTransEventApproval[]=[];
    public Organizations = [
 	  {id: 0,  name:"Please select",title:"", address:"",country:"",overview:"", state:"",logo:""},
       
@@ -30,6 +106,14 @@ export class EventsComponent implements OnInit {
 	  {id: 0,  name:"Please select", address:"",ContactNo:"",Email:""},
       
      ];
+	 
+	 model={  	
+    
+	Organizations:[],
+	Universities:[],
+	eventID:''
+	
+     	};
 
   constructor(
    private validateService: ValidateService,  
@@ -39,8 +123,43 @@ export class EventsComponent implements OnInit {
   
 
     ) { }
+	
+
+	
+  onOrganizationChange(items) {
+	debugger;
+       this.model.Organizations = items;
+    }
+	
+onUniversityChange(items) {
+	debugger;
+       this.model.Universities = items;
+    }
+	
 ngOnInit() 
 {	
+      // Invite on init
+	  // Get all organization
+	  this.authService.getOrganizations().subscribe(data => {
+		   for(let i=0; i< data.length; i++)
+      this.myOptions.push({id:data[i].OrgnID, name:data[i].OrgnName});
+    },
+    //observable also returns error
+    err => {
+      console.log(err);
+      return false;
+    });
+ 
+	this.authService.getAllUniversity().subscribe(data => {
+		   for(let i=0; i< data.length; i++)
+      this.myUnivOptions.push({id:data[i].Univ_ID, name:data[i].Univ_Name});
+    },
+    //observable also returns error
+    err => {
+      console.log(err);
+      return false;
+    });
+	
 	  this.tagID=localStorage.getItem('tagID');
 	  if(this.tagID == 'S' || this.tagID == 'C')
 	  {
@@ -49,6 +168,13 @@ ngOnInit()
 	  {
 		  this.orgOrUnivLabel = "Organization";
 	  }
+	  
+	  if(this.tagID == 'S')
+	  {
+	   this.univID = JSON.parse(this.authService.getLoginUser()).Univ_ID;
+	   this.StudentID = JSON.parse(this.authService.getLoginUser()).Student_ID
+	   this.LoadTransMapping();  
+	  }
 	
 	 let eventID
 	 this.activatedRoute.params.subscribe((params: Params) => {
@@ -56,6 +182,7 @@ ngOnInit()
        
       });
 	  
+	  this.eventid  = eventID;
  this.authService.getEventsById(eventID).subscribe(event => {
 this.dayTimeDiff(event.EventRegisterEndDt);
 this.eventDetails=event;
@@ -128,6 +255,246 @@ this.authService.GetEventOrganizerByEventID(eventID).subscribe(organizer => {
       return false;
     });	
 	
+	this.checkJoinButtonDisabled();
+	this.GetPeopleJoined();
+  }
+  
+  GetPeopleJoined()
+  {
+	  this.authService.GetApprovedEventStudentByEventID(this.eventid).subscribe(data => {
+		   if(data.length > 0)
+		   {
+			this.totalPeopleJoined = data.length;	
+			this.Students.pop();
+             for(let i=0; i< data.length;i++)
+			 {
+				 this.GetStudent(data[i].Student_ID);
+			 }				 
+		   }else{
+			   this.totalPeopleJoined =0;
+		   }
+		},
+		//observable also returns error
+		err => {
+		console.log(err);
+		return false;
+		});
+  }
+  
+  checkJoinButtonDisabled()
+  {
+	  debugger;
+	  let isDisabled = false;
+	  this.authService.GetEventStudentByEventIDAndStudentID(this.eventid, this.StudentID).subscribe(data => {
+		   if(data.length > 0)
+		   {
+		    this.isJoinBtnDisabled = true;
+		   }
+		},
+		//observable also returns error
+		err => {
+		console.log(err);
+		return false;
+		});
+		
+		
+  }
+  
+  onEventInviteSubmit(){
+	  debugger;
+	  if(this.model.Organizations.length == 0 || this.model.Universities.length == 0)
+	  {
+		  this.DangerMessage="Please select any organization or university to invite.";
+		  return;
+	  }else
+	  {
+		  this.DangerMessage ='';
+	  }
+	  
+	  
+  	this.model.eventID = this.eventid.toString();
+  	 // Required Fields
+    // if(this.validateService.validateEvent(this.model)){     
+	  // this.flashMessage.show('Please fill in all fields', {cssClass: 'alert-danger', timeout: 3000});
+	 // // this.ErrorList.push("Name required");
+	  // this.submitted = false;
+      // return false;
+    // }
+
+    // Validate Email
+    //if(!this.validateService.validateEmail(this.model.Email_ID)){
+     //this.flashMessage.show('Please use a valid email', {cssClass: 'alert-danger', timeout: 3000});
+      //return false;
+    //}
+
+  // Register user
+    this.authService.registerEventInvite(this.model).subscribe(data => {
+		debugger;
+      if(data.success){
+		  this.model.Organizations =[];
+		  this.model.Universities=[]; 
+		  this.SuccessMessage = "Selected universities and organizations successfully invited."
+       // this.flashMessage.show('univer has been registered', {cssClass: 'alert-success', timeout: 3000});
+        //this.router.navigate(['/universitydashboard']);
+      } else {
+        //this.flashMessage.show('Something went wrong', {cssClass: 'alert-danger', timeout: 3000});
+        //this.router.navigate(['/EventInfo']);
+      }
+    });
+
+  }
+  
+  LoadTransMapping()
+  {
+	  debugger;
+	  this.TransApprovalMapping=[];
+	   let TransApprovalID="ReqEA-1";
+	   let transApprovalIDNumber=1;
+	   let transDt='';
+	   this.authService.getMaxTranEventApprovalID().subscribe(data => {
+		   if(data.length > 0)
+		   {
+		    TransApprovalID = "ReqEA-" +(parseInt(((data[0].Tran_Approval_ID).split('-')[1])) +1).toString();
+		   }
+		},
+		//observable also returns error
+		err => {
+		console.log(err);
+		return false;
+		});
+		
+		this.authService.getMaxTranEventApprovalNumberID().subscribe(data => {
+		   if(data.length > 0)
+		   {
+		    transApprovalIDNumber = data[0].Tran_Approval_IDNumber + 1;
+		   }
+		},
+		//observable also returns error
+		err => {
+		console.log(err);
+		return false;
+		});
+		
+		this.authService.getAllTranscationTypeWithRolesAndPriority(this.univID, 2).subscribe(data => {
+					if(data.length > 0)
+					{
+						for(let i=0; i< data.length; i++)
+						{							
+							 this.TransApprovalMapping.push({TransMapID : data[i].Tran_Map_ID, NextApproverRoleID:data[i].Role_ID, PrevApproverRoleID:0,
+							 Priority:data[i].Priority,MaskID:Math.pow(2, data[i].Priority), Status:0, EventID: this.eventid,
+							 UniversityID:this.univID, TransApprovalID:TransApprovalID, TransDt:transDt, StudentID:this.StudentID, TransApprovalIDNumber:transApprovalIDNumber});
+						}
+					}
+			},
+				//observable also returns error
+					err => {
+					console.log(err);
+					return false;
+				});		
+			
+  }
+  
+  clearComments()
+  {
+	  this.Comments='';
+  }
+  
+  approveEvent()
+  {	
+	var  model=
+	  {
+         _id: '',
+		 comments:''
+      }
+	  model._id=this.eventid.toString();
+	  model.comments = this.Comments;
+	  debugger;
+	  this.authService.approveEvent(model).subscribe(event => {
+		  if(event.success)
+		  {
+			  document.getElementById('close').click();
+			  this.router.navigate(['/']);
+			  
+		  }
+	  });
+  }
+  
+  rejectEvent()
+  {	
+	var  model=
+	  {
+         _id: '' ,
+		 comments:''
+      }
+	  model._id = this.eventid.toString();
+	  model.comments = this.Comments;
+	  debugger;
+	  this.authService.rejectEvent(model).subscribe(event => {
+		  if(event.success)
+		  {
+			  document.getElementById('close2').click();
+			  this.router.navigate(['/']);
+		  }
+	  });
+  }
+  
+  isDisabled()
+  {
+	  if(this.tagID == 'S')
+	  {
+		  return true;
+	  }else {
+		  return false;
+	  }
+  }
+  
+  GetStudent(studentId)
+  {
+	  debugger;
+	  this.authService.getStudentInfoByStudentID(studentId).subscribe(data1 => {
+		    // for(let i=0; i< data.length; i++)
+				
+       this.Students.push({Student_Name: data1.Student_Name ,Email_ID: data1.username, Address:data1.Address, Mobile_No:data1.Mobile_No});
+				
+		   
+       },
+    //observable also returns error
+    err => {
+      console.log(err);
+      return false;
+    });
+	
+  }
+  
+  onJoinEvent(event)
+  {
+	  this.isJoinBtnDisabled = true;
+	  event.target.disabled = true;
+	  debugger;
+	  this.EventStudent.pop();
+	  this.EventStudent.push({EventID:this.eventid.toString(), StudentID:this.StudentID.toString()});
+	  this.authService.addUniversityTransEventApprovalDetail(this.TransApprovalMapping).subscribe(data => {
+		debugger;
+      // if(data.success){
+        // //this.flashMessage.show('You are now registered and can log in', {cssClass: 'alert-success', timeout: 3000});
+        // //this.router.navigate(['/login']);
+      // } else {
+        // //this.flashMessage.show('Something went wrong', {cssClass: 'alert-danger', timeout: 3000});
+        // //this.router.navigate(['/register']);
+      // }
+	  });
+	   
+	
+	this.authService.addIntoEventStudent(this.EventStudent[0]).subscribe(data => {
+		debugger;
+      // if(data.success){
+        // //this.flashMessage.show('You are now registered and can log in', {cssClass: 'alert-success', timeout: 3000});
+        // //this.router.navigate(['/login']);
+      // } else {
+        // //this.flashMessage.show('Something went wrong', {cssClass: 'alert-danger', timeout: 3000});
+        // //this.router.navigate(['/register']);
+      // }
+    });
   }
   
   onPopupClick()
@@ -140,31 +507,51 @@ this.authService.GetEventOrganizerByEventID(eventID).subscribe(organizer => {
   
   GetUnivName(univID)
   {
+<<<<<<< HEAD
 
+=======
+	  
+>>>>>>> 11094209a651fc76cdb35a695bca2488197c4854
 	return this.Universities.find(x=>x.id == univID).name;
   }
   
   GetUnivAddress(univID)
   {
+<<<<<<< HEAD
 	
+=======
+	  
+>>>>>>> 11094209a651fc76cdb35a695bca2488197c4854
 	return this.Universities.find(x=>x.id == univID).address;
   }
   
   GetUnivContact(univID)
   {
+<<<<<<< HEAD
 	
+=======
+	  
+>>>>>>> 11094209a651fc76cdb35a695bca2488197c4854
 	return this.Universities.find(x=>x.id == univID).ContactNo;
   }
   
   GetName(orgnID)
   {
+<<<<<<< HEAD
 	 
+=======
+	  
+>>>>>>> 11094209a651fc76cdb35a695bca2488197c4854
 return this.Organizations.find(x=>x.id == orgnID).name;
   }
   
   GetTitle(orgnID)
   {
+<<<<<<< HEAD
 	
+=======
+	  
+>>>>>>> 11094209a651fc76cdb35a695bca2488197c4854
 return this.Organizations.find(x=>x.id == orgnID).title;
   }
   
@@ -176,7 +563,10 @@ return this.Organizations.find(x=>x.id == orgnID).overview;
   
   GetAddress(orgnID)
   {
+<<<<<<< HEAD
 	  
+=======
+>>>>>>> 11094209a651fc76cdb35a695bca2488197c4854
 return this.Organizations.find(x=>x.id == orgnID).address  +"," + this.Organizations.find(x=>x.id == orgnID).state +"," + this.Organizations.find(x=>x.id == orgnID).country;
   }
   

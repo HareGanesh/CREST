@@ -64,7 +64,7 @@ export class UniversityroleComponent implements OnInit {
 	  this.authService.getUserByEmail(this.model).subscribe(data => {
 		   if(data != null)
 		   {
-			   this.ErrorList.push("Email id is duplicate");
+			   this.ErrorList.push("Alternate Email is duplicate");
 			   
 		   }
        },
@@ -88,7 +88,7 @@ export class UniversityroleComponent implements OnInit {
 	  this.authService.getUserByUserName(this.model).subscribe(data => {
 		   if(data != null)
 		   {
-			   this.UserNameErrorList.push("user name is duplicate");
+			   this.UserNameErrorList.push("Email is duplicate");
 			   
 		   }
        },

@@ -69,29 +69,29 @@
 		
 	
 	</div>
-	<label>Username <span class="red">*</span></label>
+				<label>Email <span class="red">*</span></label>
 				<div class="input-group">
 				 <span class="input-group-addon"><i class="fa fa-address-card"></i></span>
 					
-					<input required type="text" [(ngModel)]="model.username" name="username" ngControl="username"  class="form-control" placeholder="User name"
+					<input required type="text" [(ngModel)]="model.username" name="username" ngControl="username"  class="form-control" placeholder="Email"
 					autofocus="true" id="#username" #username="ngModel" (focusout)="userNameChange()">
 					<div [hidden]="username.valid || username.pristine"
 						 class="alert alert-danger">
-					  User Name is required
+					  Email is required
 					</div>	
 					<div class="alert alert-danger" *ngIf="UserNameErrorList.length != 0">
 				 <small><b>{{UserNameErrorList[0]}}</b></small>
 				</div>
 				</div>
-				<label>Email <span class="red">*</span></label>
+				<label>Alternate Email <span class="red">*</span></label>
 				<div class="input-group">
 				 <span class="input-group-addon"><i class="fa fa-envelope"></i></span>
 					
-					<input required type="text" [(ngModel)]="model.Email_ID" name="Email_ID" ngControl="email"  class="form-control" placeholder="Email"
+					<input type="text" [(ngModel)]="model.Email_ID" name="Email_ID" ngControl="email"  class="form-control" placeholder="Alt Email"
 					autofocus="true" id="#email" #email="ngModel" pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$" (focusout)="emailChange()">
 					<div [hidden]="email.valid || email.pristine"
 						 class="alert alert-danger">
-					  <div [hidden]="!email.hasError('required')">Email is required</div>
+					 
 			   <div [hidden]="!email.hasError('pattern')">Email format should be 
 				  <small><b>joe@abc.com</b></small>
 			   </div>			

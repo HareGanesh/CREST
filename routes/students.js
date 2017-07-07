@@ -56,7 +56,7 @@ router.post('/register', (req, res, next) => {
                                 
         PWD: req.body.ConfirmPwd,    
 		UserName:req.body.username, 
-		EmailID:req.body.Email_ID,
+		//EmailID:req.body.Email_ID,
 		Active:1,
 		TagID:'S'
 		});
@@ -103,13 +103,15 @@ router.post('/authenticate', (req, res, next) => {
 					  student: {
 						id: student._id,
 						Student_Name: student.Student_Name,
-						Email_ID: student.Email_ID,
+						username:student.username,
+						//Email_ID: student.Email_ID,
 						Student_ID: student.Student_ID,
 						Mobile_No: student.Mobile_No,
 						DOB:student.DOB,
 						Address:student.Address,
 						Orgn_ID:student.Orgn_ID,
-						Univ_ID:student.Univ_ID
+						Univ_ID:student.Univ_ID,
+						isPasswordChanged: student.isPasswordChanged
 					  }
 					}); 
 				}
@@ -233,6 +235,36 @@ router.get('/getStudentByStudentID', (req, res, next) => {
   var studentID = req.headers["studentid"];  
   
   Student.getStudentByStudentID(studentID, (err,studentDetail)=>{
+    if(err) {
+                                throw err;                            
+                }
+     else
+                  {                            
+                                  res.json(studentDetail);
+                  }
+  });  
+}); 
+
+router.get('/getStudentByUnivID', (req, res, next) => {
+	
+  var univID = req.headers["univid"];  
+  
+  Student.getStudentByUnivID(univID, (err,studentDetail)=>{
+    if(err) {
+                                throw err;                            
+                }
+     else
+                  {                            
+                                  res.json(studentDetail);
+                  }
+  });  
+}); 
+
+router.get('/getPendingStudentByUnivID', (req, res, next) => {
+	
+  var univID = req.headers["univid"];  
+  
+  Student.getPendingStudentByUnivID(univID, (err,studentDetail)=>{
     if(err) {
                                 throw err;                            
                 }

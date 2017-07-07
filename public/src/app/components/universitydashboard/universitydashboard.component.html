@@ -1,4 +1,4 @@
-<ng-container>
+<ng-container *ngIf="authService.login();">
 <app-navbar></app-navbar> 
 <div style="margin-left:230px">
       <nav class="navbar ">
@@ -20,14 +20,15 @@
                       
                      <div class="header">  
                     <ul >
+					<li *ngIf="tagID=='UR'"><input type="checkbox" name="all" [checked]="isAllChecked(item1)" (change)="checkAll($event)"/> <label>Select all</label></li>
 					<li><a>Req No</a></li>
 					
 					<li><a>Student name</a></li>
 					<li *ngIf="tagID=='U'"><a>Prev Approval</a></li>
 					<li><a>Next approval</a></li>
-								
 					
-					<li></li>
+					
+					<li style="width:20%"></li>
 					</ul>
 					</div>
 					<div class="item"> 
@@ -37,6 +38,7 @@
 						<span style="color: #ffc520">Prev Approver :</span> <span style="color: #00b3ee">{{item.Prev_Approver_RName}}</span>
 						<!-- <b><i><span style="color: #ffc520">PrevApproval: Sumit - Hod</span></i></b> <small>Html support</small>. -->
 					</tooltip-content>
+					<li *ngIf="tagID=='UR'"> <input type="checkbox" name="sizecb[]"  value="{{item.Tran_Approval_ID}}" [(ngModel)]="item.isChecked" (change)="check($event, item.Tran_Approval_ID)"/></li> 
 					<li [tooltip]="toltip">{{item.Tran_Approval_ID}}</li>
 					 <!-- <li tooltip content="Next Approver : Amit Khandelwal - Principal{{item.Next_Approver_RID}}<br/> PrevApproval: Sumit - Hod{{item.Prev_Approver_RID}}">{{item.Tran_Approval_ID}}</li> -->
                      
@@ -45,12 +47,18 @@
                       <li>{{item.Next_Approver_RName}} </li>
                       
                      
-					  <li *ngIf="tagID=='UR'">
-					  <a class="btn btn-primary pull-right" (click)="ApproveStudent(item)">Approve</a>
+					  <li *ngIf="tagID=='UR'" style="width:20%">
+					  <a class="btn btn-primary" (click)="ApproveStudent(item)" data-toggle="modal" data-target="#commentDiv">Approve</a>
+					  <a class="btn btn-primary" (click)="RejectStudent(item)" data-toggle="modal" data-target="#RejectCommentDiv">Reject</a>
 					  <!-- <a class="btn btn-primary pull-right" style="width:66px;" (click)="showPopup(item._id)" data-toggle="modal" data-target="#vv">Edit</a>  -->
 					  
 					  </li>
-</ul>
+					</ul>
+					<div *ngIf="tagID=='UR'">
+					
+					<a  class="btn btn-primary"  style="margin-top:10px;" (click)="ApproveAllStudent()" data-toggle="modal" data-target="#commentAllDiv">Approve All</a>
+					<a  class="btn btn-primary"  style="margin-top:10px;" (click)="RejectAllStudent()" data-toggle="modal" data-target="#RejectCommentAllDiv">Reject All</a>
+					</div>
                       </div> </div>
 					  
                       <!-- /MAIL LIST -->
@@ -65,5 +73,113 @@
               </div>
             </div>
 </div>
-</ng-container>
 
+<div id="commentDiv" class="modal fade" role="dialog" >
+<div class="modal-dialog" style="width:40% !important" >
+
+<div class="modal-content" >
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title" style="color:#73879C;background: #F7F7F7;font-family:inherit;font-size: 30px;font-weight: 400;line-height: 1.471">Approve Student </h4>
+      </div>
+	  <div class="modal-body">
+	   
+	   <textarea [(ngModel)]="Comments" name="Comments" ngControl="Comments"  class="form-control" placeholder="Comments"
+		 autofocus="true" cols="3" rows="3" maxlength="2000"></textarea>
+		 </div>
+	<div class="modal-footer">  
+<input type="button" class="btn btn-lg btn btn-primary btn-block student_update" id="close2" data-dismiss="modal" value="Cancel" style="margin-top:4px;">
+<input type="button" (click)="SubmitApproveItem()" class="btn btn-lg btn btn-primary btn-block student_update" value="Submit" >
+
+
+	 
+</div>
+</div>
+</div>
+</div>
+
+<div id="commentAllDiv" class="modal fade" role="dialog" >
+<div class="modal-dialog" style="width:40% !important" >
+
+<div class="modal-content" >
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title" style="color:#73879C;background: #F7F7F7;font-family:inherit;font-size: 30px;font-weight: 400;line-height: 1.471">Approve Student </h4>
+      </div>
+	  <div class="modal-body">
+	   
+	   <textarea [(ngModel)]="Comments" name="Comments" ngControl="Comments"  class="form-control" placeholder="Comments"
+		 autofocus="true" cols="3" rows="3" maxlength="2000"></textarea>
+		 </div>
+	<div class="modal-footer">  
+<input type="button" class="btn btn-lg btn btn-primary btn-block student_update" id="close" data-dismiss="modal" value="Cancel" style="margin-top:4px;">
+<input type="button" (click)="SubmitAllApproveItem()" class="btn btn-lg btn btn-primary btn-block student_update" value="Submit" >
+
+
+	 
+</div>
+</div>
+</div>
+</div>
+
+<div id="RejectCommentDiv" class="modal fade" role="dialog" >
+<div class="modal-dialog" style="width:40% !important" >
+
+<div class="modal-content" >
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title" style="color:#73879C;background: #F7F7F7;font-family:inherit;font-size: 30px;font-weight: 400;line-height: 1.471">Reject Student </h4>
+      </div>
+	  <div class="modal-body">
+	   
+	   <textarea [(ngModel)]="Comments" name="Comments" ngControl="Comments"  class="form-control" placeholder="Comments"
+		 autofocus="true" cols="3" rows="3" maxlength="2000"></textarea>
+		 </div>
+	<div class="modal-footer">  
+<input type="button" class="btn btn-lg btn btn-primary btn-block student_update" id="closeR" data-dismiss="modal" value="Cancel" style="margin-top:4px;">
+<input type="button" (click)="SubmitRejectItem()" class="btn btn-lg btn btn-primary btn-block student_update" value="Submit" >
+
+
+	 
+</div>
+</div>
+</div>
+</div>
+
+<div id="RejectCommentAllDiv" class="modal fade" role="dialog" >
+<div class="modal-dialog" style="width:40% !important" >
+
+<div class="modal-content" >
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title" style="color:#73879C;background: #F7F7F7;font-family:inherit;font-size: 30px;font-weight: 400;line-height: 1.471">Reject Student </h4>
+      </div>
+	  <div class="modal-body">
+	   
+	   <textarea [(ngModel)]="Comments" name="Comments" ngControl="Comments"  class="form-control" placeholder="Comments"
+		 autofocus="true" cols="3" rows="3" maxlength="2000"></textarea>
+		 </div>
+	<div class="modal-footer">  
+<input type="button" class="btn btn-lg btn btn-primary btn-block student_update" id="closeRA" data-dismiss="modal" value="Cancel" style="margin-top:4px;">
+<input type="button" (click)="SubmitAllRejectItem()" class="btn btn-lg btn btn-primary btn-block student_update" value="Submit" >
+
+
+	 
+</div>
+</div>
+</div>
+</div>
+
+<!-- <button id="openModalButton" [hidden]="true" data-toggle="modal" data-target="#changepasswordModal">Open Modal</button> -->
+<!-- <div id="changepasswordModal" class="modal fade" role="dialog" data-backdrop="static" data-keyboard="false"> -->
+	 <!-- <app-changepasswordPopup></app-changepasswordPopup> -->
+
+  <!-- </div> -->
+
+
+
+
+</ng-container>
+<ng-container *ngIf="!authService.login();">
+    <app-login></app-login>
+</ng-container> 

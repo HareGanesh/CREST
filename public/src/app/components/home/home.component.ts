@@ -28,7 +28,7 @@ ngOnInit() {
 		if(this.tagID == 'O')
 		{
 		this.bindGrid();
-		}else if(this.tagID == 'S')
+		}else if(this.tagID == 'S' || this.tagID == 'U' || this.tagID == 'UR')
 		{
 			this.bindGridUniverties();
 		}else if(this.tagID == 'C')
@@ -58,15 +58,41 @@ ngOnInit() {
 			  this.bindEvents();
 		  }
 	  });
-  } 
+  }
+  
+  rejectEvent(id)
+  {
+	var  model=
+	  {
+         _id: ''  
+      }
+	  model._id=id;
+	  debugger;
+	  this.authService.rejectEvent(model).subscribe(event => {
+		  if(event.success)
+		  {
+			  this.bindEvents();
+		  }
+	  });
+  }
+  
+  
+  
   bindEvents()
   {
+	  debugger;
+	  
 	var modelData=[];
 	var OrgData=[];
 	var filterEvent=[];
     this.authService.getEvents().subscribe(event => {
+<<<<<<< HEAD
 		
       modelData= event.filter((E) => E.IsApproved == false);
+=======
+		debugger;
+      modelData= event.filter((E) => E.IsApproved == false && E.IsRejected == false);
+>>>>>>> 11094209a651fc76cdb35a695bca2488197c4854
 	  for(var i=0;i<modelData.length;i++)
 	 {
 		  var m =this.dayDiff(modelData[i].StartDt);		  
@@ -139,7 +165,7 @@ ngOnInit() {
 		var UnivData=[];
 	    var filterEvent=[];
     this.authService.getEvents().subscribe(event => {
-      modelData= event.filter((E) => E.IsApproved == true);
+      modelData= event.filter((E) => E.IsApproved == true && E.IsRejected == false);
 	  for(var i=0;i<modelData.length;i++)
 	 {
 		  var m =this.dayDiff(modelData[i].StartDt);
@@ -173,11 +199,13 @@ ngOnInit() {
 	          }
 		   }
 	 
+	 // if(this.tagID == 'S')
+  // {
+// document.getElementById("openModalButton").click();
+  // }
 	  this.OrgEventModel=filterEvent;
   }
-		});
-  
-
+		});  
  
 }
 
@@ -192,7 +220,7 @@ return diffDays;
 }
 
 public open() {
-	
+	debugger;
 	if(this.searchFilter !=undefined && this.searchFilter !='')
 	{
 	var modelData=this.eventModel;
@@ -200,6 +228,8 @@ public open() {
 	var filterData=[];
 	var orgFilterData=[];
 	
+	if(this.tagID == '0' || this.tagID == 'S' || this.tagID == 'U' || this.tagID == 'UR')
+	{
 	  for(var i=0;i<modelData.length;i++)
 	 {
 		  if(modelData[i].Location.toString().toLowerCase().indexOf(this.searchFilter.toLowerCase())!=-1 || modelData[i].EventTitle.toString().toLowerCase().indexOf(this.searchFilter.toLowerCase())!=-1)
@@ -208,6 +238,7 @@ public open() {
 		  }
 	 }
 	 this.eventModel=filterData;
+	}
 	 
 	 for(var i=0;i<orgData.length;i++)
 	 {
@@ -221,7 +252,20 @@ public open() {
 	}
 	else
 	{
+		if(this.tagID == 'C')
+		{
+		this.bindEvents();
+		}
+		
+		if(this.tagID == 'O')
+		{
 		this.bindGrid();
+		}
+		
+		if(this.tagID == 'S' || this.tagID == 'U' || this.tagID == 'UR')
+		{
+		this.bindGridUniverties();
+		}
 	}
     //alert(filterData);
   }

@@ -1,0 +1,50 @@
+<ng-container>
+<app-navbar></app-navbar> 
+<div style="margin-left:230px;">
+
+
+ <div class="row" style="height:800px; overflow:auto;">
+              <div class="col-md-12">
+                <div>
+            
+                  <div class="x_content">
+				   <div class="row">
+                      <div class="col-md-12 mail_list_column">
+                      
+                     <div class="header">  
+                    <ul >
+					
+					<li><a>Student name</a></li>
+					<li><a>Email ID</a></li>
+					<li><a>Address</a></li>					
+					<li><a>Mobile No</a></li>
+					
+					
+					</ul>
+					</div>
+					<div class="item"> 
+					 <ul class="col-md-12 mail_list_column mail_list" *ngFor="let item of Students; let i=index">
+	
+                      <li>{{item.Student_Name}}</li>					 
+					  <li > {{item.username}}</li>
+                      <li>{{item.Address}} </li>
+                      <li> {{item.Mobile_No}}</li>
+                     
+					
+</ul>
+                      </div> </div>
+					  
+                      <!-- /MAIL LIST -->
+
+                      <!-- CONTENT MAIL -->
+                     
+                      <!-- /CONTENT MAIL -->
+                    </div>
+                    
+                  </div>
+                </div>
+              </div>
+            </div>
+</div>
+</ng-container>
+

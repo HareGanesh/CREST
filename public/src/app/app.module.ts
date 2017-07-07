@@ -38,9 +38,11 @@ import { UniversitydashboardComponent } from './components/universitydashboard/u
 
 import {TooltipModule} from "ngx-tooltip";
 import { UniversityroleComponent } from './components/universityrole/universityrole.component';
-
-
-
+import { StudentListComponent } from './components//student-list/student-list.component';
+import { ChangepasswordComponent } from './components/changepassword/changepassword.component';
+import { ChangepasswordPopupComponent } from './components/changepasswordPopup/changepasswordPopup.component';
+import { EventstudentapprovallistComponent } from './components/universitydashboard/eventstudentapprovallist/eventstudentapprovallist.component'; 
+import {AccordionModule} from "ng2-accordion";
 
 const appRoutes: Routes = [
 
@@ -50,7 +52,7 @@ const appRoutes: Routes = [
   {path:'dashboard', component: DashboardComponent ,canActivate:[AuthGuard]},
   {path:'profile', component: ProfileComponent, canActivate:[AuthGuard]},
   {path:'student', component: RegisterstudentComponent},
-
+   {path:'studentList', component: StudentListComponent},
 
   {path:'organization', component: OrganizationComponent},
   {path:'eventinfo/:id', component: RegistereventComponent},
@@ -61,6 +63,8 @@ const appRoutes: Routes = [
   {path: 'universityrole', component: UniversityRoleMasterComponent },
 {path: 'universitydashboard', component: UniversitydashboardComponent },
 {path: 'adduniversityroledetail', component: UniversityroleComponent },
+{path: 'changepassword', component: ChangepasswordComponent },
+	{path:'eventstudentapprovallist', component: EventstudentapprovallistComponent}
   // {path:'eventinfo/:id', component: RegistereventComponent},
   // {path: 'eventDetails/:id', component: EventsComponent }	
 
@@ -89,7 +93,11 @@ const appRoutes: Routes = [
 	AddUniversityComponent,
 	UniversityRoleMasterComponent,
 	UniversitydashboardComponent,
-	UniversityroleComponent
+	UniversityroleComponent,
+	StudentListComponent,
+	ChangepasswordComponent,
+	ChangepasswordPopupComponent,
+	EventstudentapprovallistComponent
 	 
 
   ],
@@ -100,7 +108,8 @@ const appRoutes: Routes = [
     RouterModule.forRoot(appRoutes),
     FlashMessagesModule,
 	MultiselectDropdownModule,
-	TooltipModule
+	TooltipModule,
+	AccordionModule
   ],
   providers: [ValidateService, AuthService, AuthGuard],
   bootstrap: [AppComponent]

@@ -49,8 +49,8 @@
 <a href="#OrganizersTab" data-toggle="tab" [class.disabled]="isDisabled()">Organizers</a>
 </li>
 
-<li #fifthLI>
-<a href="#OrganizationsTab" data-toggle="tab" [class.disabled]="isDisabled()">{{orgOrUnivLabel}}</a>
+<li #fifthLI style="display:none;">
+<a href="#OrganizationsTab" data-toggle="tab" [class.disabled]="isDisabled()">Invite</a>
 </li>
 
 
@@ -93,6 +93,21 @@
              class="alert alert-danger">
           Event Description is required
         </div>
+	</div>
+	
+	<label>Total no of participant <span class="red">*</span></label>
+	<div class="input-group">
+     <span class="input-group-addon"><i class="fa fa-address-book"></i></span>
+		
+		<input required type="text" [(ngModel)]="model.TotalAllowedParticipant" name="TotalAllowedParticipant" ngControl="TotalAllowedParticipant"  class="form-control" placeholder="Number"
+		autofocus="true" id="#TotalAllowedParticipant" #TotalAllowedParticipant="ngModel" pattern="^[0-9]+$">
+		<div [hidden]="TotalAllowedParticipant.valid || TotalAllowedParticipant.pristine"
+             class="alert alert-danger">
+			 <div [hidden]="!TotalAllowedParticipant.hasError('required')">Total number of participant allowed is required</div>
+			   <div [hidden]="!TotalAllowedParticipant.hasError('pattern')">Only numbers allowed in Total number of participant field.		 
+			   </div>
+          
+        </div>	
 	</div>
 
  <label>Event Logo <span class="red">*</span></label>
@@ -355,7 +370,8 @@
 
 	</div>
 <a id="Prev3" class="big-red-button" data-toggle="tab" (click)=OnPrevClick(inputa,4,forthLI,thirdLI) #inputa>Prev</a>
-<a id="Next3" class="big-red-button" data-toggle="tab" (click)=OnNextClick(input4,4,forthLI,fifthLI) #input4>Next</a>
+<button (click)="onEventSubmit()" class="big-red-button" [disabled]="!EventForm.form.valid" >Submit All</button>
+<a style="display:none;" id="Next3" class="big-red-button" data-toggle="tab" (click)=OnNextClick(input4,4,forthLI,fifthLI) #input4>Next</a>
 <!-- <button (click)="onEventSubmit()" class="big-red-button floatRight" [disabled]="!EventForm.form.valid" >Submit All</button> -->
 <!-- <a id="Prev3" class="big-red-button" data-toggle="tab" (click)=OnPrevClick(inputa,4,forthLI,thirdLI) #inputa>Prev</a>	 -->
 
@@ -363,17 +379,17 @@
 
 </div>
 
-<div id="OrganizationsTab" class="tab-pane fade ">
+<div id="OrganizationsTab" class="tab-pane fade " style="display:none;">
 
-<div class="AddMoreDiv" *ngIf="tagID=='O'">
-<label>Please invite:</label>
+<div class="AddMoreDiv">
+<label style="margin-right:10px;">Please invite Organizations:</label>
 
 <ss-multiselect-dropdown id ="orgn" name="Organizations" [options]="myOptions" [texts]="myTexts" (ngModelChange)="onOrganizationChange($event)" [settings]="mySettings" [ngModel]="model.Organizations" style="width:200px !important;"></ss-multiselect-dropdown>
 
 </div>
 
-<div class="AddMoreDiv" *ngIf="tagID=='U'">
-<label>Please invite:</label>
+<div class="AddMoreDiv">
+<label style="margin-right:23px;">Please invite Universities:</label>
 
 <ss-multiselect-dropdown id ="univ" name="Universities" [options]="myUnivOptions" [texts]="myUnivTexts" (ngModelChange)="onUniversityChange($event)" [settings]="mySettings" [ngModel]="model.Universities" style="width:200px !important;"></ss-multiselect-dropdown>
 

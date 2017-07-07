@@ -13,6 +13,15 @@
 <div class="twelve columns">
 <div class="pic left" style="background-image: url('http://hackathon.io.s3.amazonaws.com/profiles/images/000/082/329/thumb/oculus_rift_3.jpg?1489763175');"></div>
 <div class="wrapper left">
+<a id="backBtn" class="big-red-button" *ngIf="tagID=='UR'" style="margin-top:15px;" [routerLink]="['/eventstudentapprovallist']">Back To List</a>
+<a id="backBtn" class="big-red-button" *ngIf="tagID=='C'" style="margin-top:15px;" [routerLink]="['/']">Back To List</a>
+<a id="backBtn" class="big-red-button" *ngIf="tagID=='S'" style="margin-top:15px;" [routerLink]="['/']">Back To List</a>
+<div style="float:right;margin-left:5px;"  *ngIf="tagID=='C'">
+<!-- <input type="button" value="Approve Event" style="margin-top:16px;" class="btn btn-primary" (click)="approveEvent();"/> -->
+<!-- <input type="button" value="Reject Event" style="margin-top:16px;" class="btn btn-primary" (click)="rejectEvent();"/> -->
+<a  class="big-red-button"  data-toggle="modal" style="margin-top:16px;"  (click) = "clearComments();" data-target="#commentDiv">Approve</a>
+<a  class="big-red-button"  data-toggle="modal" style="margin-top:16px;" (click) = "clearComments();" data-target="#RejectCommentDiv">Reject</a>
+</div> 
 <div class="info">
 <h1 class="title">{{eventDetails.EventTitle}}</h1>
 <p class="heading">{{eventDetails.Description}}...</p>
@@ -50,26 +59,32 @@
 <a href="#OverviewTab" data-toggle="tab">Overview</a>
 </li>
 <li>
-<a href="#ScheduleTab" data-toggle="tab">Schedule</a>
+<a href="#ScheduleTab" data-toggle="tab" [class.disabled]="isDisabled()">Schedule</a>
 </li>
 <li class="RulesTab">
-<a href="#RulesTab" data-toggle="tab">Rules</a>
+<a href="#RulesTab" data-toggle="tab" [class.disabled]="isDisabled()">Rules</a>
 </li>
 
 <li>
-<a href="#PeopleTab" data-toggle="tab">People</a>
+<a href="#PeopleTab" data-toggle="tab" [class.disabled]="isDisabled()">People</a>
 </li>
 <li>
-<a href="#PrizesTab" data-toggle="tab">Prizes</a>
+<a href="#PrizesTab" data-toggle="tab" [class.disabled]="isDisabled()">Prizes</a>
 </li>
 <li>
-<a href="#ChatTab" data-toggle="tab">Chat</a>
+<a href="#ChatTab" data-toggle="tab" [class.disabled]="isDisabled()">Chat</a>
 </li>
 <li>
-<a href="#OrganizersTab" data-toggle="tab">Organizers</a>
+<a href="#OrganizersTab" data-toggle="tab" [class.disabled]="isDisabled()">Organizers</a>
+</li>
+<li *ngIf="tagID=='C'">
+ <a href="#InviteTab" data-toggle="tab" [class.disabled]="isDisabled()">Invite</a>
 </li>
 <li>
-<a href="#OrganizationTab" data-toggle="tab">{{orgOrUnivLabel}}</a>
+<a href="#OrganizationTab" data-toggle="tab" [class.disabled]="isDisabled()">Organizations</a>
+</li>
+<li>
+<a href="#UniversityTab" data-toggle="tab" [class.disabled]="isDisabled()">Universities</a>
 </li>
 </ul>
 
@@ -78,8 +93,14 @@
 
 <div class="eventcheck border border2">
 <div class="ebgins">
-<div class="joinEvent">
-<a href="#" class="big-red-button">JOIN EVENT</a>
+<div class="joinEvent" *ngIf="tagID == 'S'">
+
+<div class="joinEvent" *ngIf="isJoinBtnDisabled == true">
+<input type="button" class="big-red-button" value="Join Event" (click)="onJoinEvent($event)" disabled style="background-color: #aaa;color: grey; cursor: not-allowed;">
+</div>
+<div class="joinEvent" *ngIf="isJoinBtnDisabled == false">
+<input type="button" class="big-red-button" value="Join Event" (click)="onJoinEvent($event)">
+</div>
 </div>
 Submission deadline
 <ul>
@@ -148,7 +169,7 @@ Prizes
 </div>
 </div>
 
-<div class="ebgins" *ngIf="tagID=='O'">
+<div class="ebgins">
 <h2>Organization</h2>
 <div *ngFor="let organization of eventOrganizationArray; let i=index;"> 
 
@@ -161,7 +182,7 @@ Prizes
 
 </div>
 
-<div class="ebgins" *ngIf="tagID=='S' || tagID=='C'">
+<div class="ebgins">
 <h2>University</h2>
 <div *ngFor="let university of eventUniversityArray; let i=index;"> 
 
@@ -201,8 +222,56 @@ Prizes
 
 </div>
 
-<div id="PeopleTab" class="tab-pane fade"><h3>People
+<div id="PeopleTab" class="tab-pane fade"><h3>{{totalPeopleJoined}} people joined.
 </h3>
+
+
+<div>
+
+
+ <div class="row">
+              <div class="col-md-12">
+                <div>
+            
+                  <div class="x_content">
+				   <div class="row">
+                      <div class="col-md-12">
+                      
+                     <div class="header">  
+                    <ul >
+					
+					<li><a>Student name</a></li>
+					<li><a>Email ID</a></li>
+					<li><a>Address</a></li>					
+					<li><a>Mobile No</a></li>
+					
+					
+					</ul>
+					</div>
+					<div class="item"> 
+					 <ul class="col-md-12 mail_list_column mail_list" *ngFor="let item of Students; let i=index">
+	
+                      <li>{{item.Student_Name}}</li>					 
+					  <li > {{item.Email_ID}}</li>
+                      <li>{{item.Address}} </li>
+                      <li> {{item.Mobile_No}}</li>
+                     
+					
+</ul>
+                      </div> </div>
+					  
+                      <!-- /MAIL LIST -->
+
+                      <!-- CONTENT MAIL -->
+                     
+                      <!-- /CONTENT MAIL -->
+                    </div>
+                    
+                  </div>
+                </div>
+              </div>
+            </div>
+</div>
 </div>
 
 <div id="PrizesTab" class="tab-pane fade"><h3>Prizes
@@ -254,7 +323,165 @@ Prizes
 
 </div>
 
-<div id="OrganizationTab" class="tab-pane fade"><h3>{{orgOrUnivLabel}}
+<div *ngIf="tagID=='C'" id="InviteTab" class="tab-pane fade">
+
+<div class="alert alert-success" *ngIf="SuccessMessage !=''">
+  <strong>{{SuccessMessage}}</strong>
+</div>
+<div class="alert alert-danger" *ngIf="DangerMessage !=''">
+  <strong>{{DangerMessage}}</strong>
+</div>
+
+<div class="AddMoreDiv">
+<label style="margin-right:10px;">Please invite Organizations:</label>
+
+<ss-multiselect-dropdown id ="orgn" name="Organizations" [options]="myOptions" [texts]="myTexts" (ngModelChange)="onOrganizationChange($event)" [settings]="mySettings" [ngModel]="model.Organizations" style="width:200px !important;"></ss-multiselect-dropdown>
+
+</div>
+
+<div class="AddMoreDiv">
+<label style="margin-right:23px;">Please invite Universities:</label>
+
+<ss-multiselect-dropdown id ="univ" name="Universities" [options]="myUnivOptions" [texts]="myUnivTexts" (ngModelChange)="onUniversityChange($event)" [settings]="mySettings" [ngModel]="model.Universities" style="width:200px !important;"></ss-multiselect-dropdown>
+
+</div>
+
+	
+<button (click)="onEventInviteSubmit()" class="big-red-button">Invite</button>
+
+</div> 
+<div id="OrganizationTab" class="tab-pane fade"><h3>Organizations
+</h3>
+
+<!-- commenting this one for now -->
+<div class="eventcheck border border2" *ngFor="let organization of eventOrganizationArray; let i=index">
+<div class="ebgins">
+<div class="row network_cell">
+<div class="col-md-1">
+<img src="../../src/img/{{GetOrganizationLogo(organization.OrgnID)}}" width="100px" height="100px">
+
+</div>
+<div class="col-md-6 col-md-offset-2 ">
+<div class="row">
+<h5>
+{{GetName(organization.OrgnID)}}
+</h5>
+</div>
+<div class="row">
+{{GetTitle(organization.OrgnID)}}
+</div>
+<div class="row">
+{{GetAddress(organization.OrgnID)}}
+</div>
+<div class="row">
+
+</div>
+</div>
+<div class="col-md-9 col-md-offset-1 ">
+<div class="row">
+<div>
+<a class="big-red-button" style="float:right;" data-target="#OrganizationModal" data-toggle="modal" click=onPopupClick() data-id="{{organization.OrgnID}}">Details</a>
+<!-- <div id="OrganizationModal" class="modal fade" role="dialog"> -->
+	<!-- <app-organization id="{{organization.OrgnID}}"></app-organization> -->
+
+  <!-- </div> -->
+<div id="OrganizationModal" class="modal fade" role="dialog">
+	<div class="modal-dialog">
+
+    
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Organization</h4>
+      </div>
+      <div class="modal-body">
+        <p>{{GetOverview(organization.OrgnID)}}</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+
+  </div>
+
+  </div> 
+</div>
+</div>
+</div>
+
+</div>
+</div>
+ </div>
+
+ <!-- Commenting this one for now-->
+
+ <!------------------------------->
+ 
+ <!-- <div  class="eventcheck border border2" *ngFor="let university of eventUniversityArray; let i=index"> -->
+<!-- <div class="ebgins"> -->
+<!-- <div class="row network_cell"> -->
+<!-- <div class="col-md-1"> -->
+<!-- <img src="../../src/img/PSDC_Logo.png" width="100px" height="100px"> -->
+
+<!-- </div> -->
+<!-- <div class="col-md-6 col-md-offset-2 "> -->
+<!-- <div class="row"> -->
+<!-- <h5> -->
+<!-- {{GetUnivName(university.Univ_ID)}} -->
+<!-- </h5> -->
+<!-- </div> -->
+<!-- <div class="row"> -->
+<!-- <b> -->
+<!-- {{GetUnivContact(university.Univ_ID)}} -->
+<!-- </b> -->
+<!-- </div> -->
+<!-- <div class="row"> -->
+<!-- {{GetUnivAddress(university.Univ_ID)}} -->
+<!-- </div> -->
+<!-- <div class="row"> -->
+
+<!-- </div> -->
+<!-- </div> -->
+<!-- <div class="col-md-9 col-md-offset-1 "> -->
+<!-- <div class="row"> -->
+<!-- <div> -->
+<!-- <a class="big-red-button" style="float:right;" data-target="#UniversityModal" data-toggle="modal" click=onPopupClick() data-id="{{university.Univ_ID}}">Details</a> -->
+<!-- <!-- <div id="OrganizationModal" class="modal fade" role="dialog"> --> 
+	<!-- <!-- <app-organization id="{{organization.OrgnID}}"></app-organization> -->
+
+  <!-- <!-- </div> --> 
+<!-- <div id="UniversityModal" class="modal fade" role="dialog"> -->
+	<!-- <div class="modal-dialog"> -->
+
+    
+    <!-- <div class="modal-content"> -->
+      <!-- <div class="modal-header"> -->
+        <!-- <button type="button" class="close" data-dismiss="modal">&times;</button> -->
+        <!-- <h4 class="modal-title">University</h4> -->
+      <!-- </div> -->
+      <!-- <div class="modal-body"> -->
+        <!-- <p>Dummy text here for now</p> -->
+      <!-- </div> -->
+      <!-- <div class="modal-footer"> -->
+        <!-- <button type="button" class="btn btn-default" data-dismiss="modal">Close</button> -->
+      <!-- </div> -->
+    <!-- </div> -->
+
+  <!-- </div> -->
+
+  <!-- </div>  -->
+<!-- </div> -->
+<!-- </div> -->
+<!-- </div> -->
+
+<!-- </div> -->
+<!-- </div> -->
+ <!-- </div> -->
+ 
+ 
+<!----------------------------------->
+</div>
+<div id="UniversityTab" class="tab-pane fade"><h3>Universities
 </h3>
 
 <!-- commenting this one for now -->
@@ -397,6 +624,53 @@ Prizes
 
 
 
+</div>
+
+<div id="commentDiv" class="modal fade" role="dialog" >
+<div class="modal-dialog" style="width:40% !important" >
+
+<div class="modal-content" >
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title" style="color:#73879C;background: #F7F7F7;font-family:inherit;font-size: 30px;font-weight: 400;line-height: 1.471">Approve Event </h4>
+      </div>
+	  <div class="modal-body">
+	   
+	   <textarea [(ngModel)]="Comments" name="Comments" ngControl="Comments"  class="form-control" placeholder="Comments"
+		 autofocus="true" cols="3" rows="3" maxlength="2000"></textarea>
+		 </div>
+	<div class="modal-footer">  
+<input type="button" class="btn btn-lg btn btn-primary btn-block student_update" id="close" data-dismiss="modal" value="Cancel" style="margin-top:4px;">
+<input type="button" (click)="approveEvent()" class="btn btn-lg btn btn-primary btn-block student_update" value="Submit" >
+
+
+	 
+</div>
+</div>
+</div>
+</div>
+<div id="RejectCommentDiv" class="modal fade" role="dialog" >
+<div class="modal-dialog" style="width:40% !important" >
+
+<div class="modal-content" >
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title" style="color:#73879C;background: #F7F7F7;font-family:inherit;font-size: 30px;font-weight: 400;line-height: 1.471">Reject Event </h4>
+      </div>
+	  <div class="modal-body">
+	   
+	   <textarea [(ngModel)]="Comments" name="Comments" ngControl="Comments"  class="form-control" placeholder="Comments"
+		 autofocus="true" cols="3" rows="3" maxlength="2000"></textarea>
+		 </div>
+	<div class="modal-footer">  
+<input type="button" class="btn btn-lg btn btn-primary btn-block student_update" id="close2" data-dismiss="modal" value="Cancel" style="margin-top:4px;">
+<input type="button" (click)="rejectEvent()" class="btn btn-lg btn btn-primary btn-block student_update" value="Submit" >
+
+
+	 
+</div>
+</div>
+</div>
 </div>
  
 </ng-container> 

@@ -50,7 +50,7 @@ public model:Object;
                    {
                                   
         this.flashMessage.show(data.msg, {
-          cssClass: 'alert-danger',timeout: 5000});         
+          cssClass: 'alert-danger'});         
        }
     });
   }
@@ -60,8 +60,8 @@ public model:Object;
      if(data.user.TagID=='C')
                 {
                                    this.authService.storeStudentData(data.token, data.user,data.user.TagID);
-           this.flashMessage.show('You are now logged in', {
-           cssClass: 'alert-success', timeout: 5000});
+            // this.flashMessage.show('You are now logged in', {
+           // cssClass: 'alert-success'});
            this.router.navigate(['/']);
          
                  }
@@ -71,15 +71,20 @@ public model:Object;
         if(student.success)
                                 {
            this.authService.storeStudentData(student.token, student.student,data.user.TagID);
-           this.flashMessage.show('You are now logged in', {
-           cssClass: 'alert-success', timeout: 5000});
+		   if(!JSON.parse(this.authService.getLoginUser()).isPasswordChanged )
+			{
+				document.getElementById("openModalButton").click();
+			}else {
+            // this.flashMessage.show('You are now logged in', {
+            // cssClass: 'alert-success'});
            this.router.navigate(['/']);
+			}
         } 
                                 else
                                 {
            this.flashMessage.show(student.msg, {
-           cssClass: 'alert-danger', timeout: 5000});
-           this.router.navigate(['login']);
+           cssClass: 'alert-danger'});
+           //this.router.navigate(['login']);
         }
           });
                   }
@@ -89,15 +94,21 @@ public model:Object;
         if(univ.success)
                                 {
            this.authService.storeStudentData(univ.token, univ.university,data.user.TagID);
-           this.flashMessage.show('You are now logged in', {
-           cssClass: 'alert-success', timeout: 5000});
+		   if(!JSON.parse(this.authService.getLoginUser()).isPasswordChanged)
+			{
+				document.getElementById("openModalButton").click();
+			}
+			else {
+            // this.flashMessage.show('You are now logged in', {
+            // cssClass: 'alert-success'});
            this.router.navigate(['/universitydashboard']);
+			}
         } 
                                 else
                                 {
            this.flashMessage.show(univ.msg, {
-           cssClass: 'alert-danger', timeout: 5000});
-           this.router.navigate(['login']);
+           cssClass: 'alert-danger'});
+           //this.router.navigate(['login']);
         }
           });
                   }
@@ -106,15 +117,20 @@ public model:Object;
         if(RoleUser.success)
 		{
            this.authService.storeStudentData(RoleUser.token, RoleUser.universityRoleUser,data.user.TagID);
-           this.flashMessage.show('You are now logged in', {
-           cssClass: 'alert-success', timeout: 5000});
+		   if(!JSON.parse(this.authService.getLoginUser()).isPasswordChanged)
+			{
+			document.getElementById("openModalButton").click();
+			}else {
+            // this.flashMessage.show('You are now logged in', {
+            // cssClass: 'alert-success'});
            this.router.navigate(['/universitydashboard']);
+			}
         } 
 		else
 		{
            this.flashMessage.show(RoleUser.msg, {
-           cssClass: 'alert-danger', timeout: 5000});
-           this.router.navigate(['login']);
+           cssClass: 'alert-danger'});
+           //this.router.navigate(['login']);
         }
           });
    }
