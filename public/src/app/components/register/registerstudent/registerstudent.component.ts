@@ -36,6 +36,13 @@ export class RegisterstudentComponent implements OnInit {
             
      ];
 	 
+	 public GenderList = [
+	  {id:'0',  name:"Please select"},
+	  {id: 'Male',  name:"Male"},
+	  {id: 'Female',  name:"Female"}
+            
+     ];
+	 
 	 public Departsments = [
 	  {id: 0,  name:"Please select"},
       {id: 1, name: "Computer Science"},
@@ -80,7 +87,8 @@ export class RegisterstudentComponent implements OnInit {
     Address: '',
     Mobile_No: '',
     Univ_ID: '0',
-    Dept_ID: '0'
+    Dept_ID: '0',
+	GenderID:0
    
   	}
   }

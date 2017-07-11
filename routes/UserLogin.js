@@ -8,7 +8,7 @@ const UserLogin = require('../models/UserLogin');
 const univesityMaster = require('../models/UniversityMstr');
 const Student = require('../models/student');
 const UniversityRoleUser = require('../models/UniversityRoleUser');
- // const mailSender = require('../models/mailSender');
+ const mailSender = require('../models/mailSender');
  
  
 // router.post('/AddUser', (req, res, next) => {

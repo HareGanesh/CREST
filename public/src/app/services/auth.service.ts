@@ -168,7 +168,7 @@ export class AuthService {
 
 
   login(){
-	  debugger;
+	  
 	 
     const token = localStorage.getItem('id_token');
 	const user = localStorage.getItem('currentUser');
@@ -217,6 +217,27 @@ export class AuthService {
 	
     //event/register is temporary domain
   	return this.http.post('http://localhost:3777/events/AddEventInvite', event,{headers: headers})
+  	.map(res => res.json());
+  }
+  
+  getAllDegree()
+  {
+	  debugger;
+	  return this.http.get('http://localhost:3777/DegreeMstr/getAllDegree')
+  	.map(res => res.json());
+  }
+  
+  getAllGrade()
+  {
+	  debugger;
+	  return this.http.get('http://localhost:3777/GradeMstr/getAllGrade')
+  	.map(res => res.json());
+  }
+  
+  getAllSpecialization()
+  {
+	  debugger;
+	  return this.http.get('http://localhost:3777/SpecializationMstr/getAllSpecialization')
   	.map(res => res.json());
   }
   
@@ -409,6 +430,17 @@ let headers = new Headers();
                 return this.http.get('http://localhost:3777/students/getStudentByID',{headers: headers})
                 .map(res => res.json());
   }
+  
+  getStudentProfileByStudentID(studentID)
+  {
+	  debugger;
+                  
+let headers = new Headers();
+                headers.append('studentid',studentID);
+                return this.http.get('http://localhost:3777/students/getStudentProfileByStudentID',{headers: headers})
+                .map(res => res.json());
+  }
+  
   
   getStudentByUnivID(univID)
   {

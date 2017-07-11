@@ -41,6 +41,10 @@ const StudentSchema = mongoose.Schema({
     type: Date
   },
   
+  GenderID:{
+    type: String
+  },
+  
   isPasswordChanged:{
 	  type: Boolean,
 	  default:false
@@ -87,8 +91,8 @@ Orgn_ID:{
    Modified_by:{
     type: String
   },
-  Student_Heading:{type: String	},
-  Student_Bio:{	type: String},
+  Student_Heading:{type: String,default :''	},
+  Student_Bio:{	type: String,default :''},
 
    Is_Approved:{type: Number, default:0}
 });
@@ -119,6 +123,42 @@ module.exports.getStudentByStudentID = function(studentID,callback){
 	const query = {Student_ID: studentID}
 	Student.findOne(query,callback);
 }
+
+module.exports.getStudentProfileByStudentID= function(StudentID,callback){
+	//const query = {Student_ID:StudentID};
+	Student.aggregate([
+	{ $match: {
+            Student_ID: StudentID
+        }},
+    {
+      
+		$lookup:
+        {
+          from: "StudentEducationDetail",
+          localField: "Student_ID",
+          foreignField: "StudentID",
+          as: "StudentEducational_Info"
+        }
+   },
+   {
+      $lookup:
+        {
+          from: "StudentProfessionalDetail",
+          localField: "Student_ID",
+          foreignField: "StudentID",
+          as: "StudentProfessional_Info"
+        }
+   },
+   {
+      $lookup:
+        {
+          from: "UniversityMaster",
+          localField: "Univ_ID",
+          foreignField: "Univ_ID",
+          as: "StudentUniv_Info"
+        }
+   }
+], callback);}
 
 module.exports.getStudentByUnivID = function(univID,callback){
 	const query = {Univ_ID: univID, Is_Approved:1}
@@ -157,7 +197,7 @@ module.exports.comparePwd = function(candidatePwd, hash, callback){
 
 module.exports.udpateProfile = function(newStudent, callback){ 
 var query = { Student_ID: newStudent.Student_ID };
-Student.update(query, {Student_Heading: newStudent.Student_Heading,Student_Bio:newStudent.Student_Bio,Student_Name:newStudent.Student_Name}, callback);
+Student.update(query, {Student_Heading: newStudent.Student_Heading,Student_Bio:newStudent.Student_Bio,Student_Name:newStudent.Student_Name, Address:newStudent.Address, Mobile_No:newStudent.Mobile_No, Email_ID:newStudent.Email_ID}, callback);
 }
 
 module.exports.setIsApproved = function(Student_ID, callback){ 

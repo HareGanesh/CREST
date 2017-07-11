@@ -7,6 +7,8 @@ const Student = require('../models/student');
 const UnivTranscationApprovalDetail = require('../models/UnivTranscationApprovalDetail');
 var bcrypt = require('bcrypt');
 const userLogin = require('../models/UserLogin'); 
+const StudentProfessionalDetail = require('../models/StudentProfessionalDetail'); 
+const StudentEducationDetail = require('../models/StudentEducationalDetail'); 
 
 /// Register
 router.post('/register', (req, res, next) => {
@@ -23,6 +25,7 @@ router.post('/register', (req, res, next) => {
     Address: req.body.Address,
     Mobile_No: req.body.Mobile_No,
     Univ_ID: req.body.Univ_ID,
+	GenderID: req.body.GenderID,
     Is_Approved:0
   	});
 
@@ -137,25 +140,16 @@ router.get('/profile', passport.authenticate('jwt', {session:false}), (req, res,
 
 //  update Profile
 router.post('/update', (req, res, next) => {
-                //console.log(req.body);
-                //console.log("update");
+    ProfessionalDetailInfo=req.body.ProfessionalDetail;            
+    EducationDetailInfo=req.body.EducationDetail;
   let newStudent2 = new Student({
-
-    Student_Heading:req.body.Student_Heading,
+				Student_ID:req.body.StudentID,
+				Student_Heading:req.body.Student_Heading,
                 Student_Bio:req.body.Student_Bio,
                 Student_Name: req.body.Student_Name,
-                Email_ID: req.body.Email_ID,
-                username: req.body.username,
-                Pwd: req.body.Pwd,
-    Student_ID: req.body.Student_ID,
-    DOB: req.body.DOB,
-    Address: req.body.Address,
-    Mobile_No: req.body.Mobile_No,
-    Orgn_ID: req.body.Orgn_ID,
-    Dept_ID: req.body.Dept_ID
-   
-
-
+                Email_ID: req.body.Email_ID,                
+				Address: req.body.Address,
+				Mobile_No: req.body.Mobile_No
                 });
 
   Student.udpateProfile(newStudent2, (err, student2)=> {
@@ -165,6 +159,53 @@ router.post('/update', (req, res, next) => {
       res.json({success: false, msg:'Failed to update '});
                   console.log(err);            
     } else {
+		
+		// Delete all corresponding mapping and masking data
+		  
+		  StudentProfessionalDetail.DeleteStudentEducationByStudentID(req.body.StudentID, (err, professionalDet)=> {
+                                                                                console.log(professionalDet);
+                                                                });
+																
+		  StudentEducationDetail.DeleteStudentEducationByStudentID(req.body.StudentID, (err, edudet)=> {
+                                                                                console.log(edudet);
+                                                                });
+		
+		
+		if(ProfessionalDetailInfo.length>0)
+                    {
+                        for(var n=0;n < ProfessionalDetailInfo.length; n++)
+                            {
+                                var  studentProfessionalDetail= new StudentProfessionalDetail();
+                                studentProfessionalDetail.StudentID= req.body.StudentID;
+								studentProfessionalDetail.EmployerName=ProfessionalDetailInfo[n].EmployerName;
+								studentProfessionalDetail.DurationStartMonth=ProfessionalDetailInfo[n].DurationStartMonth;
+								studentProfessionalDetail.DurationEndMonth=ProfessionalDetailInfo[n].DurationEndMonth;
+								studentProfessionalDetail.DurationStartYear=ProfessionalDetailInfo[n].DurationStartYear;
+								studentProfessionalDetail.DurationEndYear=ProfessionalDetailInfo[n].DurationEndYear;
+								studentProfessionalDetail.Designation=ProfessionalDetailInfo[n].Designation;
+								studentProfessionalDetail.JobProfile=ProfessionalDetailInfo[n].JobProfile;
+								studentProfessionalDetail.FullTimeOrPartTime = ProfessionalDetailInfo[n].FullTimeOrPartTime;
+                                StudentProfessionalDetail.AddStudentProfessionalDetail(studentProfessionalDetail, (err, studentProfessionalDetail)=> {
+                                                                     console.log(studentProfessionalDetail);
+                                                                });
+                            }                                                
+                    }
+				if(EducationDetailInfo.length>0)
+                    {
+                        for(var n=0;n < EducationDetailInfo.length; n++)
+                            {
+                                var  studentEducationDetail= new StudentEducationDetail();
+                                studentEducationDetail.StudentID= req.body.StudentID;
+								studentEducationDetail.DegreeID=EducationDetailInfo[n].DegreeID;
+								studentEducationDetail.SpecializationID= EducationDetailInfo[n].SpecializationID;
+								studentEducationDetail.Year=EducationDetailInfo[n].Year;
+								studentEducationDetail.GradeID=EducationDetailInfo[n].GradeID;
+                                StudentEducationDetail.AddStudentEducationDetail(studentEducationDetail, (err, studentEducationDetail)=> {
+                                                                                console.log(studentEducationDetail);
+                                                                });
+                            }                                                
+                    }
+		
       res.json({success: true, msg:'Student updated'});
     }
   });
@@ -176,6 +217,22 @@ router.get('/getStudentByID', (req, res, next) => {
   var studentID = req.headers["id"];  
   console.log(studentID);
   Student.getStudentById(studentID, (err,studentDetail)=>{
+    if(err) {
+                                throw err;                            
+                }
+     else
+                  {                            
+                                  res.json(studentDetail);
+                  }
+  });  
+}); 
+
+// getStudentByID
+router.get('/getStudentProfileByStudentID', (req, res, next) => {
+	
+  var studentID = req.headers["studentid"];  
+  console.log(studentID);
+  Student.getStudentProfileByStudentID(studentID, (err,studentDetail)=>{
     if(err) {
                                 throw err;                            
                 }

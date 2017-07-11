@@ -47,7 +47,9 @@ const EventUniversity = require('./routes/EventUniversity');
 const UniversityRoleUser = require('./routes/UniversityRoleUser'); 
 const UserLogin = require('./routes/UserLogin'); 
 const EventStudent = require('./routes/EventStudent'); 
-
+const DegreeMstr = require('./routes/DegreeMaster');
+const GradeMstr = require('./routes/GradeMaster');
+const SpecializationMstr = require('./routes/SpecializationMaster');
 //MIDDLEWARE
 app.use(cors());//run on diff port
 //app.use(bodyParser.json());//grab data from frontend
@@ -97,6 +99,10 @@ app.use('/EventUniversity', EventUniversity);
 app.use('/UniversityRoleUser', UniversityRoleUser);
 app.use('/UserLogin', UserLogin);
 app.use('/EventStudent', EventStudent);
+
+app.use('/DegreeMstr', DegreeMstr);
+app.use('/GradeMstr', GradeMstr);
+app.use('/SpecializationMstr', SpecializationMstr);
 
 //app.use('/events', events);
 // app.use('/students', function(students, res, next) {

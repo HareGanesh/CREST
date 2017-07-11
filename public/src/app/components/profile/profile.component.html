@@ -1,76 +1,439 @@
 	
-
+<ng-container *ngIf="authService.login();">
+<app-navbar></app-navbar> 
+<div class="container" *ngIf ="student != undefined">  
+<div class="row">
+    <div class="col-am-6 col-md-4 col-md-offset-2" style="width:100%">
+      <h1 class="text-left">Student profile</h1>
+      <br>
+      <div class="account-wall" style="width:70%">
 	<form  #ProfileForm="ngForm">
-  <div class="modal-dialog" *ngIf="student!=undefined" >
-
-    <!-- Modal content-->
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title" style="color:#73879C;background: #F7F7F7;font-family:inherit;font-size: 30px;font-weight: 400;line-height: 1.471">Student Profile</h4>
-      </div>
-	  <div class="body border">
+  
+  <div id="tabs">
 <div class="row">
-<div class="two columns">
-<label>Student Name</label>
-<span  class="red">*</span>
+<div style="margin:5px;" class="alert alert-success" *ngIf="SuccessMessage !=''">
+  <strong>{{SuccessMessage}}</strong>
 </div>
-<div class="ten columns">
-<div class="input string required user_full_name">
-    <input class="string required"  name="Student_Name" [(ngModel)]="student.Student_Name"   placeholder="Full Name" size="50" type="text" ></div>
-</div>
-</div>
-<div class="row">
-<div class="two columns">
-<label>Student Headline</label>
-</div>
-<div class="ten columns">
-<div class="input string optional user_headline">
-   <input class="string optional" id="Student_Heading" [(ngModel)]="student.Student_Heading"  name="Student_Heading"  placeholder="Describe yourself in less than 6 words" size="50" type="text"></div>
-</div>
-</div>
-<div class="row">
-<div class="two columns">
-<label>Student Bio</label>
-</div>
-<div class="ten columns">
-<div class="input text optional student_bio">
-     <textarea class="student_bio" cols="40" id="Student_Bio" [(ngModel)]="student.Student_Bio" name="Student_Bio" placeholder="A brief description of what you have done, what you are doing, and the kinds of things you are interested in." rows="4"></textarea></div>
-</div>
-</div>
+<ul class="nav nav-tabs" id="wheel-tab">
+<li class="active " #firstLI>
+<a href="#OverviewTab" data-toggle="tab">Profile</a>
+</li>
 
-<div class="row">
-<div class="two columns">
-<label for="options">Intersted Category :</label>			
-</div>
-<div class="ten columns">
- 
-            <div *ngFor="let option of options"> 
-            <label>
-                    <input type="checkbox"
-                           name="options"
-                           value="{{option.CategoryID}}"
-                           [checked]="option.IsChecked"
-						   (change)="option.IsChecked = !option.IsChecked" 
-                           />
-                    {{option.CategoryName}}
-                </label>
-</div>
-</div>
 
-</div>
-<div class="row">
-<input type="button" (click)="updateProfile('close')" class="btn btn-lg btn btn-primary btn-block student_update" value="Udpate">
 
-</div>
+</ul>
 
+<div class="tab-content x_panel">
+<div id="OverviewTab" class="tab-pane fade in active">
+
+<div>
+<ul>
+<li class="red" *ngFor="let a of this.ErrorList; let index = index">
+{{ErrorList[index]}}
+</li>
+</ul>
+</div>
+  
+	  <div class="body">
+	  <accordion [showArrows]="true" [closeOthers]="false" [expandAll]="true">
+					   <accordion-group style="margin:2px;">
+					   <accordion-heading> 
+					   Basic Details
+					   </accordion-heading>
+					   <div class="row">
+					   <div class="col-xs-6">
+
+					   <label>Student Name <span class="red">*</span></label>
+				<div class="input-group">
+				 <span class="input-group-addon"><i class="fa fa-address-card"></i></span>
+					
+					<input required type="text" [(ngModel)]="model.Student_Name" name="Student_Name" ngControl="Student_Name"  class="form-control" placeholder="Email"
+					autofocus="true" id="#Student_Name" #Student_Name="ngModel">
+					<div [hidden]="Student_Name.valid || Student_Name.pristine"
+						 class="alert alert-danger">
+					  Student name is required
+					</div>	
+					<!-- <div class="alert alert-danger" *ngIf="UserNameErrorList.length != 0"> -->
+				 <!-- <small><b>{{UserNameErrorList[0]}}</b></small> -->
+				<!-- </div> -->
+				</div>
+				</div>
+				
+				<div class="col-xs-6">
+				<label>Alternate Email <span class="red">*</span></label>
+				<div class="input-group">
+				 <span class="input-group-addon"><i class="fa fa-address-card"></i></span>
+					
+					<input required type="text" [(ngModel)]="model.Email_ID" name="email" ngControl="email"  class="form-control" placeholder="Email"
+					autofocus="true" id="#email" #email="ngModel">
+					<div [hidden]="email.valid || email.pristine"
+						 class="alert alert-danger">
+					  Email is required
+					</div>	
+					<!-- <div class="alert alert-danger" *ngIf="UserNameErrorList.length != 0"> -->
+				 <!-- <small><b>{{UserNameErrorList[0]}}</b></small> -->
+				<!-- </div> -->
+				</div>
+				
+				</div>
+				</div>
+				
+				
+				
+				<div class="row">
+				 <div class="col-xs-6">
+
+					   <label>University Name <span class="red">*</span></label>
+				<div class="input-group">
+				 <span class="input-group-addon"><i class="fa fa-address-card"></i></span>
+					
+					<input disabled type="text" [(ngModel)]="model.Univ_Name" name="univname" ngControl="univname"  class="form-control" placeholder="univname"
+					autofocus="true" id="#univname" #univname="ngModel">
+					
+					<!-- <div class="alert alert-danger" *ngIf="UserNameErrorList.length != 0"> -->
+				 <!-- <small><b>{{UserNameErrorList[0]}}</b></small> -->
+				<!-- </div> -->
+				</div>
+				</div>
+				
+				<div class="col-xs-6">
+
+					   <label>Phone <span class="red">*</span></label>
+				<div class="input-group">
+				 <span class="input-group-addon"><i class="fa fa-address-card"></i></span>
+					
+					<input required type="text" [(ngModel)]="model.Mobile_No" name="mobile" ngControl="mobile"  class="form-control" placeholder="mobile"
+					autofocus="true" id="#mobile" #mobile="ngModel">
+					<div [hidden]="mobile.valid || mobile.pristine"
+						 class="alert alert-danger">
+					  mobile is required
+					</div>	
+					<!-- <div class="alert alert-danger" *ngIf="UserNameErrorList.length != 0"> -->
+				 <!-- <small><b>{{UserNameErrorList[0]}}</b></small> -->
+				<!-- </div> -->
+				</div>
+				</div>
+				</div>
+				<div class="row">
+					   
+				
+				<div class="col-xs-6">
+				<label>Location <span class="red">*</span></label>
+				<div class="input-group">
+				 <span class="input-group-addon"><i class="fa fa-address-card"></i></span>
+					
+					<input required type="text" [(ngModel)]="model.Address" name="Address" ngControl="Address"  class="form-control" placeholder="Address"
+					autofocus="true" id="#Address" #Address="ngModel">
+					<div [hidden]="Address.valid || Address.pristine"
+						 class="alert alert-danger">
+					  Address is required
+					</div>	
+					<!-- <div class="alert alert-danger" *ngIf="UserNameErrorList.length != 0"> -->
+				 <!-- <small><b>{{UserNameErrorList[0]}}</b></small> -->
+				<!-- </div> -->
+				</div>
+				
+				</div>
+				<div class="col-xs-6">
+				<label>Profile Headline <span class="red">*</span></label>
+				<div class="input-group">
+				 <span class="input-group-addon"><i class="fa fa-address-card"></i></span>
+					
+					<input required type="text" [(ngModel)]="model.Student_Heading" name="Heading" ngControl="Heading"  class="form-control" placeholder="Heading"
+					autofocus="true" id="#Heading" #Heading="ngModel">
+					<div [hidden]="Heading.valid || Heading.pristine"
+						 class="alert alert-danger">
+					  Heading is required
+					</div>	
+					<!-- <div class="alert alert-danger" *ngIf="UserNameErrorList.length != 0"> -->
+				 <!-- <small><b>{{UserNameErrorList[0]}}</b></small> -->
+				<!-- </div> -->
+				</div>
+				
+				</div>
+				</div>
+				<div class="row">
+					  <label>Student Bio <span class="red">*</span></label>
+	<div class="input-group">
+     <span class="input-group-addon"><i class="fa fa-address-card"></i></span>
+		
+		<textarea [(ngModel)]="model.Student_Bio" name="StudentBio" ngControl="StudentBio"  class="form-control" placeholder="StudentBio"
+		autofocus="true" id="#StudentBio" #StudentBio="ngModel" cols="40" rows="4" maxlength="2000" required></textarea>
+		<div [hidden]="StudentBio.valid || StudentBio.pristine"
+             class="alert alert-danger">
+          Student Bio is required
         </div>
-      <div class="modal-footer">
-	  
-        <button type="button" class="btn btn-default" id="close" data-dismiss="modal">Close</button>
-      </div>
-    </div>
+	</div> 
+				
+				<div class="col-xs-6">
+				</div>
+				</div>
+				</accordion-group>
+						<accordion-group style="margin:2px;">
+					   <accordion-heading> 
+					   Education Details
+					   </accordion-heading>
+					   <div class="col-xs-6">
+				<a class="floatRight"(click)=AddMoreEducation()><img src="..\..\src\img\AddMore.png" height="30px" width="30px"></a> 
+					   
+	<div *ngFor="let ed of model.EducationDetail;let i = index">
+	<div class="AddMoreDiv">
+	<a *ngIf="model.EducationDetail.length == i+1 && model.EducationDetail.length !=1" id="RemoveOrg" class="floatRight" (click)=RemoveEducation()><img src="..\..\src\img\Remove.png" height="30px" width="30px"></a>
+<label>Education Qualification - {{i+1}}</label>
 
+</div>
+	<div [style.border-top]="GetStyle(i)">
+	
+<label style="margin-top:15px;">Degree Name</label>
+	<div class="input-group">
+	
+     <span class="input-group-addon"><i class="fa fa-address-book"></i></span>
+		
+		<select id="#Degree{{i}}" #Degree{{i}}="ngModel" [(ngModel)]="ed.DegreeID"   name="Degree{{i}}" class="form-control" >         
+			<option *ngFor="let deg of DegreeList" [ngValue]="deg.DegreeID">
+				{{deg.DegreeName}}
+			</option>
+        </select>
+		
+        </div>	
+		<label>Specialization</label>
+		<div class="input-group">
+     <span class="input-group-addon"><i class="fa fa-address-book"></i></span>
+		
+		<select id="#SpecializationID{{i}}" #SpecializationID{{i}}="ngModel" [(ngModel)]="ed.SpecializationID"   name="SpecializationID{{i}}" class="form-control" >         
+			<!-- <option *ngFor="let sp of Specialization" [ngValue]="sp.SpecializationID"> -->
+				<!-- {{sp.SpecializationName}} -->
+			<!-- </option> -->
+			<option *ngFor="let sp of SpecializationList" [ngValue]="sp.SpecializationID">
+				{{sp.SpecializationName}}
+			</option>
+        </select>
+        </div>	
+		
+		<label>Year</label>	
+	<div class="input-group">
+     <span class="input-group-addon"><i class="fa fa-address-book"></i></span>
+		
+		<select id="#Year{{i}}" #Year{{i}}="ngModel" [(ngModel)]="ed.Year"   name="Year{{i}}" class="form-control" >         
+			<!-- <option *ngFor="let yr of Years" [ngValue]="yr.YearID"> -->
+				<!-- {{yr.Year}} -->
+			<!-- </option> -->
+			<option *ngFor="let yr of YearList" [ngValue]="yr.YearID">
+				{{yr.Year}}
+			</option>
+        </select>
+        </div>
+		<label>Grade</label>	
+	<div class="input-group">
+     <span class="input-group-addon"><i class="fa fa-address-book"></i></span>
+		
+		<select id="#GradeID{{i}}" #GradeID{{i}}="ngModel" [(ngModel)]="ed.GradeID" name="GradeID{{i}}" class="form-control" >         
+			<option *ngFor="let grade of GradeList" [ngValue]="grade.GradeID">
+				{{grade.GradeName}}
+			</option>
+        </select>
+        </div>
+	
+		
+</div>
+
+	</div>
+</div>
+</accordion-group>
+					
+<accordion-group style="margin-top:10px;">
+					   <accordion-heading> 
+					   Professional Details
+					   </accordion-heading>
+					   <div class="col-xs-6">
+				
+					   
+<a class="floatRight"(click)=AddMoreProfessional()><img src="..\..\src\img\AddMore.png" height="30px" width="30px"></a> 
+
+	<div *ngFor="let pd of model.ProfessionalDetail;let i = index">
+	<div class="AddMoreDiv">
+	<a *ngIf="model.ProfessionalDetail.length == i+1 && model.ProfessionalDetail.length !=1" id="RemoveOrg" class="floatRight" (click)=RemoveProfessional()><img src="..\..\src\img\Remove.png" height="30px" width="30px"></a>
+<label>Professional Detail - {{i+1}}</label>
+
+</div>
+	<div [style.border-top]="GetProfessionalStyle(i)">
+<label style="margin-top:15px;">Employer Name</label>
+	<div class="input-group">
+	
+     <span class="input-group-addon"><i class="fa fa-address-book"></i></span>
+		
+		<input type="text" [(ngModel)]="model.ProfessionalDetail[i].EmployerName" name="EmployerName{{i}}" ngControl="EmployerName"  class="form-control" placeholder="Employer Name"
+		autofocus="true" id="#EmployerName" #EmployerName="ngModel">
+		
+        </div>	
+		
+    <div class="form-group">
+        <div class="checkbox">
+            <label>
+                <input type="checkbox" [(ngModel)]="model.ProfessionalDetail[i].CurrentEmployer" class="checkbox-control"  id="#CurrentEmployer{{i}}" #CurrentEmployer{{i}}="ngModel"  name="CurrentEmployer{{i}}" value="1">Current Employer
+                
+            </label>
+        </div>
+	</div>
+		<!-- <label>Specialization</label> -->
+		<!-- <div class="input-group"> -->
+     <!-- <span class="input-group-addon"><i class="fa fa-address-book"></i></span> -->
+		
+		<!-- <select id="#SpecializationID{{i}}" #SpecializationID{{i}}="ngModel" [(ngModel)]="ed.DegreeID"   name="Degree{{i}}" class="form-control" >          -->
+			<!-- <!-- <option *ngFor="let sp of Specialization" [ngValue]="sp.SpecializationID"> -->
+				<!-- <!-- {{sp.SpecializationName}} --> 
+			<!-- <!-- </option> --> 
+			<!-- <option *ngFor="let deg of Degree" [ngValue]="deg.DegreeID"> -->
+				<!-- {{deg.DegreeName}} -->
+			<!-- </option> -->
+        <!-- </select> -->
+        <!-- </div>	 -->
+		<div class="col-xs-2">
+		<label>Start Month</label>	
+	<div class="input-group">
+     <span style="padding-right:4px;" class="input-group-addon"><i class="fa fa-address-book"></i></span>
+		
+		<select id="#SMonth{{i}}" #SMonth{{i}}="ngModel" [(ngModel)]="pd.DurationStartMonth"   name="SMonth{{i}}" class="form-control" >         
+			<!-- <option *ngFor="let yr of Years" [ngValue]="yr.YearID"> -->
+				<!-- {{yr.Year}} -->
+			<!-- </option> -->
+			<option *ngFor="let month of MonthList" [ngValue]="month.MonthID">
+				{{month.Month}}
+			</option>
+        </select>
+        </div>
+		</div>
+		<div class="col-xs-3">
+		<label>Start Year</label>	
+	<div class="input-group">
+     <span class="input-group-addon"><i class="fa fa-address-book"></i></span>
+		
+		<select id="#SYear{{i}}" #SYear{{i}}="ngModel" [(ngModel)]="pd.DurationStartYear"   name="SYear{{i}}" class="form-control" >         
+			<!-- <option *ngFor="let yr of Years" [ngValue]="yr.YearID"> -->
+				<!-- {{yr.Year}} -->
+			<!-- </option> -->
+			<option *ngFor="let yr of YearList" [ngValue]="yr.YearID">
+				{{yr.Year}}
+			</option>
+        </select>
+        </div>
+		
+		</div>
+		
+		<div class="col-xs-2">
+		
+		
+		</div>
+		
+		<div class="col-xs-2">
+		<label>End Month</label>	
+	<div class="input-group">
+     <span style="padding-right:4px;" class="input-group-addon"><i class="fa fa-address-book"></i></span>
+		
+		<select id="#EMonth{{i}}" #EMonth{{i}}="ngModel" [(ngModel)]="pd.DurationEndMonth"   name="EMonth{{i}}" class="form-control" >         
+			<!-- <option *ngFor="let yr of Years" [ngValue]="yr.YearID"> -->
+				<!-- {{yr.Year}} -->
+			<!-- </option> -->
+			<option *ngFor="let month of MonthList" [ngValue]="month.MonthID">
+				{{month.Month}}
+			</option>
+        </select>
+        </div>
+		</div>
+		<div class="col-xs-3">
+		<label>End Year</label>	
+	<div class="input-group">
+     <span class="input-group-addon"><i class="fa fa-address-book"></i></span>
+		
+		<select id="#EYear{{i}}" #EYear{{i}}="ngModel" [(ngModel)]="pd.DurationEndYear"   name="EYear{{i}}" class="form-control" >         
+			<!-- <option *ngFor="let yr of Years" [ngValue]="yr.YearID"> -->
+				<!-- {{yr.Year}} -->
+			<!-- </option> -->
+			<option *ngFor="let yr of YearList" [ngValue]="yr.YearID">
+				{{yr.Year}}
+			</option>
+        </select>
+        </div>
+		</div>
+		<label>Designation</label>
+	<div class="input-group">
+	
+     <span class="input-group-addon"><i class="fa fa-address-book"></i></span>
+		
+		<input type="text" [(ngModel)]="model.ProfessionalDetail[i].Designation" name="Designation{{i}}" ngControl="Designation"  class="form-control" placeholder="Designation"
+		autofocus="true" id="#Designation" #Designation="ngModel">
+		
+        </div>
+	
+	
+		<label>Contract</label>
+    <div class="form-group">
+        <div class="radio">
+            <label>
+                <input type="radio" [(ngModel)]="model.ProfessionalDetail[i].FullTimeOrPartTime" class="radio-control"  ngControl="FullTimeOrPartTime" id="#FullTimeOrPartTime{{i}}" #FullTimeOrPartTime{{i}}="ngModel"  name="FullTimeOrPartTime{{i}}" value="Yes">Full Time
+                
+            </label>
+        </div>
+        <div class="radio">
+            <label>
+                <input type="radio" [(ngModel)]="model.ProfessionalDetail[i].FullTimeOrPartTime" class="radio-control"  ngControl="FullTimeOrPartTime" id="#FullTimeOrPartTime{{i}}" #FullTimeOrPartTime{{i}}="ngModel"  name="FullTimeOrPartTime{{i}}" value="No">Part Time
+           </label>
+        </div>
+    
+	</div>
+	<label>Job Profile</label>
+	<div class="input-group">
+     <span class="input-group-addon"><i class="fa fa-address-card"></i></span>
+		
+		<textarea [(ngModel)]="model.ProfessionalDetail[i].JobProfile" name="JobProfile{{i}}" ngControl="JobProfile"  class="form-control" placeholder="Job Profile"
+		autofocus="true" id="#JobProfile" #JobProfile="ngModel" cols="40" rows="4" maxlength="2000"></textarea>
+		
+	</div> 
+</div>
+	</div>
+</div>
+<!-- <div class="row"> -->
+<!-- <div class="two columns"> -->
+<!-- <label for="options">Intersted Category :</label>			 -->
+<!-- </div> -->
+<!-- <div class="ten columns"> -->
+ 
+            <!-- <div *ngFor="let option of options">  -->
+            <!-- <label> -->
+                    <!-- <input type="checkbox" -->
+                           <!-- name="options" -->
+                           <!-- value="{{option.CategoryID}}" -->
+                           <!-- [checked]="option.IsChecked" -->
+						   <!-- (change)="option.IsChecked = !option.IsChecked"  -->
+                           <!-- /> -->
+                    <!-- {{option.CategoryName}} -->
+                <!-- </label> -->
+<!-- </div> -->
+<!-- </div> -->
+
+<!-- </div> -->
+					   </accordion-group>
+					</accordion>
+
+<div class="row">
+<input type="button" (click)="updateProfile()" class="btn btn-lg btn btn-primary btn-block student_update" value="Udpate" [disabled]="!ProfileForm.form.valid">
+
+</div>
+      
+    
+</div>
+</div>
+</div>
+</div>
   </div>
 </form>
+ </div>
+ </div>
+ </div>
+ </div>
  
+ 
+</ng-container>
+<ng-container *ngIf="!authService.login();">
+    <app-login></app-login>
+</ng-container> 

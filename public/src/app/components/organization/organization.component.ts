@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,ElementRef } from '@angular/core';
 
 @Component({
   selector: 'app-organization',
@@ -6,10 +6,14 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./organization.component.scss']
 })
 export class OrganizationComponent implements OnInit {
-
-  constructor() { }
+  id: String;
+  constructor(private elm: ElementRef) {
+ this.id = this.elm.nativeElement.getAttribute('id'); 	  }
 
   ngOnInit() {
+	  debugger;
+	  this.id = this.elm.nativeElement.getAttribute('id'); 
+	  console.log(this.id);
   }
 
 }

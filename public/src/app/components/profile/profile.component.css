@@ -13,10 +13,20 @@ background-color: #fff;
     width: 60% !important;
    
 }
+.floatRight{
+	float:right;
+}
+
+
+.alert {
+  padding: 15px;
+  margin-bottom: 0px;
+  border: 1px solid transparent;
+  border-radius: 4px;
+}
 .row {
-    width: 940px;
     max-width: 100%;
-    min-width: 768px;
+   
     margin: 0 auto;
 }
 .twelve, .row .twelve {
@@ -47,7 +57,7 @@ input[type="text"], input[type="password"], input[type="date"],
 input[type="textarea"] input[type="datetime"], input[type="email"], input[type="number"], input[type="search"], input[type="tel"], input[type="time"], input[type="url"] {
     height: 38px;
     padding: 12px;
-	margin:0 0 12px 0;
+	
 }
 .student_bio{
 	width:404px;

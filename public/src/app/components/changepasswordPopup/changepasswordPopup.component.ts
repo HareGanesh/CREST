@@ -55,7 +55,13 @@ export class ChangepasswordPopupComponent implements OnInit {
   onPasswordSubmit(){
 	  debugger;
 	  this.submitted = true; 	
+	  
     this.model.Email_ID = JSON.parse(this.authService.getLoginUser()).username;
+	if(this.model.Email_ID == undefined)
+	{
+		this.model.Email_ID = JSON.parse(this.authService.getLoginUser()).UserName;
+	}
+	
   // Register user
     // this.authService.authenticateEmailAndPwd(this.model).subscribe(data => {
 		// debugger;
