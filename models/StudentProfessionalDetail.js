@@ -40,6 +40,10 @@ const StudentProfessionalDetailSchema = mongoose.Schema({
 	  type:String
   },
   
+  CurrentEmployer:{
+	  type:Boolean
+  },
+  
   Active:{
 		type: Boolean
 	},

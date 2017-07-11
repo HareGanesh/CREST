@@ -104,7 +104,7 @@ optionsChecked = [];
 	  this.BindMonthList();
 	  this.BindYearList();
       this.studentEducationDetail = { DegreeID:0,  SpecializationID:0, Year:0, GradeID:0};	
-	  this.professionalDetail = {EmployerName :'', DurationStartMonth:0,  DurationStartYear:0, DurationEndMonth:0, DurationEndYear:0, Designation:'', JobProfile:'', FullTimeOrPartTime:'No', CurrentEmployer:false};	  
+	  this.professionalDetail = {EmployerName :'', DurationStartMonth:0,  DurationStartYear:0, DurationEndMonth:0, DurationEndYear:0, Designation:'', JobProfile:'', FullTimeOrPartTime:'No', CurrentEmployer:true};	  
 	  	 debugger;
 	 // console.log(this.authService.studentID);
 	  this.authService.getStudentProfileByStudentID(JSON.parse(this.authService.getStudent()).Student_ID).subscribe(data => {
@@ -241,6 +241,14 @@ optionsChecked = [];
 	  debugger
 	  this.model.ProfessionalDetail.pop();
   }
+  
+ onChange(item)
+ {
+	for(let i=0; i< this.model.ProfessionalDetail.length; i++)
+	{
+		this.model.ProfessionalDetail[i].CurrentEmployer = false;
+	}
+ }
   
   GetStyle(i)
   {

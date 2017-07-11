@@ -270,7 +270,7 @@
     <div class="form-group">
         <div class="checkbox">
             <label>
-                <input type="checkbox" [(ngModel)]="model.ProfessionalDetail[i].CurrentEmployer" class="checkbox-control"  id="#CurrentEmployer{{i}}" #CurrentEmployer{{i}}="ngModel"  name="CurrentEmployer{{i}}" value="1">Current Employer
+                <input type="checkbox" (ngModelChange)="onChange($currentEmp)" [(ngModel)]="model.ProfessionalDetail[i].CurrentEmployer" class="checkbox-control"  id="#CurrentEmployer{{i}}" #CurrentEmployer{{i}}="ngModel"  name="CurrentEmployer{{i}}" value="1">Current Employer
                 
             </label>
         </div>

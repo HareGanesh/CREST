@@ -185,6 +185,7 @@ router.post('/update', (req, res, next) => {
 								studentProfessionalDetail.Designation=ProfessionalDetailInfo[n].Designation;
 								studentProfessionalDetail.JobProfile=ProfessionalDetailInfo[n].JobProfile;
 								studentProfessionalDetail.FullTimeOrPartTime = ProfessionalDetailInfo[n].FullTimeOrPartTime;
+								studentProfessionalDetail.CurrentEmployer = ProfessionalDetailInfo[n].CurrentEmployer;
                                 StudentProfessionalDetail.AddStudentProfessionalDetail(studentProfessionalDetail, (err, studentProfessionalDetail)=> {
                                                                      console.log(studentProfessionalDetail);
                                                                 });
