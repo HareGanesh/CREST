@@ -600,11 +600,27 @@ getAllUnivTranscationApprovalDetailByUnivIDAndMaskID(univID, maskID){
                 .map(res => res.json());
 }
 
+getAllUnivTranscationApprovalDetailInfoByUnivIDAndMaskID(univID, maskID){
+				let headers = new Headers();
+                headers.append('univid',univID);
+				headers.append('maskid',maskID);
+                return this.http.get('http://localhost:3777/UnivTranscationApprovalDetail/getAllUnivTranscationApprovalDetailInfoByUnivID',{headers: headers})
+                .map(res => res.json());
+}
+
 getAllUnivTranscationEventApprovalDetailByUnivIDAndMaskID(univID, maskID){
 				let headers = new Headers();
                 headers.append('univid',univID);
 				headers.append('maskid',maskID);
                 return this.http.get('http://localhost:3777/UnivTranscationEventApprovalDetail/getAllUnivTranscationEventApprovalDetailByUnivID',{headers: headers})
+                .map(res => res.json());
+}
+
+getAllUnivTranscationEventApprovalDetailInfoByUnivIDAndMaskID(univID, maskID){
+				let headers = new Headers();
+                headers.append('univid',univID);
+				headers.append('maskid',maskID);
+                return this.http.get('http://localhost:3777/UnivTranscationEventApprovalDetail/getAllUnivTranscationEventApprovalDetailInfoByUnivID',{headers: headers})
                 .map(res => res.json());
 }
 

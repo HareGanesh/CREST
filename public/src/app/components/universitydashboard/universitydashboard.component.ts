@@ -99,17 +99,17 @@ export class UniversitydashboardComponent implements OnInit {
 	  
 	  debugger;
 	  //
-	  this.GetAllStudent();
+	  //this.GetAllStudent();
 	  if(this.tagID == 'UR')
 	  {
 		  debugger;
 		  let roleid = JSON.parse(this.authService.getLoginUser()).Role_ID;
 	       maskID = Math.pow(2,(this.Roles.filter(x=>x.RoleID == roleid)[0].Priority));
-	  	  this.authService.getAllUnivTranscationApprovalDetailByUnivIDAndMaskID(this.univID, maskID).subscribe(university => {   
+	  	  this.authService.getAllUnivTranscationApprovalDetailInfoByUnivIDAndMaskID(this.univID, maskID).subscribe(university => {   
 	      this.universityApprovalUserList=university;
 		  for(let i=0; i<this.universityApprovalUserList.length;i++)
 		  {
-		  this.universityApprovalUserList[i].Student_Name= this.Students.filter(x=>x.StudentID == this.universityApprovalUserList[i].Student_ID)[0].StudentName;
+		  this.universityApprovalUserList[i].Student_Name= university[i].Student_Info[0].Student_Name;
 		  this.universityApprovalUserList[i].Prev_Approver_RName= this.Roles.filter(x=>x.RoleID == this.universityApprovalUserList[i].Prev_Approver_RID)[0].RoleName;
 		  this.universityApprovalUserList[i].Next_Approver_RName= this.Roles.filter(x=>x.RoleID == this.universityApprovalUserList[i].Next_Approver_RID)[0].RoleName;
 		  }
@@ -126,7 +126,7 @@ export class UniversitydashboardComponent implements OnInit {
 	      this.universityApprovalUserList=university;
 		  for(let i=0; i<this.universityApprovalUserList.length;i++)
 		  {
-		  this.universityApprovalUserList[i].Student_Name= this.Students.filter(x=>x.StudentID == this.universityApprovalUserList[i].Student_ID)[0].StudentName;
+		  this.universityApprovalUserList[i].Student_Name= university[i].Student_Info[0].StudentName;
 		  this.universityApprovalUserList[i].Prev_Approver_RName= this.Roles.filter(x=>x.RoleID == this.universityApprovalUserList[i].Prev_Approver_RID)[0].RoleName;
 		  this.universityApprovalUserList[i].Next_Approver_RName= this.Roles.filter(x=>x.RoleID == this.universityApprovalUserList[i].Next_Approver_RID)[0].RoleName;
 		  }

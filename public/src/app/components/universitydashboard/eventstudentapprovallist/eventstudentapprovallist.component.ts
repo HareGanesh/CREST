@@ -129,12 +129,12 @@ export class EventstudentapprovallistComponent implements OnInit {
 	  
 	  debugger;
 	  //
-	  this.GetAllStudent();
+	  //this.GetAllStudent();
 	  if(this.tagID == 'UR')
 	  {
 		  let roleid = JSON.parse(this.authService.getLoginUser()).Role_ID;
 	       maskID = Math.pow(2,(this.Roles.filter(x=>x.RoleID == roleid)[0].Priority));
-	  	  this.authService.getAllUnivTranscationEventApprovalDetailByUnivIDAndMaskID(this.univID, maskID).subscribe(university => {   
+	  	  this.authService.getAllUnivTranscationEventApprovalDetailInfoByUnivIDAndMaskID(this.univID, maskID).subscribe(university => {   
 	      this.universityEventApprovalUserList=university.UnivTranscationEventApprovalDetail;
 		  if(this.universityEventApprovalUserList.length > 0)
 		  {
@@ -142,7 +142,7 @@ export class EventstudentapprovallistComponent implements OnInit {
 		  {
 		  //this.universityEventApprovalUserList[i].Event_Title= university.evt.EventTitle;
 		  //this.universityEventApprovalUserList[i].EventID = university.evt._id;
-		  this.universityEventApprovalUserList[i].Student_Name= this.Students.filter(x=>x.StudentID == this.universityEventApprovalUserList[i].Student_ID)[0].StudentName;
+		  this.universityEventApprovalUserList[i].Student_Name= university.UnivTranscationEventApprovalDetail[i].Student_Info[0].Student_Name;
 		  this.universityEventApprovalUserList[i].Prev_Approver_RName= this.Roles.filter(x=>x.RoleID == this.universityEventApprovalUserList[i].Prev_Approver_RID)[0].RoleName;
 		  this.universityEventApprovalUserList[i].Next_Approver_RName= this.Roles.filter(x=>x.RoleID == this.universityEventApprovalUserList[i].Next_Approver_RID)[0].RoleName;
 		  }

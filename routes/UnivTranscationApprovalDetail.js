@@ -109,6 +109,21 @@ console.log("Test");
   });  
 });
 
+router.get('/getAllUnivTranscationApprovalDetailInfoByUnivID', (req, res) => {
+var univid = req.headers["univid"]; 
+var maskID = req.headers["maskid"]; 
+console.log(univid + maskID);	
+  UnivTranscationApprovalDetail.getAllUnivTranscationApprovalDetailInfoByUnivID(univid,maskID, (err,UnivTranscationApprovalDetail)=>{
+    if(err) {	
+		throw err;
+	}
+     else
+	  {		console.log(UnivTranscationApprovalDetail); 
+		  res.json(UnivTranscationApprovalDetail);
+	  }
+  });  
+});
+
 router.get('/getMaxTransApprovalID', (req, res) => {
 
 

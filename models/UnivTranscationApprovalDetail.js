@@ -97,7 +97,28 @@ module.exports.getAllUnivTranscationApprovalDetail = function(callback){
 	console.log(query);
 	UnivTranscationApprovalDetailMaster.find(query,callback);
 	}
-	
+
+module.exports.getAllUnivTranscationApprovalDetailInfoByUnivID = function(univID, maskID, callback)
+	{	 
+	var query = { Univ_ID: univID, Mask_ID: {$lte:maskID}, Status:0, TransactionStatus:{$ne:'R'}};
+	UnivTranscationApprovalDetailMaster.aggregate([
+	{ $match: {
+            Univ_ID: parseInt(univID),
+			Mask_ID: {$lte:parseInt(maskID)},
+			Status:0,
+			TransactionStatus:{$ne:'R'}
+        }},
+    {
+      
+		$lookup:
+        {
+          from: "Student",
+          localField: "Student_ID",
+          foreignField: "Student_ID",
+          as: "Student_Info"
+        }
+   }
+], callback);}
 	
 	
 module.exports.getMaxTransApprovalID = function(callback){
