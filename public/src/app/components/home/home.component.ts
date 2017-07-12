@@ -11,6 +11,7 @@ export class HomeComponent implements OnInit {
 tagID:String;
 eventModel:EventModel[];
 OrgEventModel:EventModel[];
+ApprovedOrgEventModel:EventModel[];
  searchFilter:any;
   constructor(
    private validateService: ValidateService,  
@@ -94,7 +95,18 @@ ngOnInit() {
 		  modelData[i].RemainDay=m;
 	 }
 	 this.OrgEventModel=modelData;
+	 
+	 modelData= event.filter((E) => E.IsApproved == true);
+	  for(var i=0;i<modelData.length;i++)
+	 {
+		  var m =this.dayDiff(modelData[i].StartDt);		  
+		  modelData[i].RemainDay=m;
+	 }
+	 this.ApprovedOrgEventModel=modelData;
     },
+	
+	
+	
     //observable also returns error
     err => {
       console.log(err);

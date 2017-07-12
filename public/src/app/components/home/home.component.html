@@ -34,8 +34,8 @@
 <li class="active" >
 <a href="#OverviewTab" data-toggle="tab">Future Event</a>
 </li>
-<li style="display:none;">
-<a href="#ScheduleTab" data-toggle="tab">Show All</a>
+<li *ngIf="tagID == 'C'">
+<a href="#ApprovedTab" data-toggle="tab">Show All Approved</a>
 </li>
 
 </ul>
@@ -92,14 +92,14 @@
 </div>
 
 
-<div id="ScheduleTab" class="tab-pane fade">
+<div id="ApprovedTab" class="tab-pane fade">
  <div class="row">
               <div class="col-md-12">
                 <div>
             
                   <div class="x_content">
                     <div class="row">
-                      <div class="col-md-12 mail_list_column" *ngFor="let item of eventModel; ">
+                      <div class="col-md-12 mail_list_column" *ngFor="let item of ApprovedOrgEventModel; ">
                       
                         <a href="#" id="{{item._id}}">
                           <div class="mail_list">

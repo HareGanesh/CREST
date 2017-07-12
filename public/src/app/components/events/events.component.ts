@@ -303,7 +303,7 @@ this.authService.GetEventOrganizerByEventID(eventID).subscribe(organizer => {
   
   onEventInviteSubmit(){
 	  debugger;
-	  if(this.model.Organizations.length == 0 || this.model.Universities.length == 0)
+	  if(this.model.Organizations.length == 0 && this.model.Universities.length == 0)
 	  {
 		  this.DangerMessage="Please select any organization or university to invite.";
 		  return;

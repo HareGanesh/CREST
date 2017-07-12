@@ -19,8 +19,14 @@
 <div style="float:right;margin-left:5px;"  *ngIf="tagID=='C'">
 <!-- <input type="button" value="Approve Event" style="margin-top:16px;" class="btn btn-primary" (click)="approveEvent();"/> -->
 <!-- <input type="button" value="Reject Event" style="margin-top:16px;" class="btn btn-primary" (click)="rejectEvent();"/> -->
+
+<div *ngIf="!eventDetails.IsApproved && !eventDetails.IsRejected">
+
 <a  class="big-red-button"  data-toggle="modal" style="margin-top:16px;"  (click) = "clearComments();" data-target="#commentDiv">Approve</a>
 <a  class="big-red-button"  data-toggle="modal" style="margin-top:16px;" (click) = "clearComments();" data-target="#RejectCommentDiv">Reject</a>
+
+</div>
+
 </div> 
 <div class="info">
 <h1 class="title">{{eventDetails.EventTitle}}</h1>
@@ -77,7 +83,7 @@
 <li>
 <a href="#OrganizersTab" data-toggle="tab" [class.disabled]="isDisabled()">Organizers</a>
 </li>
-<li *ngIf="tagID=='C'">
+<li *ngIf="tagID=='C' && eventDetails.IsApproved">
  <a href="#InviteTab" data-toggle="tab" [class.disabled]="isDisabled()">Invite</a>
 </li>
 <li>
