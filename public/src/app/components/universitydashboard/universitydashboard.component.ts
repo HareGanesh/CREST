@@ -122,11 +122,11 @@ export class UniversitydashboardComponent implements OnInit {
 	  }else if(this.tagID == "U"){
 		  debugger;
 		  maskID = 1024;
-	  	  this.authService.getAllUnivTranscationApprovalDetailByUnivIDAndMaskID(this.univID, maskID).subscribe(university => {   
+	  	  this.authService.getAllUnivTranscationApprovalDetailInfoByUnivIDAndMaskID(this.univID, maskID).subscribe(university => {   
 	      this.universityApprovalUserList=university;
 		  for(let i=0; i<this.universityApprovalUserList.length;i++)
 		  {
-		  this.universityApprovalUserList[i].Student_Name= university[i].Student_Info[0].StudentName;
+		  this.universityApprovalUserList[i].Student_Name= university[i].Student_Info[0].Student_Name;
 		  this.universityApprovalUserList[i].Prev_Approver_RName= this.Roles.filter(x=>x.RoleID == this.universityApprovalUserList[i].Prev_Approver_RID)[0].RoleName;
 		  this.universityApprovalUserList[i].Next_Approver_RName= this.Roles.filter(x=>x.RoleID == this.universityApprovalUserList[i].Next_Approver_RID)[0].RoleName;
 		  }
