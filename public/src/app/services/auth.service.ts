@@ -775,5 +775,81 @@ getAllUnivTranscationEventApprovalDetailInfoByUnivIDAndMaskID(univID, maskID){
                 // return this.http.get('http://localhost:3777/EventStudent/getEventStudentByEventIDAndStudentIDWithStudent',{headers: headers})
                 // .map(res => res.json());
   // }
+  
+  
+  // Organization calls starts here
+  
+  updateOrganization(organization){
+                let headers = new Headers();
+                headers.append('Content-Type','application/json');
+
+    //students/register is temporary domain
+                return this.http.post('http://localhost:3777/OrganizationMstr/updateOrganization', organization,{headers: headers})
+                .map(res => res.json());
+  }
+  
+  getOrganizationById(id){
+                debugger;
+                let headers = new Headers();
+                headers.append('id',id);
+                return this.http.get('http://localhost:3777/OrganizationMstr/GetOrganizationByID',{headers: headers})
+                .map(res => res.json());
+} 
+   deleteOrganization(organization){
+                let headers = new Headers();
+                //headers.append('id',id);
+    //students/register is temporary domain
+                return this.http.post('http://localhost:3777/OrganizationMstr/deleteOrganization',organization,{headers: headers})
+                .map(res => res.json());
+   }
+   
+   addOrganization(organization){
+                let headers = new Headers();
+                headers.append('Content-Type','application/json');
+
+    //students/register is temporary domain
+                return this.http.post('http://localhost:3777/OrganizationMstr/register', organization,{headers: headers})
+                .map(res => res.json());
+  }
+  
+  addOrganizationRole(organizationRole){
+  	let headers = new Headers();
+  	headers.append('Content-Type','application/json');
+
+    //students/register is temporary domain
+  	return this.http.post('http://localhost:3777/OrganizationRoleMstr/AddOrganizationRole', organizationRole,{headers: headers})
+  	.map(res => res.json());
+  } 
+  
+  getOrganizationRoles()
+  {
+	  debugger;
+	  return this.http.get('http://localhost:3777/OrganizationRoleMstr/getAllOrganizationRole')
+  	.map(res => res.json());
+  }
+  
+  getOrganizationRolesByOrgnID(OrgnID)
+  {
+	  let headers = new Headers();
+      headers.append('orgnid',OrgnID);
+	  return this.http.get('http://localhost:3777/OrganizationRoleMstr/getOrganizationRolesByOrgnID', {headers:headers})
+  	.map(res => res.json());
+  }
+  
+  authenticateOrganization(organization){
+    let headers = new Headers();
+    headers.append('Content-Type','application/json');
+    return this.http.post('http://localhost:3777/OrganizationMstr/authenticateOrganization', organization,{headers: headers})
+    .map(res => res.json());
+  }
+  
+  GetOrganizationsWithRoles(){
+                
+    //students/register is temporary domain
+                return this.http.get('http://localhost:3777/OrganizationMstr/GetOrganizationsWithRoles')
+                .map(res => res.json());
+  }
+  
+  // End here
 
 }

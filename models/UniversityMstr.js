@@ -115,7 +115,7 @@ UniversityMaster.update(query, {Univ_Name: university.Univ_Name,EmailID:universi
 } 
 
 module.exports.updatePassword = function(user, callback){ 
-var query = { EmailID	: user.EmailID };
+var query = { UserName	: user.EmailID };
 console.log(query);
 UniversityMaster.update(query, {Pwd: user.PWD, isPasswordChanged: user.isPasswordChanged}, callback);
 }

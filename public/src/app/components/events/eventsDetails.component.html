@@ -86,7 +86,7 @@
 <li *ngIf="tagID=='C' && eventDetails.IsApproved">
  <a href="#InviteTab" data-toggle="tab" [class.disabled]="isDisabled()">Invite</a>
 </li>
-<li>
+<li style="display:none;">
 <a href="#OrganizationTab" data-toggle="tab" [class.disabled]="isDisabled()">Organizations</a>
 </li>
 <li>
@@ -175,18 +175,18 @@ Prizes
 </div>
 </div>
 
-<div class="ebgins">
-<h2>Organization</h2>
-<div *ngFor="let organization of eventOrganizationArray; let i=index;"> 
+<!-- <div class="ebgins"> -->
+<!-- <h2>Organization</h2> -->
+<!-- <div *ngFor="let organization of eventOrganizationArray; let i=index;">  -->
 
-<div class="not-available" *ngIf="i == 0"> <i class="icon-exclamation-sign"></i> {{GetName(eventOrganizationArray[i].OrgnID)}}</div>
-<!-- <a class="footerlink" *ngIf="i == 0" data-toggle="tab" (click)="ActiveTab('OrganizersTab')" href="#OrganizersTab">More</a> -->
-</div>
+<!-- <div class="not-available" *ngIf="i == 0"> <i class="icon-exclamation-sign"></i> {{GetName(eventOrganizationArray[i].OrgnID)}}</div> -->
+<!-- <!-- <a class="footerlink" *ngIf="i == 0" data-toggle="tab" (click)="ActiveTab('OrganizersTab')" href="#OrganizersTab">More</a> -->
+<!-- </div> -->
 
   
 
 
-</div>
+<!-- </div> -->
 
 <div class="ebgins">
 <h2>University</h2>
@@ -356,68 +356,68 @@ Prizes
 <button (click)="onEventInviteSubmit()" class="big-red-button">Invite</button>
 
 </div> 
-<div id="OrganizationTab" class="tab-pane fade"><h3>Organizations
-</h3>
+<!-- <div  id="OrganizationTab" class="tab-pane fade"><h3>Organizations -->
+<!-- </h3> -->
 
-<!-- commenting this one for now -->
-<div class="eventcheck border border2" *ngFor="let organization of eventOrganizationArray; let i=index">
-<div class="ebgins">
-<div class="row network_cell">
-<div class="col-md-1">
-<img src="../../src/img/{{GetOrganizationLogo(organization.OrgnID)}}" width="100px" height="100px">
+<!-- <!-- commenting this one for now --> 
+<!-- <div class="eventcheck border border2" *ngFor="let organization of eventOrganizationArray; let i=index"> -->
+<!-- <div class="ebgins"> -->
+<!-- <div class="row network_cell"> -->
+<!-- <div class="col-md-1"> -->
+<!-- <img src="../../src/img/{{GetOrganizationLogo(organization.OrgnID)}}" width="100px" height="100px"> -->
 
-</div>
-<div class="col-md-6 col-md-offset-2 ">
-<div class="row">
-<h5>
-{{GetName(organization.OrgnID)}}
-</h5>
-</div>
-<div class="row">
-{{GetTitle(organization.OrgnID)}}
-</div>
-<div class="row">
-{{GetAddress(organization.OrgnID)}}
-</div>
-<div class="row">
+<!-- </div> -->
+<!-- <div class="col-md-6 col-md-offset-2 "> -->
+<!-- <div class="row"> -->
+<!-- <h5> -->
+<!-- {{GetName(organization.OrgnID)}} -->
+<!-- </h5> -->
+<!-- </div> -->
+<!-- <div class="row"> -->
+<!-- {{GetTitle(organization.OrgnID)}} -->
+<!-- </div> -->
+<!-- <div class="row"> -->
+<!-- {{GetAddress(organization.OrgnID)}} -->
+<!-- </div> -->
+<!-- <div class="row"> -->
 
-</div>
-</div>
-<div class="col-md-9 col-md-offset-1 ">
-<div class="row">
-<div>
-<a class="big-red-button" style="float:right;" data-target="#OrganizationModal" data-toggle="modal" click=onPopupClick() data-id="{{organization.OrgnID}}">Details</a>
+<!-- </div> -->
+<!-- </div> -->
+<!-- <div class="col-md-9 col-md-offset-1 "> -->
+<!-- <div class="row"> -->
+<!-- <div> -->
+<!-- <a class="big-red-button" style="float:right;" data-target="#OrganizationModal" data-toggle="modal" click=onPopupClick() data-id="{{organization.OrgnID}}">Details</a> -->
+<!-- <!-- <div id="OrganizationModal" class="modal fade" role="dialog"> --> 
+	<!-- <!-- <app-organization id="{{organization.OrgnID}}"></app-organization> --> 
+
+  <!-- <!-- </div> --> 
 <!-- <div id="OrganizationModal" class="modal fade" role="dialog"> -->
-	<!-- <app-organization id="{{organization.OrgnID}}"></app-organization> -->
-
-  <!-- </div> -->
-<div id="OrganizationModal" class="modal fade" role="dialog">
-	<div class="modal-dialog">
+	<!-- <div class="modal-dialog"> -->
 
     
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title">Organization</h4>
-      </div>
-      <div class="modal-body">
-        <p>{{GetOverview(organization.OrgnID)}}</p>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-      </div>
-    </div>
+    <!-- <div class="modal-content"> -->
+      <!-- <div class="modal-header"> -->
+        <!-- <button type="button" class="close" data-dismiss="modal">&times;</button> -->
+        <!-- <h4 class="modal-title">Organization</h4> -->
+      <!-- </div> -->
+      <!-- <div class="modal-body"> -->
+        <!-- <p>{{GetOverview(organization.OrgnID)}}</p> -->
+      <!-- </div> -->
+      <!-- <div class="modal-footer"> -->
+        <!-- <button type="button" class="btn btn-default" data-dismiss="modal">Close</button> -->
+      <!-- </div> -->
+    <!-- </div> -->
 
-  </div>
+  <!-- </div> -->
 
-  </div> 
-</div>
-</div>
-</div>
+  <!-- </div>  -->
+<!-- </div> -->
+<!-- </div> -->
+<!-- </div> -->
 
-</div>
-</div>
- </div>
+<!-- </div> -->
+<!-- </div> -->
+ <!-- </div> -->
 
  <!-- Commenting this one for now-->
 
@@ -486,7 +486,7 @@ Prizes
  
  
 <!----------------------------------->
-</div>
+<!-- </div> -->
 <div id="UniversityTab" class="tab-pane fade"><h3>Universities
 </h3>
 

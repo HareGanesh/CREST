@@ -17,6 +17,7 @@ import { ProfileComponent } from './components/profile/profile.component';
 import {EventsComponent} from './components/events/events.component';
 
 import {UniversityTransMappingComponent} from './components/UniversityTransMap/UniversityTransMapping.component';
+import {OrganizationTransMappingComponent} from './components/OrganizationTransMap/OrganizationTransMapping.component';
 
 import {ValidateService} from './services/validate.service';
 import {AuthService} from './services/auth.service';
@@ -33,6 +34,7 @@ import { OrganizationComponent } from './components/organization/organization.co
 import { EqualValidator } from './services/password.match.directive';
 import { AddUniversityComponent } from './components/university/add-university/add-university.component';
 import { UniversityRoleMasterComponent } from './components/university//university-role-master/university-role-master.component';
+import { OrganizationRoleMasterComponent } from './components/organization//organization-role-master/organization-role-master.component';
 import { UniversityComponent } from './components/university/university.component';
 import { UniversitydashboardComponent } from './components/universitydashboard/universitydashboard.component';
 
@@ -58,9 +60,11 @@ const appRoutes: Routes = [
   {path:'eventinfo/:id', component: RegistereventComponent},
   {path: 'eventDetails/:id', component: EventsComponent },
 {path:'UniversityTransMapping', component: UniversityTransMappingComponent},
+{path:'OrganizationTransMapping', component: OrganizationTransMappingComponent},
 {path: 'university/:id', component: UniversityComponent },	
   
   {path: 'universityrole', component: UniversityRoleMasterComponent },
+  {path: 'organizationrole', component: OrganizationRoleMasterComponent },
 {path: 'universitydashboard', component: UniversitydashboardComponent },
 {path: 'adduniversityroledetail', component: UniversityroleComponent },
 {path: 'changepassword', component: ChangepasswordComponent },
@@ -89,9 +93,11 @@ const appRoutes: Routes = [
 	EqualValidator,
 	EventsComponent,
 	UniversityTransMappingComponent,
+	OrganizationTransMappingComponent,
 	UniversityComponent,
 	AddUniversityComponent,
 	UniversityRoleMasterComponent,
+	OrganizationRoleMasterComponent,
 	UniversitydashboardComponent,
 	UniversityroleComponent,
 	StudentListComponent,

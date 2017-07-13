@@ -33,6 +33,7 @@ const EventOrganizer = require('./routes/EventOrganizer');
 const organizationMstr = require('./routes/OrganizationMstr'); 
 const EventOrganization = require('./routes/EventOrganization'); 
 const UniversityRoleMstr = require('./routes/UniversityRoleMstr'); 
+const OrganizationRoleMstr = require('./routes/OrganizationRoleMstr'); 
 const UniversityMstr = require('./routes/UniversityMstr');
 const TranscationTypeMstr = require('./routes/TranscationTypeMstr');
 const UnivTranscationTypeDetail = require('./routes/UnivTranscationTypeDetail');
@@ -84,6 +85,7 @@ app.use('/EventOrganizer', EventOrganizer);
 app.use('/StudentCategory', StudentCategory); 
 app.use('/UniversityMstr', UniversityMstr); 
 app.use('/UniversityRoleMstr', UniversityRoleMstr); 
+app.use('/OrganizationRoleMstr', OrganizationRoleMstr); 
 app.use('/AppRoleMaster', AppRoleMaster); 
 
 app.use('/TranscationTypeMstr', TranscationTypeMstr); 

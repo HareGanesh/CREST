@@ -1,0 +1,109 @@
+<ng-container *ngIf="authService.login();">
+<app-navbar></app-navbar> 
+
+<div class="container">  
+
+  <div class="row">
+    <div class="col-am-6 col-md-4 col-md-offset-4" style="width:90%">
+      <h1 class="text-left">Organization Role Master</h1>
+      <br>
+      <div class="account-wall" style="width:50%">
+	  
+	  
+	  
+	  
+<div [hidden]="submitted">
+
+
+
+<form #EventForm="ngForm" (submit)="onSubmit()">
+
+<div id="tabs">
+<div class="row">
+
+
+<div class="tab-content x_panel">
+<div>
+<ul>
+<li class="red" *ngFor="let a of this.ErrorList; let index = index">
+{{ErrorList[index]}}
+</li>
+</ul>
+</div>
+
+ 
+	
+	<label>Organization <span class="red">*</span></label>
+	<div class="input-group" style="width:100%" *ngIf = "tagID=='C'">
+     <span class="input-group-addon"><i class="fa fa-key"></i></span>
+	
+		<select id="#Orgn_ID" (ngModelChange)="onChange($event)"   [(ngModel)]="model.Orgn_ID"  #Orgn_ID="ngModel" (ngModel)="Univ_ID"   name="Orgn_ID" ngControl="OrgnMstr"  class="form-control" >
+         
+		<option *ngFor="let orgn of Organizations" [value]="orgn.Orgn_ID" >  
+        {{orgn.Orgn_Name}}
+        </option>
+    </select>
+		<div [hidden]="Orgn_ID.valid || Orgn_ID.pristine"
+             class="alert alert-danger">
+          Organization is required 
+		  </div>
+	
+	</div>
+	<div class="input-group" style="width:100%" *ngIf = "tagID=='O'">
+				 <span class="input-group-addon"><i class="fa fa-address-card"></i></span>
+					
+					<input disabled type="text" value="{{organizationName}}" name="organizationName" ngControl="organizationName"  class="form-control">
+					 
+					
+				</div>
+
+
+<div >
+
+<label>Role Name <span class="red">*</span></label>
+	<div class="input-group" style="width:100%;">
+    
+		<div style="width:98%;float:left; margin-bottom:10px;" *ngFor="let orgnrole of OrganizationRoles;let i = index">		
+		<input disabled type="text" value="{{orgnrole.Orgn_RoleName}}"  ngControl="Orgn_RoleName"  class="form-control"
+		autofocus="true"> 
+		
+		</div>
+		
+		<div style="width:98%;float:left; margin-bottom:10px;" *ngFor="let role of model.Orgn_RoleName;let i = index">		
+		<input required type="text" [(ngModel)]="role.Orgn_RoleName" name="Orgn_RoleName{{i}}" ngControl="Orgn_RoleName"  class="form-control"
+		autofocus="true" id="#Orgn_RoleName{{i}}" #Orgn_RoleName{{i}}="ngModel"> 
+		
+		</div>
+		<div style="width:2%;float:right;">
+		<a id="addMore" class=""(click)=AddMoreRoles()><img src="..\..\src\img\AddMore.png" height="30px" width="30px" ></a>
+		</div>
+	
+	</div>
+
+
+</div>
+
+
+
+<div>
+	<input type="submit" class="btn btn-lg btn btn-primary btn-block" style="width:15%;float:right" value="Save" [disabled]="!EventForm.form.valid || model.Univ_ID == 0">
+	</div>
+	
+
+</div>
+
+</div>
+
+</div>
+
+</form>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+</ng-container>
+<ng-container *ngIf="!authService.login();">
+    <app-login></app-login>
+</ng-container> 

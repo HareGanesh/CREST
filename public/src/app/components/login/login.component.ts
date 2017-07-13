@@ -88,6 +88,29 @@ public model:Object;
         }
           });
                   }
+				  else if(data.user.TagID=='O')
+                {
+                  this.authService.authenticateOrganization(this.model).subscribe(orgn => {
+        if(orgn.success)
+                                {
+           this.authService.storeStudentData(orgn.token, orgn.organization,data.user.TagID);
+		   if(!JSON.parse(this.authService.getLoginUser()).isPasswordChanged )
+			{
+				document.getElementById("openModalButton").click();
+			}else {
+            // this.flashMessage.show('You are now logged in', {
+            // cssClass: 'alert-success'});
+           this.router.navigate(['/organizationrole']);
+			}
+        } 
+                                else
+                                {
+           this.flashMessage.show(orgn.msg, {
+           cssClass: 'alert-danger'});
+           //this.router.navigate(['login']);
+        }
+          });
+                  }
                   else if(data.user.TagID=='U')
                   {
                                   this.authService.authenticateUniversity(this.model).subscribe(univ => {

@@ -524,33 +524,33 @@ this.authService.GetEventOrganizerByEventID(eventID).subscribe(organizer => {
 	return this.Universities.find(x=>x.id == univID).ContactNo;
   }
   
-  GetName(orgnID)
-  {
+  // GetName(orgnID)
+  // {
 	  
-return this.Organizations.find(x=>x.id == orgnID).name;
-  }
+// return this.Organizations.find(x=>x.id == orgnID).name;
+  // }
   
-  GetTitle(orgnID)
-  {
+  // GetTitle(orgnID)
+  // {
 	  
-return this.Organizations.find(x=>x.id == orgnID).title;
-  }
+// return this.Organizations.find(x=>x.id == orgnID).title;
+  // }
   
-  GetOverview(orgnID)
-  {
+  // GetOverview(orgnID)
+  // {
 	  
-return this.Organizations.find(x=>x.id == orgnID).overview;
-  }
+// return this.Organizations.find(x=>x.id == orgnID).overview;
+  // }
   
-  GetAddress(orgnID)
-  {
-return this.Organizations.find(x=>x.id == orgnID).address  +"," + this.Organizations.find(x=>x.id == orgnID).state +"," + this.Organizations.find(x=>x.id == orgnID).country;
-  }
+  // GetAddress(orgnID)
+  // {
+// return this.Organizations.find(x=>x.id == orgnID).address  +"," + this.Organizations.find(x=>x.id == orgnID).state +"," + this.Organizations.find(x=>x.id == orgnID).country;
+  // }
   
-  GetOrganizationLogo(orgnID)
-  {
-	  return this.Organizations.find(x=>x.id == orgnID).logo +".png";
-  }
+  // GetOrganizationLogo(orgnID)
+  // {
+	  // return this.Organizations.find(x=>x.id == orgnID).logo +".png";
+  // }
   
   ActiveTab(tab)
   {

@@ -172,7 +172,7 @@
 				 <span class="input-group-addon"><i class="fa fa-mobile"></i></span>
 					
 					<input required type="text" [(ngModel)]="model.Mobile_No" name="Mobile_No" ngControl="MobileNo"  class="form-control" placeholder="Mobile No"
-					autofocus="true" id="#MobileNo" #MobileNo="ngModel" pattern="[0-9]*" minlength="10" maxlength="10">
+					autofocus="true" id="#MobileNo" #MobileNo="ngModel" 	>
 					<div [hidden]="MobileNo.valid || MobileNo.pristine"
 						 class="alert alert-danger">
 					  <div [hidden]="!MobileNo.hasError('minlength')">Mobile number should be 10 digit</div>
