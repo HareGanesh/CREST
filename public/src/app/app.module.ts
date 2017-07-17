@@ -10,6 +10,9 @@ import { NavbarComponent } from './components/navbar/navbar.component';
 import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
 import { HomeComponent } from './components/home/home.component';
+
+import { UniversityHomeComponent } from './components/universityhome/universityhome.component';
+
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { ProfileComponent } from './components/profile/profile.component';
 //import { OrganizationComponent } from './components/organization/organization.component';
@@ -44,7 +47,9 @@ import { StudentListComponent } from './components//student-list/student-list.co
 import { ChangepasswordComponent } from './components/changepassword/changepassword.component';
 import { ChangepasswordPopupComponent } from './components/changepasswordPopup/changepasswordPopup.component';
 import { EventstudentapprovallistComponent } from './components/universitydashboard/eventstudentapprovallist/eventstudentapprovallist.component'; 
-import {AccordionModule} from "ng2-accordion";
+ import {AccordionModule} from "ng2-accordion";
+// import {ToastModule} from 'ng2-toastr/ng2-toastr';
+// import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 
 const appRoutes: Routes = [
 
@@ -68,6 +73,7 @@ const appRoutes: Routes = [
 {path: 'universitydashboard', component: UniversitydashboardComponent },
 {path: 'adduniversityroledetail', component: UniversityroleComponent },
 {path: 'changepassword', component: ChangepasswordComponent },
+{path: 'universityhome', component: UniversityHomeComponent},
 	{path:'eventstudentapprovallist', component: EventstudentapprovallistComponent}
   // {path:'eventinfo/:id', component: RegistereventComponent},
   // {path: 'eventDetails/:id', component: EventsComponent }	
@@ -103,7 +109,8 @@ const appRoutes: Routes = [
 	StudentListComponent,
 	ChangepasswordComponent,
 	ChangepasswordPopupComponent,
-	EventstudentapprovallistComponent
+	EventstudentapprovallistComponent,
+	UniversityHomeComponent
 	 
 
   ],
@@ -116,6 +123,7 @@ const appRoutes: Routes = [
 	MultiselectDropdownModule,
 	TooltipModule,
 	AccordionModule
+	//BrowserAnimationsModule
   ],
   providers: [ValidateService, AuthService, AuthGuard],
   bootstrap: [AppComponent]

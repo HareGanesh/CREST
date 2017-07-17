@@ -12,6 +12,7 @@ export class AuthService {
 	student: any;
 	studentID:String; 
 	tagID:String;
+	actionResult:string;
 	university:any;
   constructor(private http:Http) { }
 //connect to backend
@@ -19,7 +20,10 @@ export class AuthService {
   registerStudent(student, TransMapping){	 
   	let headers = new Headers();
   	headers.append('Content-Type','application/json');
-	student.Pwd = this.generatePassword();
+	
+	// Commeting this for time being
+	//student.Pwd = this.generatePassword();
+	student.Pwd = "admin12345";
 	student.ConfirmPwd = student.Pwd;
 	if(TransMapping.length > 0)
     student.TransApprovalMapping = (TransMapping.sort(x=>x.Priority))[TransMapping.length-1];	  
@@ -96,6 +100,12 @@ export class AuthService {
   	return this.http.post('http://localhost:3777/UniversityRoleMstr/AddUniversityRole', universityRole,{headers: headers})
   	.map(res => res.json());
   } 
+  
+  SetActionResult(actionresult){
+      this.actionResult = actionresult;
+    localStorage.setItem('actionResult',this.actionResult);
+	 
+  }
 
   storeStudentData(token, user,tagID){
       this.tagID=tagID;

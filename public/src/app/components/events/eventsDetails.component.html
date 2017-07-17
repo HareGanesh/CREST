@@ -16,6 +16,7 @@
 <a id="backBtn" class="big-red-button" *ngIf="tagID=='UR'" style="margin-top:15px;" [routerLink]="['/eventstudentapprovallist']">Back To List</a>
 <a id="backBtn" class="big-red-button" *ngIf="tagID=='C'" style="margin-top:15px;" [routerLink]="['/']">Back To List</a>
 <a id="backBtn" class="big-red-button" *ngIf="tagID=='S'" style="margin-top:15px;" [routerLink]="['/']">Back To List</a>
+<a id="backBtn" class="big-red-button" *ngIf="tagID=='U'" style="margin-top:15px;" [routerLink]="['/universityhome']">Back To List</a>
 <div style="float:right;margin-left:5px;"  *ngIf="tagID=='C'">
 <!-- <input type="button" value="Approve Event" style="margin-top:16px;" class="btn btn-primary" (click)="approveEvent();"/> -->
 <!-- <input type="button" value="Reject Event" style="margin-top:16px;" class="btn btn-primary" (click)="rejectEvent();"/> -->
@@ -144,7 +145,8 @@ Prizes
 <div class="clear"></div>
 </div>
 <div class="ebgins">
-<h2>Schedule</h2>
+<h2>Scheduled as below:</h2>
+
 <div>
 <div class="not-available"> <i class="icon-exclamation-sign"></i> Not available</div> 
 </div>
@@ -205,7 +207,23 @@ Prizes
 </div>
 
 
-<div id="ScheduleTab" class="tab-pane fade"><h3>ContactTab
+<div id="ScheduleTab" class="tab-pane fade"><h3>
+<div class="extras">
+<ul class="clearfix">
+<li class="date">
+<i class="icon-time"></i>
+{{eventDetails.StartDt | date}}
+
+</li>
+
+</ul>
+<ul class="clearfix">
+<li>
+<i class="icon-map-marker"></i>
+{{eventDetails.Location}}
+</li>
+</ul>
+</div>
 </h3>
 </div> 
 

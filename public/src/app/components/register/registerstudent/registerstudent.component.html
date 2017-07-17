@@ -8,6 +8,9 @@
 <!-- </div> -->
 
 <div class="col-md-4 col-md-offset-4 col-sm-6 col-sm-offset-3">
+<div style="margin-bottom:10px;" class="alert alert-success" *ngIf="SuccessMessage !=''">
+		<strong>{{SuccessMessage}}<a  [routerLink]="['/login']">Login</a></strong>
+	</div>
  <div class="panel panel-info">
 	<div class="panel-heading">
 	<div class="pane-title">Register to continue to CREST</div>
@@ -172,7 +175,7 @@
 				 <span class="input-group-addon"><i class="fa fa-mobile"></i></span>
 					
 					<input required type="text" [(ngModel)]="model.Mobile_No" name="Mobile_No" ngControl="MobileNo"  class="form-control" placeholder="Mobile No"
-					autofocus="true" id="#MobileNo" #MobileNo="ngModel" 	>
+					autofocus="true" id="#MobileNo" #MobileNo="ngModel" pattern="[0-9]*" minlength="10" maxlength="10">
 					<div [hidden]="MobileNo.valid || MobileNo.pristine"
 						 class="alert alert-danger">
 					  <div [hidden]="!MobileNo.hasError('minlength')">Mobile number should be 10 digit</div>
@@ -195,7 +198,7 @@
 				
 
 
-			<input type="submit" class="btn btn-lg btn btn-primary btn-block" value="Register Me!" [disabled]="!RegisterForm.form.valid || ErrorList.length >0 || UserNameErrorList.length >0 || StuErrorList.length > 0 || model.Univ_ID == 0|| model.GenderID == '0'">
+			<input type="submit" class="btn btn-lg btn btn-primary btn-block" id="btnsubmit" value="Register Me!" [disabled]="!RegisterForm.form.valid || ErrorList.length >0 || UserNameErrorList.length >0 || StuErrorList.length > 0 || model.Univ_ID == 0|| model.GenderID == '0'">
 
 			</form>
 		</div>

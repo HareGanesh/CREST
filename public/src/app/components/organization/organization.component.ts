@@ -118,7 +118,7 @@ this.activatedRoute.params.subscribe((params: Params) => {
                 debugger;
                 if(this.organizationmodel._id==undefined)
                 {
-                this.organizationmodel.Pwd=this.generatePassword();
+                this.organizationmodel.Pwd= 'admin12345';//this.generatePassword();
                 this.authService.addOrganization(this.organizationmodel).subscribe(data => {
                                 debugger;
                                 if(data.success)

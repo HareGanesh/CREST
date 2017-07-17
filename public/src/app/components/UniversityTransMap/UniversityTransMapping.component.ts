@@ -24,6 +24,7 @@ export class UniversityTransMappingComponent implements OnInit {
 	isUpdate:Boolean;
 	tagID:String;
 	univID:number;
+	public SuccessMessage = '';
 	public organizations = [
 	  
          
@@ -239,14 +240,23 @@ submitted = false;
 	
 	// Load roles
 	this.authService.getUniversityRoles().subscribe(data => {
-		   for(let i=0; i< data.length; i++)
+		   
 			   if(data.length > 0)
 			   {
+				   for(let i=0; i< data.length; i++)
+				   {
 				this.UniversityRolesWithUniversity.push(data[i]);
+				   }
 				if(this.tagID == 'U')
 				{
 				this.onChange(this.univID);
 				}
+				
+				// if(this.model.UniversityID != '0')
+				// {
+				// this.onChange(parseInt(this.model.UniversityID));
+				// }
+				
 			   }
     },
     //observable also returns error
@@ -464,7 +474,7 @@ checkValidation()
 	  }
   else {
 	  
-	  this.submitted = true;
+	  //this.submitted = true;
 	  
   	// this.model.StartDt = new Date(this.model.StartDt).toISOString();
 	// this.model.EndDt = new Date(this.model.EndDt).toISOString();
@@ -506,17 +516,59 @@ checkValidation()
     this.authService.AddUnivTranscationTypeDetail(this.model).subscribe(data => {
 		debugger;
       if(data.success){
-		  if(this.tagID == 'C')
-		  {
-        //this.flashMessage.show('Event has been registered', {cssClass: 'alert-success', timeout: 3000});
-        this.router.navigate(['/']);
-		  }else {
-			  this.router.navigate(['/universitydashboard']);
-		  }
-      } else {
-        //this.flashMessage.show('Something went wrong', {cssClass: 'alert-danger', timeout: 3000});
-        this.router.navigate(['/EventInfo']);
-      }
+		  this.SuccessMessage = "New Transcation type added by admin. Click + button to add more.";
+		  this.Universities = [
+	  {Univ_ID: 0,  Univ_Name:"Please select"}
+         
+     ];
+	 
+	this.TranscationTypeList = [
+	  {Tran_Type_ID: 0,  Tran_Type_Name:"Please select"}
+         
+     ];
+	 
+	this.UniversityRoles = [
+	  
+         
+     ];
+	 this.UniversityRolesWithUniversity = [
+	   {Univ_RoleID: 0,  Univ_RoleName:"Please select", Univ_ID:""}
+         
+     ];
+	this.EventTypes = [
+      {EventTypeID: 0,  EventTypeName:"Please select"}    
+     ]; 
+	 
+	 this. model={  	
+    UniversityID:'0',  
+    TransTypeID:'0',
+	NoOfLevel:1,
+	TransMapID:'',	
+    Roles:[],
+	TransMask:[],
+	TransMap:[],
+	UniversityName:'',
+	Created_On:new Date(),
+	Created_by:'',
+	Modified_On:'',
+	Modified_by:''
+	
+     	};
+	 this.ngOnInit();
+	 
+		 
+		  // if(this.tagID == 'C')
+		  // {
+        // //this.flashMessage.show('Event has been registered', {cssClass: 'alert-success', timeout: 3000});
+        // this.router.navigate(['/']);
+		  // }else {
+			  // this.router.navigate(['/universitydashboard']);
+		  // }
+      // } else {
+        // //this.flashMessage.show('Something went wrong', {cssClass: 'alert-danger', timeout: 3000});
+        // this.router.navigate(['/EventInfo']);
+      // }
+	}
     });
   }
 

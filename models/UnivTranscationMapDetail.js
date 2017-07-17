@@ -81,6 +81,7 @@ module.exports.getMaxTransMapID = function(callback){
 
 module.exports.DeleteUnivTranscationMapDetailById = function(TransMapID, callback){ 
 var query = { Tran_Map_ID: TransMapID };
+console.log("deleted" + TransMapID);
 UnivTranscationMapDetailMaster.remove(query,  callback);}
 
 

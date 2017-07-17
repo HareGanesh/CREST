@@ -3,11 +3,15 @@
 <div style="margin-left:230px">
       <nav class="navbar ">
   <div class="container-fluid">
-    
-	<div class="nav navbar-nav navbar-right">
-	
-	  <a data-toggle="modal" class="btn btn-primary pull-right navbar-btn" (click)="clearModel();" data-target="#vv">Add University</a>
+    <div> 
+	<div class="alert alert-success col-xs-6" *ngIf="SuccessMessage !=''">
+	<strong>{{SuccessMessage}}</strong>
+</div>
+	<div class="nav navbar-nav navbar-right col-xs-3">
+		<a data-toggle="modal" class="btn btn-primary pull-right navbar-btn" (click)="clearModel();" data-target="#vv">Add University</a>
     </div>
+	
+</div>
   </div>
 </nav>
 
@@ -155,12 +159,14 @@
 </div>
 <div class="ten columns">
 <div class="input string optional user_headline">
-    <input class="string optional" required id="#ContactNo" [(ngModel)]="univeritymodel.ContactNo"   name="ContactNo" #ContactNo="ngModel"  size="50" type="text"></div>
+    <input class="string optional" required id="#ContactNo" [(ngModel)]="univeritymodel.ContactNo"   pattern="[0-9]*" minlength="10" maxlength="10" name="ContactNo" #ContactNo="ngModel"  size="50" type="text"></div>
 	
 	<div [hidden]="ContactNo.valid || ContactNo.pristine"
              class="alert alert-danger " style="width:48%">
-          University ContactNo is required
-        </div>	
+          <div [hidden]="!ContactNo.hasError('minlength')">Contact number should be 10 digit</div>
+				  <div [hidden]="!ContactNo.hasError('required')">Contact number is required</div>
+				  <div [hidden]="!ContactNo.hasError('pattern')">Contact number should be only numbers</div>
+        </div>
 </div>
 </div>
 

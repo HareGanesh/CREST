@@ -324,6 +324,7 @@ optionsChecked = [];
 		
       if(data.success){		
 		this.SuccessMessage	= "profile updated successfully.";
+		
 		 if(this.options.length >0)
 	  {
 		  for(let m=0;m<this.options.length; m++)

@@ -414,6 +414,7 @@ this.authService.GetEventOrganizerByEventID(eventID).subscribe(organizer => {
 		  if(event.success)
 		  {
 			  document.getElementById('close').click();
+			  this.authService.SetActionResult('A');
 			  this.router.navigate(['/']);
 			  
 		  }
@@ -434,6 +435,7 @@ this.authService.GetEventOrganizerByEventID(eventID).subscribe(organizer => {
 		  if(event.success)
 		  {
 			  document.getElementById('close2').click();
+			  this.authService.SetActionResult('R');
 			  this.router.navigate(['/']);
 		  }
 	  });

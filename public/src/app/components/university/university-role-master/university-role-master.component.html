@@ -14,15 +14,27 @@
 	  
 <div [hidden]="submitted">
 
-
+<div class="alert alert-success" style="margin-bottom:10px;" *ngIf="SuccessMessage !=''">
+  <strong>{{SuccessMessage}}</strong>
+</div>
 
 <form #EventForm="ngForm" (submit)="onSubmit()">
 
 <div id="tabs">
 <div class="row">
 
+<ul class="nav nav-tabs" id="wheel-tab">
+<li class="active " #firstLI>
+<a href="#OverviewTab" data-toggle="tab">Role Mapping</a>
+</li>
+
+
+
+</ul>
+
 
 <div class="tab-content x_panel">
+<div id="OverviewTab" class="tab-pane fade in active">
 <div>
 <ul>
 <li class="red" *ngFor="let a of this.ErrorList; let index = index">
@@ -89,7 +101,7 @@
 	<input type="submit" class="btn btn-lg btn btn-primary btn-block" style="width:15%;float:right" value="Save" [disabled]="!EventForm.form.valid || model.Univ_ID == 0">
 	</div>
 	
-
+</div>
 </div>
 
 </div>

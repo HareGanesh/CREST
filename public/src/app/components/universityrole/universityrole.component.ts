@@ -1,8 +1,11 @@
-import { Component, OnInit,ChangeDetectorRef,ViewEncapsulation } from '@angular/core';
+import { Component, OnInit,ChangeDetectorRef,ViewEncapsulation, ViewContainerRef } from '@angular/core';
+//import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
+
 import {ValidateService} from '../../services/validate.service';
 import {AuthService} from '../../services/auth.service';
 import {FlashMessagesService} from 'angular2-flash-messages';
 import { UniversityRole } from './UniversityRole';
+//import { ToastsManager } from 'ng2-toastr/ng2-toastr';
 
 import {Router, ActivatedRoute, Params} from '@angular/router';
 
@@ -17,6 +20,7 @@ export class UniversityroleComponent implements OnInit {
      ];
   
   public univID;
+  public SuccessMessage='';
 	public ErrorList:string[]=[];
 	public UserNameErrorList:string[]=[];
   constructor(private validateService: ValidateService,
@@ -24,7 +28,13 @@ export class UniversityroleComponent implements OnInit {
     private authService:AuthService,
     private router: Router,
 	private activatedRoute:ActivatedRoute,
-	private changeDetectorRef: ChangeDetectorRef) { }
+	private changeDetectorRef: ChangeDetectorRef
+	//public toastr: ToastsManager, vcr: ViewContainerRef
+	)
+	{
+	
+//this.toastr.setRootViewContainerRef(vcr);
+		}
     model={  	
     RoleID:0,  
     username:'',
@@ -113,18 +123,27 @@ export class UniversityroleComponent implements OnInit {
 
 onUserRoleSubmit(){
 	  debugger;
-	  this.submitted = true; 	
+	 // this.submitted = true; 	
     this.model.Univ_ID = this.univID;
-	this.model.Password= this.generatePassword();
+	// Commeting this for time being
+	//this.model.Password= this.generatePassword();
+	this.model.Password= "admin12345";
   // Register user
     this.authService.addUniversityUserRole(this.model).subscribe(data => {
 		debugger;
       if(data.success){
-        //this.flashMessage.show('You are now registered and can log in', {cssClass: 'alert-success', timeout: 3000});
-        this.router.navigate(['/universitydashboard']);
-      } else {
-        //this.flashMessage.show('Something went wrong', {cssClass: 'alert-danger', timeout: 3000});
-        this.router.navigate(['/register']);
+        // //this.flashMessage.show('You are now registered and can log in', {cssClass: 'alert-success', timeout: 3000});
+        // this.router.navigate(['/universitydashboard']);
+      // } else {
+        // //this.flashMessage.show('Something went wrong', {cssClass: 'alert-danger', timeout: 3000});
+        // this.router.navigate(['/register']);
+		this.SuccessMessage	= "New Role user added successfully.";
+		
+       //this.toastr.success('You are awesome!', 'Success!');
+      
+
+		
+		
       }
     });
 	  

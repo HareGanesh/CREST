@@ -17,6 +17,7 @@ import {Router, ActivatedRoute, Params} from '@angular/router';
 export class UniversityRoleMasterComponent implements OnInit {
 	tagID:String;
 	universityName:String;
+	public SuccessMessage = '';
 	univID:Number;
 model={  	
     Univ_RoleName:[],  
@@ -51,6 +52,7 @@ model={
 	 
 	 
   ngOnInit() {
+	  debugger;
 	  this.tagID=localStorage.getItem('tagID');
 	  if(this.tagID == 'U')
 	  {
@@ -74,6 +76,11 @@ model={
 			   {
 			   this.onChange(this.univID);	
 			   }
+			   
+			   // if(this.model.Univ_ID != '')
+			   // {
+			   // this.onChange(this.model.Univ_ID);
+			   // }
 	}
     },
     //observable also returns error
@@ -191,13 +198,35 @@ onChange(univID) {
 	   this.authService.addUniversityRole(this.model).subscribe(data => {
 		  if(data.success)
 		  {
-			  if(this.tagID == 'C')
-			  {
-			    this.router.navigate(['/']);
-			  }else if(this.tagID == 'U')
-			  {
-			    this.router.navigate(['/universitydashboard']);
-			  }
+			  this.SuccessMessage	= "New Role added successfully. Click + button to add more roles.";
+			  this.Universities = [
+	  {Univ_ID: 0,  Univ_Name:"Please select"}
+         
+     ];
+	 this.UniversityRolesWithUniversity = [
+	   {Univ_RoleID: 0,  Univ_RoleName:"Please select", Univ_ID:""}
+         
+     ];
+	  this.UniversityRoles = [ 
+         
+     ];
+	 
+	 this.model.Univ_RoleName =[];
+	 this.model={  	
+    Univ_RoleName:[],  
+    Univ_ID:'0'
+	
+};
+	 this.ngOnInit();
+	 
+
+			  // if(this.tagID == 'C')
+			  // {
+			    // this.router.navigate(['/']);
+			  // }else if(this.tagID == 'U')
+			  // {
+			    // this.router.navigate(['/universitydashboard']);
+			  // }
 		  }
 		    },
 			//observable also returns error

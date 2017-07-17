@@ -17,7 +17,11 @@
                   <div class="x_content">
 				   <div class="row">
                       <div class="col-md-12 mail_list_column">
-                      
+                      <div *ngIf="tagID=='UR'">
+					
+					<a  class="btn btn-primary"  style="margin-top:10px;" (click)="ApproveAllStudent()" data-toggle="modal" data-target="#commentAllDiv">Approve All</a>
+					<a  class="btn btn-primary"  style="margin-top:10px;" (click)="RejectAllStudent()" data-toggle="modal" data-target="#RejectCommentAllDiv">Reject All</a>
+					</div>
                      <div class="header">  
                     <ul >
 					<li *ngIf="tagID=='UR'"><input type="checkbox" name="all" [checked]="isAllChecked(item1)" (change)="checkAll($event)"/> <label>Select all</label></li>
@@ -54,11 +58,7 @@
 					  
 					  </li>
 					</ul>
-					<div *ngIf="tagID=='UR'">
 					
-					<a  class="btn btn-primary"  style="margin-top:10px;" (click)="ApproveAllStudent()" data-toggle="modal" data-target="#commentAllDiv">Approve All</a>
-					<a  class="btn btn-primary"  style="margin-top:10px;" (click)="RejectAllStudent()" data-toggle="modal" data-target="#RejectCommentAllDiv">Reject All</a>
-					</div>
                       </div> </div>
 					  
                       <!-- /MAIL LIST -->

@@ -4,14 +4,15 @@ import {AuthService} from '../../services/auth.service'
 import {Router} from '@angular/router';
 @Component({
   selector: 'app-home',
-  templateUrl: './home.component.html',
-  styleUrls: ['./home.component.scss','./custom.min.css']
+  templateUrl: './universityhome.component.html',
+  styleUrls: ['./universityhome.component.scss','./custom.min.css']
 })
-export class HomeComponent implements OnInit {
+export class UniversityHomeComponent implements OnInit {
 tagID:String;
 eventModel:EventModel[];
 OrgEventModel:EventModel[];
 ApprovedOrgEventModel:EventModel[];
+RejectedUnivEventModel:EventModel[];
 public ActionPar = '';
  searchFilter:any;
   constructor(
@@ -175,47 +176,67 @@ ngOnInit() {
 		var UnivData=[];
 	    var filterEvent=[];
     this.authService.getEvents().subscribe(event => {
-      modelData= event.filter((E) => E.IsApproved == true && E.IsRejected == false);
+      modelData= event.filter((E) => E.Created_by == JSON.parse(this.authService.getStudent()).UserName);
 	  for(var i=0;i<modelData.length;i++)
 	 {
 		  var m =this.dayDiff(modelData[i].StartDt);
 		  
 		  modelData[i].RemainDay=m;
 	 }
-	 this.eventModel=modelData;
+	 this.OrgEventModel=modelData;
+	 
+	 modelData= event.filter((E) => E.IsApproved == true && E.Created_by == JSON.parse(this.authService.getStudent()).UserName);
+	  for(var i=0;i<modelData.length;i++)
+	 {
+		  var m =this.dayDiff(modelData[i].StartDt);		  
+		  modelData[i].RemainDay=m;
+	 }
+	 this.ApprovedOrgEventModel=modelData;
+	 
+	 modelData= event.filter((E) => E.IsRejected == true && E.Created_by == JSON.parse(this.authService.getStudent()).UserName);
+	  for(var i=0;i<modelData.length;i++)
+	 {
+		  var m =this.dayDiff(modelData[i].StartDt);		  
+		  modelData[i].RemainDay=m;
+	 }
+	 
+	 this.RejectedUnivEventModel = modelData;
+	 
     },
     //observable also returns error
     err => {
       console.log(err);
       return false;
     });
-  	var student=JSON.parse(this.authService.getStudent());
-	debugger;
-		//{{ksdf.Orgn_ID}}
-		this.authService.GetEventByUnivID(student.Univ_ID).subscribe(univ => {			
-			UnivData=univ;
-			 if(this.eventModel.length>0 && UnivData.length >0)
-  {
-	    for(var j=0; j < UnivData.length;j++)
-		  {
-			 for(var i=0;i < this.eventModel.length;i++)
-	          {
-				 // var m=this.eventModel[i];
-		         if(UnivData[j].EventID ==this.eventModel[i]._id)
-				{
-					filterEvent.push(this.eventModel[i]);
-					
-				}
-	          }
-		   }
-	 
-	 // if(this.tagID == 'S')
+	
+	
+  	// var student=JSON.parse(this.authService.getStudent());
+	// debugger;
+		// //{{ksdf.Orgn_ID}}
+		// this.authService.GetEventByUnivID(student.Univ_ID).subscribe(univ => {			
+			// UnivData=univ;
+			 // if(this.eventModel.length>0 && UnivData.length >0)
   // {
-// document.getElementById("openModalButton").click();
+	    // for(var j=0; j < UnivData.length;j++)
+		  // {
+			 // for(var i=0;i < this.eventModel.length;i++)
+	          // {
+				 // // var m=this.eventModel[i];
+		         // if(UnivData[j].EventID ==this.eventModel[i]._id)
+				// {
+					// filterEvent.push(this.eventModel[i]);
+					
+				// }
+	          // }
+		   // }
+	 
+	 // // if(this.tagID == 'S')
+  // // {
+// // document.getElementById("openModalButton").click();
+  // // }
+	  // this.OrgEventModel=filterEvent;
   // }
-	  this.OrgEventModel=filterEvent;
-  }
-		});  
+		//});  
  
 }
 

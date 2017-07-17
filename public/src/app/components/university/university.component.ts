@@ -17,6 +17,7 @@ export class UniversityComponent implements OnInit {
                 public eventModel:any;
                 public univeritymodel = new universityModel();
     public Action:String="Edit";
+	public SuccessMessage='';
                 public errorMsg:String="";
                 public deleteID:String="";
                 private universityList: Array<universityModel> = [];
@@ -116,14 +117,19 @@ this.activatedRoute.params.subscribe((params: Params) => {
                 debugger;
                 if(this.univeritymodel._id==undefined)
                 {
-                this.univeritymodel.Pwd=this.generatePassword();
+			    // Commeting this for time being 
+                //this.univeritymodel.Pwd=this.generatePassword
+				this.univeritymodel.Pwd= "admin12345";
                 this.authService.addUniversity(this.univeritymodel).subscribe(data => {
                                 debugger;
                                 if(data.success)
                                 {
                                                 
                      document.getElementById('close').click();
+					 
                                 this.bindGrid();
+								this.SuccessMessage = "New University : "+ this.univeritymodel.Univ_Name +" added by admin."
+								
                                 }
                                 else
                                 {
@@ -138,7 +144,9 @@ this.activatedRoute.params.subscribe((params: Params) => {
                                 if(data.success)
                                 {
                      document.getElementById('close').click();
+					 
                                 this.bindGrid();
+								this.SuccessMessage = "University : "+ this.univeritymodel.Univ_Name +" updated by admin."
                                 }
                 });
                 

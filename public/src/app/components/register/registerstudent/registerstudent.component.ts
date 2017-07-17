@@ -25,6 +25,7 @@ export class RegisterstudentComponent implements OnInit {
     Mobile_No: String;
     Univ_ID: Number;
     Dept_ID: Number;
+	public SuccessMessage='';
 	TransApprovalMapping:UniversityTransApproval[]=[];
     model:Object;
 	submitted = false;
@@ -120,7 +121,7 @@ export class RegisterstudentComponent implements OnInit {
   
   userNameChange()
   {
-	  debugger;
+	  
 	  let length = this.UserNameErrorList.length;
 		for(let i=0; i< length;i++)
 		{
@@ -233,7 +234,7 @@ export class RegisterstudentComponent implements OnInit {
 
 
 	 
-	  this.submitted = true;
+	  //this.submitted = true;
 
   	const student = {
 
@@ -270,8 +271,12 @@ export class RegisterstudentComponent implements OnInit {
     this.authService.registerStudent(this.model, this.TransApprovalMapping).subscribe(data => {
 		debugger;
       if(data.success){
+		  this.SuccessMessage = "Registration is complete. Request sent to university for approval. Once approved you can use login to continue. Click here for login: ";
+		  //this.model='';
+		  //this.ngOnInit();
+		  //document.getElementById('btnsubmit').disabled = true;
         //this.flashMessage.show('You are now registered and can log in', {cssClass: 'alert-success', timeout: 3000});
-        this.router.navigate(['/login']);
+        //this.router.navigate(['/login']);
       } else {
         //this.flashMessage.show('Something went wrong', {cssClass: 'alert-danger', timeout: 3000});
         this.router.navigate(['/register']);

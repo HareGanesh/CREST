@@ -26,6 +26,7 @@ export class RegistereventComponent implements OnInit {
 	category:Object;
 	tagID:String;
 	orgOrUnivLabel:String;
+	public SuccessMessage='';
 	public organizations = [
 	  
          
@@ -619,14 +620,14 @@ OnPrevClick(input, count,li1, li2)
 
   onEventSubmit(){
 	  debugger;
-	  this.submitted = true;
+	  //this.submitted = true;
 	  
   	this.model.StartDt = new Date(this.model.StartDt).toISOString();
 	this.model.EndDt = new Date(this.model.EndDt).toISOString();
 	this.model.EventRegisterEndDt = new Date(this.model.EventRegisterEndDt).toISOString();
 	
 	// Set created and modified properties
-	this.model.Created_by = JSON.parse(this.authService.getStudent()).id;
+	this.model.Created_by = JSON.parse(this.authService.getStudent()).UserName;
 	this.model.Created_On = new Date();
   	 // Required Fields
     // if(this.validateService.validateEvent(this.model)){     
@@ -646,8 +647,9 @@ OnPrevClick(input, count,li1, li2)
     this.authService.registerEvent(this.model).subscribe(data => {
 		debugger;
       if(data.success){
-        //this.flashMessage.show('Event has been registered', {cssClass: 'alert-success', timeout: 3000});
-        this.router.navigate(['/universitydashboard']);
+        this.SuccessMessage= 'Event has been registered';
+		this.authService.SetActionResult('ER');
+        this.router.navigate(['/universityhome']);
       } else {
         //this.flashMessage.show('Something went wrong', {cssClass: 'alert-danger', timeout: 3000});
         this.router.navigate(['/EventInfo']);

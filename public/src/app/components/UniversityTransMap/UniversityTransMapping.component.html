@@ -30,7 +30,9 @@
 
 <div id="tabs">
 <div class="row">
-
+<div class="alert alert-success" *ngIf="SuccessMessage !=''">
+  <strong>{{SuccessMessage}}</strong>
+</div>
 <ul class="nav nav-tabs" id="wheel-tab">
 <li class="active " #firstLI>
 <a href="#OverviewTab" data-toggle="tab">Mapping</a>
@@ -113,6 +115,7 @@
 
 
 </div>
+<b *ngIf="model.Roles.length != 0"><span class='red'> Priority order is lower to higher. For example P - 1 is lower and P - N (N > 1) is higher.</span> </b>
 <table class="table table-bordered" *ngIf="model.Roles.length != 0" style="border: 0px solid #ddd;">
     <thead class="table-bordered">
       <tr>
