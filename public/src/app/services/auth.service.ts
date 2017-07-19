@@ -371,6 +371,16 @@ getOrganizations()
   	.map(res => res.json());
   }
   
+  
+  getAllUniversityUserByUnivID(univID)
+  {
+	  debugger;
+	  let headers = new Headers();
+      headers.append('univid',univID);
+	  return this.http.get('http://localhost:3777/UniversityRoleUser/getUniversityRoleUserByUnivID',{headers: headers})
+  	.map(res => res.json());
+  }
+  
   approveEvent(event){
                 let headers = new Headers();
                 headers.append('Content-Type','application/json');
@@ -564,6 +574,24 @@ authenticateUser(user){
                 return this.http.post('http://localhost:3777/UniversityRoleUser/register', universityUserRole,{headers: headers})
                 .map(res => res.json());
   }
+  
+  updateUniversityUserRole(universityUserRole){
+                let headers = new Headers();
+                headers.append('Content-Type','application/json');
+
+    //UniversityRoleUser/register is temporary domain
+                return this.http.post('http://localhost:3777/UniversityRoleUser/updateUniversityUser', universityUserRole,{headers: headers})
+                .map(res => res.json());
+  }
+  
+  
+  deleteUniversityUserRole(universityUserRole){
+                let headers = new Headers();
+                //headers.append('id',id);
+    //students/register is temporary domain
+                return this.http.post('http://localhost:3777/UniversityRoleUser/deleteUniversityUserRole',universityUserRole,{headers: headers})
+                .map(res => res.json());
+   }
   
    updateUniversity(university){
                 let headers = new Headers();
@@ -859,6 +887,44 @@ getAllUnivTranscationEventApprovalDetailInfoByUnivIDAndMaskID(univID, maskID){
                 return this.http.get('http://localhost:3777/OrganizationMstr/GetOrganizationsWithRoles')
                 .map(res => res.json());
   }
+  
+  // organization transaction map starts here
+  
+  getAllOrgnTranscationType()
+  {
+	  debugger;
+	  return this.http.get('http://localhost:3777/OrgnTranscationTypeMstr/getAllOrgnTranscationType')
+  	.map(res => res.json());
+  }
+  
+  getAllOrgnTranscationTypeWithRolesAndPriority(orgnid, trantypeid)
+  {
+	  debugger;
+	  let headers = new Headers();
+      headers.append('orgnid',orgnid);
+	  headers.append('transcationtypeid',trantypeid);
+	  return this.http.get('http://localhost:3777/OrgnTranscationTypeDetail/GetOrgnTranscationTypeDetailByUnivIDAndTransType',{headers: headers})
+  	.map(res => res.json());
+  }
+  
+  getMaxOrgnTranMapID()
+  {
+	  debugger;
+	  return this.http.get('http://localhost:3777/OrgnTranscationTypeDetail/getMaxOrgnTransMapID')
+  	.map(res => res.json());
+  }
+  
+  AddOrgnTranscationTypeDetail(OrganizationTranscation){
+  	let headers = new Headers();
+  	headers.append('Content-Type','application/json');
+
+	
+    //OrganizationTranscation/register is temporary domain
+  	return this.http.post('http://localhost:3777/OrgnTranscationTypeDetail/AddOrgnTranscationTypeDetail', OrganizationTranscation,{headers: headers})
+  	.map(res => res.json());
+  }
+  
+  // End here
   
   // End here
 

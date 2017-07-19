@@ -1,13 +1,15 @@
 export class UniversityRole {
 
     public constructor(	
-	public RoleID:Number,
-	public username:String,
-	public Password:String,
-	public Email_ID:String,
-	public Mobile_No:String,
-	public DepartMent:String,
-	public Univ_ID:Number,
+	public Role_ID:number,
+	public username:string,
+	public Password:string,
+	public Email_ID:string,
+	public Mobile_No:string,
+	public Department:string,
+	public Univ_ID:number,
+	public RoleName:string,
+	public _id:string
 	)
 	{
 		

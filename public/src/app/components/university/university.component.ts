@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ViewContainerRef } from '@angular/core';
 import {FlashMessagesService} from 'angular2-flash-messages';
 import {ValidateService} from '../../services/validate.service';
 import {AuthService} from '../../services/auth.service'
@@ -6,6 +6,7 @@ import {Router, ActivatedRoute, Params} from '@angular/router';
 
 import {universityModel} from '../../model/universityModel';
 import {AddUniversityComponent} from '../../components/university/add-university/add-university.component';
+import { ToastsManager } from 'ng2-toastr/ng2-toastr';
 
 @Component({
   selector: 'app-university',
@@ -28,8 +29,13 @@ export class UniversityComponent implements OnInit {
    private router: Router,
    private activatedRoute:ActivatedRoute,
   private adduniversity:AddUniversityComponent,
-  private flashMessage:FlashMessagesService
-  ) {}
+  private flashMessage:FlashMessagesService,
+	public toastr: ToastsManager, public vcr: ViewContainerRef
+	)
+	{
+	
+this.toastr.setRootViewContainerRef(vcr);
+		}
   
   @Input()
   ngOnInit() {      
@@ -129,6 +135,7 @@ this.activatedRoute.params.subscribe((params: Params) => {
 					 
                                 this.bindGrid();
 								this.SuccessMessage = "New University : "+ this.univeritymodel.Univ_Name +" added by admin."
+								this.toastr.success(this.SuccessMessage, 'Success!');
 								
                                 }
                                 else
@@ -147,6 +154,7 @@ this.activatedRoute.params.subscribe((params: Params) => {
 					 
                                 this.bindGrid();
 								this.SuccessMessage = "University : "+ this.univeritymodel.Univ_Name +" updated by admin."
+								this.toastr.success(this.SuccessMessage, 'Success!');								
                                 }
                 });
                 

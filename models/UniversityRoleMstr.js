@@ -54,6 +54,25 @@ module.exports.getUniversityRoleMstrByUnivID = function(Univ_ID,callback){
 	const query = {Univ_ID: Univ_ID}
 	UniversityRoleMaster.find(query,callback);}
 
+module.exports.getUniversityRoleInfoByUnivID = function(Univ_ID,callback){
+		
+	UniversityRoleMaster.aggregate([
+	{ $match: {
+            Univ_ID: parseInt(Univ_ID)
+        }},
+    {
+      
+		$lookup:
+        {
+          from: "UniversityRoleUser",
+          localField: "Univ_ID",
+          foreignField: "Univ_ID",
+          as: "RoleUserInfo"
+        }
+   },
+   
+], callback);}
+	
 module.exports.AddUniversityRoleMstr = function(newUniversityRoleMstr, callback){ 
 	console.log(newUniversityRoleMstr);
       newUniversityRoleMstr.save(callback);

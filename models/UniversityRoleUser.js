@@ -4,7 +4,9 @@ const config = require('../config/database');
 var bcrypt = require('bcrypt');
 //Schema
 const UniversityRoleUserSchema = mongoose.Schema({
-
+ id:{
+	 type:String
+ },
 
   Univ_ID:{
     type: Number
@@ -42,7 +44,8 @@ const UniversityRoleUserSchema = mongoose.Schema({
   
 
    Active:{
-    type: Boolean
+    type: Boolean,
+	default:true
   },
 
    Created_On:{
@@ -99,10 +102,28 @@ module.exports.addUniversityRoleUser = function(newUniversityRoleUser, callback)
 
   //if(err) throw err;
 }
+module.exports.getUniversityRoleUserByUnivID = function(univ_ID,callback){
+	const query = {Univ_ID: univ_ID, Active: true}
+	UniversityRoleUser.find(query,callback);
+}
+
+module.exports.deleteUniversityUserRole = function(id, callback){ 
+var query = { _id: id };
+console.log("db" + id);
+UniversityRoleUser.update(query, {Active:false}, callback);
+} 
+
 
 module.exports.getAllUniversityRoleUser = function(callback){	
+
 	UniversityRoleUser.find("",callback);
 }
+
+module.exports.updateUniversityRoleUser = function(universityRoleUser, callback){ 
+var query = { _id: universityRoleUser.id };
+console.log(query);
+UniversityRoleUser.update(query, {username: universityRoleUser.username,Email_ID:universityRoleUser.Email_ID,Mobile_No:universityRoleUser.Mobile_No,Department:universityRoleUser.Department}, callback);
+} 
 
 
 module.exports.udpateProfile = function(newUniversityRoleUser, callback){ 

@@ -1,9 +1,9 @@
-import { Component, OnInit,ChangeDetectorRef,ViewEncapsulation } from '@angular/core';
+import { Component, OnInit,ChangeDetectorRef,ViewEncapsulation, ViewContainerRef } from '@angular/core';
  import {ValidateService} from '../../../services/validate.service';
 import {AuthService} from '../../../services/auth.service';
 import {FlashMessagesService} from 'angular2-flash-messages';
 import {univerisityRoleMstr} from '../../../model/univerisityRoleMstr';
-
+import { ToastsManager } from 'ng2-toastr/ng2-toastr';
 
 import {Router, ActivatedRoute, Params} from '@angular/router';
 
@@ -34,9 +34,14 @@ model={
     private authService:AuthService,
     private router: Router,
 	private activatedRoute:ActivatedRoute,
-	private changeDetectorRef: ChangeDetectorRef
-    )
-	{}
+	private changeDetectorRef: ChangeDetectorRef,
+	public toastr: ToastsManager, public vcr: ViewContainerRef
+	)
+	{
+	
+this.toastr.setRootViewContainerRef(vcr);
+		}
+		
 	public Universities = [
 	  {Univ_ID: 0,  Univ_Name:"Please select"}
          
@@ -199,6 +204,7 @@ onChange(univID) {
 		  if(data.success)
 		  {
 			  this.SuccessMessage	= "New Role added successfully. Click + button to add more roles.";
+			   this.toastr.success(this.SuccessMessage, 'Success!');
 			  this.Universities = [
 	  {Univ_ID: 0,  Univ_Name:"Please select"}
          

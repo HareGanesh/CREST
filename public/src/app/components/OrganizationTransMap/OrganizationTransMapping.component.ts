@@ -42,7 +42,7 @@ export class OrganizationTransMappingComponent implements OnInit {
 	public eventId='';
   
   public ErrorList:string[]=[];
-   public universityRole:OrganizationRole;
+   public organizationRole:OrganizationRole;
   
   public universityTransMask:OrganizationTransMask;
   public universityTransMap:OrganizationTransMap;
@@ -121,7 +121,7 @@ submitted = false;
 		this.OrganizationRoles=[];
 		this.model.Roles=[];
 	//document.getElementsByClassName('AddMoreDiv').cssClass='show';
-       this.OrganizationRoles = this.OrganizationRolesWithOrganization.filter(x=>x.Orgn_ID ==orgnID);
+       //this.OrganizationRoles = this.OrganizationRolesWithOrganization.filter(x=>x.Orgn_ID ==orgnID);
 	   
 	   if(this.OrganizationsWithRoles.find(x=>x.Orgn_ID == parseInt(orgnID)).RoleList.length > 0)
 	   {
@@ -350,9 +350,9 @@ submitted = false;
 	  for(let i=0; i< levelNo;i++)
 	  {
 		  let length = this.model.Roles.length+1;
-		  let universityRole:OrganizationRole;
-		  this.universityRole = { Priority:length, RoleID:0};
-	  this.model.Roles.push(this.universityRole);
+		  let organizationRole:OrganizationRole;
+		  this.organizationRole = { Priority:length, RoleID:0};
+	  this.model.Roles.push(this.organizationRole);
 	  
 	  
 	   console.log(this.OrganizationRoles);

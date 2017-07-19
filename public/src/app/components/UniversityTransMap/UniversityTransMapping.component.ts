@@ -1,4 +1,4 @@
-import { Component, OnInit,ChangeDetectorRef,ViewEncapsulation } from '@angular/core';
+import { Component, OnInit,ChangeDetectorRef,ViewEncapsulation, ViewContainerRef } from '@angular/core';
  import {ValidateService} from '../../services/validate.service';
 import {AuthService} from '../../services/auth.service';
 import {FlashMessagesService} from 'angular2-flash-messages';
@@ -8,7 +8,7 @@ import { UniversityTrans } from './UniversityTrans';
 import { UniversityTransMask } from './UniversityTransMask';
 import { UniversityTransMap } from './UniversityTransMap';
 import {Router, ActivatedRoute, Params} from '@angular/router';
-
+import { ToastsManager } from 'ng2-toastr/ng2-toastr';
 
 
 @Component({
@@ -105,11 +105,14 @@ submitted = false;
     private authService:AuthService,
     private router: Router,
 	private activatedRoute:ActivatedRoute,
-	private changeDetectorRef: ChangeDetectorRef
+	private changeDetectorRef: ChangeDetectorRef,
+	public toastr: ToastsManager, public vcr: ViewContainerRef
+	)
+	{
+	
+this.toastr.setRootViewContainerRef(vcr);
+		}
 
-
-
-    ) { }
 
 	
 	onChange(univID) {
@@ -517,6 +520,7 @@ checkValidation()
 		debugger;
       if(data.success){
 		  this.SuccessMessage = "New Transcation type added by admin. Click + button to add more.";
+		  this.toastr.success(this.SuccessMessage, 'Success!');
 		  this.Universities = [
 	  {Univ_ID: 0,  Univ_Name:"Please select"}
          

@@ -48,8 +48,11 @@ import { ChangepasswordComponent } from './components/changepassword/changepassw
 import { ChangepasswordPopupComponent } from './components/changepasswordPopup/changepasswordPopup.component';
 import { EventstudentapprovallistComponent } from './components/universitydashboard/eventstudentapprovallist/eventstudentapprovallist.component'; 
  import {AccordionModule} from "ng2-accordion";
-// import {ToastModule} from 'ng2-toastr/ng2-toastr';
-// import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
+import {ToastModule} from 'ng2-toastr/ng2-toastr';
+import {ToastOptions} from 'ng2-toastr';
+import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
+import { CustomOption } from './custom-option';
+
 
 const appRoutes: Routes = [
 
@@ -122,10 +125,11 @@ const appRoutes: Routes = [
     FlashMessagesModule,
 	MultiselectDropdownModule,
 	TooltipModule,
-	AccordionModule
-	//BrowserAnimationsModule
+	AccordionModule,
+	BrowserAnimationsModule,
+	ToastModule.forRoot()
   ],
-  providers: [ValidateService, AuthService, AuthGuard],
+  providers: [ValidateService, AuthService, AuthGuard, {provide: ToastOptions, useClass: CustomOption}],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

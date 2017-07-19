@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewContainerRef } from '@angular/core';
 import {ValidateService} from '../../services/validate.service';
 import {AuthService} from '../../services/auth.service'
 import {Router, ActivatedRoute, Params} from '@angular/router';
@@ -7,6 +7,7 @@ import { UniversityTransEventApproval } from './UniversityTransEventApproval';
 import { IMultiSelectOption } from 'angular-2-dropdown-multiselect';
 import { IMultiSelectSettings } from 'angular-2-dropdown-multiselect';
 import { IMultiSelectTexts } from 'angular-2-dropdown-multiselect';
+import { ToastsManager } from 'ng2-toastr/ng2-toastr';
 
 @Component({
   selector: 'app-home',
@@ -24,8 +25,8 @@ export class EventsComponent implements OnInit {
          
      ];
 
-	  optionsModel: number[] = [1, 2];
- public selectedTexts: any[] = [];
+	  optionsModel: number[] = [8, 2];
+ public selectedTexts: any[] = [21,22];
 
 // // Settings configuration
 
@@ -119,10 +120,13 @@ myUnivOptions: IMultiSelectOption[] = [
    private validateService: ValidateService,  
    private authService:AuthService,
    private router: Router,
-   private activatedRoute:ActivatedRoute
-  
-
-    ) { }
+   private activatedRoute:ActivatedRoute,
+	public toastr: ToastsManager, public vcr: ViewContainerRef
+	)
+	{
+	
+this.toastr.setRootViewContainerRef(vcr);
+		}
 	
 
 	
@@ -152,7 +156,10 @@ ngOnInit()
  
 	this.authService.getAllUniversity().subscribe(data => {
 		   for(let i=0; i< data.length; i++)
+		   {
       this.myUnivOptions.push({id:data[i].Univ_ID, name:data[i].Univ_Name});
+		   
+		   }		   
     },
     //observable also returns error
     err => {
@@ -221,6 +228,10 @@ this.authService.GetEventOrganizerByEventID(eventID).subscribe(organizer => {
 	this.authService.GetEventOrganizationByEventID(eventID).subscribe(organization => {
 	debugger;
 	this.eventOrganizationArray=organization;
+	for(let i=0; i<organization.length; i++)
+	{
+		this.model.Organizations.push(parseInt(this.eventOrganizationArray[i].OrgnID));
+	}
 },  err => {
       console.log(err);
       return false;
@@ -229,6 +240,10 @@ this.authService.GetEventOrganizerByEventID(eventID).subscribe(organizer => {
 	this.authService.GetEventUniversityByEventID(eventID).subscribe(university => {
 	debugger;
 	this.eventUniversityArray=university;
+	for(let i=0; i<university.length; i++)
+	{
+		this.model.Universities.push(parseInt(this.eventUniversityArray[i].Univ_ID));
+	}
 },  err => {
       console.log(err);
       return false;
@@ -335,6 +350,7 @@ this.authService.GetEventOrganizerByEventID(eventID).subscribe(organizer => {
 		  this.model.Organizations =[];
 		  this.model.Universities=[]; 
 		  this.SuccessMessage = "Selected universities and organizations successfully invited."
+		  this.toastr.success(this.SuccessMessage , 'Success!');
        // this.flashMessage.show('univer has been registered', {cssClass: 'alert-success', timeout: 3000});
         //this.router.navigate(['/universitydashboard']);
       } else {
@@ -490,10 +506,10 @@ this.authService.GetEventOrganizerByEventID(eventID).subscribe(organizer => {
 	
 	this.authService.addIntoEventStudent(this.EventStudent[0]).subscribe(data => {
 		debugger;
-      // if(data.success){
-        // //this.flashMessage.show('You are now registered and can log in', {cssClass: 'alert-success', timeout: 3000});
-        // //this.router.navigate(['/login']);
-      // } else {
+      if(data.success){
+        this.toastr.success("You have been successfully invited. Please wait for the approval by university." , 'Success!');
+      }
+	  // else {
         // //this.flashMessage.show('Something went wrong', {cssClass: 'alert-danger', timeout: 3000});
         // //this.router.navigate(['/register']);
       // }

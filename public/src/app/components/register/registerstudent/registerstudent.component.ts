@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewContainerRef } from '@angular/core';
 import {ValidateService} from '../../../services/validate.service';
 import {AuthService} from '../../../services/auth.service'
 import {FlashMessagesService} from 'angular2-flash-messages';
@@ -7,6 +7,7 @@ import { NG_VALIDATORS,Validator,Validators,AbstractControl,ValidatorFn } from '
 import { UniversityTransApproval } from './UniversityTransApproval';
 
 
+import { ToastsManager } from 'ng2-toastr/ng2-toastr';
 
 @Component({
   selector: 'app-registerstudent',
@@ -56,11 +57,13 @@ export class RegisterstudentComponent implements OnInit {
    private validateService: ValidateService,
    private flashMessage:FlashMessagesService,
     private authService:AuthService,
-    private router: Router
-
-
-
-    ) { }
+    private router: Router,
+	public toastr: ToastsManager, public vcr: ViewContainerRef
+	)
+	{
+	
+this.toastr.setRootViewContainerRef(vcr);
+		}
 
   ngOnInit() {
 	  
@@ -93,6 +96,11 @@ export class RegisterstudentComponent implements OnInit {
    
   	}
   }
+  
+  showSuccess(msg) {
+	  debugger;
+        this.toastr.success(msg, 'Success!');
+      }
   
   emailChange()
   {
@@ -272,6 +280,7 @@ export class RegisterstudentComponent implements OnInit {
 		debugger;
       if(data.success){
 		  this.SuccessMessage = "Registration is complete. Request sent to university for approval. Once approved you can use login to continue. Click here for login: ";
+		  this.showSuccess(this.SuccessMessage);
 		  //this.model='';
 		  //this.ngOnInit();
 		  //document.getElementById('btnsubmit').disabled = true;

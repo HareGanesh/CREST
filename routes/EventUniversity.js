@@ -22,6 +22,7 @@ router.post('/EventUniversity', (req, res, next) => {
     Modified_by: req.body.Modified_by
   	});
 	
+	
   EventUniversity.AddEventUniversity(newEventUniversity, (err, EventUniversity)=> {
 	  console.log(newEventUniversity);
   		if(err){

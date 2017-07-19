@@ -11,30 +11,131 @@
 <ng-container *ngIf="authService.login();">
 <app-navbar></app-navbar> 
 
-<div class="container">  
-
-  <div class="row">
-    <div class="col-am-6 col-md-4 col-md-offset-4" style="width:100%">
-      <h1 class="text-left">Create University User Role</h1>
-      <br>
-      <div class="account-wall" style="width:50%">
-	  
-	  
-	  <div class="alert alert-success" style="margin-bottom:10px;" *ngIf="SuccessMessage !=''">
-  <strong>{{SuccessMessage}}</strong>
+<div style="margin-left:230px">
+      <nav class="navbar ">
+  <div class="container-fluid">
+    <div> 
+	
+	<div class="nav navbar-nav navbar-right col-xs-3">
+		<a data-toggle="modal" class="btn btn-primary pull-right navbar-btn"  (click)="clearModel();" data-target="#vv">Add University User</a>
+    </div>
+	
 </div>
+  </div>
+</nav>
+
+ <div class="row">
+              <div class="col-md-12">
+                <div>
+            
+                  <div class="x_content">
+				   <div class="row">
+				   <div class="col-md-12 mail_list_column">
+				   <div class="header">  
+                    <ul >
+					<li><a>Role Name</a></li>
+					
+					<li><a>EmailID</a></li>
+					<li><a>Contact No</a></li>					
+					<li><a>Active</a></li>
+					<li></li>
+					</ul>
+					</div>
+                      
+                      
+                     
+					<div class="item"> 
+					 <ul class="col-md-12 mail_list_column mail_list" *ngFor="let item of universityUserList; ">
+                      <li> {{item.RoleName}}</li>
+					  <li> {{item.username}}</li>
+                      <li>{{item.Mobile_No}} </li>
+                      
+                      <li> <input type="checkbox" checked="checked"> </li>
+					  <li>
+					  <a class="btn btn-primary pull-right" style="width:66px;" (click)="deleteUniverity(item._id)"  data-toggle="modal" data-target="#deleteDiv">Delete</a>
+					  <a class="btn btn-primary pull-right" style="width:66px;" (click)="showPopup(item._id)" data-toggle="modal" data-target="#vv">Edit</a> 
+					  
+					  </li>
+</ul>
+                      </div>
+					  </div>
+					  
+                      <!-- /MAIL LIST -->
+
+                      <!-- CONTENT MAIL -->
+                     
+                      <!-- /CONTENT MAIL -->
+                    </div>
+                    
+                  </div>
+                </div>
+              </div>
+            </div>
+</div>
+
+<div id="deleteDiv" class="modal fade" role="dialog" >
+<div class="modal-dialog" style="width:30% !important" >
+
+<div class="modal-content" >
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title" style="color:#73879C;background: #F7F7F7;font-family:inherit;font-size: 30px;font-weight: 400;line-height: 1.471">Delete University user</h4>
+      </div>
+	  <div class="modal-body">
+	   
+	   
+	   Do you really  want to delete user role ? 
+	   
+	  
+	  </div>
+	  <div class="model-footer">
+
+<input type="button" (click)="deleteItem()" class="btn btn-lg btn btn-primary"  style="float:right;" value="Yes" >
+<input type="button" class="btn btn-lg btn btn-primary"  id="close2" data-dismiss="modal" value="No">
+</div>
+</div>
+</div>
+</div>
+
+<!-- <div class="container">   -->
+
+  <!-- <div class="row"> -->
+  
+  
+  
+    <!-- <div class="col-am-6 col-md-4 col-md-offset-4" style="width:100%"> -->
+      <!-- <h1 class="text-left">Create University User Role</h1> -->
+      <!-- <br> -->
+      <!-- <div class="account-wall" style="width:50%"> -->
+	  
+	  
+	  
 	  
 
 
+<div class="container"> 
+<div  id="vv" class="modal fade" role="dialog">
+<div class="modal-dialog">
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title" style="color:#73879C;background: #F7F7F7;font-family:inherit;font-size: 30px;font-weight: 400;line-height: 1.471">User role</h4>
+      </div>
 
-
+<div class="modal-body">
+<div class="row">
+    <div style="width:100%" class="col-am-6 col-md-4">
+     
+      <div class="account-wall" style="width:100%">
+	  
 <form (submit)="onUserRoleSubmit()" #RoleForm="ngForm">	
 
 <div id="tabs">
 <div class="row">
 
 <ul class="nav nav-tabs" id="wheel-tab">
-<li class="active " #firstLI>
+<li class="active ">
 <a href="#OverviewTab" data-toggle="tab">University Role</a>
 </li>
 
@@ -62,7 +163,7 @@
      <span class="input-group-addon"><i class="fa fa-key"></i></span>
 	
 		
-	<select id="#UniversityRoleID" #UniversityRoleID="ngModel" [(ngModel)]="model.RoleID"   name="UniversityRoleID" class="form-control" >         
+	<select id="#UniversityRoleID" #UniversityRoleID="ngModel" [(ngModel)]="model.Role_ID"   name="UniversityRoleID" class="form-control" >         
 			<option *ngFor="let univRole of UniversityRoles" [ngValue]="univRole.Univ_RoleID">
 				{{univRole.Univ_RoleName}}
 			</option>
@@ -73,10 +174,10 @@
 	</div>
 				<label>Email <span class="red">*</span></label>
 				<div class="input-group">
-				 <span class="input-group-addon"><i class="fa fa-address-card"></i></span>
+				 <span class="input-group-addon"><i class="fa fa-envelope"></i></span>
 					
 					<input required type="text" [(ngModel)]="model.username" name="username" ngControl="username"  class="form-control" placeholder="Email"
-					autofocus="true" id="#username" #username="ngModel" (focusout)="userNameChange()">
+				 id="#username" #username="ngModel" (focusout)="userNameChange()">
 					<div [hidden]="username.valid || username.pristine"
 						 class="alert alert-danger">
 					  Email is required
@@ -109,7 +210,7 @@
 				 <span class="input-group-addon"><i class="fa fa-mobile"></i></span>
 					
 					<input required type="text" [(ngModel)]="model.Mobile_No" name="Mobile_No" ngControl="MobileNo"  class="form-control" placeholder="Mobile No"
-					autofocus="true" id="#MobileNo" #MobileNo="ngModel" pattern="[0-9]*" minlength="10" maxlength="10">
+				 id="#MobileNo" #MobileNo="ngModel" pattern="[0-9]*" minlength="10" maxlength="10">
 					<div [hidden]="MobileNo.valid || MobileNo.pristine"
 						 class="alert alert-danger">
 					  <div [hidden]="!MobileNo.hasError('minlength')">Mobile number should be 10 digit</div>
@@ -123,7 +224,7 @@
 				<span class="input-group-addon"><i class="fa fa-address-card"></i></span>
 		
 				<textarea [(ngModel)]="model.Department" name="Department" ngControl="Department"  class="form-control" placeholder="Department"
-				autofocus="true" id="#Department" #Department="ngModel" cols="3" rows="3" maxlength="2000" required></textarea>
+				 id="#Department" #Department="ngModel" cols="3" rows="3" maxlength="2000" required></textarea>
 				<div [hidden]="Department.valid || Department.pristine"
 				class="alert alert-danger">
 				Department is required
@@ -136,6 +237,7 @@
 
 
 <div>
+<input type="button" class="btn btn-lg btn btn-primary btn-block" id="close" data-dismiss="modal" value="Close" style="margin-top:4px; width:15%;float:right">
 	<input type="submit" class="btn btn-lg btn btn-primary btn-block" style="width:15%;float:right" value="Save!" [disabled]="!RoleForm.form.valid || ErrorList.length >0 || UserNameErrorList.length >0 ||  model.RoleID == 0">
 	</div>
 	
@@ -149,9 +251,13 @@
 </form>
 </div>
 </div>
-</div>
-</div>
 
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
 
 </ng-container>
 <ng-container *ngIf="!authService.login();">

@@ -54,9 +54,9 @@ module.exports.getAllEventUniversity = function(callback){
 }
 
 
-module.exports.RemoveEventUniversityByID = function(EventUniversityID, callback){ 
-var query = { EventUniversityID: EventUniversityID };
-EventUniversity.update(query, {Active: false}, callback);}
+module.exports.RemoveEventUniversityByEventID = function(EventID, callback){ 
+var query = { EventID: EventID };
+EventUniversity.remove(query, callback);}
 
 
 module.exports.DeleteEventUniversityByEventID = function(EventID, callback){ 

@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewContainerRef } from '@angular/core';
 import {ValidateService} from '../../services/validate.service';
 import {AuthService} from '../../services/auth.service'
 import {Router} from '@angular/router';
+import { ToastsManager } from 'ng2-toastr/ng2-toastr';
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -17,15 +18,25 @@ public ActionPar = '';
   constructor(
    private validateService: ValidateService,  
     private authService:AuthService,
-    private router: Router
-
-
-
-    ) { }
+    private router: Router,
+	public toastr: ToastsManager, private vcr: ViewContainerRef
+	)
+	{
+	
+this.toastr.setRootViewContainerRef(vcr);
+		}
 ngOnInit() {
 	debugger;
 	this.tagID=localStorage.getItem('tagID');
 	this.ActionPar = localStorage.getItem('actionResult');
+	if(this.ActionPar == 'R')
+	{
+	this.toastr.warning('Event rejected!', 'Alert!!');
+	}else if(this.ActionPar == 'A')
+	{
+		this.toastr.success('Event approved!', 'Success!');
+	}
+	
 	this.authService.SetActionResult('');
 	if(this.authService.login())
 	{

@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewContainerRef } from '@angular/core';
 import {AuthService} from '../../services/auth.service';
 import {Router} from '@angular/router';
 import {FlashMessagesService} from 'angular2-flash-messages';
-
+import { ToastsManager } from 'ng2-toastr/ng2-toastr';
 
 @Component({
   selector: 'app-login',
@@ -17,10 +17,22 @@ public model:Object;
   constructor(
     private authService:AuthService,
     private router:Router,
-    private flashMessage:FlashMessagesService
-  ) { }
+    private flashMessage:FlashMessagesService,
+	public toastr: ToastsManager, public vcr: ViewContainerRef
+	)
+	{
+	
+this.toastr.setRootViewContainerRef(vcr);
+		}
 
   ngOnInit() {
+	   if(localStorage.getItem('actionResult') == "PC")
+	   {
+		   this.toastr.success('Password changed successfully! Please login with new password', 'Success');
+	   }
+	   
+	   this.authService.SetActionResult('');
+	   
 	this.model= 
 	{
       username: '',

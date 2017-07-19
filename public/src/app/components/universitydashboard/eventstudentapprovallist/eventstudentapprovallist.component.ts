@@ -1,4 +1,4 @@
-import { Component, OnInit, Input,ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, Input,ViewEncapsulation, ViewContainerRef } from '@angular/core';
 import {FlashMessagesService} from 'angular2-flash-messages';
 import {ValidateService} from '../../../services/validate.service';
 import {AuthService} from '../../../services/auth.service'
@@ -8,6 +8,7 @@ import { UniversityTransEventApproval } from './UniversityTransEventApproval';
 import { UniversityTransEventApprovalList } from './UniversityTransactionEventApprovalList';
 import {TooltipModule} from "ngx-tooltip";
 import {AccordionModule} from "ng2-accordion";
+import { ToastsManager } from 'ng2-toastr/ng2-toastr';
 
 @Component({
   selector: 'app-eventstudentapprovallist',
@@ -58,8 +59,14 @@ export class EventstudentapprovallistComponent implements OnInit {
    private router: Router,
    private activatedRoute:ActivatedRoute,
   
-  private flashMessage:FlashMessagesService
-  ) {}
+  private flashMessage:FlashMessagesService,
+	public toastr: ToastsManager, public vcr: ViewContainerRef
+	)
+	{
+	
+this.toastr.setRootViewContainerRef(vcr);
+		}
+  
   
   @Input()
    ngOnInit() {	
@@ -364,6 +371,7 @@ export class EventstudentapprovallistComponent implements OnInit {
       if(data.success){
         //this.flashMessage.show('You are now registered and can log in', {cssClass: 'alert-success', timeout: 3000});
         document.getElementById('close').click();
+		this.toastr.success('Approved, Students request for event participation is approved.', 'Approved!');
                                 this.bindGrid();
       } else {
         //this.flashMessage.show('Something went wrong', {cssClass: 'alert-danger', timeout: 3000});
@@ -506,6 +514,7 @@ export class EventstudentapprovallistComponent implements OnInit {
       if(data.success){
         //this.flashMessage.show('You are now registered and can log in', {cssClass: 'alert-success', timeout: 3000});
         document.getElementById('closeR').click();
+		this.toastr.warning('Rejected, Students request for event participation is rejected.', 'Reject!');
                                 this.bindGrid();
       } else {
         //this.flashMessage.show('Something went wrong', {cssClass: 'alert-danger', timeout: 3000});

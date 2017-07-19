@@ -349,9 +349,7 @@ Prizes
 
 <div *ngIf="tagID=='C'" id="InviteTab" class="tab-pane fade">
 
-<div class="alert alert-success" *ngIf="SuccessMessage !=''">
-  <strong>{{SuccessMessage}}</strong>
-</div>
+
 <div class="alert alert-danger" *ngIf="DangerMessage !=''">
   <strong>{{DangerMessage}}</strong>
 </div>
@@ -366,7 +364,7 @@ Prizes
 <div class="AddMoreDiv">
 <label style="margin-right:23px;">Please invite Universities:</label>
 
-<ss-multiselect-dropdown id ="univ" name="Universities" [options]="myUnivOptions" [texts]="myUnivTexts" (ngModelChange)="onUniversityChange($event)" [settings]="mySettings" [ngModel]="model.Universities" style="width:200px !important;"></ss-multiselect-dropdown>
+<ss-multiselect-dropdown id ="univ" name="Universities"  [options]="myUnivOptions" [texts]="myUnivTexts" (ngModelChange)="onUniversityChange($event)" [settings]="mySettings" [ngModel]="model.Universities" style="width:200px !important;"></ss-multiselect-dropdown>
 
 </div>
 

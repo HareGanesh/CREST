@@ -1,9 +1,10 @@
-import { Component, OnInit,ChangeDetectorRef,ViewEncapsulation } from '@angular/core';
+import { Component, OnInit,ChangeDetectorRef,ViewEncapsulation, ViewContainerRef } from '@angular/core';
 import {ValidateService} from '../../services/validate.service';
 import {AuthService} from '../../services/auth.service';
 import {FlashMessagesService} from 'angular2-flash-messages';
 //import { UniversityRole } from './UniversityRole';
 import {Router, ActivatedRoute, Params} from '@angular/router';
+import { ToastsManager } from 'ng2-toastr/ng2-toastr';
 
 @Component({
   selector: 'app-changepasswordPopup',
@@ -21,7 +22,13 @@ export class ChangepasswordPopupComponent implements OnInit {
     private authService:AuthService,
     private router: Router,
 	private activatedRoute:ActivatedRoute,
-	private changeDetectorRef: ChangeDetectorRef) { }
+	private changeDetectorRef: ChangeDetectorRef,
+	public toastr: ToastsManager, public vcr: ViewContainerRef
+	)
+	{
+	
+this.toastr.setRootViewContainerRef(vcr);
+		}
     model={  	
 	//OldPwd:'',
     Pwd:'', 
@@ -52,6 +59,11 @@ export class ChangepasswordPopupComponent implements OnInit {
     // });
   }
   
+  showSuccess()
+  {
+	  this.toastr.success('Password changed successfully! Please login with new password', 'Success');
+  }
+  
   onPasswordSubmit(){
 	  debugger;
 	  this.submitted = true; 	
@@ -72,8 +84,9 @@ export class ChangepasswordPopupComponent implements OnInit {
 		  //document.getElementById('close').click();
 		  //this.SuccessMessage= "Password changed successfully. Please click close to continue."
 		  //document.getElementById(btn).click();
+		   this.toastr.success('Password changed successfully! Please login with new password', 'Success');
 		  this.authService.logout();
-		  
+		 this.authService.SetActionResult('PC');
         //this.flashMessage.show('You are now registered and can log in', {cssClass: 'alert-success', timeout: 3000});
         this.router.navigate(['/login']);
 		

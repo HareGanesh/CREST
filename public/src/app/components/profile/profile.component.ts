@@ -1,4 +1,4 @@
-import { Component, OnInit,ElementRef	 } from '@angular/core';
+import { Component, OnInit,ElementRef, ViewContainerRef } from '@angular/core';
 import {AuthService} from '../../services/auth.service';
 import {Router} from '@angular/router';
 import {categoryModel} from '../../model/categoryModel'
@@ -7,6 +7,7 @@ import {AccordionModule} from "ng2-accordion";
 import { StudentProfessionalDetail } from './StudentProfessionalDetail';
 import { StudentEducationDetail } from './StudentEducationDetail';
 import { StudentDetail } from './StudentDetail';
+import { ToastsManager } from 'ng2-toastr/ng2-toastr';
 
 @Component({
   selector: 'app-profile',
@@ -83,10 +84,13 @@ export class ProfileComponent implements OnInit {
 	
      	};
 debugger;
-  constructor(private authService:AuthService, private router:Router, private elm: ElementRef) {
-	  
-
-  }
+  constructor(private authService:AuthService, private router:Router, private elm: ElementRef,
+	public toastr: ToastsManager, public vcr: ViewContainerRef
+	)
+	{
+	
+this.toastr.setRootViewContainerRef(vcr);
+		}
   public options:categoryModel[]=[];
   public studentCategoryList :studentCategoryModel[]=[];
 optionsMap = {
@@ -323,8 +327,10 @@ optionsChecked = [];
 	 this.authService.updateProfile(this.model).subscribe(data => {
 		
       if(data.success){		
-		this.SuccessMessage	= "profile updated successfully.";
-		
+		//this.SuccessMessage	= "profile updated successfully.";
+		this.toastr.success('Profile updated successfully!', 'Success!');
+		document.body.scrollTop = document.documentElement.scrollTop = 0;
+
 		 if(this.options.length >0)
 	  {
 		  for(let m=0;m<this.options.length; m++)

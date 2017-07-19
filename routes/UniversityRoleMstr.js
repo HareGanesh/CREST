@@ -72,6 +72,20 @@ router.get('/getUniversityRoleMstrByUnivID', (req, res) => {
   });  
 });
 
+router.get('/getUniversityRoleInfoByUnivID', (req, res) => {
+  var univID = req.headers["univid"];  
+  UniversityRole.getUniversityRoleInfoByUnivID(univID, (err,UniversityRole)=>{
+    if(err) {
+		throw err;		
+	}
+     else
+	  {		 
+		  res.json(UniversityRole);
+	  }
+  });  
+});
+
+
 
 router.get('/getAllUniversityRole', (req, res) => {
 

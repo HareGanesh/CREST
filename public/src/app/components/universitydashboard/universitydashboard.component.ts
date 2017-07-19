@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ViewContainerRef } from '@angular/core';
 import {FlashMessagesService} from 'angular2-flash-messages';
 import {ValidateService} from '../../services/validate.service';
 import {AuthService} from '../../services/auth.service'
@@ -7,6 +7,7 @@ import {universityApprovalHistory} from './universityApprovalHistory';
 import { UniversityTransApproval } from './UniversityTransApproval';
 import { UniversityTransApprovalList } from './UniversityTransactionApprovalList';
 import {TooltipModule} from "ngx-tooltip";
+import { ToastsManager } from 'ng2-toastr/ng2-toastr';
 
 @Component({
   selector: 'app-universitydashboard',
@@ -51,8 +52,13 @@ export class UniversitydashboardComponent implements OnInit {
    private router: Router,
    private activatedRoute:ActivatedRoute,
   
-  private flashMessage:FlashMessagesService
-  ) {}
+  private flashMessage:FlashMessagesService,
+	public toastr: ToastsManager, public vcr: ViewContainerRef
+	)
+	{
+	
+this.toastr.setRootViewContainerRef(vcr);
+		}
   
   @Input()
    ngOnInit() {	
@@ -358,6 +364,7 @@ export class UniversitydashboardComponent implements OnInit {
       if(data.success){
         //this.flashMessage.show('You are now registered and can log in', {cssClass: 'alert-success', timeout: 3000});
         document.getElementById('close').click();
+		this.toastr.success('Approved, Students are allowed to login to Crest portal', 'Success!');	
                                 this.bindGrid();
       } else {
         //this.flashMessage.show('Something went wrong', {cssClass: 'alert-danger', timeout: 3000});
@@ -479,6 +486,7 @@ export class UniversitydashboardComponent implements OnInit {
       if(data.success){
         //this.flashMessage.show('You are now registered and can log in', {cssClass: 'alert-success', timeout: 3000});
         document.getElementById('close2').click();
+		this.toastr.success('Approved, Student is allowed to login to Crest portal', 'Success!');	
                                 this.bindGrid();
       } else {
         //this.flashMessage.show('Something went wrong', {cssClass: 'alert-danger', timeout: 3000});
@@ -610,6 +618,7 @@ export class UniversitydashboardComponent implements OnInit {
       if(data.success){
         //this.flashMessage.show('You are now registered and can log in', {cssClass: 'alert-success', timeout: 3000});
         document.getElementById('closeRA').click();
+		this.toastr.warning('Rejected, Students are not allowed to login.', 'Warning!');	
                                 this.bindGrid();
       } else {
         //this.flashMessage.show('Something went wrong', {cssClass: 'alert-danger', timeout: 3000});
@@ -729,6 +738,7 @@ export class UniversitydashboardComponent implements OnInit {
       if(data.success){
         //this.flashMessage.show('You are now registered and can log in', {cssClass: 'alert-success', timeout: 3000});
         document.getElementById('closeR').click();
+		this.toastr.warning('Rejected, Student is not allowed to login.', 'Warning!');	
                                 this.bindGrid();
       } else {
         //this.flashMessage.show('Something went wrong', {cssClass: 'alert-danger', timeout: 3000});

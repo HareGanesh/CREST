@@ -148,6 +148,13 @@ router.post('/AddEventInvite', (req, res, next) => {
   
 				if(organizationInfo.length>0)
                     {
+						
+						EventOrganization.RemoveEventOrganizationByEventID(eventID, (err, eventorgn)=> {
+                                                                                console.log(eventorgn);
+                                                                });
+                        
+							
+							
                         for(var n=0;n < organizationInfo.length; n++)
                             {
                                 var  eventOrganization= new EventOrganization();
@@ -160,6 +167,12 @@ router.post('/AddEventInvite', (req, res, next) => {
                     }
 				if(universitiesInfo.length>0)
                     {
+						
+                        EventUniversity.RemoveEventUniversityByEventID(eventID, (err, eventUniv)=> {
+                                                                                console.log(eventUniv);
+                                                                });
+                            
+							
                         for(var n=0;n < universitiesInfo.length; n++)
                             {
                                 var  eventUniversity= new EventUniversity();

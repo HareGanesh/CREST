@@ -55,9 +55,9 @@ module.exports.getAllEventOrganization = function(callback){
 }
 
 
-module.exports.RemoveEventOrganizationByID = function(EventOrganizationID, callback){ 
-var query = { EventOrganizationID: EventOrganizationID };
-EventOrganization.update(query, {Active: false}, callback);}
+module.exports.RemoveEventOrganizationByEventID = function(EventID, callback){ 
+var query = { EventID: EventID };
+EventOrganization.update(query, callback);}
 
 
 module.exports.DeleteEventOrganizationByEventID = function(EventID, callback){ 

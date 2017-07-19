@@ -17,13 +17,14 @@ router.post('/register', (req, res, next) => {
   	//Student_Name: req.body.Student_Name,
   	Email_ID: req.body.Email_ID,
   	username: req.body.username,
+	Department:req.body.Department,
   	Pwd: req.body.Password,
     //Student_ID: req.body.Student_ID,
     //DOB: req.body.DOB,
     //Address: req.body.Address,
     Mobile_No: req.body.Mobile_No,
     Univ_ID: req.body.Univ_ID,
-    Role_ID: req.body.RoleID
+    Role_ID: req.body.Role_ID
   	});
 	
 	let userDetail = new userLogin(
@@ -52,6 +53,62 @@ router.post('/register', (req, res, next) => {
   });
 });
 
+router.post('/updateUniversityUser', (req, res, next) => {
+	
+		console.log("routes" + req.body);
+  let newUniversityRoleUser = new UniversityRoleUser({
+	id :req.body._id,
+  	//Student_Name: req.body.Student_Name,
+  	Email_ID: req.body.Email_ID,
+  	username: req.body.username,
+	Department:req.body.Department,
+  	
+    //Student_ID: req.body.Student_ID,
+    //DOB: req.body.DOB,
+    //Address: req.body.Address,
+    Mobile_No: req.body.Mobile_No,
+    Univ_ID: req.body.Univ_ID,
+    Role_ID: req.body.Role_ID
+  	});
+  UniversityRoleUser.updateUniversityRoleUser(newUniversityRoleUser, (err, univRoleUser)=> {
+                  
+                                if(err){
+                                                
+      res.json({success: false, msg:'Failed to update '});
+                  console.log(err);            
+    } else {
+      res.json({success: true, msg:'University updated'});
+    }
+  });
+});
+
+router.post('/deleteUniversityUserRole', (req, res, next) => {
+	
+  UniversityRoleUser.deleteUniversityUserRole(req.body._id, (err, univ)=> {
+                  
+                                if(err){
+                                                
+      res.json({success: false, msg:'Failed to delete '});
+                  console.log(err);            
+    } else {
+      res.json({success: true, msg:'deleted '});
+    }
+  });
+});
+
+
+router.get('/getUniversityRoleUserByUnivID', (req, res) => {
+  var univID = req.headers["univid"];  
+  UniversityRoleUser.getUniversityRoleUserByUnivID(univID, (err,UniversityRoleUser)=>{
+    if(err) {
+		throw err;		
+	}
+     else
+	  {		 
+		  res.json(UniversityRoleUser);
+	  }
+  });  
+});
 
 // Authenticate
 router.post('/authenticateUniversityRole', (req, res, next) => {
