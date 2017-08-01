@@ -40,7 +40,7 @@ ngOnInit() {
 	this.authService.SetActionResult('');
 	if(this.authService.login())
 	{
-		if(this.tagID == 'O')
+		if(this.tagID == 'O' || this.tagID == 'OR')
 		{
 		this.bindGrid();
 		}else if(this.tagID == 'S' || this.tagID == 'U' || this.tagID == 'UR')
@@ -278,12 +278,12 @@ public open() {
 		this.bindEvents();
 		}
 		
-		if(this.tagID == 'O')
+		if(this.tagID == 'O' || this.tagID == 'OR')
 		{
 		this.bindGrid();
 		}
 		
-		if(this.tagID == 'S' || this.tagID == 'U' || this.tagID == 'UR')
+		if(this.tagID == 'S' || this.tagID == 'U' || this.tagID == 'UR' || this.tagID == 'O')
 		{
 		this.bindGridUniverties();
 		}

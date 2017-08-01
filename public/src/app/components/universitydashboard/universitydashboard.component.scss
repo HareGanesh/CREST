@@ -1,3 +1,82 @@
+// ng2 smart table
+
+:host /deep/ {
+  ng2-smart-table {
+  
+  font-family: "Helvetica Neue", Roboto, Arial, "Droid Sans", sans-serif;
+    border-collapse: collapse;
+	 font-size: 13px !important;
+    width: 100%;
+	
+    th, td {
+      
+      line-height: 35px;
+      vertical-align: middle;
+	  border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+	 font-family: "Helvetica Neue", Roboto, Arial, "Droid Sans", sans-serif;
+    }
+
+    tr td {
+      padding: 0 8px;
+	   font-size: 13px !important;
+	 font-family: "Helvetica Neue", Roboto, Arial, "Droid Sans", sans-serif !important;
+    margin: 0;
+    padding: 8px;
+    }
+	
+	tr:nth-child(even) {
+    background-color: #dddddd;
+}
+}
+
+a.ng2-smart-sort-link {
+      font-size: 16px !important;
+      
+      font-weight: bold;
+      &.sort {
+        font-weight: bold !important;
+
+        &::after {
+          
+        }
+      }
+    }
+
+	.ng2-smart-action-multiple-select input{
+    
+    
+    height: 20px !important;
+    margin-left:0px !important;
+    font-size: 14px;
+    line-height: 1.42857;
+    color: #555555;
+    background-color: #fff;
+    background-image: none;
+    border: 1px solid #ccc;
+    border-radius: 0px;
+    box-shadow: none !important;
+}
+ 
+}
+
+
+ul:nth-child(even) {
+    background-color: #dddddd;
+}
+
+.row {
+    margin-right: 6px;
+    margin-left: 0px;
+}
+
+
+
+
+
+
+
 .grid-item {
 	border: solid 1px #ccc;
 }
@@ -40,7 +119,8 @@ body {
     margin: 0;
     padding: 0;
     overflow: hidden;
-    background-color: #333333;
+    background-color: #aaaaa;
+	border: 1px solid #dddddd;
 }
 
 .header li {
@@ -51,15 +131,25 @@ body {
 
 .header li a {
     display: block;
-    color: white;   
+    color: #1e6bb8;   
     padding: 16px;
     text-decoration: none;
-	font-weight:16;
+	font-size:14px;
+	font-weight:bold;
 	text-align:left;
 }
 
  .header li a:hover {
-    background-color: #111111;
+    
+}
+
+tooltip-content.tooltip.bottom {
+    margin-top: -25px !important;
+    padding: 5px 0 !important;
+}
+
+.table th {
+color:#1e6bb8;
 }
 
 .item ul{

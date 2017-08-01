@@ -113,6 +113,11 @@ console.log("db" + id);
 UniversityRoleUser.update(query, {Active:false}, callback);
 } 
 
+module.exports.RemoveUniversityUserRoleByRoleID = function(roleId, callback){ 
+var query = { Role_ID: roleId };
+
+UniversityRoleUser.remove(query, callback);
+}
 
 module.exports.getAllUniversityRoleUser = function(callback){	
 

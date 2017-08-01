@@ -1,4 +1,4 @@
-import { Component, OnInit,ChangeDetectorRef,ViewEncapsulation, ViewContainerRef } from '@angular/core';
+import { Component, OnInit,ChangeDetectorRef, ViewContainerRef } from '@angular/core';
 //import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 
 import {ValidateService} from '../../services/validate.service';
@@ -6,7 +6,7 @@ import {AuthService} from '../../services/auth.service';
 import {FlashMessagesService} from 'angular2-flash-messages';
 import { UniversityRole } from './UniversityRole';
 import { ToastsManager } from 'ng2-toastr/ng2-toastr';
-
+import { Ng2SmartTableModule, LocalDataSource  } from 'ng2-smart-table';
 
 
 import {Router, ActivatedRoute, Params} from '@angular/router';
@@ -20,7 +20,7 @@ export class UniversityroleComponent implements OnInit {
   public UniversityRoles = [
 	   {Univ_RoleID: 0,  Univ_RoleName:"Please select"}         
      ];
-	 
+  source: LocalDataSource; 
   public universityUserList: Array<UniversityRole> = [];
   public universityUserTempList: Array<UniversityRole> = [];
   public univID;
@@ -52,6 +52,53 @@ export class UniversityroleComponent implements OnInit {
 	Univ_ID:0
      	};
 		
+	settings = {
+	delete: {
+      confirmDelete: true,
+	  //deleteButtonContent: '<a class="btn btn-primary pull-right" style="width:66px;" (click)="deleteUniverity(item._id)"  data-toggle="modal" data-target="#deleteDiv">Delete</a>'
+    },
+	edit: {
+      confirmSave: true,
+    },
+	
+	actions: {
+	 edit: false, //as an example  
+	 add:false,
+	 custom: [{ name: 'edit', title:'Edit'}],
+	 position:'right'
+	},
+	
+	pager:{
+	 perPage:10
+	},
+
+
+  columns: {
+    RoleName: {
+      title: 'Role Name',
+	  filter:false
+	  
+    },
+    
+    username: {
+      title: 'Email ID',
+	  filter:false
+    },
+    Mobile_No: {
+      title: 'Contact No',
+	  filter:false
+    },
+	Active:{
+		title:'Active',
+	  filter:false
+	}
+  }
+};
+
+data = [
+    
+];
+		
   submitted = false;
   public deleteID='';
   ngOnInit() {
@@ -74,8 +121,12 @@ export class UniversityroleComponent implements OnInit {
 		   for(let i=0; i< this.universityUserList.length; i++)
 		   {
 			   this.universityUserList[i].RoleName = this.UniversityRoles.filter(x=>x.Univ_RoleID == this.universityUserList[i].Role_ID)[0].Univ_RoleName;
+			   
 			//this.UniversityRoles.push(data[i]);
 		   }
+		   this.data = this.universityUserList;
+		   this.source = new LocalDataSource(this.data); 
+		   this.source.setSort([{ field: 'RoleName', direction: 'asc' }]);
     },
     //observable also returns error
     err => {
@@ -99,11 +150,63 @@ export class UniversityroleComponent implements OnInit {
 	  debugger;
         this.toastr.success('You are awesome!', 'Success!');
       }
+	  
+   onSearch(query: string = '') {
+	  debugger;
+	  if(query != '')
+	  {
+  this.source.setFilter([
+    // fields we want to include in the search
+    {
+      field: 'RoleName',
+      search: query
+    },    
+    {
+      field: 'username',
+      search: query
+    },
+    {
+      field: 'Mobile_No',
+      search: query
+    }
+  ], false); 
+	  }else
+	  {
+		  this.source = new LocalDataSource(this.data); 
+		  this.source.setSort([{ field: 'RoleName', direction: 'asc' }]);
+	  }  
+	}
+	
+	onDeleteConfirm(event) {
+	  debugger;
+	  //document.getElementById('deleteDiv').show();
+	  this.deleteUniverityUser(event.data._id);
+	  document.getElementById("deletebtn").click();
+
+    // if (window.confirm('Are you sure you want to delete?')) {
+      // event.confirm.resolve();
+    // } else {
+      // event.confirm.reject();
+    // }
+  }
+  
+  onEdit(event) {
+	  debugger;
+	  this.showPopup(event.data._id);
+	  document.getElementById("editbtn").click();
+	  
+    // if (window.confirm('Are you sure you want to save?')) {
+      // event.newData['name'] += ' + added in code';
+      // event.confirm.resolve(event.newData);
+    // } else {
+      // event.confirm.reject();
+    // }
+  }
 
   
   emailChange()
   {
-	  debugger;
+	  
 	  let length = this.ErrorList.length;
 		for(let i=0; i< length;i++)
 		{
@@ -131,7 +234,7 @@ export class UniversityroleComponent implements OnInit {
   
   userNameChange()
   {
-	  debugger;
+	 
 	  let length = this.UserNameErrorList.length;
 		for(let i=0; i< length;i++)
 		{
@@ -155,7 +258,7 @@ export class UniversityroleComponent implements OnInit {
 		}
   }
   
-  deleteUniverity(id)
+  deleteUniverityUser(id)
   {
      this.deleteID=id;
   }
@@ -203,7 +306,7 @@ export class UniversityroleComponent implements OnInit {
   {              
      // this.Action="Edit";
 	 this.UserNameErrorList = [];
-       this.model = this.universityUserList.find(x=>x._id == id);
+       this.model = this.data.find(x=>x._id == id);
 	   this.username = this.model.username;
 	   this.EmailID = this.model.Email_ID;
   }

@@ -112,7 +112,30 @@ this.toastr.setRootViewContainerRef(vcr);
 			}else {
             // this.flashMessage.show('You are now logged in', {
             // cssClass: 'alert-success'});
-           this.router.navigate(['/organizationrole']);
+           this.router.navigate(['/universityhome']);
+			}
+        } 
+                                else
+                                {
+           this.flashMessage.show(orgn.msg, {
+           cssClass: 'alert-danger'});
+           //this.router.navigate(['login']);
+        }
+          });
+                  }
+				  else if(data.user.TagID=="OR")
+                {
+                  this.authService.authenticateOrganizationRole(this.model).subscribe(orgn => {
+        if(orgn.success)
+                                {
+           this.authService.storeStudentData(orgn.token, orgn.organizationRoleUser,data.user.TagID);
+		   if(!JSON.parse(this.authService.getLoginUser()).isPasswordChanged )
+			{
+				document.getElementById("openModalButton").click();
+			}else {
+            // this.flashMessage.show('You are now logged in', {
+            // cssClass: 'alert-success'});
+           this.router.navigate(['/']);
 			}
         } 
                                 else

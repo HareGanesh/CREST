@@ -42,6 +42,20 @@ router.get('/getUnivTranscationMapDetailByID', (req, res) => {
   });  
 });
 
+router.get('/getUnivTranscationMapDetailByTranMapID', (req, res) => {
+  var Tran_Map_ID = req.headers["tranmapid"];  
+  UnivTranscationMapDetail.getUnivTranscationMapDetailByID(Tran_Map_ID, (err,UnivTranscationMapDetail)=>{
+    if(err) {
+		throw err;		
+	}
+     else
+	  {		 
+		  res.json(UnivTranscationMapDetail);
+	  }
+  });  
+});
+
+
 
 
 router.get('/getAllUnivTranscationMapDetail', (req, res) => {

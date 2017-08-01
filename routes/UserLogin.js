@@ -9,6 +9,7 @@ const univesityMaster = require('../models/UniversityMstr');
 const organizationMaster = require('../models/OrganizationMstr');
 const Student = require('../models/student');
 const UniversityRoleUser = require('../models/UniversityRoleUser');
+const OrganizationRoleUser = require('../models/OrganizationRoleUser');
  const mailSender = require('../models/mailSender');
  
  
@@ -147,7 +148,20 @@ router.post('/authenticate', (req, res, next) => {
 			  return res.json({success: true, msg: 'Password changed.'});   
 				}
 				});
-			  }
+			  }if(req.body.TagID == 'OR')
+			  {
+			  OrganizationRoleUser.updatePassword(userDetail,(err,user)=>
+				{
+				if(err)
+				{
+			  res.json({success: false, msg:'Failed to register in userLogin'});
+				}else 
+				{
+					//sendMail();
+			  return res.json({success: true, msg: 'Password changed.'});   
+				}
+				});
+			  }			  
 			  else if(req.body.TagID == 'S')
 			  {
 			  Student.updatePassword(userDetail,(err,user)=>

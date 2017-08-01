@@ -101,7 +101,10 @@ module.exports.maxorganizationId = function(callback){
 
 module.exports.getOrganizationsWithRoles = function(callback){
 	OrganizationMaster.aggregate([	
-    {
+    { $match: {
+            Active: true
+        }},
+	{
       
 		$lookup:
         {

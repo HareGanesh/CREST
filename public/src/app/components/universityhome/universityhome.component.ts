@@ -37,10 +37,7 @@ ngOnInit() {
 	this.authService.SetActionResult('');
 	if(this.authService.login())
 	{
-		if(this.tagID == 'O')
-		{
-		this.bindGrid();
-		}else if(this.tagID == 'S' || this.tagID == 'U' || this.tagID == 'UR')
+		if(this.tagID == 'S' || this.tagID == 'U' || this.tagID == 'UR' || this.tagID == 'O')
 		{
 			this.bindGridUniverties();
 		}else if(this.tagID == 'C')
@@ -183,7 +180,13 @@ ngOnInit() {
 		var UnivData=[];
 	    var filterEvent=[];
     this.authService.getEvents().subscribe(event => {
-      modelData= event.filter((E) => E.Created_by == JSON.parse(this.authService.getStudent()).UserName);
+		if(this.tagID == 'O')
+		{
+      modelData= event.filter((E) => E.Created_by == JSON.parse(this.authService.getStudent()).username);
+		}else 
+		{
+			modelData= event.filter((E) => E.Created_by == JSON.parse(this.authService.getStudent()).UserName);
+		}
 	  for(var i=0;i<modelData.length;i++)
 	 {
 		  var m =this.dayDiff(modelData[i].StartDt);
@@ -191,16 +194,26 @@ ngOnInit() {
 		  modelData[i].RemainDay=m;
 	 }
 	 this.OrgEventModel=modelData;
-	 
+	 if(this.tagID == 'O')
+		{
+      modelData= event.filter((E) => E.IsApproved == true && E.Created_by == JSON.parse(this.authService.getStudent()).username);
+		}else 
+		{
 	 modelData= event.filter((E) => E.IsApproved == true && E.Created_by == JSON.parse(this.authService.getStudent()).UserName);
+		}
 	  for(var i=0;i<modelData.length;i++)
 	 {
 		  var m =this.dayDiff(modelData[i].StartDt);		  
 		  modelData[i].RemainDay=m;
 	 }
 	 this.ApprovedOrgEventModel=modelData;
-	 
+	 if(this.tagID == 'O')
+		{
+      modelData= event.filter((E) => E.IsRejected == true && E.Created_by == JSON.parse(this.authService.getStudent()).username);
+		}else 
+		{
 	 modelData= event.filter((E) => E.IsRejected == true && E.Created_by == JSON.parse(this.authService.getStudent()).UserName);
+		}
 	  for(var i=0;i<modelData.length;i++)
 	 {
 		  var m =this.dayDiff(modelData[i].StartDt);		  

@@ -84,7 +84,10 @@ var query = { Tran_Map_ID: TransMapID };
 console.log("deleted" + TransMapID);
 UnivTranscationMapDetailMaster.remove(query,  callback);}
 
+module.exports.DeleteUnivTranscationMapDetailByRoleId = function(Role_ID, callback){ 
+var query = { Role_ID: Role_ID };
 
+UnivTranscationMapDetailMaster.remove(query,  callback);}
 
 
 

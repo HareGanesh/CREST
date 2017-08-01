@@ -4,6 +4,8 @@ const passport = require('passport');
 const jwt = require('jsonwebtoken');
 const config = require('../config/database');
 const UniversityRole = require('../models/UniversityRoleMstr');
+const UniversityRoleUser = require('../models/UniversityRoleUser');
+const UnivTranscationMapDetail = require('../models/UnivTranscationMapDetail');
 
 router.post('/AddUniversityRole', (req, res, next) => {
 	
@@ -40,6 +42,25 @@ router.post('/AddUniversityRole', (req, res, next) => {
   //});
 
   }
+  
+  for(var i=0;i<req.body.DeletedRoleIDList.length;i++)
+	{
+		console.log("deleted");
+	   UniversityRole.DeleteUniversityRoleByRoleId(req.body.DeletedRoleIDList[i], (err, UniversityRoleDet)=> {
+		console.log(UniversityRoleDet);	
+		});
+  	
+	   UniversityRoleUser.RemoveUniversityUserRoleByRoleID(req.body.DeletedRoleIDList[i], (err, UniversityRoleUserDet)=> {
+		console.log(UniversityRoleUserDet);	
+		});
+		
+		UnivTranscationMapDetail.DeleteUnivTranscationMapDetailByRoleId(req.body.DeletedRoleIDList[i], (err, UniversityRoleUserDet)=> {
+		console.log(UniversityRoleUserDet);	
+		});
+  //});
+
+  }
+  
   }
 	 });
   res.json({success: true, msg:'UniversityRole Created.'});

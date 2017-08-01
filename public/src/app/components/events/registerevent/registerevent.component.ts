@@ -627,7 +627,15 @@ OnPrevClick(input, count,li1, li2)
 	this.model.EventRegisterEndDt = new Date(this.model.EventRegisterEndDt).toISOString();
 	
 	// Set created and modified properties
+	if(this.tagID == 'U')
+	{
 	this.model.Created_by = JSON.parse(this.authService.getStudent()).UserName;
+	}
+	else 
+	{
+		this.model.Created_by = JSON.parse(this.authService.getStudent()).username;
+	}
+	
 	this.model.Created_On = new Date();
   	 // Required Fields
     // if(this.validateService.validateEvent(this.model)){     

@@ -158,6 +158,37 @@ console.log("Test");
   });  
 });
 
+router.get('/getAllUnivTranscationEventApprovalDetailInfoByUnivIDAndRoleID', (req, res) => {
+var univid = req.headers["univid"]; 
+var roleId = req.headers["roleid"]; 
+
+console.log("Test");	
+  UnivTranscationEventApprovalDetail.getAllUnivTranscationEventApprovalDetailInfoByUnivIDAndRoleID(univid,roleId, (err,UnivTranscationEventApprovalDetail)=>{
+    if(err) {	
+		throw err;
+	}
+     else
+	  {		
+          console.log(UnivTranscationEventApprovalDetail); 
+		  EventUniversity.getEventUniversityByUnivID(univid, (err,Event)=>{
+			if(err) {
+                                throw err;                            
+                }
+			else
+                  {                     
+				console.log("aaaa");			
+				
+                   res.json({UnivTranscationEventApprovalDetail:UnivTranscationEventApprovalDetail, evt:Event});
+				  
+                  }
+			});  
+          
+		 
+	  }
+  });  
+});
+
+
 router.get('/getMaxTransApprovalID', (req, res) => {
 
 

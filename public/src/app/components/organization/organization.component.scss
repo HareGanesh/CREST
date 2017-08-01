@@ -1,3 +1,55 @@
+:host /deep/ {
+  ng2-smart-table {
+  
+  font-family: "Helvetica Neue", Roboto, Arial, "Droid Sans", sans-serif;
+    border-collapse: collapse;
+	 font-size: 13px !important;
+    width: 100%;
+	
+    th, td {
+      
+      line-height: 35px;
+      vertical-align: middle;
+	  border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+	 font-family: "Helvetica Neue", Roboto, Arial, "Droid Sans", sans-serif;
+    }
+
+    tr td {
+      padding: 0 8px;
+	   font-size: 13px !important;
+	 font-family: "Helvetica Neue", Roboto, Arial, "Droid Sans", sans-serif !important;
+    margin: 0;
+    padding: 8px;
+    }
+	
+	tr:nth-child(even) {
+    background-color: #dddddd;
+}
+}
+
+a.ng2-smart-sort-link {
+      font-size: 16px !important;
+      
+      font-weight: bold;
+      &.sort {
+        font-weight: bold !important;
+
+        &::after {
+          
+        }
+      }
+    }
+ 
+}
+
+
+.row {
+    margin-right: 6px;
+    margin-left: 0px;
+}
+
 .grid-item {
 	border: solid 1px #ccc;
 }

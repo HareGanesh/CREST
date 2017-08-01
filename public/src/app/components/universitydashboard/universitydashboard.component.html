@@ -3,7 +3,10 @@
 <div style="margin-left:230px">
       <nav class="navbar ">
   <div class="container-fluid">
-    
+    <div class="title_left">
+                <h3>Student List <small></small></h3>
+              </div>
+			  <input style="float:right"  #search class="search col-xs-3" type="text" placeholder="Search..." (keydown.enter)="onSearch(search.value)">
 	<!-- <div class="nav navbar-nav navbar-right"> -->
 	  <!-- <a data-toggle="modal" class="btn btn-primary pull-right navbar-btn" (click)="clearModel();" data-target="#vv">Add University</a> -->
     <!-- </div> -->
@@ -11,55 +14,103 @@
 </nav>
 
  <div class="row">
+ 
               <div class="col-md-12">
                 <div>
             
                   <div class="x_content">
-				   <div class="row">
-                      <div class="col-md-12 mail_list_column">
+				   <div class="row" *ngIf="tagID=='U'">
+				   <ng2-smart-table [settings]="settings" [source]="source" mode="external"></ng2-smart-table>
+				   </div>
+				   <div class="row" *ngIf="tagID=='UR'">
+				   <!-- <a  class="btn btn-primary"  (click)="ApproveAllStudent()" data-toggle="modal" data-target="#commentAllDiv">Approve All</a> -->
+					<!-- <a  class="btn btn-primary"  (click)="RejectAllStudent()" data-toggle="modal" data-target="#RejectCommentAllDiv">Reject All</a> -->
+				   <!-- <ng2-smart-table [settings]="URsettings" [source]="URsource" mode="external" (custom)="onApproveStudent($event)" (deleteConfirm)="onRejectStudent($event)"></ng2-smart-table> -->
+                      
+					  <!-- <a style="display:none" class="btn btn-primary" id="btnApprove" data-toggle="modal" data-target="#commentDiv">Approve</a> -->
+					  <!-- <a style="display:none" class="btn btn-primary" id = "btnReject"  data-toggle="modal" data-target="#RejectCommentDiv">Reject</a> -->
+					  
+					  <div class="col-md-12">
                       <div *ngIf="tagID=='UR'">
 					
 					<a  class="btn btn-primary"  (click)="ApproveAllStudent()" data-toggle="modal" data-target="#commentAllDiv">Approve All</a>
 					<a  class="btn btn-primary"  (click)="RejectAllStudent()" data-toggle="modal" data-target="#RejectCommentAllDiv">Reject All</a>
 					</div>
-                     <div class="header">  
-                    <ul >
-					<li *ngIf="tagID=='UR'"><input type="checkbox" name="all" [checked]="isAllChecked(item1)" (change)="checkAll($event)"/> <label>Select all</label></li>
-					<li><a>Req No</a></li>
-					
-					<li><a>Student name</a></li>
-					<li *ngIf="tagID=='U'"><a>Prev Approval</a></li>
-					<li><a>Next approval</a></li>
 					
 					
-					<li style="width:20%"></li>
-					</ul>
-					</div>
-					<div class="item"> 
-					 <ul class="col-md-12 mail_list_column mail_list" *ngFor="let item of universityApprovalUserList; let i=index">
-					 <tooltip-content #toltip [animation]="true" placement="top">
-						<span style="color: #ffc520">Next Approver :</span> <span style="color: #00b3ee">{{item.Next_Approver_RName}}</span><br/>
-						<span style="color: #ffc520">Prev Approver :</span> <span style="color: #00b3ee">{{item.Prev_Approver_RName}}</span>
-						<!-- <b><i><span style="color: #ffc520">PrevApproval: Sumit - Hod</span></i></b> <small>Html support</small>. -->
-					</tooltip-content>
-					<li *ngIf="tagID=='UR'"> <input type="checkbox" name="sizecb[]"  value="{{item.Tran_Approval_ID}}" [(ngModel)]="item.isChecked" (change)="check($event, item.Tran_Approval_ID)"/></li> 
-					<li [tooltip]="toltip">{{item.Tran_Approval_ID}}</li>
-					 <!-- <li tooltip content="Next Approver : Amit Khandelwal - Principal{{item.Next_Approver_RID}}<br/> PrevApproval: Sumit - Hod{{item.Prev_Approver_RID}}">{{item.Tran_Approval_ID}}</li> -->
+					<div class="table-responsive">          
+						<table class="table table-bordered table-striped">
+							<thead>
+								<tr>
+									<th style="color:#1e6bb8"><input type="checkbox" name="all" [checked]="isAllChecked(item1)" (change)="checkAll($event)"/>Select</th>
+									<th >Req No</th>
+									<th>Student Name</th>
+									<th>Next Approval</th>
+									<th>Action</th>
+								  </tr>
+								</thead>
+								<tbody>
+								  <tr *ngFor="let item of universityApprovalUserList; let i=index">
+								  
+									<td> <input type="checkbox" name="sizecb[]"  value="{{item.Tran_Approval_ID}}" [(ngModel)]="item.isChecked" (change)="check($event, item.Tran_Approval_ID)"/></td>
+									<td [tooltip]="toltip">{{item.Tran_Approval_ID}}</td>
+									<td>{{item.Student_Name}}</td>
+									<td>{{item.Next_Approver_RName}}</td>
+									<td><a class="btn btn-primary" (click)="ApproveStudent(item)" data-toggle="modal" data-target="#commentDiv">Approve</a>
+									 <a class="btn btn-primary" (click)="RejectStudent(item)" data-toggle="modal" data-target="#RejectCommentDiv">Reject</a>
+									 </td>
+									<tooltip-content #toltip [animation]="true" placement="top">
+										<span style="color: #ffc520">Next Approver :</span> <span style="color: #00b3ee">{{item.Next_Approver_RName}}</span><br/>
+										<span style="color: #ffc520">Prev Approver :</span> <span style="color: #00b3ee">{{item.Prev_Approver_RName}}</span>
+										<!-- <b><i><span style="color: #ffc520">PrevApproval: Sumit - Hod</span></i></b> <small>Html support</small>. -->
+								  </tooltip-content>
+								  </tr>
+								</tbody>
+							  </table>
+							  </div>
+					
+					
+					
+					
+                     <!-- <div class="header">   -->
+                    <!-- <ul > -->
+					<!-- <li *ngIf="tagID=='UR'"><input type="checkbox" name="all" [checked]="isAllChecked(item1)" (change)="checkAll($event)"/></li> -->
+					<!-- <li><a>Req No</a></li> -->
+					
+					<!-- <li><a>Student name</a></li> -->
+					<!-- <li *ngIf="tagID=='U'"><a>Prev Approval</a></li> -->
+					<!-- <li><a>Next approval</a></li> -->
+					
+					
+					<!-- <li style="width:20%"></li> -->
+					<!-- </ul> -->
+					<!-- </div> -->
+					<!-- <div class="item">  -->
+					 <!-- <ul class="col-md-12 mail_list_column mail_list" *ngFor="let item of universityApprovalUserList; let i=index"> -->
+					 <!-- <tooltip-content #toltip [animation]="true" placement="top"> -->
+						<!-- <span style="color: #ffc520">Next Approver :</span> <span style="color: #00b3ee">{{item.Next_Approver_RName}}</span><br/> -->
+						<!-- <span style="color: #ffc520">Prev Approver :</span> <span style="color: #00b3ee">{{item.Prev_Approver_RName}}</span> -->
+						<!-- <!-- <b><i><span style="color: #ffc520">PrevApproval: Sumit - Hod</span></i></b> <small>Html support</small>. --> 
+					<!-- </tooltip-content> -->
+					<!-- <li *ngIf="tagID=='UR'"> <input type="checkbox" name="sizecb[]"  value="{{item.Tran_Approval_ID}}" [(ngModel)]="item.isChecked" (change)="check($event, item.Tran_Approval_ID)"/></li>  -->
+					<!-- <li [tooltip]="toltip">{{item.Tran_Approval_ID}}</li> -->
+					 <!-- <!-- <li tooltip content="Next Approver : Amit Khandelwal - Principal{{item.Next_Approver_RID}}<br/> PrevApproval: Sumit - Hod{{item.Prev_Approver_RID}}">{{item.Tran_Approval_ID}}</li> -->
                      
-					  <li > {{item.Student_Name}}</li>
-					  <li *ngIf="tagID=='U'">{{item.Prev_Approver_RName}} </li>
-                      <li>{{item.Next_Approver_RName}} </li>
+					  <!-- <li > {{item.Student_Name}}</li> -->
+					  <!-- <li *ngIf="tagID=='U'">{{item.Prev_Approver_RName}} </li> -->
+                      <!-- <li>{{item.Next_Approver_RName}} </li> -->
                       
                      
-					  <li *ngIf="tagID=='UR'" style="width:20%">
-					  <a class="btn btn-primary" (click)="ApproveStudent(item)" data-toggle="modal" data-target="#commentDiv">Approve</a>
-					  <a class="btn btn-primary" (click)="RejectStudent(item)" data-toggle="modal" data-target="#RejectCommentDiv">Reject</a>
-					  <!-- <a class="btn btn-primary pull-right" style="width:66px;" (click)="showPopup(item._id)" data-toggle="modal" data-target="#vv">Edit</a>  -->
+					  <!-- <li *ngIf="tagID=='UR'" style="width:20%"> -->
+					  <!-- <a class="btn btn-primary" (click)="ApproveStudent(item)" data-toggle="modal" data-target="#commentDiv">Approve</a> -->
+					  <!-- <a class="btn btn-primary" (click)="RejectStudent(item)" data-toggle="modal" data-target="#RejectCommentDiv">Reject</a> -->
+					  <!-- <!-- <a class="btn btn-primary pull-right" style="width:66px;" (click)="showPopup(item._id)" data-toggle="modal" data-target="#vv">Edit</a>  --> 
 					  
-					  </li>
-					</ul>
+					  <!-- </li> -->
+					<!-- </ul> -->
 					
-                      </div> </div>
+                      <!-- </div>  -->
+					  </div>
 					  
                       <!-- /MAIL LIST -->
 

@@ -90,6 +90,10 @@ module.exports.DeleteUniversityRoleById = function(OrgnID, callback){
 var query = { OrgnID: OrgnID };
 UniversityRoleMaster.update(query, {Active: false}, callback);}
 
+module.exports.DeleteUniversityRoleByRoleId = function(roleID, callback){ 
+var query = { Univ_RoleID: roleID };
+UniversityRoleMaster.remove(query, callback);}
+
 
 
 

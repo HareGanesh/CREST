@@ -71,7 +71,7 @@
 		  </div>
 	
 	</div>
-	<div class="input-group" *ngIf = "tagID=='U'">
+	<div class="input-group" *ngIf = "tagID=='O'">
 				 <span class="input-group-addon"><i class="fa fa-address-card"></i></span>
 					
 					<input disabled type="text" [(ngModel)]="model.OrganizationName" name="OrganizationName" ngControl="OrganizationName"  class="form-control"
@@ -93,6 +93,33 @@
           Trans Type is required 
 		  </div>
 	</div>
+	
+	<label>Start Date <span class="red">*</span></label>
+	<div class="input-group" *ngIf="model.TransFlowStartDate == ''">
+     <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+		<!-- <input type="date" #myDate [value]="model.StartDt | date:'yyyy-MM-dd'" (input)="model.StartDt=parseDate($event.target.value)" /> -->
+		<input type="date" required name="TransFlowStartDate" ngControl="TransFlowStartDate"  class="form-control" placeholder="Start Date"
+		autofocus="true" id="#TransFlowStartDate" (blur)="compareDates()" [value]="model.TransFlowStartDate | date:'yyyy-MM-dd'" (input)="model.TransFlowStartDate=parseDate($event.target.value)" />
+		
+	
+	</div>
+	<div class="input-group" *ngIf="model.TransFlowStartDate != ''">
+     <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+		<!-- <input type="date" #myDate [value]="model.StartDt | date:'yyyy-MM-dd'" (input)="model.StartDt=parseDate($event.target.value)" /> -->
+		<input disabled type="date" required name="TransFlowStartDate" ngControl="TransFlowStartDate"  class="form-control" placeholder="Start Date"
+		autofocus="true" id="#TransFlowStartDate" (blur)="compareDates()" [value]="model.TransFlowStartDate | date:'yyyy-MM-dd'" (input)="model.TransFlowStartDate=parseDate($event.target.value)" />
+		
+	
+	</div>
+
+	<label>End Date</label>
+	<div class="input-group">
+     <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+		
+		<input required type="date" name="TransFlowEndDate" ngControl="TransFlowEndDate"  class="form-control" placeholder="End Date"
+		autofocus="true" id="#TransFlowEndDate" (blur)="compareDates()" [value]="model.TransFlowEndDate | date:'yyyy-MM-dd'" (input)="model.TransFlowEndDate=parseDate($event.target.value)" />
+		</div>
+	
 <div class="AddMoreDivUniv">
 
 <label>Add Level <span class="red">*</span></label>
@@ -159,7 +186,8 @@
 
 
 <div>
-	<a id="btnFinal" class="big-red-button floatRight" (click)=onSubmit()>Save</a>
+	<a id="btnReset" class="big-red-button floatRight" style="margin-left:5px;"  (click)=onReset()>Reset</a>
+	<a id="btnFinal" class="big-red-button floatRight" [class.disabled]="isButtonDisabled()" (click)=onSubmit()>Save</a>
 	</div>
 
 </div>
@@ -170,6 +198,37 @@
 
 </form>
 </div>
+
+<div>
+<h2 *ngIf="SavedTransData.length != 0"> Saved Transaction </h2>
+<table class="table table-bordered" *ngIf="SavedTransData.length != 0" style="border: 0px solid #ddd;">
+
+    <thead class="table-bordered">
+      <tr>
+        <th>S.NO</th>
+        <th>Start Date</th>
+        <th>End Date</th>
+		<th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let role of SavedTransData;let i = index">
+        <td>Flow - {{i+1}}</td>
+        <td>
+		{{SavedTransData[i].Tran_Flow_Start_DT | date:'MM/dd/yyyy'}}
+			
+	</td>
+        <td>{{SavedTransData[i].Tran_Flow_End_DT | date:'MM/dd/yyyy'}}</td>
+		<!-- <td *ngIf="model.Roles.length == i+1 && model.Roles.length !=1" style="border:none;"> -->
+		<td >
+		<a *ngIf="SavedTransData[i].Tran_Flow_End_DT != null" style="text-decoration:underline;cursor:pointer;" (click)=ViewSavedTransactionFlow(SavedTransData[i].Tran_Map_ID)>View Flow</a>
+		</td>
+		
+      </tr>
+  </tbody>
+  </table>
+</div>
+
 </div>
 </div>
 </div>

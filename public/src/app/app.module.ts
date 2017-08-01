@@ -32,7 +32,7 @@ import { MultiselectDropdownModule } from 'angular-2-dropdown-multiselect';
 
 
 import { OrganizationComponent } from './components/organization/organization.component';
-
+ import { OrganizationroleComponent } from './components/organizationrole/organizationrole.component';
 
 import { EqualValidator } from './services/password.match.directive';
 import { AddUniversityComponent } from './components/university/add-university/add-university.component';
@@ -43,6 +43,7 @@ import { UniversitydashboardComponent } from './components/universitydashboard/u
 
 import {TooltipModule} from "ngx-tooltip";
 import { UniversityroleComponent } from './components/universityrole/universityrole.component';
+
 import { StudentListComponent } from './components//student-list/student-list.component';
 import { ChangepasswordComponent } from './components/changepassword/changepassword.component';
 import { ChangepasswordPopupComponent } from './components/changepasswordPopup/changepasswordPopup.component';
@@ -52,7 +53,7 @@ import {ToastModule} from 'ng2-toastr/ng2-toastr';
 import {ToastOptions} from 'ng2-toastr';
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { CustomOption } from './custom-option';
-
+import { Ng2SmartTableModule } from 'ng2-smart-table';
 
 const appRoutes: Routes = [
 
@@ -75,6 +76,7 @@ const appRoutes: Routes = [
   {path: 'organizationrole', component: OrganizationRoleMasterComponent },
 {path: 'universitydashboard', component: UniversitydashboardComponent },
 {path: 'adduniversityroledetail', component: UniversityroleComponent },
+ {path: 'addorganizationrole', component: OrganizationroleComponent },
 {path: 'changepassword', component: ChangepasswordComponent },
 {path: 'universityhome', component: UniversityHomeComponent},
 	{path:'eventstudentapprovallist', component: EventstudentapprovallistComponent}
@@ -109,6 +111,7 @@ const appRoutes: Routes = [
 	OrganizationRoleMasterComponent,
 	UniversitydashboardComponent,
 	UniversityroleComponent,
+	OrganizationroleComponent,
 	StudentListComponent,
 	ChangepasswordComponent,
 	ChangepasswordPopupComponent,
@@ -127,7 +130,8 @@ const appRoutes: Routes = [
 	TooltipModule,
 	AccordionModule,
 	BrowserAnimationsModule,
-	ToastModule.forRoot()
+	ToastModule.forRoot(),
+	Ng2SmartTableModule
   ],
   providers: [ValidateService, AuthService, AuthGuard, {provide: ToastOptions, useClass: CustomOption}],
   bootstrap: [AppComponent]

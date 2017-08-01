@@ -4,8 +4,11 @@
       <nav class="navbar ">
   <div class="container-fluid">
     <div> 
-	
+	<div class="title_left">
+                <h3>University List <small></small></h3>
+              </div>
 	<div class="nav navbar-nav navbar-right col-xs-3">
+	<input  #search class="search col-xs-6" type="text" placeholder="Search..." (keydown.enter)="onSearch(search.value)">
 		<a data-toggle="modal" class="btn btn-primary pull-right navbar-btn" (click)="clearModel();" data-target="#vv">Add University</a>
     </div>
 	
@@ -13,38 +16,43 @@
   </div>
 </nav>
 
+
  <div class="row">
               <div class="col-md-12">
                 <div>
             
                   <div class="x_content">
 				   <div class="row">
-                      <div class="col-md-12 mail_list_column">
+				   
+				   <ng2-smart-table [settings]="settings" [source]="source" mode="external" (deleteConfirm)="onDeleteConfirm($event)" (custom)="onEdit($event)"></ng2-smart-table>
+				   <a class="btn btn-primary pull-right"   id="deletebtn" style="width:66px;display:none;"  data-toggle="modal" data-target="#deleteDiv">Delete</a>
+				   <a class="btn btn-primary pull-right"  id="editbtn" style="width:66px;display:none;" data-toggle="modal" data-target="#vv">Edit</a>
+                      <!-- <div class="col-md-12 mail_list_column"> -->
                       
-                     <div class="header">  
-                    <ul >
-					<li><a>University Name</a></li>
-					<li><a>Address</a></li>
-					<li><a>EmailID</a></li>
-					<li><a>Contact No</a></li>					
-					<li><a>Active</a></li>
-					<li></li>
-					</ul>
-					</div>
-					<div class="item"> 
-					 <ul class="col-md-12 mail_list_column mail_list" *ngFor="let item of universityList; ">
-                      <li> {{item.Univ_Name}}</li>
-					  <li> {{item.Address}}</li>
-                      <li>{{item.EmailID}} </li>
-                      <li> {{item.ContactNo}}</li>
-                      <li> <input type="checkbox" checked="checked"> </li>
-					  <li>
-					  <a class="btn btn-primary pull-right" style="width:66px;" (click)="deleteUniverity(item._id)"  data-toggle="modal" data-target="#deleteDiv">Delete</a>
-					  <a class="btn btn-primary pull-right" style="width:66px;" (click)="showPopup(item._id)" data-toggle="modal" data-target="#vv">Edit</a> 
+                     <!-- <div class="header">   -->
+                    <!-- <ul > -->
+					<!-- <li><a>University Name</a></li> -->
+					<!-- <li><a>Address</a></li> -->
+					<!-- <li><a>EmailID</a></li> -->
+					<!-- <li><a>Contact No</a></li>					 -->
+					<!-- <li><a>Active</a></li> -->
+					<!-- <li></li> -->
+					<!-- </ul> -->
+					<!-- </div> -->
+					<!-- <div class="item">  -->
+					 <!-- <ul class="col-md-12 mail_list_column mail_list" *ngFor="let item of universityList; "> -->
+                      <!-- <li> {{item.Univ_Name}}</li> -->
+					  <!-- <li> {{item.Address}}</li> -->
+                      <!-- <li>{{item.EmailID}} </li> -->
+                      <!-- <li> {{item.ContactNo}}</li> -->
+                      <!-- <li> <input type="checkbox" checked="checked"> </li> -->
+					  <!-- <li> -->
+					  <!-- <a class="btn btn-primary pull-right" id="deletebtn" style="width:66px;" (click)="deleteUniverity(item._id)"  data-toggle="modal" data-target="#deleteDiv">Delete</a> -->
+					  <!-- <a class="btn btn-primary pull-right" id="editbtn" style="width:66px;" (click)="showPopup(item._id)" data-toggle="modal" data-target="#vv">Edit</a>  -->
 					  
-					  </li>
-</ul>
-                      </div> </div>
+					  <!-- </li> -->
+<!-- </ul> -->
+                      <!-- </div> </div> -->
 					  
                       <!-- /MAIL LIST -->
 
@@ -89,6 +97,7 @@
 	
 	
      	<form  #AddUniversityForm="ngForm" novalidate>
+	
   <div class="modal-dialog" >
 
     <!-- Modal content-->
@@ -96,9 +105,12 @@
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal">&times;</button>
         <h4 class="modal-title" style="color:#73879C;background: #F7F7F7;font-family:inherit;font-size: 30px;font-weight: 400;line-height: 1.471">{{Action}} University </h4>
-      </div>
+      <span class="red">Please create university role mapping after university register.</span>
+	  </div>
 	  <div class="body border">
+	  
 <div class="row">
+
 <div class="two columns">
 <label>University Name</label>	
 <span  class="red">*</span>
@@ -179,6 +191,8 @@
 <!-- </div> -->
 
 <div class="row">
+
+	  
 <input type="button" class="btn btn-lg btn btn-primary btn-block student_update" id="close" data-dismiss="modal" value="Close" style="margin-top:4px;">
 <input type="button" (click)="updateProfile()" class="btn btn-lg btn btn-primary btn-block student_update" value="Save" [disabled]="!AddUniversityForm.form.valid">
 

@@ -1,10 +1,9 @@
-import { Component, OnInit,ChangeDetectorRef,ViewEncapsulation } from '@angular/core';
+import { Component, OnInit,ChangeDetectorRef, ViewContainerRef } from '@angular/core';
  import {ValidateService} from '../../../services/validate.service';
 import {AuthService} from '../../../services/auth.service';
 import {FlashMessagesService} from 'angular2-flash-messages';
 import {organizationRoleMstr} from '../../../model/organizationRoleMstr';
-
-
+import { ToastsManager } from 'ng2-toastr/ng2-toastr';
 import {Router, ActivatedRoute, Params} from '@angular/router';
 
 
@@ -17,6 +16,7 @@ import {Router, ActivatedRoute, Params} from '@angular/router';
 export class OrganizationRoleMasterComponent implements OnInit {
 	tagID:String;
 	organizationName:String;
+	SuccessMessage='';
 	OrgnID:Number;
 model={  	
     Orgn_RoleName:[],  
@@ -33,9 +33,13 @@ model={
     private authService:AuthService,
     private router: Router,
 	private activatedRoute:ActivatedRoute,
-	private changeDetectorRef: ChangeDetectorRef
-    )
-	{}
+	private changeDetectorRef: ChangeDetectorRef,
+	public toastr: ToastsManager, public vcr: ViewContainerRef
+	)
+	{
+	  this.toastr.setRootViewContainerRef(vcr);
+	}
+	
 	public Organizations = [
 	  {Orgn_ID: 0,  Orgn_Name:"Please select"}
          
@@ -216,13 +220,27 @@ onChange(orgnID) {
 	   this.authService.addOrganizationRole(this.model).subscribe(data => {
 		  if(data.success)
 		  {
-			  if(this.tagID == 'C')
-			  {
-			    this.router.navigate(['/']);
-			  }else if(this.tagID == 'O')
-			  {
-			    this.router.navigate(['/universitydashboard']);
-			  }
+			 this.SuccessMessage = "New Role added successfully. Click + button to add more roles.";
+			   this.toastr.success(this.SuccessMessage, 'Success!');
+			  this.Organizations = [
+				{Orgn_ID: 0,  Orgn_Name:"Please select"}
+         
+				];
+			 this.OrganizationRolesWithOrganization = [
+			   {Orgn_RoleID: 0,  Orgn_RoleName:"Please select", Orgn_ID:""}
+				 
+			 ];
+			  this.OrganizationRoles = [ 
+				 
+			 ];
+			 
+			 this.model.Orgn_RoleName =[];
+			 this.model={  	
+				Orgn_RoleName:[],  
+				Orgn_ID:'0'			
+				};
+		
+			this.ngOnInit();
 		  }
 		    },
 			//observable also returns error

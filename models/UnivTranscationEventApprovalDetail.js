@@ -130,7 +130,27 @@ module.exports.getAllUnivTranscationEventApprovalDetailInfoByUnivID = function(u
    }
 ], callback);}
 	
-	
+module.exports.getAllUnivTranscationEventApprovalDetailInfoByUnivIDAndRoleID = function(univID, roleId, callback)
+	{	 
+	//var query = { Univ_ID: univID, Mask_ID: {$lte:maskID}, Status:0, TransactionStatus:{$ne:'R'}};
+	UnivTranscationEventApprovalDetailMaster.aggregate([
+	{ $match: {
+            Univ_ID: parseInt(univID),
+			Mask_ID: parseInt(roleId),
+			Status:0,
+			TransactionStatus:{$ne:'R'}
+        }},
+    {
+      
+		$lookup:
+        {
+          from: "Student",
+          localField: "Student_ID",
+          foreignField: "Student_ID",
+          as: "Student_Info"
+        }
+   }
+], callback);}
 	
 module.exports.getMaxTransApprovalID = function(callback){
 	 

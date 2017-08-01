@@ -1,0 +1,200 @@
+
+<ng-container *ngIf="authService.login();">
+<app-navbar></app-navbar> 
+
+<div style="margin-left:230px">
+      <nav class="navbar ">
+  <div class="container-fluid">
+    <div> 
+	<div class="title_left">
+                <h3>Organization User List <small></small></h3>
+              </div>
+	<div class="nav navbar-nav navbar-right col-xs-3">
+	<input  #search class="search col-xs-6" type="text" placeholder="Search..." (keydown.enter)="onSearch(search.value)">
+		<a data-toggle="modal" class="btn btn-primary pull-right"  (click)="clearModel();" data-target="#vv">Add Organization User</a>
+    </div>
+	
+</div>
+  </div>
+</nav>
+
+ <div class="row">
+              <div class="col-md-12">
+                <div>
+            
+                  <div class="x_content">
+				   <div class="row">
+				    <ng2-smart-table [settings]="settings" [source]="source" mode="external" (deleteConfirm)="onDeleteConfirm($event)" (custom)="onEdit($event)"></ng2-smart-table>
+				   <a class="btn btn-primary pull-right"   id="deletebtn" style="width:66px;display:none;"  data-toggle="modal" data-target="#deleteDiv">Delete</a>
+				   <a class="btn btn-primary pull-right"  id="editbtn" style="width:66px;display:none;" data-toggle="modal" data-target="#vv">Edit</a>
+				   
+                    </div>
+                    
+                  </div>
+                </div>
+              </div>
+            </div>
+</div>
+
+<div id="deleteDiv" class="modal fade" role="dialog" >
+<div class="modal-dialog" style="width:30% !important" >
+
+<div class="modal-content" style="height:200px;">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title" style="color:#73879C;background: #F7F7F7;font-family:inherit;font-size: 30px;font-weight: 400;line-height: 1.471">Delete Organization user</h4>
+      </div>
+	  <div class="modal-body">
+	   
+	   
+	   Do you really  want to delete user role ? 
+	   
+	  
+	  </div>
+	  <div class="model-footer">
+
+<input type="button" (click)="deleteItem()" class="btn btn-lg btn btn-primary"  style="float:right;" value="Yes" >
+<input type="button" class="btn btn-lg btn btn-primary"  id="close2" style="float:right;" data-dismiss="modal" value="No">
+</div>
+</div>
+</div>
+</div>
+
+<div class="container"> 
+<div  id="vv" class="modal fade" role="dialog">
+<div class="modal-dialog">
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title" style="color:#73879C;background: #F7F7F7;font-family:inherit;font-size: 30px;font-weight: 400;line-height: 1.471">User role</h4>
+      </div>
+
+<div class="modal-body">
+<div class="row">
+    <div style="width:100%" class="col-am-6 col-md-4">
+     
+      <div class="account-wall" style="width:100%">
+	  
+<form (submit)="onUserRoleSubmit()" #RoleForm="ngForm">	
+
+<div id="tabs">
+<div class="row">
+
+<ul class="nav nav-tabs" id="wheel-tab">
+<li class="active ">
+<a href="#OverviewTab" data-toggle="tab">Organization Role</a>
+</li>
+
+
+
+</ul>
+
+<div class="tab-content x_panel">
+<div id="OverviewTab" class="tab-pane fade in active">
+
+	<label>Organization Role <span class="red">*</span></label>
+	<div class="input-group">
+     <span class="input-group-addon"><i class="fa fa-key"></i></span>
+	
+		
+	<select id="#OrganizationRoleID" #OrganizationRoleID="ngModel" [(ngModel)]="model.Role_ID"   name="OrganizationRoleID" class="form-control" >         
+			<option *ngFor="let orgnRole of OrganizationRoles" [ngValue]="orgnRole.Orgn_RoleID">
+				{{orgnRole.Orgn_RoleName}}
+			</option>
+        </select>
+	
+		
+	
+	</div>
+				<label>Email <span class="red">*</span></label>
+				<div class="input-group">
+				 <span class="input-group-addon"><i class="fa fa-envelope"></i></span>
+					
+					<input required type="text" [(ngModel)]="model.username" name="username" ngControl="username"  class="form-control" placeholder="Email"
+				 id="#username" #username="ngModel" (focusout)="userNameChange()">
+					<div [hidden]="username.valid || username.pristine"
+						 class="alert alert-danger">
+					  Email is required
+					</div>	
+					<div class="alert alert-danger" *ngIf="UserNameErrorList.length != 0">
+				 <small><b>{{UserNameErrorList[0]}}</b></small>
+				</div>
+				</div>
+				<label>Alternate Email <span class="red">*</span></label>
+				<div class="input-group">
+				 <span class="input-group-addon"><i class="fa fa-envelope"></i></span>
+					
+					<input type="text" [(ngModel)]="model.Email_ID" name="Email_ID" ngControl="email"  class="form-control" placeholder="Alt Email"
+					autofocus="true" id="#email" #email="ngModel" pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$" (focusout)="emailChange()">
+					<div [hidden]="email.valid || email.pristine"
+						 class="alert alert-danger">
+					 
+			   <div [hidden]="!email.hasError('pattern')">Email format should be 
+				  <small><b>joe@abc.com</b></small>
+			   </div>			
+
+					</div>
+				<div class="alert alert-danger" *ngIf="ErrorList.length != 0">
+				 <small><b>{{ErrorList[0]}}</b></small>
+				</div>
+				</div>
+				
+				<label>Mobile Number <span class="red">*</span></label>	
+				<div class="input-group">
+				 <span class="input-group-addon"><i class="fa fa-mobile"></i></span>
+					
+					<input required type="text" [(ngModel)]="model.Mobile_No" name="Mobile_No" ngControl="MobileNo"  class="form-control" placeholder="Mobile No"
+				 id="#MobileNo" #MobileNo="ngModel" pattern="[0-9]*" minlength="10" maxlength="10">
+					<div [hidden]="MobileNo.valid || MobileNo.pristine"
+						 class="alert alert-danger">
+					  <div [hidden]="!MobileNo.hasError('minlength')">Mobile number should be 10 digit</div>
+				  <div [hidden]="!MobileNo.hasError('required')">Mobile number is required</div>
+				  <div [hidden]="!MobileNo.hasError('pattern')">Mobile number should be only numbers</div>
+
+					</div>
+				</div>
+				<label>Department <span class="red">*</span></label>
+				<div class="input-group">
+				<span class="input-group-addon"><i class="fa fa-address-card"></i></span>
+		
+				<textarea [(ngModel)]="model.Department" name="Department" ngControl="Department"  class="form-control" placeholder="Department"
+				 id="#Department" #Department="ngModel" cols="3" rows="3" maxlength="2000" required></textarea>
+				<div [hidden]="Department.valid || Department.pristine"
+				class="alert alert-danger">
+				Department is required
+			</div>
+			</div>
+	
+	 
+</div> 
+
+
+
+<div>
+<input type="button" class="btn btn-lg btn btn-primary btn-block" id="close" data-dismiss="modal" value="Close" style="margin-top:4px; width:15%;float:right">
+	<input type="submit" class="btn btn-lg btn btn-primary btn-block" style="width:15%;float:right" value="Save!" [disabled]="!RoleForm.form.valid || ErrorList.length >0 || UserNameErrorList.length >0 ||  model.RoleID == 0">
+	</div>
+	
+</div>
+
+
+</div>
+
+</div>
+
+</form>
+</div>
+</div>
+
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+</ng-container>
+<ng-container *ngIf="!authService.login();">
+    <app-login></app-login>
+</ng-container> 

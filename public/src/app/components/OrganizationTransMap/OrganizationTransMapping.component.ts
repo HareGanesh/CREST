@@ -1,4 +1,4 @@
-import { Component, OnInit,ChangeDetectorRef,ViewEncapsulation } from '@angular/core';
+import { Component, OnInit,ChangeDetectorRef,ViewContainerRef } from '@angular/core';
  import {ValidateService} from '../../services/validate.service';
 import {AuthService} from '../../services/auth.service';
 import {FlashMessagesService} from 'angular2-flash-messages';
@@ -8,14 +8,13 @@ import { OrganizationTrans } from './OrganizationTrans';
 import { OrganizationTransMask } from './OrganizationTransMask';
 import { OrganizationTransMap } from './OrganizationTransMap';
 import {Router, ActivatedRoute, Params} from '@angular/router';
-
+import { ToastsManager } from 'ng2-toastr/ng2-toastr';
 
 
 @Component({
   selector: 'app-OrganizationTransMapping',
   templateUrl: './OrganizationTransMapping.component.html',
-  styleUrls: ['./OrganizationTransMapping.component.scss'],
-  encapsulation: ViewEncapsulation.None 
+  styleUrls: ['./OrganizationTransMapping.component.scss']
 
 })
 export class OrganizationTransMappingComponent implements OnInit {
@@ -23,7 +22,10 @@ export class OrganizationTransMappingComponent implements OnInit {
 	category:Object;
 	isUpdate:Boolean;
 	tagID:String;
+	isRolesDisabled:boolean = false;
+	SuccessMessage='';
 	orgnID:number;
+	public SavedTransData=[];
 	public organizations = [
 	  
          
@@ -91,6 +93,8 @@ public EventTypes = [
     TransTypeID:'0',
 	NoOfLevel:1,
 	TransMapID:'',	
+	TransFlowStartDate:'',
+	TransFlowEndDate:'',
     Roles:[],
 	TransMask:[],
 	TransMap:[],
@@ -109,80 +113,163 @@ submitted = false;
     private authService:AuthService,
     private router: Router,
 	private activatedRoute:ActivatedRoute,
-	private changeDetectorRef: ChangeDetectorRef
-
-
-
-    ) { }
+	private changeDetectorRef: ChangeDetectorRef,
+	public toastr: ToastsManager, public vcr: ViewContainerRef
+	)
+	{
+	
+	this.toastr.setRootViewContainerRef(vcr);
+		}
 
 	
 	onChange(orgnID) {
 		debugger;
 		this.OrganizationRoles=[];
+		this.SavedTransData=[];
 		this.model.Roles=[];
-	//document.getElementsByClassName('AddMoreDiv').cssClass='show';
-       //this.OrganizationRoles = this.OrganizationRolesWithOrganization.filter(x=>x.Orgn_ID ==orgnID);
+		//document.getElementsByClassName('AddMoreDiv').cssClass='show';
+		//this.OrganizationRoles = this.OrganizationRolesWithOrganization.filter(x=>x.Orgn_ID ==orgnID);
 	   
-	   if(this.OrganizationsWithRoles.find(x=>x.Orgn_ID == parseInt(orgnID)).RoleList.length > 0)
-	   {
-	   this.OrganizationRoles = this.OrganizationsWithRoles.find(x=>x.Orgn_ID == parseInt(orgnID)).RoleList;
-	   }
+	   // if(this.OrganizationsWithRoles.find(x=>x.Orgn_ID == parseInt(orgnID)).RoleList.length > 0)
+	   // {
+	   // this.OrganizationRoles = this.OrganizationsWithRoles.find(x=>x.Orgn_ID == parseInt(orgnID)).RoleList;
+	   // }
 	   
-	   this.OrganizationRoles.push(this.OrganizationRolesWithOrganization[0]);
-	   this.OrganizationRoles = this.OrganizationRoles.sort(x=>x.Orgn_RoleID);
+	   // this.OrganizationRoles.push(this.OrganizationRolesWithOrganization[0]);
+	   // this.OrganizationRoles = this.OrganizationRoles.sort(x=>x.Orgn_RoleID);
 	   
 		if(this.model.TransTypeID != '0')
 			{
-				this.authService.getAllTranscationTypeWithRolesAndPriority(parseInt(orgnID), parseInt(this.model.TransTypeID)).subscribe(data => {
-					if(data.length > 0)
+				this.authService.getAllOrgnTranscationTypeInfoWithRolesAndPriority(parseInt(orgnID), parseInt(this.model.TransTypeID)).subscribe(data => {
+					this.isRolesDisabled = false;
+					debugger;
+					this.OrganizationRoles =  data.orgnRoles;
+					this.OrganizationRoles.push(this.OrganizationRolesWithOrganization[0]);
+					this.OrganizationRoles = this.OrganizationRoles.sort(x=>x.Orgn_RoleID);
+					if(data.TransMapArray.length > 0 && data.OrgnTranscationTypeDetail[0].Tran_Flow_End_DT == null)
 					{
-						this.model.TransMapID = data[0].Tran_Map_ID;
-						for(let i=0; i< data.length; i++)
+						this.model.TransMapID = data.TransMapArray[0].Tran_Map_ID;
+						for(let i=0; i< data.TransMapArray.length; i++)
 						{
 							this.isUpdate = true;
-							this.model.Roles.push({RoleID:data[i].Role_ID,Priority:data[i].Priority});
+							this.model.Roles.push({RoleID:data.TransMapArray[i].Role_ID,Priority:data.TransMapArray[i].Priority});
 						}
+						
+						this.model.TransFlowStartDate = data.OrgnTranscationTypeDetail[0].Tran_Flow_Start_DT;
+						//this.model.TransFlowEndDate = data.UnivTranscationTypeDetail[0].Tran_Flow_End_DT;
 					}else
 					{
+						if(data.TransMapArray.length == 0)
+						{
+						this.model.TransFlowStartDate = new Date().toString();
+						}else {
+						this.model.TransFlowStartDate = new Date((new Date(data.OrgnTranscationTypeDetail[0].Tran_Flow_End_DT)).getTime() + (60*60*24*1000)).toString();
+						this.model.TransFlowEndDate = '';
+						}
+						//this.model.TransFlowStartDate = data.UnivTranscationTypeDetail[0].Tran_Flow_End_DT;
 						this.isUpdate = false;
 					}
+					
 			},
 				//observable also returns error
 					err => {
 					console.log(err);
 					return false;
 				});
+				
+				// Old transaction data
+				
+				
+				this.authService.getAllOrgnTranscationTypeListByOrgnIDAndTranType(parseInt(orgnID), parseInt(this.model.TransTypeID)).subscribe(data => {
+		
+		   if(data.length > 0 )
+					{
+						debugger;
+						this.SavedTransData = data;
+					}
+		
+			},
+			//observable also returns error
+			err => {
+			  console.log(err);
+			  return false;
+			});
 			}
 		}
 		
 	onChangeTransType(TransTypeID) {
 	debugger;
-	//document.getElementsByClassName('AddMoreDiv').cssClass='show';
-	this.model.Roles=[];
-	if(this.model.OrganizationID != '0')
-	{
-	this.authService.getAllTranscationTypeWithRolesAndPriority(parseInt(this.model.OrganizationID), parseInt(TransTypeID)).subscribe(data => {
-		   if(data.length > 0)
+		this.OrganizationRoles=[];
+		this.SavedTransData=[];
+		this.model.Roles=[];
+		//document.getElementsByClassName('AddMoreDiv').cssClass='show';
+		//this.OrganizationRoles = this.OrganizationRolesWithOrganization.filter(x=>x.Orgn_ID ==orgnID);
+	   
+	   // if(this.OrganizationsWithRoles.find(x=>x.Orgn_ID == parseInt(orgnID)).RoleList.length > 0)
+	   // {
+	   // this.OrganizationRoles = this.OrganizationsWithRoles.find(x=>x.Orgn_ID == parseInt(orgnID)).RoleList;
+	   // }
+	   
+	   // this.OrganizationRoles.push(this.OrganizationRolesWithOrganization[0]);
+	   // this.OrganizationRoles = this.OrganizationRoles.sort(x=>x.Orgn_RoleID);
+	   
+		if(this.model.TransTypeID != '0')
+			{
+				this.authService.getAllOrgnTranscationTypeInfoWithRolesAndPriority(parseInt(this.model.OrganizationID), parseInt(TransTypeID)).subscribe(data => {
+					this.isRolesDisabled = false;
+					debugger;
+					this.OrganizationRoles =  data.orgnRoles;
+					this.OrganizationRoles.push(this.OrganizationRolesWithOrganization[0]);
+					this.OrganizationRoles = this.OrganizationRoles.sort(x=>x.Orgn_RoleID);
+					if(data.TransMapArray.length > 0 && data.OrgnTranscationTypeDetail[0].Tran_Flow_End_DT == null)
 					{
-						this.model.TransMapID = data[0].Tran_Map_ID;
-						for(let i=0; i< data.length; i++)
+						this.model.TransMapID = data.TransMapArray[0].Tran_Map_ID;
+						for(let i=0; i< data.TransMapArray.length; i++)
 						{
 							this.isUpdate = true;
-							this.model.Roles.push({RoleID:data[i].Role_ID,Priority:data[i].Priority});
+							this.model.Roles.push({RoleID:data.TransMapArray[i].Role_ID,Priority:data.TransMapArray[i].Priority});
 						}
+						
+						this.model.TransFlowStartDate = data.OrgnTranscationTypeDetail[0].Tran_Flow_Start_DT;
+						//this.model.TransFlowEndDate = data.UnivTranscationTypeDetail[0].Tran_Flow_End_DT;
 					}else
 					{
+						if(data.TransMapArray.length == 0)
+						{
+						this.model.TransFlowStartDate = new Date().toString();
+						}else {
+						this.model.TransFlowStartDate = new Date((new Date(data.OrgnTranscationTypeDetail[0].Tran_Flow_End_DT)).getTime() + (60*60*24*1000)).toString();
+						this.model.TransFlowEndDate = '';
+						}
+						//this.model.TransFlowStartDate = data.UnivTranscationTypeDetail[0].Tran_Flow_End_DT;
 						this.isUpdate = false;
 					}
-    },
-    //observable also returns error
-    err => {
-      console.log(err);
-      return false;
-    });
-	}
-       
-    }
+					
+			},
+				//observable also returns error
+					err => {
+					console.log(err);
+					return false;
+				});
+				
+				// Old transaction data
+				
+				
+				this.authService.getAllOrgnTranscationTypeListByOrgnIDAndTranType(parseInt(this.model.OrganizationID), parseInt(TransTypeID)).subscribe(data => {		
+				if(data.length > 0 )
+					{
+						debugger;
+						this.SavedTransData = data;
+					}		
+				},
+				//observable also returns error
+				err => {
+				  console.log(err);
+				  return false;
+				});
+				}
+		}
+		
 	isDisabled() {
 	  //debugger;
          if(this.model.OrganizationID !="0"){
@@ -191,7 +278,48 @@ submitted = false;
           else{
 		   return true;
 	      }
-  }
+	}
+  
+	parseDate(dateString: string): Date {
+		if (dateString) {
+			return new Date(dateString);
+		} else {
+			return null;
+		}
+	}
+	
+	compareDates()
+	{
+		// if(this.isUpdate)
+		// {
+			// this.model.Roles=[];
+		// }
+
+		let length = this.ErrorList.length;
+		for(let i=0; i< length;i++)
+		{
+			this.ErrorList.pop();
+		}
+			
+		 debugger;
+		if(this.model.TransFlowEndDate != '')
+		{
+		if(new Date(this.model.TransFlowEndDate) < new Date(this.model.TransFlowStartDate))
+		{
+		  
+		  this.ErrorList.push("End Date can not before start date");	  
+		}
+		}
+		  
+	   if(this.model.TransFlowEndDate != '')
+		{
+			if(new Date(this.model.TransFlowEndDate) <= new Date((new Date()).getTime() + (60*60*24*1000)))
+			{
+			 this.ErrorList.push("End Date can not be before next day of  current date.");	  
+			}
+		}
+	}
+
   ngOnInit() {
 	  debugger;
 	  this.tagID=localStorage.getItem('tagID');
@@ -201,7 +329,7 @@ submitted = false;
 		  this.model.OrganizationID = this.orgnID.toString();		  
 	  }
 	  	  
-	  this.authService.getMaxTranMapID().subscribe(data => {
+	  this.authService.getMaxOrgnTranMapID().subscribe(data => {
 		  if(data.length > 0)
 		  {
 		  this.model.TransMapID = data[0].Tran_Map_ID;
@@ -276,14 +404,22 @@ submitted = false;
 	
 	// Load event types
 	this.authService.getAllTranscationType().subscribe(data => {
+		if(data.length > 0)
+		{
 		   for(let i=0; i< data.length; i++)
-      this.TranscationTypeList.push(data[i]);
+		   {
+			this.TranscationTypeList.push(data[i]);
+		   }
+		   
+		this.TranscationTypeList.find(x=> x.Tran_Type_ID == 1).Tran_Type_Name = "Employee Registration Approval";
+		}
     },
     //observable also returns error
     err => {
       console.log(err);
       return false;
     });
+	
 	
 	
 	  
@@ -332,7 +468,52 @@ submitted = false;
 	  // }
   }
   
+  isButtonDisabled() {
+	  //debugger;
+         
+		if(this.isRolesDisabled)
+			{
+		   return true;		 
+			}
+		else 
+			{
+			return false;
+			}		   
+  }
   
+  ViewSavedTransactionFlow(tranMapID)
+  {
+	  debugger;
+	  this.model.Roles=[];
+	this.authService.getOrgnTranscationMapDetailByTranMapID(parseInt(tranMapID)).subscribe(data => {
+		
+		   if(data.length > 0)
+					{
+						this.isRolesDisabled = true;
+						//this.model.TransMapID = data.TransMapArray[0].Tran_Map_ID;
+						for(let i=0; i< data.length; i++)
+						{
+							//this.isUpdate = true;
+							this.model.Roles.push({RoleID:data[i].Role_ID,Priority:data[i].Priority});
+						}
+						
+						this.model.TransFlowStartDate = this.SavedTransData.filter(x=> x.Tran_Map_ID == tranMapID)[0].Tran_Flow_Start_DT;
+						this.model.TransFlowEndDate = this.SavedTransData.filter(x=> x.Tran_Map_ID == tranMapID)[0].Tran_Flow_End_DT;
+						this.toastr.info("Please have a look on saved transaction", 'Saved transaction!');
+					}else
+					{
+						//this.model.TransFlowStartDate = data.UnivTranscationTypeDetail[0].Tran_Flow_End_DT;
+						//this.model.TransFlowStartDate = new Date((new Date(data.UnivTranscationTypeDetail[0].Tran_Flow_End_DT)).getTime() + (60*60*24*1000)).toString();;
+						//this.isUpdate = false;
+					}
+		
+    },
+    //observable also returns error
+    err => {
+      console.log(err);
+      return false;
+    });
+  }
   
 
   
@@ -415,8 +596,9 @@ submitted = false;
    // }
 // }
   
-checkValidation()
-{	debugger;
+	checkValidation()
+	{	
+	debugger;
     let length = this.ErrorList.length;
 	for(let i=0; i< length;i++)
 	{
@@ -471,9 +653,17 @@ checkValidation()
 	{
 		return true;
 	}
-}
+	}
 
-
+	onReset()
+	{
+		this.isRolesDisabled = false;
+		this.SavedTransData = [];
+		this.model.Roles = [];
+		this.model.TransFlowStartDate='';
+		this.model.TransFlowEndDate = '';
+		this.model.TransTypeID='0';
+	}
 
   onSubmit(){
 	  debugger;
@@ -483,7 +673,7 @@ checkValidation()
 	  }
   else {
 	  
-	  this.submitted = true;
+	  
 	  
   	// this.model.StartDt = new Date(this.model.StartDt).toISOString();
 	// this.model.EndDt = new Date(this.model.EndDt).toISOString();
@@ -522,16 +712,62 @@ checkValidation()
 	
 	
   // Register user
-    this.authService.AddUnivTranscationTypeDetail(this.model).subscribe(data => {
+    this.authService.AddOrgnTranscationTypeDetail(this.model).subscribe(data => {
 		debugger;
       if(data.success){
-		  if(this.tagID == 'C')
-		  {
-        //this.flashMessage.show('Event has been registered', {cssClass: 'alert-success', timeout: 3000});
-        this.router.navigate(['/']);
-		  }else {
-			  this.router.navigate(['/universitydashboard']);
-		  }
+		  this.SuccessMessage = "New Transcation type added by admin. Click + button to add more.";
+		  this.toastr.success(this.SuccessMessage, 'Success!');
+		  this.Organizations = [
+	  {Orgn_ID: 0,  OrgnName:"Please select"}
+         
+     ];
+
+	 this.OrganizationsWithRoles = [
+	  {Orgn_ID: 0,  OrgnName:"Please select", RoleList:[]}
+         
+     ];
+	 
+	this.TranscationTypeList = [
+	  {Tran_Type_ID: 0,  Tran_Type_Name:"Please select"}
+         
+     ];
+	this.OrganizationRoles = [
+	  
+         
+     ];
+	 this.OrganizationRolesWithOrganization = [
+	   {Orgn_RoleID: 0,  Orgn_RoleName:"Please select", Orgn_ID:""}
+         
+     ];
+	 this.EventTypes = [
+      {EventTypeID: 0,  EventTypeName:"Please select"}    
+     ]; 
+	 
+	 this.model.TransMask=[];
+	 this.model.TransMap=[];
+	 //this.model.Roles=[];
+	 // this. model={  	
+    // UniversityID:'0',  
+    // TransTypeID:'0',
+	// NoOfLevel:1,
+	// TransMapID:'',	
+    // Roles:[],
+	// TransMask:[],
+	// TransMap:[],
+	// UniversityName:'',
+	// TransFlowStartDate:'',
+	// TransFlowEndDate:'',
+	// Created_On:new Date(),
+	// Created_by:'',
+	// Modified_On:'',
+	// Modified_by:''
+	
+     	// };
+	 this.ngOnInit();
+	 if(this.tagID == 'C')
+	 {
+	 this.onChange(this.model.OrganizationID);
+	 }
       } else {
         //this.flashMessage.show('Something went wrong', {cssClass: 'alert-danger', timeout: 3000});
         this.router.navigate(['/EventInfo']);

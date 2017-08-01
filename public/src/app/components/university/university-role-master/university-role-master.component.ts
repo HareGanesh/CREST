@@ -1,4 +1,4 @@
-import { Component, OnInit,ChangeDetectorRef,ViewEncapsulation, ViewContainerRef } from '@angular/core';
+import { Component, OnInit,ChangeDetectorRef, ViewContainerRef } from '@angular/core';
  import {ValidateService} from '../../../services/validate.service';
 import {AuthService} from '../../../services/auth.service';
 import {FlashMessagesService} from 'angular2-flash-messages';
@@ -19,9 +19,24 @@ export class UniversityRoleMasterComponent implements OnInit {
 	universityName:String;
 	public SuccessMessage = '';
 	univID:Number;
+	public Roles = [
+	  {RoleID: 0,  Priority:0, Tran_Map_ID:0}
+         
+     ];
+	 
+	deletedRoleID:number[]=[];
+	
+	deletedDataInfo=
+	{
+		RoleID:0,
+		StudentIDArray:[],
+		EventstudentIDArray:[]
+	};
+	deletedDataInfoList=[];
 model={  	
     Univ_RoleName:[],  
-    Univ_ID:'0'
+    Univ_ID:'0',
+	DeletedRoleIDList:[]
 	
 };
   //public UniversityRoles : Array<String>=[];
@@ -200,7 +215,7 @@ onChange(univID) {
 	  }
   else {
 	  debugger;
-	   this.authService.addUniversityRole(this.model).subscribe(data => {
+	   this.authService.addUniversityRole(this.model, this.deletedDataInfoList).subscribe(data => {
 		  if(data.success)
 		  {
 			  this.SuccessMessage	= "New Role added successfully. Click + button to add more roles.";
@@ -217,10 +232,25 @@ onChange(univID) {
          
      ];
 	 
+	 this.Roles = [
+	  {RoleID: 0,  Priority:0, Tran_Map_ID:0}
+         
+     ];
+	 
+	
+	this.deletedDataInfoList=[];
+	this.deletedDataInfo=
+	{
+		RoleID:0,
+		StudentIDArray:[],
+		EventstudentIDArray:[]
+	};
+	 
 	 this.model.Univ_RoleName =[];
 	 this.model={  	
     Univ_RoleName:[],  
-    Univ_ID:'0'
+    Univ_ID:'0',
+	DeletedRoleIDList:[]
 	
 };
 	 this.ngOnInit();
@@ -249,5 +279,92 @@ onChange(univID) {
 	 this.model.Univ_RoleName.push({Univ_RoleName:""}); 
   }
   
-
+  RemoveRoles(index)
+  {
+	  debugger;
+	  let maskArray=[];
+	  let studentIDArray=[];
+	  let eventstudentIDArray=[];
+	  let highPriority=false;
+	  let role = this.UniversityRoles[index];
+	  let roleIndex= this.UniversityRoles.indexOf(role);
+		  for(let i=0; i < this.UniversityRoles.length; i++)
+		  {
+			  if(this.UniversityRoles[i]== role)
+			  {
+				 roleIndex = i;
+				 break;
+			  }
+		  }  
+		  
+	  
+		  this.UniversityRoles.splice(roleIndex, 1);
+		  this.deletedRoleID.push(role.Univ_RoleID);
+	  
+	  
+	  this.authService.getAllTranscationTypeWithRolesAndPriority(this.univID, 1).subscribe(data => {
+					if(data.length > 0)
+					{
+						for(let i=0; i< data.length; i++)
+						{
+							this.Roles.push({RoleID:data[i].Role_ID, Priority:data[i].Priority, Tran_Map_ID: data[i].Tran_Map_ID});
+						}
+						
+						for(let j=0; j< this.Roles.length; j++)
+						{
+							maskArray.push(Math.pow(2, this.Roles[j].Priority));							
+						}
+						
+						if( Math.max.apply(null, maskArray) == Math.pow(2,(this.Roles.filter(x=>x.RoleID == role.Univ_RoleID)[0].Priority)))
+						 {
+							 highPriority = true;
+						 }
+						 
+						 if(highPriority)
+						 {
+						this.authService.getAllUnivTranscationApprovalDetailInfoByUnivIDAndRoleID(this.univID, role.Univ_RoleID).subscribe(university => {   
+						//.universityApprovalUserList=university;
+						for(let i=0; i<university.length;i++)
+						{
+						 studentIDArray.push(university[i].Student_Info[0].Student_ID);						
+						}
+						},
+						//observable also returns error
+						err => {
+						console.log(err);
+						return false;
+						});
+						
+						this.authService.getAllUnivTranscationEventApprovalDetailInfoByUnivIDAndRoleID(this.univID, role.Univ_RoleID).subscribe(university => {   
+						//.universityApprovalUserList=university;
+						for(let i=0; i<university.length;i++)
+						{
+						 eventstudentIDArray.push(university[i].Student_Info[0].Student_ID);						
+						}
+						},
+						//observable also returns error
+						err => {
+						console.log(err);
+						return false;
+						});
+						 }
+					}
+				 },//observable also returns error
+		err => {
+      console.log(err);
+      return false;
+    });
+	this.deletedDataInfo.RoleID = role.Univ_RoleID;
+	this.deletedDataInfo.StudentIDArray = studentIDArray;
+	this.deletedDataInfo.EventstudentIDArray = eventstudentIDArray;
+	this.deletedDataInfoList.push(this.deletedDataInfo);
+  }
+  
+  RemoveTempRoles(index)
+  {
+	  debugger;
+	  
+	 this.model.Univ_RoleName.splice(index,1); 
+	 
+  }
 }

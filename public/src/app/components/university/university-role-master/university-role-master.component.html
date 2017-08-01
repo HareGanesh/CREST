@@ -75,26 +75,27 @@
 <label>Role Name <span class="red">*</span></label>
 	<div class="input-group" style="width:100%;">
     
-		<div style="width:98%;float:left; margin-bottom:10px;" *ngFor="let univrole of UniversityRoles;let i = index">		
+		<div style="width:96%;float:left; margin-bottom:10px;" *ngFor="let univrole of UniversityRoles;let i = index">		
 		<input disabled type="text" value="{{univrole.Univ_RoleName}}"  ngControl="Univ_RoleName" class="form-control" style="width:98%;"
 		autofocus="true"> 
-		<div style="width:2%;float:right;">
-		<a id="remove" class=""(click)=RemoveRoles()><img src="..\..\src\img\remove.png" height="30px" width="30px" ></a>
-		</div>
+		<!-- <div style="width:2%;float:right;"> -->
+		<!-- <a id="remove" class=""(click)=RemoveRoles(i)><img src="..\..\src\img\remove.png" height="30px" width="30px" ></a> -->
+		<!-- </div> -->
 		</div>
 		
-		<div style="width:98%;float:left; margin-bottom:10px;" *ngFor="let role of model.Univ_RoleName;let i = index">		
+		<div style="width:96%;float:left; margin-bottom:10px;" *ngFor="let role of model.Univ_RoleName;let i = index">		
 		<input required type="text" [(ngModel)]="role.Univ_RoleName" name="Univ_RoleName{{i}}" ngControl="Univ_RoleName" style="width:98%;"  class="form-control"
 		autofocus="true" id="#Univ_RoleName{{i}}" #Univ_RoleName{{i}}="ngModel"> 
 		
-		<div style="width:2%;float:right;" *ngIf="i < model.Univ_RoleName.length-1 ">
-		<a id="remove" class=""(click)=RemoveRoles()><img src="..\..\src\img\remove.png" height="30px" width="30px" ></a>
+		<!-- <div style="width:2%;float:right;" *ngIf="i < model.Univ_RoleName.length-1 "> -->
+		<!-- <a id="remove" class=""(click)=RemoveTempRoles(i)><img src="..\..\src\img\remove.png" height="30px" width="30px" ></a> -->
+		<!-- </div> -->
+		<div style="width:2%;float:right;"  *ngIf="i == model.Univ_RoleName.length-1">
+		<a id="addMore" class=""(click)=AddMoreRoles()><img src="..\..\src\img\AddMore.png" height="30px" width="30px" ></a>
 		</div>
 		</div>
 		
-		<div style="width:2%;float:right;">
-		<a id="addMore" class=""(click)=AddMoreRoles()><img src="..\..\src\img\AddMore.png" height="30px" width="30px" ></a>
-		</div>
+		
 	
 	</div>
 

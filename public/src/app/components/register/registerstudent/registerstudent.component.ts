@@ -67,10 +67,21 @@ this.toastr.setRootViewContainerRef(vcr);
 
   ngOnInit() {
 	  
-	  // Get all organization
+	  // Get all university  
 	  this.authService.getAllUniversity().subscribe(data => {
 		   for(let i=0; i< data.length; i++)
-      this.Universities.push({id:data[i].Univ_ID, name:data[i].Univ_Name});
+		   {
+			   this.authService.getUnivTranscationTypeDetailByUnivID(data[i].Univ_ID).subscribe(univTrans => {
+		       if(univTrans.length > 0)
+			   {
+			     this.Universities.push({id:data[i].Univ_ID, name:data[i].Univ_Name});
+			   }
+			},//observable also returns error
+    err => {
+      console.log(err);
+      return false;
+    });
+    }	
     },
     //observable also returns error
     err => {
@@ -203,7 +214,7 @@ this.toastr.setRootViewContainerRef(vcr);
 		return false;
 		});
 		
-		this.authService.getAllTranscationTypeWithRolesAndPriority(parseInt(univID), 1).subscribe(data => {
+		this.authService.getUnivTranscationTypeDetailByUnivIDAndTransTypeAndCurrentDate(parseInt(univID), 1).subscribe(data => {
 					if(data.length > 0)
 					{
 						for(let i=0; i< data.length; i++)

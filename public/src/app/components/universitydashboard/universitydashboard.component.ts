@@ -8,6 +8,7 @@ import { UniversityTransApproval } from './UniversityTransApproval';
 import { UniversityTransApprovalList } from './UniversityTransactionApprovalList';
 import {TooltipModule} from "ngx-tooltip";
 import { ToastsManager } from 'ng2-toastr/ng2-toastr';
+import { Ng2SmartTableModule, LocalDataSource  } from 'ng2-smart-table';
 
 @Component({
   selector: 'app-universitydashboard',
@@ -15,8 +16,101 @@ import { ToastsManager } from 'ng2-toastr/ng2-toastr';
   styleUrls: ['./universitydashboard.component.scss']
 })
 export class UniversitydashboardComponent implements OnInit {
+	source: LocalDataSource; 
+    settings = {
+	delete: {
+      confirmDelete: true
+	  //'<a class="btn btn-primary pull-right" style="width:66px;" (click)="deleteUniverity(item._id)"  data-toggle="modal" data-target="#deleteDiv">Delete</a>'
+    },
+	edit: {
+      confirmSave: true,
+    },
+	
+	actions: {
+	 edit: false, //as an example  
+	 add:false,
+	 delete:false,
+	},
+	
+	pager:{
+	 perPage:20
+	},
 
 
+  columns: {
+    Tran_Approval_ID: {
+      title: 'Req No',
+	  filter:false
+	  
+    },
+    Student_Name: {
+      title: 'Student Name',
+	  filter:false
+    },
+    Prev_Approver_RName: {
+      title: 'Prev Approval',
+	  filter:false
+    },
+    Next_Approver_RName: {
+      title: 'Next approval',
+	  filter:false
+    }
+	}
+  };
+
+	data = [
+    
+	];
+	
+	URsource: LocalDataSource; 
+    URsettings = {
+	selectMode: 'multi',
+	
+	delete: {
+      confirmDelete: true,
+	  deleteButtonContent: 'Reject' //
+	  //deleteButtonContent: '<a class="btn btn-primary pull-right" style="width:66px;" (click)="deleteUniverity(item._id)"  data-toggle="modal" data-target="#deleteDiv">Delete</a>'
+    },
+	edit: {
+      confirmSave: true,
+    },
+	
+	actions: {
+	 edit: false, //as an example  
+	 add:false,
+	 delete:true,
+	 deleteButtonContent:'Reject',
+	 custom: [{ name: 'Approve', title:'Approve         '} ],
+	 position:'right'
+	},
+	
+	pager:{
+	 perPage:20
+	},
+
+
+  columns: {
+    Tran_Approval_ID: {
+      title: 'Req No',
+	  filter:false
+	  
+    },
+    Student_Name: {
+      title: 'Student Name',
+	  filter:false
+    },
+    
+    Next_Approver_RName: {
+      title: 'Next approval',
+	  filter:false
+    }
+	}
+  };
+
+	URdata = [
+    
+	];
+	
     public Action:String="Edit";
 	public errorMsg:String="";
 	public deleteID:String="";
@@ -59,6 +153,8 @@ export class UniversitydashboardComponent implements OnInit {
 	
 this.toastr.setRootViewContainerRef(vcr);
 		}
+		
+	
   
   @Input()
    ngOnInit() {	
@@ -70,7 +166,7 @@ this.toastr.setRootViewContainerRef(vcr);
   	}
 	this.univID = JSON.parse(this.authService.getLoginUser()).Univ_ID;
 	this.GetUniversityRolesByUnivID();
-	this.authService.getAllTranscationTypeWithRolesAndPriority(this.univID, 1).subscribe(data => {
+	this.authService.getUnivTranscationTypeDetailByUnivIDAndTransTypeAndCurrentDate(this.univID, 1).subscribe(data => {
 					if(data.length > 0)
 					{
 						for(let i=0; i< data.length; i++)
@@ -88,6 +184,89 @@ this.toastr.setRootViewContainerRef(vcr);
    
 
   }
+  
+  onSearch(query: string = '') {
+	  debugger;
+	  if(this.tagID == 'UR')
+	  {
+		 
+	  if(query != '')
+	  {
+		var filterData=[];
+		for(var i=0;i<this.universityApprovalUserList.length;i++)
+		 {
+			  if(this.universityApprovalUserList[i].Tran_Approval_ID.toString().toLowerCase().indexOf(query.toLowerCase())!=-1 || this.universityApprovalUserList[i].Student_Name.toString().toLowerCase().indexOf(query.toLowerCase())!=-1 || this.universityApprovalUserList[i].Next_Approver_RName.toString().toLowerCase().indexOf(query.toLowerCase())!=-1 ||  this.universityApprovalUserList[i].Prev_Approver_RName.toString().toLowerCase().indexOf(query.toLowerCase())!=-1)
+			  {
+				  filterData.push(this.universityApprovalUserList[i]);
+			  }
+		 }
+		 this.universityApprovalUserList=filterData;		
+		}
+		else {
+			this.bindGrid();
+			}
+	  
+  // second parameter specifying whether to perform 'AND' or 'OR' search 
+  // (meaning all columns should contain search query or at least one)
+  // 'AND' by default, so changing to 'OR' by setting false here
+
+	  }else {  
+	  if(query != '')
+	  {
+  this.source.setFilter([
+    // fields we want to include in the search
+    {
+      field: 'Tran_Approval_ID',
+      search: query
+    },
+    {
+      field: 'Student_Name',
+      search: query
+    },
+    {
+      field: 'Prev_Approver_RName',
+      search: query
+    },
+    {
+      field: 'Next_Approver_RName',
+      search: query
+    }
+  ], false); 
+	  }else
+	  {
+		  this.source = new LocalDataSource(this.data); 
+	  }
+	  }
+  // second parameter specifying whether to perform 'AND' or 'OR' search 
+  // (meaning all columns should contain search query or at least one)
+  // 'AND' by default, so changing to 'OR' by setting false here
+}
+
+	onApproveStudent(event) {
+	  debugger;
+	  this.ApproveStudent(event.data);
+	  document.getElementById("btnApprove").click();
+	  
+    // if (window.confirm('Are you sure you want to save?')) {
+      // event.newData['name'] += ' + added in code';
+      // event.confirm.resolve(event.newData);
+    // } else {
+      // event.confirm.reject();
+    // }
+	}
+	
+	onRejectStudent(event) {
+	  debugger;
+	  this.RejectStudent(event.data);
+	  document.getElementById("btnReject").click();
+	  
+    // if (window.confirm('Are you sure you want to save?')) {
+      // event.newData['name'] += ' + added in code';
+      // event.confirm.resolve(event.newData);
+    // } else {
+      // event.confirm.reject();
+    // }
+	}
   
   
   // To bind the grid with university
@@ -119,6 +298,9 @@ this.toastr.setRootViewContainerRef(vcr);
 		  this.universityApprovalUserList[i].Prev_Approver_RName= this.Roles.filter(x=>x.RoleID == this.universityApprovalUserList[i].Prev_Approver_RID)[0].RoleName;
 		  this.universityApprovalUserList[i].Next_Approver_RName= this.Roles.filter(x=>x.RoleID == this.universityApprovalUserList[i].Next_Approver_RID)[0].RoleName;
 		  }
+		  
+		  this.URdata = this.universityApprovalUserList;
+		  this.URsource = new LocalDataSource(this.URdata); 
     },
     //observable also returns error
     err => {
@@ -136,6 +318,9 @@ this.toastr.setRootViewContainerRef(vcr);
 		  this.universityApprovalUserList[i].Prev_Approver_RName= this.Roles.filter(x=>x.RoleID == this.universityApprovalUserList[i].Prev_Approver_RID)[0].RoleName;
 		  this.universityApprovalUserList[i].Next_Approver_RName= this.Roles.filter(x=>x.RoleID == this.universityApprovalUserList[i].Next_Approver_RID)[0].RoleName;
 		  }
+		  
+		  this.data = this.universityApprovalUserList;
+		  this.source = new LocalDataSource(this.data); 
     },
     //observable also returns error
     err => {

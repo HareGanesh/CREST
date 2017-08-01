@@ -151,29 +151,28 @@ router.post('/AddEventInvite', (req, res, next) => {
 						
 						EventOrganization.RemoveEventOrganizationByEventID(eventID, (err, eventorgn)=> {
                                                                                 console.log(eventorgn);
-                                                                });
-                        
-							
-							
-                        for(var n=0;n < organizationInfo.length; n++)
+																				for(var n=0;n < organizationInfo.length; n++)
                             {
                                 var  eventOrganization= new EventOrganization();
                                 eventOrganization.EventID= eventID
 								eventOrganization.OrgnID=organizationInfo[n];
+								console.log("n= " + n);
                                 EventOrganization.AddEventOrganization(eventOrganization, (err, organizationInfo)=> {
                                                                      console.log(organizationInfo);
                                                                 });
-                            }                                                
+                            }
+                                                                });
+                        
+							
+							
+                                                                        
                     }
 				if(universitiesInfo.length>0)
                     {
 						
                         EventUniversity.RemoveEventUniversityByEventID(eventID, (err, eventUniv)=> {
                                                                                 console.log(eventUniv);
-                                                                });
-                            
-							
-                        for(var n=0;n < universitiesInfo.length; n++)
+																				for(var n=0;n < universitiesInfo.length; n++)
                             {
                                 var  eventUniversity= new EventUniversity();
                                 eventUniversity.EventID= eventID;
@@ -181,7 +180,11 @@ router.post('/AddEventInvite', (req, res, next) => {
                                 EventUniversity.AddEventUniversity(eventUniversity, (err, universityInfo)=> {
                                                                                 console.log(universityInfo);
                                                                 });
-                            }                                                
+                            }  
+                                                                });
+                            
+							
+                                                                      
                     }
       res.json({success: true, msg:'Event Created.'});
     

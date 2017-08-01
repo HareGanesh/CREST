@@ -8,8 +8,8 @@
 <!-- </div> -->
 
 <div class="col-md-4 col-md-offset-4 col-sm-6 col-sm-offset-3">
-<div style="margin-bottom:10px;" class="alert alert-success" *ngIf="SuccessMessage !=''">
-		<strong>{{SuccessMessage}}<a  [routerLink]="['/login']">Login</a></strong>
+<div style="margin-bottom:10px;" *ngIf="SuccessMessage !=''">
+		<a class="big-red-button"  [routerLink]="['/login']">Login</a>
 	</div>
  <div class="panel panel-info">
 	<div class="panel-heading">

@@ -6,6 +6,7 @@ const config = require('../config/database');
 const UnivTranscationTypeDetail = require('../models/UnivTranscationTypeDetail');
 const UnivTranscationMaskDetail = require('../models/UnivTranscationMaskDetail');
 const UnivTranscationMapDetail = require('../models/UnivTranscationMapDetail');
+const UniversityRole = require('../models/UniversityRoleMstr');
 
 router.post('/AddUnivTranscationTypeDetail', (req, res, next) => {
 	
@@ -15,8 +16,11 @@ router.post('/AddUnivTranscationTypeDetail', (req, res, next) => {
   let newUnivTranscationTypeDetail = new UnivTranscationTypeDetail({
   	Tran_Type_ID: req.body.TransTypeID,
   	Tran_Map_ID: req.body.TransMapID,
+	Tran_Flow_Start_DT: req.body.TransFlowStartDate,
+	Tran_Flow_End_DT: req.body.TransFlowEndDate,
 	Univ_ID:req.body.UniversityID,
 	No_of_Levels:req.body.NoOfLevel,
+	
   	Active: req.body.Active,  
 	Created_On: req.body.Created_On,
 	Created_by: req.body.Created_by,
@@ -28,7 +32,7 @@ router.post('/AddUnivTranscationTypeDetail', (req, res, next) => {
 	
 	// --- Update logic
 	
-	UnivTranscationTypeDetail.getUnivTranscationTypeDetailByUnivIDAndTransType(req.body.UniversityID,req.body.TransTypeID, (err,UnivTranscationTypeDetail1)=>{
+	UnivTranscationTypeDetail.getUnivTranscationTypeDetailByUnivIDAndTransTypeAndEffDateBetweenStartAndEnd(req.body.UniversityID,req.body.TransTypeID, req.body.TransFlowStartDate, (err,UnivTranscationTypeDetail1)=>{
     if(err) {
 		throw err;		
 	}
@@ -145,6 +149,37 @@ router.post('/AddUnivTranscationTypeDetail', (req, res, next) => {
   
 });
 
+
+router.get('/getUnivTranscationTypeDetailByUnivIDAndTransTypeAndCurrentDate', (req, res) => {
+  var univid = req.headers["univid"]; 
+  var transcationType = req.headers["transcationtypeid"]; 
+
+  console.log(univid);
+  console.log(transcationType);
+  UnivTranscationTypeDetail.getUnivTranscationTypeDetailByUnivIDAndTransTypeAndCurrentDate(univid,transcationType, (err,UnivTranscationTypeDetail1)=>{
+    if(err) {
+		throw err;		
+	}
+     else
+	  {		 
+  console.log(UnivTranscationTypeDetail1);
+		  
+		  if(UnivTranscationTypeDetail1.length > 0)
+		  {
+		  UnivTranscationMapDetail.getUnivTranscationMapDetailByID(UnivTranscationTypeDetail1[0].Tran_Map_ID, (err, TransMapArray)=> 
+		  {
+             console.log(TransMapArray);
+			 res.json(TransMapArray);
+          });
+		  }else {
+			res.json({success: true, msg:'No Record'});  
+		  }
+																
+		
+	  }
+  });  
+});
+
 router.get('/GetUnivTranscationTypeDetailByUnivIDAndTransType', (req, res) => {
   var univid = req.headers["univid"]; 
   var transcationType = req.headers["transcationtypeid"]; 
@@ -167,7 +202,7 @@ router.get('/GetUnivTranscationTypeDetailByUnivIDAndTransType', (req, res) => {
 			 res.json(TransMapArray);
           });
 		  }else {
-			res.json({success: true, msg:'No record.'});  
+			res.json({success: true, msg:'No Record'});  
 		  }
 																
 		
@@ -175,7 +210,72 @@ router.get('/GetUnivTranscationTypeDetailByUnivIDAndTransType', (req, res) => {
   });  
 });
 
+router.get('/GetUnivTranscationTypeDetailInfoByUnivIDAndTransType', (req, res) => {
+  var univid = req.headers["univid"]; 
+  var transcationType = req.headers["transcationtypeid"]; 
 
+  console.log(univid);
+  console.log(transcationType);
+  UnivTranscationTypeDetail.getUnivTranscationTypeDetailByUnivIDAndTransTypeAndEffDate(univid,transcationType, (err,UnivTranscationTypeDetail1)=>{
+    if(err) {
+		throw err;		
+	}
+     else
+	  {		 
+  console.log(UnivTranscationTypeDetail1);
+		  UniversityRole.getUniversityRoleMstrByUnivID(univid, (err,univRoles)=>{
+    if(err) {
+		throw err;		
+	}
+     else
+	  {	
+		  if(UnivTranscationTypeDetail1.length > 0)
+		  {
+		  UnivTranscationMapDetail.getUnivTranscationMapDetailByID(UnivTranscationTypeDetail1[0].Tran_Map_ID, (err, TransMapArray)=> 
+		  {
+             console.log(TransMapArray);
+			 res.json({TransMapArray:TransMapArray, UnivTranscationTypeDetail: UnivTranscationTypeDetail1, univRoles: univRoles, msg:'Record'});
+          });
+		  }else {
+			res.json({success: true, TransMapArray:[], univRoles: univRoles});  
+		  }  
+		}
+		  });
+		  }  
+	  
+  });  
+});
+
+
+router.get('/getUnivTranscationTypeDetailByUnivID', (req, res) => {
+  var univid = req.headers["univid"];  
+  UnivTranscationTypeDetail.getUnivTranscationTypeDetailByUnivID(univid, (err,UnivTranscationTypeDetail1)=>{
+    if(err) {
+		throw err;		
+	}
+     else
+	  {		 
+  	res.json(UnivTranscationTypeDetail1);
+	  }
+  });  
+});
+
+router.get('/getAllUnivTranscationTypeListByUnivIDAndTranType', (req, res) => {
+  var univid = req.headers["univid"]; 
+  var transcationType = req.headers["transcationtypeid"]; 
+
+  console.log(univid);
+  console.log(transcationType);
+  UnivTranscationTypeDetail.getAllUnivTranscationTypeListByUnivIDAndTranType(univid,transcationType, (err,UnivTranscationTypeDetail1)=>{
+    if(err) {
+		throw err;		
+	}
+     else
+	  {		 
+  	res.json(UnivTranscationTypeDetail1);
+	  }
+  });  
+});
 
 router.get('/getAllUnivTranscationTypeDetail', (req, res) => {
 
@@ -190,6 +290,8 @@ console.log("Test");
 	  }
   });  
 });
+
+
 
 router.get('/getMaxTransMapID', (req, res) => {
 

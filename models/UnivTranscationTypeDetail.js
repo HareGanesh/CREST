@@ -26,6 +26,15 @@ const UnivTranscationTypeDetailMstrSchema = mongoose.Schema({
 		type: Boolean
 	},
 	
+	Tran_Flow_Start_DT:{
+		type:Date
+	},
+	
+	Tran_Flow_End_DT:{
+		type:Date,
+		default:''
+	},
+	
    CreatedOn:{
     type: Date
   },
@@ -47,11 +56,38 @@ const UnivTranscationTypeDetailMstrSchema = mongoose.Schema({
 
 const UnivTranscationTypeDetailMaster = module.exports = mongoose.model('Univ_Tran_Type_Det', UnivTranscationTypeDetailMstrSchema,'Univ_Tran_Type_Det');
 
+module.exports.getUnivTranscationTypeDetailByUnivID = function(univID, callback){ 
+
+	var query = { 'Univ_ID': parseInt(univID) };	
+	UnivTranscationTypeDetailMaster.find(query, callback);
+}
+
 module.exports.getUnivTranscationTypeDetailByUnivIDAndTransType = function(univID, transTypeID, callback){ 
 
-	var query = { 'Univ_ID': parseInt(univID), 'Tran_Type_ID': parseInt(transTypeID)};
+	var query = { 'Univ_ID': parseInt(univID), 'Tran_Type_ID': parseInt(transTypeID) };
 	console.log(query);
 	UnivTranscationTypeDetailMaster.find(query, callback);
+}
+
+module.exports.getUnivTranscationTypeDetailByUnivIDAndTransTypeAndEffDate = function(univID, transTypeID, callback){ 
+
+	var query = { 'Univ_ID': parseInt(univID), 'Tran_Type_ID': parseInt(transTypeID)};
+	
+	UnivTranscationTypeDetailMaster.find(query,callback).sort({Tran_Map_ID : -1}).limit(1);	
+}
+
+module.exports.getUnivTranscationTypeDetailByUnivIDAndTransTypeAndEffDateBetweenStartAndEnd = function(univID, transTypeID, startDate, callback){ 
+
+	var query = { 'Univ_ID': parseInt(univID), 'Tran_Type_ID': parseInt(transTypeID), Tran_Flow_Start_DT: new Date(startDate) };
+	
+	UnivTranscationTypeDetailMaster.find(query,callback).sort({Tran_Map_ID : -1}).limit(1);	
+}
+
+module.exports.getUnivTranscationTypeDetailByUnivIDAndTransTypeAndCurrentDate = function(univID, transTypeID, callback){ 
+
+	var query = { 'Univ_ID': parseInt(univID), 'Tran_Type_ID': parseInt(transTypeID), Tran_Flow_Start_DT: {$lte:new Date()} };
+	
+	UnivTranscationTypeDetailMaster.find(query,callback).sort({Tran_Map_ID : -1}).limit(1);	
 }
 
 module.exports.getUnivTranscationTypeDetailMstrByName = function(CategoryName,callback){
@@ -65,6 +101,10 @@ module.exports.AddUnivTranscationTypeDetail = function(newUnivTranscationTypeDet
 
 module.exports.getAllUnivTranscationTypeDetail = function(callback){	
 	UnivTranscationTypeDetailMaster.find("",callback);}
+	
+module.exports.getAllUnivTranscationTypeListByUnivIDAndTranType = function(univID, transTypeID, callback){	
+var query = { 'Univ_ID': parseInt(univID), 'Tran_Type_ID': parseInt(transTypeID)};
+	UnivTranscationTypeDetailMaster.find(query,callback);}
 	
 module.exports.getMaxTransMapID = function(callback){	
 	//UnivTranscationTypeDetailMaster.find("",callback);
@@ -84,7 +124,7 @@ module.exports.getMaxTransMapID = function(callback){
 module.exports.UpdateUnivTranscationTypeDetailByTranMapID = function(TransTypeDet, callback)
 { 
 var query = { Tran_Map_ID: TransTypeDet.Tran_Map_ID };
-UnivTranscationTypeDetailMaster.update(query, {No_of_Levels:TransTypeDet.No_of_Levels}, callback);
+UnivTranscationTypeDetailMaster.update(query, {No_of_Levels:TransTypeDet.No_of_Levels, Tran_Flow_End_DT:TransTypeDet.Tran_Flow_End_DT}, callback);
 }
 
 module.exports.DeleteUnivTranscationTypeDetailById = function(univID, callback){ 

@@ -40,10 +40,10 @@
 <li class="active" >
 <a href="#OverviewTab" data-toggle="tab">Event created</a>
 </li>
-<li *ngIf="tagID == 'U'">
+<li *ngIf="tagID == 'U' || tagID == 'O'">
 <a href="#ApprovedTab" data-toggle="tab">Show All Approved</a>
 </li>
-<li *ngIf="tagID == 'U'">
+<li *ngIf="tagID == 'U' || tagID == 'O'">
 <a href="#RejectedTab" data-toggle="tab">Show All Rejected</a>
 </li>
 </ul>

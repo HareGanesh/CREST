@@ -5,7 +5,9 @@
   border-radius: 4px;
 }
 
-
+.table th {
+color:#1e6bb8;
+}
 
 .link_button {
     -webkit-border-radius: 4px;
@@ -31,6 +33,15 @@ a.disabled, a.disabled:visited {
    pointer-events: none;
    cursor: default;
    color: gray;
+   background-color: #aaa;
+   opacity:0.5;
+}
+
+img.disabled, img.disabled:visited {
+   pointer-events: none;
+   cursor: default;
+   color: gray;
+   background-color: #aaa;
 }
 
 .right_col {

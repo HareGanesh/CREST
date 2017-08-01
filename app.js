@@ -46,11 +46,16 @@ const UnivTranscationEventApprovalHistory = require('./routes/UnivTranscationEve
 const UnivTranscationEventApprovalDetail = require('./routes/UnivTranscationEventApprovalDetail'); 
 const EventUniversity = require('./routes/EventUniversity'); 
 const UniversityRoleUser = require('./routes/UniversityRoleUser'); 
+const OrganizationRoleUser = require('./routes/OrganizationRoleUser');
 const UserLogin = require('./routes/UserLogin'); 
 const EventStudent = require('./routes/EventStudent'); 
 const DegreeMstr = require('./routes/DegreeMaster');
 const GradeMstr = require('./routes/GradeMaster');
 const SpecializationMstr = require('./routes/SpecializationMaster');
+
+const OrgnTranscationTypeDetail = require('./routes/OrgnTranscationTypeDetail');
+const OrgnTranscationMapDetail = require('./routes/OrgnTranscationMapDetail');
+
 //MIDDLEWARE
 app.use(cors());//run on diff port
 //app.use(bodyParser.json());//grab data from frontend
@@ -99,12 +104,16 @@ app.use('/UnivTranscationEventApprovalHistory', UnivTranscationEventApprovalHist
 
 app.use('/EventUniversity', EventUniversity);
 app.use('/UniversityRoleUser', UniversityRoleUser);
+app.use('/OrganizationRoleUser', OrganizationRoleUser);
 app.use('/UserLogin', UserLogin);
 app.use('/EventStudent', EventStudent);
 
 app.use('/DegreeMstr', DegreeMstr);
 app.use('/GradeMstr', GradeMstr);
 app.use('/SpecializationMstr', SpecializationMstr);
+
+app.use('/OrgnTranscationTypeDetail', OrgnTranscationTypeDetail);
+app.use('/OrgnTranscationMapDetail', OrgnTranscationMapDetail);
 
 //app.use('/events', events);
 // app.use('/students', function(students, res, next) {

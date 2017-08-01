@@ -4,10 +4,15 @@
       <nav class="navbar ">
   <div class="container-fluid">
     
-	<div class="nav navbar-nav navbar-right">
-	
-	  <a data-toggle="modal" class="btn btn-primary pull-right navbar-btn" (click)="clearModel();" data-target="#vv">Add Organization</a>
+	<div class="title_left">
+                <h3>Organization List <small></small></h3>
+              </div>
+	<div class="nav navbar-nav navbar-right col-xs-3">
+	<input  #search class="search col-xs-6" type="text" placeholder="Search..." (keydown.enter)="onSearch(search.value)">
+		<a data-toggle="modal" class="btn btn-primary pull-right navbar-btn" (click)="clearModel();" data-target="#vv">Add Organization</a>
     </div>
+	
+	
   </div>
 </nav>
 
@@ -17,32 +22,35 @@
             
                   <div class="x_content">
 				   <div class="row">
-                      <div class="col-md-12 mail_list_column">
+				   <ng2-smart-table [settings]="settings" [source]="source" mode="external" (deleteConfirm)="onDeleteConfirm($event)" (custom)="onEdit($event)"></ng2-smart-table>
+				   <a class="btn btn-primary pull-right" style="display:none;" id="deletebtn"  data-toggle="modal" data-target="#deleteDiv">Delete</a>
+				   <a class="btn btn-primary pull-right" style="display:none;" id="editbtn" data-toggle="modal" data-target="#vv">Edit</a>
+                      <!-- <div class="col-md-12 mail_list_column"> -->
                       
-                     <div class="header">  
-                    <ul >
-					<li><a>Organization Name</a></li>
-					<li><a>Address</a></li>
-					<li><a>EmailID</a></li>
-					<li><a>Contact No</a></li>					
-					<li><a>Active</a></li>
-					<li></li>
-					</ul>
-					</div>
-					<div class="item"> 
-					 <ul class="col-md-12 mail_list_column mail_list" *ngFor="let item of organizationList; ">
-                      <li> {{item.OrgnName}}</li>
-					  <li> {{item.Address}}</li>
-                      <li>{{item.EmailID}} </li>
-                      <li> {{item.ContactNo}}</li>
-                      <li> <input type="checkbox" checked="checked"> </li>
-					  <li>
-					  <a class="btn btn-primary pull-right" style="width:66px;" (click)="deleteOrganization(item._id)"  data-toggle="modal" data-target="#deleteDiv">Delete</a>
-					  <a class="btn btn-primary pull-right" style="width:66px;" (click)="showPopup(item._id)" data-toggle="modal" data-target="#vv">Edit</a> 
+                     <!-- <div class="header">   -->
+                    <!-- <ul > -->
+					<!-- <li><a>Organization Name</a></li> -->
+					<!-- <li><a>Address</a></li> -->
+					<!-- <li><a>EmailID</a></li> -->
+					<!-- <li><a>Contact No</a></li>					 -->
+					<!-- <li><a>Active</a></li> -->
+					<!-- <li></li> -->
+					<!-- </ul> -->
+					<!-- </div> -->
+					<!-- <div class="item">  -->
+					 <!-- <ul class="col-md-12 mail_list_column mail_list" *ngFor="let item of organizationList; "> -->
+                      <!-- <li> {{item.OrgnName}}</li> -->
+					  <!-- <li> {{item.Address}}</li> -->
+                      <!-- <li>{{item.EmailID}} </li> -->
+                      <!-- <li> {{item.ContactNo}}</li> -->
+                      <!-- <li> <input type="checkbox" checked="checked"> </li> -->
+					  <!-- <li> -->
+					  <!-- <a class="btn btn-primary pull-right" style="width:66px;" (click)="deleteOrganization(item._id)"  data-toggle="modal" data-target="#deleteDiv">Delete</a> -->
+					  <!-- <a class="btn btn-primary pull-right" style="width:66px;" (click)="showPopup(item._id)" data-toggle="modal" data-target="#vv">Edit</a>  -->
 					  
-					  </li>
-</ul>
-                      </div> </div>
+					  <!-- </li> -->
+<!-- </ul> -->
+                      <!-- </div> </div> -->
 					  
                       <!-- /MAIL LIST -->
 

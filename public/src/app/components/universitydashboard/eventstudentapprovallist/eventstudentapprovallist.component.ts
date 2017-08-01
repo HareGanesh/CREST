@@ -70,6 +70,7 @@ this.toastr.setRootViewContainerRef(vcr);
   
   @Input()
    ngOnInit() {	
+   debugger;
    this.tagID=localStorage.getItem('tagID');
 	this.model={	
 	TransEventApprovalMapping:[],	
@@ -78,7 +79,7 @@ this.toastr.setRootViewContainerRef(vcr);
 	this.univID = JSON.parse(this.authService.getLoginUser()).Univ_ID;
 	this.GetUniversityRolesByUnivID();
 	
-	this.authService.getAllTranscationTypeWithRolesAndPriority(this.univID, 2).subscribe(data => {
+	this.authService.getUnivTranscationTypeDetailByUnivIDAndTransTypeAndCurrentDate(this.univID, 2).subscribe(data => {
 					if(data.length > 0)
 					{
 						for(let i=0; i< data.length; i++)
@@ -167,7 +168,7 @@ this.toastr.setRootViewContainerRef(vcr);
     });
 	  }else if(this.tagID == "U"){
 		  maskID = 1024;
-	  	  this.authService.getAllUnivTranscationEventApprovalDetailByUnivIDAndMaskID(this.univID, maskID).subscribe(university => {   
+	  	  this.authService.getAllUnivTranscationEventApprovalDetailInfoByUnivIDAndMaskID(this.univID, maskID).subscribe(university => {   
 	      this.universityEventApprovalUserList=university.UnivTranscationEventApprovalDetail;
 		  if(this.universityEventApprovalUserList.length > 0)
 		  {
@@ -175,7 +176,7 @@ this.toastr.setRootViewContainerRef(vcr);
 		  {
 		  //this.universityEventApprovalUserList[i].Event_Title= university.evt.EventTitle;
 		  //this.universityEventApprovalUserList[i].EventID = university.evt._id;
-		  this.universityEventApprovalUserList[i].Student_Name= this.Students.filter(x=>x.StudentID == this.universityEventApprovalUserList[i].Student_ID)[0].StudentName;
+		  this.universityEventApprovalUserList[i].Student_Name= university.UnivTranscationEventApprovalDetail[i].Student_Info[0].Student_Name;
 		  this.universityEventApprovalUserList[i].Prev_Approver_RName= this.Roles.filter(x=>x.RoleID == this.universityEventApprovalUserList[i].Prev_Approver_RID)[0].RoleName;
 		  this.universityEventApprovalUserList[i].Next_Approver_RName= this.Roles.filter(x=>x.RoleID == this.universityEventApprovalUserList[i].Next_Approver_RID)[0].RoleName;
 		  }

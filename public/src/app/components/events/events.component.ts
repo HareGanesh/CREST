@@ -9,6 +9,10 @@ import { IMultiSelectSettings } from 'angular-2-dropdown-multiselect';
 import { IMultiSelectTexts } from 'angular-2-dropdown-multiselect';
 import { ToastsManager } from 'ng2-toastr/ng2-toastr';
 
+import {Observable} from 'rxjs/Rx';
+import { Ng2SmartTableModule, LocalDataSource  } from 'ng2-smart-table';
+
+
 @Component({
   selector: 'app-home',
   templateUrl: './eventsDetails.component.html',
@@ -19,6 +23,56 @@ export class EventsComponent implements OnInit {
 	
 	public SuccessMessage='';
 	public DangerMessage='';
+	source: LocalDataSource; 
+	
+	// region ng2-smart-table
+	 settings = {
+	delete: {
+      confirmDelete: true,
+	  //deleteButtonContent: '<a class="btn btn-primary pull-right" style="width:66px;" (click)="deleteUniverity(item._id)"  data-toggle="modal" data-target="#deleteDiv">Delete</a>'
+    },
+	edit: {
+      confirmSave: true,
+    },
+	
+	actions: {
+	 edit: false, //as an example  
+	 add:false,
+	 delete:false,
+	},
+	
+	pager:{
+	 perPage:20
+	},
+
+
+  columns: {
+    Student_Name: {
+      title: 'Student Name',
+	  filter:false
+	  
+    },
+    Email_ID: {
+      title: 'Email ID',
+	  filter:false
+    },
+    Address: {
+      title: 'Address',
+	  filter:false
+    },
+    Mobile_No: {
+      title: 'Contact No',
+	  filter:false
+    }
+  }
+};
+
+	data = [
+    
+	];
+	
+	// End here
+	
   // Invite init
   public organizations = [
 	  
@@ -98,9 +152,10 @@ myUnivOptions: IMultiSelectOption[] = [
    public dayDiff : number;
    public dayHours : number;
    public dayMin : number;
+   public daySecond : number;
    TransApprovalMapping:UniversityTransEventApproval[]=[];
    public Organizations = [
-	  {id: 0,  name:"Please select",title:"", address:"",country:"",overview:"", state:"",logo:""},
+	  {id: 0,  name:"Please select",title:"", address:"",overview:""},
       
      ];
 	public Universities = [
@@ -140,13 +195,46 @@ onUniversityChange(items) {
        this.model.Universities = items;
     }
 	
+	onSearch(query: string = '') {
+	  debugger;
+	  if(query != '')
+	  {
+  this.source.setFilter([
+    // fields we want to include in the search
+    {
+      field: 'Student_Name',
+      search: query
+    },
+    {
+      field: 'Address',
+      search: query
+    },
+    {
+      field: 'Email_ID',
+      search: query
+    },
+    {
+      field: 'Mobile_No',
+      search: query
+    }
+  ], false); 
+	  }else
+	  {
+		  this.source = new LocalDataSource(this.data); 
+	  }
+  // second parameter specifying whether to perform 'AND' or 'OR' search 
+  // (meaning all columns should contain search query or at least one)
+  // 'AND' by default, so changing to 'OR' by setting false here
+}
+	
 ngOnInit() 
 {	
       // Invite on init
 	  // Get all organization
+	  debugger;
 	  this.authService.getOrganizations().subscribe(data => {
 		   for(let i=0; i< data.length; i++)
-      this.myOptions.push({id:data[i].OrgnID, name:data[i].OrgnName});
+      this.myOptions.push({id:data[i].Orgn_ID, name:data[i].OrgnName});
     },
     //observable also returns error
     err => {
@@ -252,7 +340,7 @@ this.authService.GetEventOrganizerByEventID(eventID).subscribe(organizer => {
 	// Get all organization
 	  this.authService.getOrganizations().subscribe(data => {
 		   for(let i=0; i< data.length; i++)
-      this.Organizations.push({id:data[i].OrgnID, name:data[i].OrgnName,title:data[i].OrgnTitle, address:data[i].OrgnAddress, country:data[i].OrgnCountry,overview:data[i].OrgnOverview,state:data[i].OrgnState,logo:data[i].OrgnLogo});
+      this.Organizations.push({id:data[i].Orgn_ID, name:data[i].OrgnName,title:data[i].Title, address:data[i].Address, overview:data[i].Overview});
     },
     //observable also returns error
     err => {
@@ -273,10 +361,16 @@ this.authService.GetEventOrganizerByEventID(eventID).subscribe(organizer => {
 	
 	this.checkJoinButtonDisabled();
 	this.GetPeopleJoined();
+	
+	Observable.interval(1).subscribe(x => {
+    this.dayTimeDiff(this.eventDetails.EventRegisterEndDt);
+  });
+
   }
   
   GetPeopleJoined()
   {
+	 
 	  this.authService.GetApprovedEventStudentByEventID(this.eventid).subscribe(data => {
 		   if(data.length > 0)
 		   {
@@ -285,7 +379,10 @@ this.authService.GetEventOrganizerByEventID(eventID).subscribe(organizer => {
              for(let i=0; i< data.length;i++)
 			 {
 				 this.GetStudent(data[i].Student_ID);
-			 }				 
+			 }	
+
+			  debugger;
+             			 
 		   }else{
 			   this.totalPeopleJoined =0;
 		   }
@@ -351,6 +448,31 @@ this.authService.GetEventOrganizerByEventID(eventID).subscribe(organizer => {
 		  this.model.Universities=[]; 
 		  this.SuccessMessage = "Selected universities and organizations successfully invited."
 		  this.toastr.success(this.SuccessMessage , 'Success!');
+		  
+		  this.authService.GetEventOrganizationByEventID(this.model.eventID).subscribe(organization => {
+			debugger;
+			this.eventOrganizationArray=organization;
+			for(let i=0; i<organization.length; i++)
+			{
+				this.model.Organizations.push(parseInt(this.eventOrganizationArray[i].OrgnID));
+			}
+			},  err => {
+			  console.log(err);
+			  return false;
+			});
+			
+			this.authService.GetEventUniversityByEventID(this.model.eventID).subscribe(university => {
+			debugger;
+			this.eventUniversityArray=university;
+			for(let i=0; i<university.length; i++)
+			{
+				this.model.Universities.push(parseInt(this.eventUniversityArray[i].Univ_ID));
+			}
+			},  err => {
+			  console.log(err);
+			  return false;
+			});
+		  
        // this.flashMessage.show('univer has been registered', {cssClass: 'alert-success', timeout: 3000});
         //this.router.navigate(['/universitydashboard']);
       } else {
@@ -474,7 +596,8 @@ this.authService.GetEventOrganizerByEventID(eventID).subscribe(organizer => {
 		    // for(let i=0; i< data.length; i++)
 				
        this.Students.push({Student_Name: data1.Student_Name ,Email_ID: data1.username, Address:data1.Address, Mobile_No:data1.Mobile_No});
-				
+	   this.data = this.Students;
+	   this.source = new LocalDataSource(this.data);
 		   
        },
     //observable also returns error
@@ -542,49 +665,69 @@ this.authService.GetEventOrganizerByEventID(eventID).subscribe(organizer => {
 	return this.Universities.find(x=>x.id == univID).ContactNo;
   }
   
-  // GetName(orgnID)
-  // {
+  GetName(orgnID)
+  {
 	  
-// return this.Organizations.find(x=>x.id == orgnID).name;
-  // }
+return this.Organizations.find(x=>x.id == orgnID).name;
+  }
   
-  // GetTitle(orgnID)
-  // {
+  GetTitle(orgnID)
+  {
 	  
-// return this.Organizations.find(x=>x.id == orgnID).title;
-  // }
+return this.Organizations.find(x=>x.id == orgnID).title;
+  }
   
-  // GetOverview(orgnID)
-  // {
+  GetOverview(orgnID)
+  {
 	  
-// return this.Organizations.find(x=>x.id == orgnID).overview;
-  // }
+return this.Organizations.find(x=>x.id == orgnID).overview;
+  }
   
-  // GetAddress(orgnID)
-  // {
-// return this.Organizations.find(x=>x.id == orgnID).address  +"," + this.Organizations.find(x=>x.id == orgnID).state +"," + this.Organizations.find(x=>x.id == orgnID).country;
-  // }
+  GetAddress(orgnID)
+  {
+//return this.Organizations.find(x=>x.id == orgn_ID).address  +"," + this.Organizations.find(x=>x.id == orgn_ID).state +"," + this.Organizations.find(x=>x.id == orgn_ID).country;
+  }
   
-  // GetOrganizationLogo(orgnID)
-  // {
-	  // return this.Organizations.find(x=>x.id == orgnID).logo +".png";
-  // }
+  GetOrganizationLogo(orgnID)
+  {
+	  //return this.Organizations.find(x=>x.id == orgnID).logo +".png";
+  }
   
   ActiveTab(tab)
   {
                   //document.getElementsByClassName('nav')[0].childNodes;
                   //console.log(document.getElementsByClassName('nav')[0].childNodes);
                   document.getElementsByClassName(tab)[0].className='active';
-                  console.log(document.getElementsByClassName('RulesTab'));
+                  
   }
-      dayTimeDiff(format){
-                
-var oneDay = 24*60*60*1000; // hours*minutes*seconds*milliseconds
-var firstDate = new Date();
-var secondDate = new Date(format);
+  dayTimeDiff(format)
+  {         
+  
+	var oneDay = 24*60*60*1000; // hours*minutes*seconds*milliseconds
+	var firstDate = new Date();
+	var secondDate = new Date(format);
+    
+	// this.dayDiff = Math.round(Math.abs((firstDate.getTime() - secondDate.getTime())/(oneDay)));
+	// this.dayHours = Math.floor(secondDate.getHours() - firstDate.getHours());
+	// this.dayMin = Math.floor(secondDate.getMinutes() - firstDate.getMinutes());
+	// this.daySecond = Math.floor(secondDate.getSeconds() - firstDate.getSeconds());
+	
+	// var diffMs = (secondDate.getTime() - firstDate.getTime()); // milliseconds between now & Christmas
+	// this.dayDiff = Math.floor(diffMs / 86400000); // days
+	// this.dayHours = Math.floor((diffMs % 86400000) / 3600000); // hours
+	// this.dayMin = Math.round(((diffMs % 86400000) % 3600000) / 60000); // minutes	
+	// this.daySecond = Math.round((((diffMs % 86400000) % 3600000) % 3600000) / 360000); // minutes	
+	//this.daySecond = Math.round((diffMs )/1000); // second
+	var diffMs = (secondDate.getTime() - firstDate.getTime()); // milliseconds between now & Christmas
+	this.dayDiff = Math.floor(diffMs / 86400000); // days
+	
 
-this.dayDiff = Math.round(Math.abs((firstDate.getTime() - secondDate.getTime())/(oneDay)));
-this.dayHours = Math.abs(secondDate.getHours() - firstDate.getHours());
-this.dayMin = Math.abs(secondDate.getMinutes() - firstDate.getMinutes());
-}
+	this.dayHours = Math.floor(Math.abs(diffMs) / (1000 * 60 * 60) % 24); // hours
+	
+	//Math.floor(Math.abs(diffMs) / (1000 * 60) % 60);
+
+	this.dayMin = Math.floor(Math.abs(diffMs) / (1000 * 60) % 60); // minutes	
+	
+	this.daySecond = Math.floor(Math.abs(diffMs) / (1000) % 60); 
+  }
 }
