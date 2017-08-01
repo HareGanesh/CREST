@@ -24,6 +24,8 @@ export class OrganizationroleComponent implements OnInit {
   public organizationUserList: Array<OrganizationRole> = [];
   public organizationUserTempList: Array<OrganizationRole> = [];
   public orgnID;
+  IsLowestRoleLoggedIn=false;
+  RolesArray=[];
   tagID:String;
   private username;
   private EmailID;
@@ -52,6 +54,7 @@ export class OrganizationroleComponent implements OnInit {
     _id:'',
 	Role_ID:0,  
     username:'',
+	Priority:0,
 	Password:'',
 	Email_ID:'',	
     Mobile_No:'',
@@ -131,6 +134,8 @@ data = [
 					
 					if(data.TransMapArray.length > 0)
 					{
+						this.RolesArray = data.TransMapArray;
+						this.checkIsLowestRoleLoggedIn(data.TransMapArray, roleid);
 		              for(let i=0; i< data.TransMapArray.length; i++)
 						{		
 								debugger;
@@ -151,7 +156,7 @@ data = [
 		   for(let i=0; i< this.organizationUserList.length; i++)
 		   {
 			   this.organizationUserList[i].RoleName = this.OrganizationRolesWithOrganization.filter(x=>x.Orgn_RoleID == this.organizationUserList[i].Role_ID)[0].Orgn_RoleName;
-			   
+			   this.organizationUserList[i].Priority = this.RolesArray.filter(x=>x.Role_ID == this.organizationUserList[i].Role_ID)[0].Priority;
 			//this.OrganizationRoles.push(data[i]);
 		   }
 		   
@@ -159,7 +164,7 @@ data = [
 		   this.data = this.organizationUserList;
 		   if(this.tagID == 'OR')
 		   {
-			   this.data = this.data.filter(x=>x.Created_by == JSON.parse(this.authService.getStudent()).username);
+			   this.data = this.data.filter(x=>x.Priority < priority );
 		   }
 		   
 		   this.source = new LocalDataSource(this.data); 
@@ -180,6 +185,25 @@ data = [
     });
 		  }
     
+	
+	checkIsLowestRoleLoggedIn(roles=[], roleid)
+  {
+	  debugger;
+    let maskID =2;
+	let maskArray=[];
+	//let roleid = JSON.parse(this.authService.getLoginUser()).Role_ID;
+	maskID = Math.pow(2,(roles.filter(x=>x.Role_ID == roleid)[0].Priority));
+	for(let j=0; j< roles.length; j++)
+	{
+	 maskArray.push(Math.pow(2, roles[j].Priority));
+							//priorityArray.push(data[j].Priority);
+	}
+						
+	if( Math.min.apply(null, maskArray) == maskID)
+	{
+	 this.IsLowestRoleLoggedIn = true;	 
+	}	
+  }
     
     
   
@@ -332,6 +356,7 @@ data = [
 	Role_ID:0,  
     username:'',
 	Password:'',
+	Priority:0,
 	Email_ID:'',	
     Mobile_No:'',
 	Department:'',

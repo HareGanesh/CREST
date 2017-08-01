@@ -10,6 +10,7 @@ export class OrganizationRole {
 	public Orgn_ID:number,
 	public RoleName:string,
 	public _id:string,
+	public Priority:number,
 	public Created_By:string
 	)
 	{

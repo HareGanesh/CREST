@@ -11,7 +11,7 @@
               </div>
 	<div class="nav navbar-nav navbar-right col-xs-3">
 	<input  #search class="search col-xs-6" type="text" placeholder="Search..." (keydown.enter)="onSearch(search.value)">
-		<a data-toggle="modal" class="btn btn-primary pull-right"  (click)="clearModel();" data-target="#vv">Add Organization User</a>
+		<a *ngIf="IsLowestRoleLoggedIn == false" data-toggle="modal" class="btn btn-primary pull-right"  (click)="clearModel();" data-target="#vv">Add Organization User</a>
     </div>
 	
 </div>
