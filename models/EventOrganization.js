@@ -54,6 +54,10 @@ module.exports.getAllEventOrganization = function(callback){
 	EventOrganization.find("",callback);
 }
 
+module.exports.getEventOrganizationByOrgnID = function(orgnID, callback){
+	const query = {OrgnID: orgnID}
+	EventOrganization.find(query,callback);} 
+
 
 module.exports.RemoveEventOrganizationByEventID = function(EventID, callback){ 
 var query = { EventID: EventID };

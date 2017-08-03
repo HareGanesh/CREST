@@ -1,0 +1,319 @@
+.table th {
+color:#1e6bb8;
+}
+
+
+:host /deep/ {
+  accordion-group {
+  div .caret {
+    display: inline-block;
+    float: right !important;
+    width: 0;
+    height: 0;
+    margin-left: 2px;
+    vertical-align: middle;
+    border-top: 4px dashed;
+    border-top: 4px solid \9;
+    border-right: 4px solid transparent;
+    border-left: 4px solid transparent;
+}
+  }
+  }
+  
+div .caret {
+    display: inline-block;
+    float: right !important;
+    width: 0;
+    height: 0;
+    margin-left: 2px;
+    vertical-align: middle;
+    border-top: 4px dashed;
+    border-top: 4px solid \9;
+    border-right: 4px solid transparent;
+    border-left: 4px solid transparent;
+}
+
+.mail_listEvent {
+    width: 100%;
+    
+    margin-bottom: 2px;
+    display: inline-block;
+}
+
+.mail_listEvent .left {
+    width: 5%;
+    float: left;
+    margin-right: 3%;
+}
+
+.mail_listEvent .right {
+    width: 70%;
+    float: left;
+}
+
+.grid-item {
+	border: solid 1px #ccc;
+}
+
+.handle {
+	width: 100%;
+	height: 50px;
+	background: #eee;
+	color: black;
+	font-weight: 500;
+	padding: 15px;
+	box-sizing: border-box;
+}
+
+.btn {
+	margin-left: 10px;
+}
+
+.box-header-btns {
+    top: 15px;
+    right: 10px;
+    cursor: pointer;
+    position: absolute;
+}
+
+.navbar-default {
+	background: black;
+	border: 0px;
+}
+
+.navbar-default .navbar-brand {
+	color: white;
+}
+
+body {
+	background-color: #f5f2f2;
+}
+.header ul{
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #333333;
+}
+
+.header li {
+    float: left;
+	width:12%;
+	
+}
+
+.header li a {
+    display: block;
+    color: white;   
+    padding: 16px;
+    text-decoration: none;
+	font-weight:16;
+	text-align:left;
+	
+}
+
+.header li input {
+    
+    color: white;   
+    padding: 16px;
+    text-decoration: none;
+	font-weight:16;
+	text-align:left;
+	margin-top:20px;
+	margin-left:15px;
+}
+.header li label {
+    
+    color: white;   
+    
+    text-decoration: none;
+	
+}
+
+ .header li a:hover {
+    background-color: #111111;
+}
+
+.item ul{
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    
+   
+}
+
+.item li {
+    float: left;
+}
+
+.item li  {
+    display: block;
+
+    text-align: center;
+    padding: 16px;
+    text-decoration: none;
+	font-weight:16;
+	width:12%;
+	text-align:left;
+}
+
+.item li  input{
+    color: white;   
+    padding: 16px;
+    text-decoration: none;
+	font-weight:16;
+	text-align:left;
+	
+}
+
+.border
+{
+background-color: #fff;
+    margin: 10px auto;
+    border: 1px solid #e5e5e5;
+    padding: 10px;
+    border-radius: 3px;
+    position: relative;
+    width: 90%;
+}
+.modal-dialog {
+    position: relative;
+    width: 60% !important;
+   
+}
+
+.twelve, .row .twelve {
+    width: 100%;
+}
+.column.centered, .columns.centered {
+    float: none;
+    margin: 0 auto;
+}
+.column, .columns {
+    float: left;
+    min-height: 1px;
+    padding: 0 10px;
+    position: relative;
+}
+.ten, .row .ten {
+    width: 83.33333%;
+}
+.two, .row .two {
+    width: 16.66667%;
+}
+.pane .body, .tile .body {
+    padding: 17px;
+    background-color: #fff;
+    line-height: 27px;
+}
+input[type="text"], input[type="password"], input[type="date"], 
+input[type="textarea"] input[type="datetime"], input[type="email"], input[type="number"], input[type="search"], input[type="tel"], input[type="time"], input[type="url"] {
+    height: 38px;
+    padding: 12px;
+	margin:0 0 12px 0;
+}
+.student_bio{
+	width:404px;
+	margin-bottom:10px;
+}
+.student_update
+{
+	width: 90px !important;
+    float: right;
+}
+
+
+
+
+
+
+.row .row {
+    width: auto;
+    max-width: none;
+    min-width: 0;
+    margin: 0 -10px;
+}
+
+.twelve, .row .twelve {
+    width: 100%;
+}
+.row:after {
+    clear: both;
+}
+
+
+
+.fa {
+    display: inline-block;
+    font: normal normal normal 14px/1 FontAwesome;
+    font-size: inherit;
+    text-rendering: auto;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-map-marker:before{content:"\f041"}
+.icon-time:before{content:"\f017"}
+.nav-md {background:#fff;}
+
+
+ .right_col {
+    padding: 10px 20px 0;
+    margin-left: 230px;
+}
+
+.big-red-button {
+    font-size: 10pt;
+    padding: 0 20px;
+    height: 38px;
+    line-height: 30px;
+    cursor: pointer;
+    display: inline-block;
+    text-align: center;
+    text-transform: uppercase;
+    border-radius: 5px;
+    color: #fff !important;
+    background-color: #337ab7 	;
+    transition: all .2s ease;
+	font-family: "Montserrat", sans-serif;
+    font-style: normal;
+    
+    line-height: 3em;
+	width:190px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -4,6 +4,7 @@ import {AuthService} from '../../services/auth.service'
 import {Router, ActivatedRoute, Params} from '@angular/router';
 import {EventModel} from '../../model/eventsModel';
 import { UniversityTransEventApproval } from './UniversityTransEventApproval';
+import { OrganizationTransEventApproval } from './OrganizationTransEventApproval';
 import { IMultiSelectOption } from 'angular-2-dropdown-multiselect';
 import { IMultiSelectSettings } from 'angular-2-dropdown-multiselect';
 import { IMultiSelectTexts } from 'angular-2-dropdown-multiselect';
@@ -144,16 +145,20 @@ myUnivOptions: IMultiSelectOption[] = [
   Comments:string;
   univID:Number;
   StudentID:String;
+  orgnID:Number;
+  employeeID:String;
   totalPeopleJoined:number;
   isJoinBtnDisabled:boolean=false;
   Students=[{Student_Name:"",Email_ID:"", Address:"", Mobile_No:""}];
   
   EventStudent=[{EventID:"",StudentID:""}];
+  EventEmployee=[{EventID:"",EmployeeID:""}];
    public dayDiff : number;
    public dayHours : number;
    public dayMin : number;
    public daySecond : number;
    TransApprovalMapping:UniversityTransEventApproval[]=[];
+   OrgnTransApprovalMapping:OrganizationTransEventApproval[]=[];
    public Organizations = [
 	  {id: 0,  name:"Please select",title:"", address:"",overview:""},
       
@@ -269,6 +274,11 @@ ngOnInit()
 	   this.univID = JSON.parse(this.authService.getLoginUser()).Univ_ID;
 	   this.StudentID = JSON.parse(this.authService.getLoginUser()).Student_ID
 	   this.LoadTransMapping();  
+	  }else if(this.tagID == 'OR')
+	  {
+		  this.orgnID = JSON.parse(this.authService.getLoginUser()).Orgn_ID;
+		  this.employeeID = JSON.parse(this.authService.getLoginUser()).id;
+		  this.LoadOrgnTransMapping();  
 	  }
 	
 	 let eventID
@@ -359,6 +369,7 @@ this.authService.GetEventOrganizerByEventID(eventID).subscribe(organizer => {
       return false;
     });	
 	
+	
 	this.checkJoinButtonDisabled();
 	this.GetPeopleJoined();
 	
@@ -398,6 +409,8 @@ this.authService.GetEventOrganizerByEventID(eventID).subscribe(organizer => {
   {
 	  debugger;
 	  let isDisabled = false;
+	  if(this.tagID == 'S')
+	  {
 	  this.authService.GetEventStudentByEventIDAndStudentID(this.eventid, this.StudentID).subscribe(data => {
 		   if(data.length > 0)
 		   {
@@ -409,6 +422,20 @@ this.authService.GetEventOrganizerByEventID(eventID).subscribe(organizer => {
 		console.log(err);
 		return false;
 		});
+	  }else if(this.tagID == 'OR')
+	  {
+		this.authService.GetEventEmployeeByEventIDAndEmployeeID(this.eventid, this.employeeID).subscribe(data => {
+		   if(data.length > 0)
+		   {
+		    this.isJoinBtnDisabled = true;
+		   }
+		},
+		//observable also returns error
+		err => {
+		console.log(err);
+		return false;
+		});
+	  }
 		
 		
   }
@@ -514,7 +541,7 @@ this.authService.GetEventOrganizerByEventID(eventID).subscribe(organizer => {
 		return false;
 		});
 		
-		this.authService.getAllTranscationTypeWithRolesAndPriority(this.univID, 2).subscribe(data => {
+		this.authService.getUnivTranscationTypeDetailByUnivIDAndTransTypeAndCurrentDate(this.univID, 2).subscribe(data => {
 					if(data.length > 0)
 					{
 						for(let i=0; i< data.length; i++)
@@ -522,6 +549,56 @@ this.authService.GetEventOrganizerByEventID(eventID).subscribe(organizer => {
 							 this.TransApprovalMapping.push({TransMapID : data[i].Tran_Map_ID, NextApproverRoleID:data[i].Role_ID, PrevApproverRoleID:0,
 							 Priority:data[i].Priority,MaskID:Math.pow(2, data[i].Priority), Status:0, EventID: this.eventid,
 							 UniversityID:this.univID, TransApprovalID:TransApprovalID, TransDt:transDt, StudentID:this.StudentID, TransApprovalIDNumber:transApprovalIDNumber});
+						}
+					}
+			},
+				//observable also returns error
+					err => {
+					console.log(err);
+					return false;
+				});		
+			
+  }
+  
+  LoadOrgnTransMapping()
+  {
+	  debugger;
+	  this.OrgnTransApprovalMapping=[];
+	   let TransApprovalID="ReqEA-1";
+	   let transApprovalIDNumber=1;
+	   let transDt='';
+	   this.authService.getMaxTranOrgnEventApprovalID().subscribe(data => {
+		   if(data.length > 0)
+		   {
+		    TransApprovalID = "ReqEA-" +(parseInt(((data[0].Tran_Approval_ID).split('-')[1])) +1).toString();
+		   }
+		},
+		//observable also returns error
+		err => {
+		console.log(err);
+		return false;
+		});
+		
+		this.authService.getMaxTranOrgnEventApprovalNumberID().subscribe(data => {
+		   if(data.length > 0)
+		   {
+		    transApprovalIDNumber = data[0].Tran_Approval_IDNumber + 1;
+		   }
+		},
+		//observable also returns error
+		err => {
+		console.log(err);
+		return false;
+		});
+		
+		this.authService.getOrgnTranscationTypeDetailByOrgnIDAndTransTypeAndCurrentDate(this.orgnID, 2).subscribe(data => {
+					if(data.length > 0)
+					{
+						for(let i=0; i< data.length; i++)
+						{							
+							 this.OrgnTransApprovalMapping.push({TransMapID : data[i].Tran_Map_ID, NextApproverRoleID:data[i].Role_ID, PrevApproverRoleID:0,
+							 Priority:data[i].Priority,MaskID:Math.pow(2, data[i].Priority), Status:0, EventID: this.eventid,
+							 OrganizationID:this.orgnID, TransApprovalID:TransApprovalID, TransDt:transDt, EmployeeID:this.employeeID, TransApprovalIDNumber:transApprovalIDNumber});
 						}
 					}
 			},
@@ -613,6 +690,8 @@ this.authService.GetEventOrganizerByEventID(eventID).subscribe(organizer => {
 	  this.isJoinBtnDisabled = true;
 	  event.target.disabled = true;
 	  debugger;
+	  if(this.tagID == 'S')
+	  {
 	  this.EventStudent.pop();
 	  this.EventStudent.push({EventID:this.eventid.toString(), StudentID:this.StudentID.toString()});
 	  this.authService.addUniversityTransEventApprovalDetail(this.TransApprovalMapping).subscribe(data => {
@@ -627,16 +706,43 @@ this.authService.GetEventOrganizerByEventID(eventID).subscribe(organizer => {
 	  });
 	   
 	
-	this.authService.addIntoEventStudent(this.EventStudent[0]).subscribe(data => {
+		this.authService.addIntoEventStudent(this.EventStudent[0]).subscribe(data => {
+			debugger;
+		if(data.success){
+			this.toastr.success("You have been successfully invited. Please wait for the approval by university." , 'Success!');
+		}
+		// else {
+		// //this.flashMessage.show('Something went wrong', {cssClass: 'alert-danger', timeout: 3000});
+        // //this.router.navigate(['/register']);
+		// }
+		});
+	  }else if(this.tagID == 'OR')
+	  {
+	  this.EventEmployee.pop();
+	  this.EventEmployee.push({EventID:this.eventid.toString(), EmployeeID:this.employeeID.toString()});
+	  this.authService.addOrganizationTransEventApprovalDetail(this.OrgnTransApprovalMapping).subscribe(data => {
 		debugger;
-      if(data.success){
-        this.toastr.success("You have been successfully invited. Please wait for the approval by university." , 'Success!');
-      }
-	  // else {
+      // if(data.success){
+        // //this.flashMessage.show('You are now registered and can log in', {cssClass: 'alert-success', timeout: 3000});
+        // //this.router.navigate(['/login']);
+      // } else {
         // //this.flashMessage.show('Something went wrong', {cssClass: 'alert-danger', timeout: 3000});
         // //this.router.navigate(['/register']);
       // }
-    });
+	  });
+	   
+	
+		this.authService.addIntoEventEmployee(this.EventEmployee[0]).subscribe(data => {
+			debugger;
+		if(data.success){
+			this.toastr.success("You have been successfully invited. Please wait for the approval by organization." , 'Success!');
+		}
+		// else {
+		// //this.flashMessage.show('Something went wrong', {cssClass: 'alert-danger', timeout: 3000});
+        // //this.router.navigate(['/register']);
+		// }
+		});
+	  }
   }
   
   onPopupClick()

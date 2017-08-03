@@ -18,6 +18,7 @@ export class ProfileComponent implements OnInit {
   student:Object;
   //model:Object;
   isLoading : boolean =  false;
+  tagID:String;
   id: String;
   public studentEducationDetail:StudentEducationDetail;
   public professionalDetail:StudentProfessionalDetail;
@@ -102,6 +103,7 @@ optionsChecked = [];
   //load user when initialized 
   ngOnInit() {
 	  this.id = this.elm.nativeElement.getAttribute('id'); 
+	  this.tagID=localStorage.getItem('tagID');
 	  this.BindDegree();
 	  this.BindGrade();
 	  this.BindSpecialization();
@@ -111,6 +113,8 @@ optionsChecked = [];
 	  this.professionalDetail = {EmployerName :'', DurationStartMonth:0,  DurationStartYear:0, DurationEndMonth:0, DurationEndYear:0, Designation:'', JobProfile:'', FullTimeOrPartTime:'No', CurrentEmployer:true};	  
 	  	 debugger;
 	 // console.log(this.authService.studentID);
+	 if(this.tagID == 'S')
+	 {
 	  this.authService.getStudentProfileByStudentID(JSON.parse(this.authService.getStudent()).Student_ID).subscribe(data => {
 		  debugger;
 		this.student = data;
@@ -145,6 +149,13 @@ optionsChecked = [];
 	  this.model.Univ_Name = this.model1[0].StudentUniv_Info[0].Univ_Name
 	  
 	  });
+	 }else 
+	 {
+		  this.model.EducationDetail.push(this.studentEducationDetail);
+		  this.model.ProfessionalDetail.push(this.professionalDetail);
+		  
+		 this.student=this.model;
+	 }
 	   
 	   this.authService.getCategories().subscribe(data => {
 		   for(let i=0; i< data.length; i++)

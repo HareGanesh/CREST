@@ -40,7 +40,7 @@ import { UniversityRoleMasterComponent } from './components/university//universi
 import { OrganizationRoleMasterComponent } from './components/organization//organization-role-master/organization-role-master.component';
 import { UniversityComponent } from './components/university/university.component';
 import { UniversitydashboardComponent } from './components/universitydashboard/universitydashboard.component';
-
+import { EmployeeEventApprovalListComponent } from './components/EmployeeEventApprovalList/EmployeeEventApprovalList.component';
 import {TooltipModule} from "ngx-tooltip";
 import { UniversityroleComponent } from './components/universityrole/universityrole.component';
 
@@ -63,23 +63,24 @@ const appRoutes: Routes = [
   {path:'dashboard', component: DashboardComponent ,canActivate:[AuthGuard]},
   {path:'profile', component: ProfileComponent, canActivate:[AuthGuard]},
   {path:'student', component: RegisterstudentComponent},
-   {path:'studentList', component: StudentListComponent},
+  {path:'studentList', component: StudentListComponent},
 
   {path:'organization', component: OrganizationComponent},
   {path:'eventinfo/:id', component: RegistereventComponent},
   {path: 'eventDetails/:id', component: EventsComponent },
-{path:'UniversityTransMapping', component: UniversityTransMappingComponent},
-{path:'OrganizationTransMapping', component: OrganizationTransMappingComponent},
-{path: 'university/:id', component: UniversityComponent },	
+  {path:'UniversityTransMapping', component: UniversityTransMappingComponent},
+  {path:'OrganizationTransMapping', component: OrganizationTransMappingComponent},
+  {path: 'university/:id', component: UniversityComponent },	
   
   {path: 'universityrole', component: UniversityRoleMasterComponent },
   {path: 'organizationrole', component: OrganizationRoleMasterComponent },
-{path: 'universitydashboard', component: UniversitydashboardComponent },
-{path: 'adduniversityroledetail', component: UniversityroleComponent },
- {path: 'addorganizationrole', component: OrganizationroleComponent },
-{path: 'changepassword', component: ChangepasswordComponent },
-{path: 'universityhome', component: UniversityHomeComponent},
-	{path:'eventstudentapprovallist', component: EventstudentapprovallistComponent}
+  {path: 'universitydashboard', component: UniversitydashboardComponent },
+  {path: 'adduniversityroledetail', component: UniversityroleComponent },
+  {path: 'addorganizationrole', component: OrganizationroleComponent },
+  {path: 'changepassword', component: ChangepasswordComponent },
+  {path: 'universityhome', component: UniversityHomeComponent},
+  {path:'eventstudentapprovallist', component: EventstudentapprovallistComponent},
+  {path:'EmployeeEventApprovalList', component:EmployeeEventApprovalListComponent}
   // {path:'eventinfo/:id', component: RegistereventComponent},
   // {path: 'eventDetails/:id', component: EventsComponent }	
 
@@ -95,11 +96,7 @@ const appRoutes: Routes = [
     DashboardComponent,
     ProfileComponent,
     RegisterstudentComponent,
-
-
     OrganizationComponent,
-
-
 	RegistereventComponent,
 	EqualValidator,
 	EventsComponent,
@@ -116,8 +113,8 @@ const appRoutes: Routes = [
 	ChangepasswordComponent,
 	ChangepasswordPopupComponent,
 	EventstudentapprovallistComponent,
-	UniversityHomeComponent
-	 
+	UniversityHomeComponent,
+	EmployeeEventApprovalListComponent	 
 
   ],
   imports: [

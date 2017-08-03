@@ -1084,4 +1084,154 @@ getAllUnivTranscationEventApprovalDetailInfoByUnivIDAndMaskID(univID, maskID){
   
   // End here
 
+  
+  //Organization event approval mapping
+  
+  // addOrganizationTransEventApprovalDetail(TransMapping){	 
+  	// let headers = new Headers();
+  	// headers.append('Content-Type','application/json');
+	// if(TransMapping.length > 0)
+    // TransMapping = (TransMapping.sort(x=>x.Priority))[TransMapping.length-1];	  
+    // //students/register is temporary domain
+  	// return this.http.post('http://localhost:3777/OrgnTranscationEventApprovalDetail/AddOrgnTranscationEventApprovalDetail', TransMapping,{headers: headers})
+  	// .map(res => res.json());
+  // }
+
+
+
+getMaxTranOrgnEventApprovalNumberID()
+  {
+	  debugger;
+	  return this.http.get('http://localhost:3777/OrgnTranscationEventApprovalDetail/getMaxTransApprovalNumberID')
+  	.map(res => res.json());
+  }
+
+getMaxTranOrgnEventApprovalID()
+  {
+	  debugger;
+	  return this.http.get('http://localhost:3777/OrgnTranscationEventApprovalDetail/getMaxTransApprovalID')
+  	.map(res => res.json());
+  }
+
+
+getAllOrgnTranscationEventApprovalDetailByOrgnIDAndMaskID(orgnID, maskID){
+				let headers = new Headers();
+                headers.append('orgnid',orgnID);
+				headers.append('maskid',maskID);
+                return this.http.get('http://localhost:3777/OrgnTranscationEventApprovalDetail/getAllOrgnTranscationEventApprovalDetailByUnivID',{headers: headers})
+                .map(res => res.json());
+}
+
+getAllOrgnTranscationEventApprovalDetailInfoByOrgnIDAndRoleID(orgnID, roleID){
+				let headers = new Headers();
+                headers.append('orgnid',orgnID);
+				headers.append('roleid',roleID);
+                return this.http.get('http://localhost:3777/OrgnTranscationEventApprovalDetail/getAllOrgnTranscationEventApprovalDetailInfoByOrgnIDAndRoleID',{headers: headers})
+                .map(res => res.json());
+}
+
+getAllOrgnTranscationEventApprovalDetailInfoByOrgnIDAndMaskID(orgnID, maskID){
+				let headers = new Headers();
+                headers.append('orgnid',orgnID);
+				headers.append('maskid',maskID);
+                return this.http.get('http://localhost:3777/OrgnTranscationEventApprovalDetail/getAllOrgnTranscationEventApprovalDetailInfoByOrgnID',{headers: headers})
+                .map(res => res.json());
+}
+
+getOrgnTranscationTypeDetailByOrgnIDAndTransTypeAndCurrentDate(orgnid, trantypeid)
+  {
+	  debugger;
+	  let headers = new Headers();
+      headers.append('orgnid',orgnid);
+	  headers.append('transcationtypeid',trantypeid);
+	  return this.http.get('http://localhost:3777/OrgnTranscationTypeDetail/getOrgnTranscationTypeDetailByOrgnIDAndTransTypeAndCurrentDate',{headers: headers})
+  	.map(res => res.json());
+  }
+  
+ GetEventEmployeeByEventIDAndEmployeeID(eventID, employeeID)
+  {
+	  let headers = new Headers();
+                headers.append('eventid',eventID);
+				headers.append('employeeid',employeeID);
+                return this.http.get('http://localhost:3777/EventEmployee/GetEventEmployeeByEventIDAndEmployeeID',{headers: headers})
+                .map(res => res.json());
+  }
+  
+  GetApprovedEventEmployeeByEventID(eventId)
+  {
+	debugger;
+    let headers = new Headers();
+    headers.append('eventid',eventId);
+    return this.http.get('http://localhost:3777/EventEmployee/GetApprovedEventEmployeeByEventID', {headers:headers})
+     .map(res => res.json());
+  }
+  
+  addOrganizationTransEventApprovalDetail(TransMapping){	 
+  	let headers = new Headers();
+  	headers.append('Content-Type','application/json');
+	if(TransMapping.length > 0)
+    TransMapping = (TransMapping.sort(x=>x.Priority))[TransMapping.length-1];	  
+    //students/register is temporary domain
+  	return this.http.post('http://localhost:3777/OrgnTranscationEventApprovalDetail/AddOrgnTranscationEventApprovalDetail', TransMapping,{headers: headers})
+  	.map(res => res.json());
+  }
+  
+  addIntoEventEmployee(eventEmployee){	 
+  	let headers = new Headers();
+  	headers.append('Content-Type','application/json');
+		  
+    //students/register is temporary domain
+  	return this.http.post('http://localhost:3777/EventEmployee/EventEmployee', eventEmployee,{headers: headers})
+  	.map(res => res.json());
+  }
+  
+  getEmployeeByOrgnID(orgnID)
+  {
+	  let headers = new Headers();
+      headers.append('orgnid',orgnID);
+       return this.http.get('http://localhost:3777/OrganizationRoleUser/getOrganizationRoleUserByOrgnID',{headers: headers})
+        .map(res => res.json());
+  }
+  
+  addOrganizationTransEventApprovalHistory(model, organizationTransEventApprovalHistory, TransEventApprovalMapping){
+                let headers = new Headers();
+                headers.append('Content-Type','application/json');
+				if(TransEventApprovalMapping.length > 0)
+				model.TransEventApprovalMapping = TransEventApprovalMapping;//.sort(x=>x.Priority))[TransEventApprovalMapping.length-1];	
+			    model.organizationApprovalHistory = organizationTransEventApprovalHistory;
+				
+				//UnivTranscationApprovalHistory/AddUnivTranscationApprovalHistory is temporary domain
+                return this.http.post('http://localhost:3777/OrgnTranscationEventApprovalHistory/AddOrgnTranscationEventApprovalHistory', model,{headers: headers})
+				.timeout(3000)
+                .map(res => res.json());
+  }
+
+addOrganizationEventTransRejectionHistoryArray(model, organizationTransApprovalHistory, TransApprovalMapping){
+                let headers = new Headers();
+                headers.append('Content-Type','application/json');
+				if(TransApprovalMapping.length > 0)
+				model.TransEventApprovalMapping = TransApprovalMapping;//.sort(x=>x.Priority))[TransEventApprovalMapping.length-1];	
+			    model.organizationApprovalHistory = organizationTransApprovalHistory;
+				
+				//UnivTranscationApprovalHistory/AddUnivTranscationApprovalHistory is temporary domain
+                return this.http.post('http://localhost:3777/OrgnTranscationEventApprovalHistory/AddOrgnTranscationEventRejectionHistory', model,{headers: headers})				
+                .map(res => res.json());
+  }
+  
+  GetEventByOrgnID(id){
+	debugger;
+	let headers = new Headers();
+  	headers.append('id',id);
+	return this.http.get('http://localhost:3777/EventOrganization/getEventOrganizationByOrgnID',{headers: headers})
+                .map(res => res.json());
+   }
+   
+   getEventEmployeeApproved()
+  {
+	debugger;
+    //let headers = new Headers();
+    //headers.append('eventid',eventid);
+    return this.http.get('http://localhost:3777/EventEmployee/getEventEmployeeApproved')
+     .map(res => res.json());
+  }
 }

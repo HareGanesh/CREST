@@ -130,4 +130,18 @@ router.get('/getEventOrganizerByOrgNo', (req, res) => {
   });  
 }); 
 
+router.get('/getEventOrganizationByOrgnID', (req, res) => {
+  var OrganizationID = req.headers["id"];  
+  
+  EventOrganization.getEventOrganizationByOrgnID(OrganizationID, (err,EventOrganization)=>{
+    if(err) {
+		throw err;		
+	}
+     else
+	  {		 
+		  res.json(EventOrganization);
+	  }
+  });  
+}); 
+
 module.exports = router;

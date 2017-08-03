@@ -135,7 +135,11 @@ data = [
 					if(data.TransMapArray.length > 0)
 					{
 						this.RolesArray = data.TransMapArray;
+						if(this.tagID !='O')
+						{
 						this.checkIsLowestRoleLoggedIn(data.TransMapArray, roleid);
+						}
+						
 		              for(let i=0; i< data.TransMapArray.length; i++)
 						{		
 								debugger;
