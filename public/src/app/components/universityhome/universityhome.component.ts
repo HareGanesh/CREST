@@ -6,7 +6,7 @@ import { ToastsManager } from 'ng2-toastr/ng2-toastr';
 @Component({
   selector: 'app-home',
   templateUrl: './universityhome.component.html',
-  styleUrls: ['./universityhome.component.scss','./custom.min.css']
+  styleUrls: ['./universityhome.component.scss']
 })
 export class UniversityHomeComponent implements OnInit {
 tagID:String;
@@ -16,6 +16,7 @@ ApprovedOrgEventModel:EventModel[];
 RejectedUnivEventModel:EventModel[];
 public ActionPar = '';
  searchFilter:any;
+ public showSearchDiv='';
   constructor(
    private validateService: ValidateService,  
     private authService:AuthService,
@@ -51,6 +52,11 @@ ngOnInit() {
 		return;
 	} 
 	
+  }
+  
+  showSearchBox(){
+	  debugger;
+	 this.showSearchDiv="Search";
   }
   
    approveEvent(id)
@@ -276,19 +282,23 @@ public open() {
 	{
 	var modelData=this.eventModel;
 	var orgData=this.OrgEventModel;
+	var orgApprovedData = this.ApprovedOrgEventModel;
+	var orgRejectedData = this.RejectedUnivEventModel;
 	var filterData=[];
 	var orgFilterData=[];
+	var orgApproveFilterData=[];
+	var orgRejectedFilterData=[];
 	
 	if(this.tagID == '0' || this.tagID == 'S' || this.tagID == 'U' || this.tagID == 'UR')
 	{
-	  for(var i=0;i<modelData.length;i++)
-	 {
-		  if(modelData[i].Location.toString().toLowerCase().indexOf(this.searchFilter.toLowerCase())!=-1 || modelData[i].EventTitle.toString().toLowerCase().indexOf(this.searchFilter.toLowerCase())!=-1)
-		  {
-			  filterData.push(modelData[i]);
-		  }
-	 }
-	 this.eventModel=filterData;
+	  // for(var i=0;i<modelData.length;i++)
+	 // {
+		  // if(modelData[i].Location.toString().toLowerCase().indexOf(this.searchFilter.toLowerCase())!=-1 || modelData[i].EventTitle.toString().toLowerCase().indexOf(this.searchFilter.toLowerCase())!=-1)
+		  // {
+			  // filterData.push(modelData[i]);
+		  // }
+	 // }
+	 //this.eventModel=filterData;
 	}
 	 
 	 for(var i=0;i<orgData.length;i++)
@@ -300,6 +310,29 @@ public open() {
 		  }
 	 }
 	 this.OrgEventModel=orgFilterData;
+	 
+	 for(var i=0;i<orgApprovedData.length;i++)
+	 {
+		 debugger;
+		  if(orgApprovedData[i].Location.toString().toLowerCase().indexOf(this.searchFilter.toLowerCase())!=-1 || orgApprovedData[i].EventTitle.toString().toLowerCase().indexOf(this.searchFilter.toLowerCase())!=-1)
+		  {
+			  orgApproveFilterData.push(orgApprovedData[i]);
+		  }
+	 }
+	 this.ApprovedOrgEventModel=orgApproveFilterData;
+	 
+	 for(var i=0;i<orgRejectedData.length;i++)
+	 {
+		 debugger;
+		  if(orgRejectedData[i].Location.toString().toLowerCase().indexOf(this.searchFilter.toLowerCase())!=-1 || orgRejectedData[i].EventTitle.toString().toLowerCase().indexOf(this.searchFilter.toLowerCase())!=-1)
+		  {
+			  orgRejectedFilterData.push(orgRejectedData[i]);
+		  }
+	 }
+	 this.RejectedUnivEventModel=orgRejectedData;
+	 
+	 this.showSearchDiv='';
+	 this.searchFilter='';
 	}
 	else
 	{

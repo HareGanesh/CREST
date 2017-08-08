@@ -2,35 +2,28 @@
 <app-navbar></app-navbar> 
 
 <!-- page content -->
-        <div class="right_col" role="main">
-		
-          <div class="">
-
-            <div class="page-title">
-              <div class="title_left">
-			  
-                <h3>Event - Employee request List <small></small></h3>
-              </div>
-
-              <div class="title_right">
-			  
-			  <!-- <div [routerLinkActive]="['active']"   [routerLinkActiveOptions] = "{exact:true}"><a  class="big-red-button" [routerLink]="['/eventinfo/0']">Register Event</a> -->
-			  <!-- </div> -->
-                <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
-                  <div class="input-group">
-                    <input type="text" [(ngModel)]="searchFilter" class="form-control" placeholder="Search for...">
-                    <span class="input-group-btn">
-                      <button class="btn btn-default" (click)="open()" type="button">Go!</button>
-                    </span>
-                  </div>
-                </div>
-              </div>
+         <div class="page-inner" role="main">
+		<div class="page-title" style="margin-top:63px;">
+			<h3>Event - Employee request List </h3>   
+            <div *ngIf="showSearchDiv !=''" id="sediv" class="input-group" style="width:50%;margin-top:-2%;float:right;" >
+                <input type="text" name="searchDiv" style="margin:0px;" [(ngModel)]="searchFilter" class="form-control search" placeholder="Search for...">
+                <span class="input-group-btn">
+                    <button style="margin:0px;" class="btn btn-default close-search waves-effect waves-button waves-classic" (click)="open()" type="button"><i class="fa fa-search"></i>Go</button>
+                </span>
             </div>
+			 <a *ngIf="showSearchDiv ==''" (click)="showSearchBox()" class="waves-effect waves-button waves-classic show-search" style="float:right;margin-top:-1%;"><i class="fa fa-search"></i></a>
+            </div>
+            
 
             <div class="clearfix"></div>
 <flash-messages></flash-messages>  
-<div id="tabs">
-<div class="row">
+<div id="main-wrapper">
+                    <div class="row">
+                    <div class="col-md-12">
+                    <div class="panel panel-white">
+                                   
+                                    <div class="panel-body">
+                                        <div role="tabpanel">
 
 <ul class="nav nav-tabs">
 <li class="active" >
@@ -146,8 +139,8 @@
 					<div *ngIf="tagID=='OR'">
 					
 					<!-- <a  class="btn btn-primary"  style="margin-top:10px;" (click)="ApproveStudent(item1)">{{ApproveAllOrConfirmAll}}</a> -->
-					<a  class="btn btn-primary"  style="margin-top:10px;" (click)="ApproveStudent(item1)" data-toggle="modal" data-target="#commentAllDiv">{{ApproveAllOrConfirmAll}}</a>
-					<a  class="btn btn-primary"  style="margin-top:10px;" (click)="RejectStudent(item1)" data-toggle="modal" data-target="#RejectCommentAllDiv">Reject All</a>
+					<a  class="btn btn-primary"  style="margin-top:10px;" (click)="ApproveEmployee(item1)" data-toggle="modal" data-target="#commentAllDiv">{{ApproveAllOrConfirmAll}}</a>
+					<a  class="btn btn-primary"  style="margin-top:10px;" (click)="RejectEmployee(item1)" data-toggle="modal" data-target="#RejectCommentAllDiv">Reject All</a>
 					</div>
 					</div>
 					</accordion-group>
@@ -171,7 +164,11 @@
 </div>
 </div>
 </div>
-           
+          
+
+</div>
+</div>
+</div>		  
           </div>
 		  </div>
 		  <div id="commentAllDiv" class="modal fade" role="dialog" >

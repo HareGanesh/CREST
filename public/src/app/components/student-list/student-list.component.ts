@@ -13,6 +13,7 @@ import { Ng2SmartTableModule, LocalDataSource  } from 'ng2-smart-table';
 export class StudentListComponent implements OnInit {
 Students:any;
 public univID;
+ public showSearchDiv='';
 source: LocalDataSource; 
   	constructor(
    private validateService: ValidateService,  
@@ -73,6 +74,11 @@ data = [
 	  this.GetAllStudent();	  
   }
   
+  showSearchBox(){
+	  debugger;
+	 this.showSearchDiv="Search";
+  }
+  
 onSearch(query: string = '') {
 	  debugger;
 	  if(query != '')
@@ -96,6 +102,7 @@ onSearch(query: string = '') {
       search: query
     }
   ], false); 
+   this.showSearchDiv='';
 	  }else
 	  {
 		  this.source = new LocalDataSource(this.data); 

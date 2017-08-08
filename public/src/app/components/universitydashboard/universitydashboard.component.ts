@@ -17,6 +17,7 @@ import { Ng2SmartTableModule, LocalDataSource  } from 'ng2-smart-table';
 })
 export class UniversitydashboardComponent implements OnInit {
 	source: LocalDataSource; 
+	public showSearchDiv='';
     settings = {
 	delete: {
       confirmDelete: true
@@ -185,7 +186,13 @@ this.toastr.setRootViewContainerRef(vcr);
 
   }
   
+  showSearchBox(){
+	  debugger;
+	 this.showSearchDiv="Search";
+  }
+  
   onSearch(query: string = '') {
+	  this.showSearchDiv ='';
 	  debugger;
 	  if(this.tagID == 'UR')
 	  {

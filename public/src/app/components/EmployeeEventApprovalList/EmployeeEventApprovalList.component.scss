@@ -222,9 +222,13 @@ input[type="textarea"] input[type="datetime"], input[type="email"], input[type="
     float: right;
 }
 
+.modal-header{
+     padding: 10px,0px, 0px,0px !important;
+}
 
-
-
+.modal-body{
+     padding: 0px,0px, 10px,0px !important;
+}
 
 
 .row .row {

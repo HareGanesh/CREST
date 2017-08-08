@@ -2,10 +2,12 @@
 <ng-container *ngIf="authService.login();">
 <app-navbar></app-navbar> 
 
-<div class="main-wrapper">
+ <div class="page-inner" role="main">
 
-
-<div class="events-wrapper">
+<div class="page-title" style="margin-top:63px;">
+			<h3>Event Detail</h3>   
+            </div> 
+<div id="main-wrapper">
 <!-- phead -->
 <div class="profile2">
 <div class="head blue-bg" id="head">
@@ -13,22 +15,25 @@
 <div class="twelve columns">
 <div class="pic left" style="background-image: url('http://hackathon.io.s3.amazonaws.com/profiles/images/000/082/329/thumb/oculus_rift_3.jpg?1489763175');"></div>
 <div class="wrapper left">
-<a id="backBtn" class="big-red-button" *ngIf="tagID=='UR'" style="margin-top:15px;" [routerLink]="['/eventstudentapprovallist']">Back To List</a>
-<a id="backBtn" class="big-red-button" *ngIf="tagID=='C'" style="margin-top:15px;" [routerLink]="['/']">Back To List</a>
-<a id="backBtn" class="big-red-button" *ngIf="tagID=='S'" style="margin-top:15px;" [routerLink]="['/']">Back To List</a>
-<a id="backBtn" class="big-red-button" *ngIf="tagID=='U'" style="margin-top:15px;" [routerLink]="['/universityhome']">Back To List</a>
 <div style="float:right;margin-left:5px;"  *ngIf="tagID=='C'">
 <!-- <input type="button" value="Approve Event" style="margin-top:16px;" class="btn btn-primary" (click)="approveEvent();"/> -->
 <!-- <input type="button" value="Reject Event" style="margin-top:16px;" class="btn btn-primary" (click)="rejectEvent();"/> -->
 
 <div *ngIf="!eventDetails.IsApproved && !eventDetails.IsRejected">
 
-<a  class="big-red-button"  data-toggle="modal" style="margin-top:16px;"  (click) = "clearComments();" data-target="#commentDiv">Approve</a>
-<a  class="big-red-button"  data-toggle="modal" style="margin-top:16px;" (click) = "clearComments();" data-target="#RejectCommentDiv">Reject</a>
 
+<a  class="btn btn-primary pull-right navbar-btn" data-toggle="modal" style="margin-top:16px;float:right;" (click) = "clearComments();" data-target="#RejectCommentDiv">Reject</a>
+<a  class="btn btn-primary pull-right navbar-btn"  data-toggle="modal" style="margin-top:16px;float:right;"  (click) = "clearComments();" data-target="#commentDiv">Approve</a>
 </div>
 
-</div> 
+</div>
+<a id="backBtn" class="btn btn-primary pull-right navbar-btn" *ngIf="tagID=='UR'" style="margin-top:15px;float:right;" [routerLink]="['/eventstudentapprovallist']">Back To List</a>
+<a id="backBtn" class="btn btn-primary pull-right navbar-btn" *ngIf="tagID=='C'" style="margin-top:15px;float:right;" [routerLink]="['/']">Back To List</a>
+<a id="backBtn" class="btn btn-primary pull-right navbar-btn" *ngIf="tagID=='S'" style="margin-top:15px;float:right;" [routerLink]="['/']">Back To List</a>
+<a id="backBtn" class="btn btn-primary pull-right navbar-btn" *ngIf="tagID=='U'" style="margin-top:15px;float:right;" [routerLink]="['/universityhome']">Back To List</a>
+<a id="backBtn" class="btn btn-primary pull-right navbar-btn" *ngIf="tagID=='O'" style="margin-top:15px;float:right;" [routerLink]="['/universityhome']">Back To List</a>
+<a id="backBtn" class="btn btn-primary pull-right navbar-btn" *ngIf="tagID=='OR'" style="margin-top:15px;float:right;" [routerLink]="['/']">Back To List</a>
+ 
 <div class="info">
 <h1 class="title">{{eventDetails.EventTitle}}</h1>
 <p class="heading">{{eventDetails.Description}}...</p>

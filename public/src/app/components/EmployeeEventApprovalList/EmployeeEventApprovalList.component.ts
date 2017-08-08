@@ -21,6 +21,7 @@ export class EmployeeEventApprovalListComponent implements OnInit {
 	public errorMsg:String="";
 	public deleteID:String="";
 	public Comments:String="";
+	public showSearchDiv='';
 	searchFilter:any;
 	OrgnEventModel:EventModel[];
 	eventModel:EventModel[];
@@ -196,6 +197,11 @@ this.toastr.setRootViewContainerRef(vcr);
 	
 	
 		
+  }
+  
+  showSearchBox(){
+	  debugger;
+	 this.showSearchDiv="Search";
   }
   
   
@@ -692,6 +698,8 @@ public open() {
 		  }
 	 }
 	 this.OrgnEventModel=orgnFilterData;
+	 this.searchFilter ='';
+	 this.showSearchDiv ='';
 	}
 	else
 	{

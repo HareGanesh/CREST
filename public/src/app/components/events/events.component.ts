@@ -14,6 +14,8 @@ import {Observable} from 'rxjs/Rx';
 import { Ng2SmartTableModule, LocalDataSource  } from 'ng2-smart-table';
 
 
+
+
 @Component({
   selector: 'app-home',
   templateUrl: './eventsDetails.component.html',
@@ -236,6 +238,9 @@ ngOnInit()
 {	
       // Invite on init
 	  // Get all organization
+	  
+	  this.loadScript('assets/plugins/waves.min.js'); 
+	  
 	  debugger;
 	  this.authService.getOrganizations().subscribe(data => {
 		   for(let i=0; i< data.length; i++)
@@ -439,6 +444,14 @@ this.authService.GetEventOrganizerByEventID(eventID).subscribe(organizer => {
 		
 		
   }
+  
+  public loadScript(url) {
+    console.log('preparing to load...')
+    let node = document.createElement('script');
+    node.src = url;
+    node.type = 'text/javascript';
+    document.getElementsByTagName('head')[0].appendChild(node);
+ }
   
   onEventInviteSubmit(){
 	  debugger;

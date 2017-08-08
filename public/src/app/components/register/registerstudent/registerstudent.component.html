@@ -6,17 +6,19 @@
   <!-- </p> -->
 
 <!-- </div> -->
+<div class="page-login" >
+<main class="page-content">
 
-<div class="col-md-4 col-md-offset-4 col-sm-6 col-sm-offset-3">
+<div class="page-inner" role="main">
 <div style="margin-bottom:10px;" *ngIf="SuccessMessage !=''">
 		<a class="big-red-button"  [routerLink]="['/login']">Login</a>
 	</div>
- <div class="panel panel-info">
+ <div class="panel panel-info" style="width:50%;margin-left:25%;">
 	<div class="panel-heading">
 	<div class="pane-title">Register to continue to CREST</div>
 	</div>
       
-	<div class="panel-body">
+	<div class="panel-body" >
 		<div [hidden]="submitted">
 			<form (submit)="onRegisterSubmit()" #RegisterForm="ngForm">
 
@@ -206,4 +208,5 @@
 	</div>
  </div>
 </div>
-  
+</main>
+  </div>

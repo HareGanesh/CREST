@@ -27,6 +27,7 @@ export class UniversityroleComponent implements OnInit {
   private username;
   private EmailID;
   public SuccessMessage='';
+  public showSearchDiv='';
 	public ErrorList:string[]=[];
 	public UserNameErrorList:string[]=[];
   constructor(private validateService: ValidateService,
@@ -170,6 +171,7 @@ data = [
       search: query
     }
   ], false); 
+  this.showSearchDiv='';
 	  }else
 	  {
 		  this.source = new LocalDataSource(this.data); 
@@ -230,6 +232,11 @@ data = [
 		}
 	
 	
+  }
+  
+  showSearchBox(){
+	  debugger;
+	 this.showSearchDiv="Search";
   }
   
   userNameChange()

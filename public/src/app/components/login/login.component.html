@@ -1,55 +1,92 @@
-<div class="container" >
-<div class="header col-md-4 col-md-offset-4 col-sm-6 col-sm-offset-3" style="height:50px; margin-top:50px;">
-	<flash-messages></flash-messages>    
-	</div>
-<div id="loginbox" style="margin-top:10px;" class="mainbox col-md-4 col-md-offset-4 col-sm-6 col-sm-offset-3"> 
+<div class="page-login" >
+
+<!-- <div id="loginbox" style="margin-top:10px;" class="mainbox col-md-4 col-md-offset-4 col-sm-6 col-sm-offset-3">  -->
    
                   
-    <div class="panel panel-info">
+    <!-- <div class="panel panel-info"> -->
 	
-	<div class="panel-heading">
-		<div class="panel-title">Login to CREST</div>
+	<!-- <div class="panel-heading"> -->
+		<!-- <div class="panel-title">Login to CREST</div> -->
 	  
-	</div>     
+	<!-- </div>      -->
 
-	<div style="padding-top:30px" class="panel-body" >
+	<!-- <div style="padding-top:30px" class="panel-body" > -->
 
-		<div style="display:none" id="login-alert" class="alert alert-danger col-sm-12"></div>
+		<!-- <div style="display:none" id="login-alert" class="alert alert-danger col-sm-12"></div> -->
 						
-		<form (submit)="onLoginSubmit()" #LoginForm="ngForm">
+		<!-- <form (submit)="onLoginSubmit()" #LoginForm="ngForm"> -->
 
-			<div class="input-group">
-			 <span class="input-group-addon"><i class="fa fa-user"></i></span>
+			<!-- <div class="input-group"> -->
+			 <!-- <span class="input-group-addon"><i class="fa fa-user"></i></span> -->
 			 
-			<input required type="text" [(ngModel)]="model.username" name="username" ngControl="username"  class="form-control" placeholder="Username" autofocus="true" id="#username" #username="ngModel">
+			<!-- <input required type="text" [(ngModel)]="model.username" name="username" ngControl="username"  class="form-control" placeholder="Username" autofocus="true" id="#username" #username="ngModel"> -->
 
 
-			<div [hidden]="username.valid || username.pristine"
-					 class="alert alert-danger">
-				  User Name is required
-				</div>		
-			</div> 
+			<!-- <div [hidden]="username.valid || username.pristine" -->
+					 <!-- class="alert alert-danger"> -->
+				  <!-- User Name is required -->
+				<!-- </div>		 -->
+			<!-- </div>  -->
 
-			<div class="input-group">
-			 <span class="input-group-addon"><i class="fa fa-lock"></i></span>
-			<input type="password" [(ngModel)]="model.Pwd" name="Pwd" class="form-control" placeholder="Password" autofocus="true" required id="#pwd" #pwd="ngModel">
-			<div [hidden]="pwd.valid || pwd.pristine"
-					 class="alert alert-danger">
-				  password is required
-				</div>	
-			</div>
+			<!-- <div class="input-group"> -->
+			 <!-- <span class="input-group-addon"><i class="fa fa-lock"></i></span> -->
+			<!-- <input type="password" [(ngModel)]="model.Pwd" name="Pwd" class="form-control" placeholder="Password" autofocus="true" required id="#pwd" #pwd="ngModel"> -->
+			<!-- <div [hidden]="pwd.valid || pwd.pristine" -->
+					 <!-- class="alert alert-danger"> -->
+				  <!-- password is required -->
+				<!-- </div>	 -->
+			<!-- </div> -->
 
 
-			<input type="submit" class="btn btn-lg btn btn-primary btn-block " value="Sign in" [disabled]="!LoginForm.form.valid">
+			<!-- <input type="submit" class="btn btn-lg btn btn-primary btn-block " value="Sign in" [disabled]="!LoginForm.form.valid"> -->
 
-			<a style="float:right;padding-left:10px;font-weight:bold" [routerLink]="['/student']">Signup</a>
-			<span style="float:right;font-weight:bold"> Need an account? </span>
-		</form>
+			<!-- <a style="float:right;padding-left:10px;font-weight:bold" [routerLink]="['/student']">Signup</a> -->
+			<!-- <span style="float:right;font-weight:bold"> Need an account? </span> -->
+		<!-- </form> -->
 
-		</div>                     
-	</div>  
-</div>
+		<!-- </div>                      -->
+	<!-- </div>   -->
+<!-- </div> -->
 
+
+<main class="page-content">
+            <div class="page-inner">
+			    <div class="header col-md-4 col-md-offset-4 col-sm-6 col-sm-offset-3">
+				<flash-messages></flash-messages>    
+				</div>
+                <div id="main-wrapper">
+                    <div class="row">
+                        <div class="col-md-3 center">
+                            <div class="login-box">
+                                <a href="index.html" class="logo-name text-lg text-center"><img src="assets/images/untitled.png" width="300" height="82"></a>
+                                <p class="text-center m-t-md">Please login into your account.</p>
+                                <form class="m-t-md" (submit)="onLoginSubmit()" #LoginForm="ngForm">
+                                    <div class="form-group">                                        
+										<input required type="text" [(ngModel)]="model.username" name="username" ngControl="username"  class="form-control" placeholder="Username" autofocus="true" id="#username" #username="ngModel">
+											<div [hidden]="username.valid || username.pristine"
+												 class="alert alert-danger">
+											  User Name is required
+											</div>	
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="password" [(ngModel)]="model.Pwd" name="Pwd" class="form-control" placeholder="Password" autofocus="true" required id="#pwd" #pwd="ngModel">
+										<div [hidden]="pwd.valid || pwd.pristine"
+												 class="alert alert-danger">
+											  password is required
+											</div>
+                                    </div>
+									<input type="submit" class="btn btn-danger btn-block " value="Login" [disabled]="!LoginForm.form.valid">
+                                    
+                                    <a href="#" class="display-block text-center m-t-md text-sm">Forgot Password?</a>
+                                    <a [routerLink]="['/student']" class="btn btn-default btn-block m-t-md">Create an account</a>
+                              </form>
+                                <p class="text-center m-t-xs text-sm">2017 &copy; UST Global.</p>
+                            </div>
+                        </div>
+                    </div><!-- Row -->
+                </div><!-- Main Wrapper -->
+            </div><!-- Page Inner -->
+        </main><!-- Page Content -->
 
 </div>
 

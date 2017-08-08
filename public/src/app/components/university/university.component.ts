@@ -20,6 +20,7 @@ export class UniversityComponent implements OnInit {
                 public eventModel:any;
                 public univeritymodel = new universityModel();
     public Action:String="Edit";
+	public showSearchDiv='';
 	source: LocalDataSource; 
 	public SuccessMessage='';
                 public errorMsg:String="";
@@ -132,6 +133,7 @@ this.activatedRoute.params.subscribe((params: Params) => {
       search: query
     }
   ], false); 
+  this.showSearchDiv='';
 	  }else
 	  {
 		  this.source = new LocalDataSource(this.data); 
@@ -184,6 +186,11 @@ this.activatedRoute.params.subscribe((params: Params) => {
     // } else {
       // event.confirm.reject();
     // }
+  }
+  
+  showSearchBox(){
+	  debugger;
+	 this.showSearchDiv="Search";
   }
 
 

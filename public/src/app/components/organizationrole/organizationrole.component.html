@@ -2,28 +2,30 @@
 <ng-container *ngIf="authService.login();">
 <app-navbar></app-navbar> 
 
-<div style="margin-left:230px">
-      <nav class="navbar ">
-  <div class="container-fluid">
-    <div> 
-	<div class="title_left">
-                <h3>Organization User List <small></small></h3>
-              </div>
-	<div class="nav navbar-nav navbar-right col-xs-3">
-	<input  #search class="search col-xs-6" type="text" placeholder="Search..." (keydown.enter)="onSearch(search.value)">
-		<a *ngIf="IsLowestRoleLoggedIn == false" data-toggle="modal" class="btn btn-primary pull-right"  (click)="clearModel();" data-target="#vv">Add Organization User</a>
-    </div>
+ <div class="page-inner" role="main">
+ 
+ 
+ <div class="page-title" style="margin-top:63px;">
+			<h3>Organization User List</h3>
+			<div *ngIf="showSearchDiv !=''" id="sediv" class="input-group" style="width:50%;margin-top:-2%;float:right;" >                
+				<input  #search class="form-control search" style="margin:0px;" type="text" placeholder="Search..." (keydown.enter)="onSearch(search.value)">
+                <span class="input-group-btn">
+                    <button style="margin:0px;" class="btn btn-default close-search waves-effect waves-button waves-classic" (click)="onSearch(search.value)" type="button"><i class="fa fa-search"></i>Go</button>
+                </span>
+            </div>
+			 <a *ngIf="showSearchDiv ==''" (click)="showSearchBox()" class="waves-effect waves-button waves-classic show-search" style="float:right;margin-top:-1%;"><i class="fa fa-search"></i></a>
+			</div>     
 	
-</div>
-  </div>
-</nav>
+		<a *ngIf="IsLowestRoleLoggedIn == false" data-toggle="modal" style="margin-top:8px;" class="btn btn-success btn-addon" (click)="clearModel();" data-target="#vv"><i class="fa fa-plus"></i> Add Organization User</a>
+    
 
- <div class="row">
+
+ <div id="main-wrapper" style="margin-left:0px !important;">
+ 
               <div class="col-md-12">
-                <div>
+                <div class="panel panel-white">
             
-                  <div class="x_content">
-				   <div class="row">
+                  <div class="panel-body">
 				    <ng2-smart-table [settings]="settings" [source]="source" mode="external" (deleteConfirm)="onDeleteConfirm($event)" (custom)="onEdit($event)"></ng2-smart-table>
 				   <a class="btn btn-primary pull-right"   id="deletebtn" style="width:66px;display:none;"  data-toggle="modal" data-target="#deleteDiv">Delete</a>
 				   <a class="btn btn-primary pull-right"  id="editbtn" style="width:66px;display:none;" data-toggle="modal" data-target="#vv">Edit</a>
@@ -32,7 +34,7 @@
                     
                   </div>
                 </div>
-              </div>
+              
             </div>
 </div>
 

@@ -1,4 +1,4 @@
-import { Component, OnInit, Input,ViewEncapsulation, ViewContainerRef } from '@angular/core';
+import { Component, OnInit, Input, ViewContainerRef } from '@angular/core';
 import {FlashMessagesService} from 'angular2-flash-messages';
 import {ValidateService} from '../../../services/validate.service';
 import {AuthService} from '../../../services/auth.service'
@@ -13,8 +13,7 @@ import { ToastsManager } from 'ng2-toastr/ng2-toastr';
 @Component({
   selector: 'app-eventstudentapprovallist',
   templateUrl: './eventstudentapprovallist.component.html',
-  styleUrls: ['./eventstudentapprovallist.component.scss'],
-  encapsulation: ViewEncapsulation.None 
+  styleUrls: ['./eventstudentapprovallist.component.scss']
 })
 export class EventstudentapprovallistComponent implements OnInit {
 
@@ -23,6 +22,7 @@ export class EventstudentapprovallistComponent implements OnInit {
 	public errorMsg:String="";
 	public deleteID:String="";
 	public Comments:String="";
+	public showSearchDiv='';
 	searchFilter:any;
 	UnivEventModel:EventModel[];
 	eventModel:EventModel[];
@@ -218,6 +218,12 @@ this.toastr.setRootViewContainerRef(vcr);
 	
 	
 	
+  }
+  
+  
+  showSearchBox(){
+	  debugger;
+	 this.showSearchDiv="Search";
   }
   
   GetUniversityRolesByUnivID()
@@ -672,6 +678,7 @@ public open() {
 	
 	if(this.tagID == '0' || this.tagID == 'S' || this.tagID == 'U' || this.tagID == 'UR')
 	{
+		if(modelData != undefined)
 	  for(var i=0;i<modelData.length;i++)
 	 {
 		  if( modelData[i].EventTitle.toString().toLowerCase().indexOf(this.searchFilter.toLowerCase())!=-1)
@@ -681,7 +688,7 @@ public open() {
 	 }
 	 this.eventModel=filterData;
 	}
-	 
+	 if(univData != undefined)
 	 for(var i=0;i<univData.length;i++)
 	 {
 		 debugger;
@@ -691,6 +698,8 @@ public open() {
 		  }
 	 }
 	 this.UnivEventModel=univFilterData;
+	 this.showSearchDiv='';
+	 this.searchFilter='';
 	}
 	else
 	{

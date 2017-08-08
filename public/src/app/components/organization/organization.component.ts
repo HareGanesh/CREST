@@ -20,6 +20,7 @@ export class OrganizationComponent implements OnInit {
 	SuccessMessage='';
 	public errorMsg:String="";
 	public deleteID:String="";
+	public showSearchDiv='';
 	private organizationList: Array<organizationModel> = [];
     public isShow:boolean;
 	source: LocalDataSource; 
@@ -126,6 +127,11 @@ this.activatedRoute.params.subscribe((params: Params) => {
     });
   }
   
+  showSearchBox()
+  {
+	  this.showSearchDiv="search";
+  }
+  
   onDeleteConfirm(event) {
 	  debugger;
 	  //document.getElementById('deleteDiv').show();
@@ -175,6 +181,7 @@ this.activatedRoute.params.subscribe((params: Params) => {
       search: query
     }
 	], false); 
+	this.showSearchDiv='';
 	  }else
 	  {
 		  this.source = new LocalDataSource(this.data); 

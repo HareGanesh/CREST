@@ -23,6 +23,7 @@ export class OrganizationroleComponent implements OnInit {
   source: LocalDataSource; 
   public organizationUserList: Array<OrganizationRole> = [];
   public organizationUserTempList: Array<OrganizationRole> = [];
+  public showSearchDiv='';
   public orgnID;
   IsLowestRoleLoggedIn=false;
   RolesArray=[];
@@ -208,6 +209,11 @@ data = [
 	 this.IsLowestRoleLoggedIn = true;	 
 	}	
   }
+  
+  showSearchBox(){
+	  debugger;
+	 this.showSearchDiv="Search";
+  }
     
     
   
@@ -235,6 +241,7 @@ data = [
       search: query
     }
   ], false); 
+  this.showSearchDiv='';
 	  }else
 	  {
 		  this.source = new LocalDataSource(this.data); 

@@ -1,253 +1,509 @@
-<div class="container body" *ngIf="authService.login()" >
-      <div class="main_container">
-        <div class="col-md-3 left_col">
-          <div class="left_col scroll-view">
-            <div class="navbar nav_title" style="border: 0;">
-              <a href="#" class="site_title"><span>CREST</span></a>
-            </div>
+<div class="page-header-fixed" style="width:10%" *ngIf="authService.login()" >
+<div class="overlay"></div>
+<div class="menu-wrap">
+            <nav class="profile-menu">
+                <div class="profile"><img src="assets/images/profile-menu-image.png" width="60" alt="David Green"/><span>David Green</span></div>
+                <div class="profile-menu-list">
+                    <a href="#"><i class="fa fa-star"></i><span>Favorites</span></a>
+                    <a href="#"><i class="fa fa-bell"></i><span>Alerts</span></a>
+                    <a href="#"><i class="fa fa-envelope"></i><span>Messages</span></a>
+                    <a href="#"><i class="fa fa-comment"></i><span>Comments</span></a>
+                </div>
+            </nav>
+            <button class="close-button" id="close-button">Close Menu</button>
+        </div>
+ <main class="page-content content-wrap" style="float:left">
+            <div class="navbar">
+                <div class="navbar-inner">
+                    <div class="sidebar-pusher">
+                        <a href="javascript:void(0);" class="waves-effect waves-button waves-classic push-sidebar">
+                            <i class="fa fa-bars"></i>
+                        </a>
+                    </div>
+                    <div class="logo-box">
+                        <a href="index.html"><img src="assets/images/Logo.png"></a>
+                    </div><!-- Logo Box -->
+                    <!-- <div class="search-button"> -->
+                        <!-- <a href="javascript:void(0);" class="waves-effect waves-button waves-classic show-search"><i class="fa fa-search"></i></a> -->
+                    <!-- </div> -->
+                    <div class="topmenu-outer">
+                        <div class="top-menu">
+                            <ul class="nav navbar-nav navbar-left">
+                                <li>		
+                                    <a href="javascript:void(0);" class="waves-effect waves-button waves-classic sidebar-toggle"><i class="fa fa-bars"></i></a>
+                                </li>
+                                <li>		
+                                    <a href="javascript:void(0);" class="waves-effect waves-button waves-classic toggle-fullscreen"><i class="fa fa-expand"></i></a>
+                                </li>
+                                
+                            </ul>
+                            <ul class="nav navbar-nav navbar-right">
+                                <!-- <li>	 -->
+                                    <!-- <a href="javascript:void(0);" class="waves-effect waves-button waves-classic show-search"><i class="fa fa-search"></i></a> -->
+                                <!-- </li> -->
+                                <li class="dropdown">
+                                    <a href="#" class="dropdown-toggle waves-effect waves-button waves-classic" data-toggle="dropdown"><i class="fa fa-envelope"></i><span class="badge badge-success pull-right">4</span></a>
+                                    <ul class="dropdown-menu title-caret dropdown-lg" role="menu">
+                                        <li><p class="drop-title">You have 4 new  messages !</p></li>
+                                        <li class="dropdown-menu-list slimscroll messages">
+                                            <ul class="list-unstyled">
+                                                <li>
+                                                    <a href="#">
+                                                        <div class="msg-img"><div class="online on"></div><img class="img-circle" src="assets/images/avatar2.png" alt=""></div>
+                                                        <p class="msg-name">Sandra Smith</p>
+                                                        <p class="msg-text">Hey ! I'm working on your project</p>
+                                                        <p class="msg-time">3 minutes ago</p>
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a href="#">
+                                                        <div class="msg-img"><div class="online off"></div><img class="img-circle" src="assets/images/avatar4.png" alt=""></div>
+                                                        <p class="msg-name">Amily Lee</p>
+                                                        <p class="msg-text">Hi David !</p>
+                                                        <p class="msg-time">8 minutes ago</p>
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a href="#">
+                                                        <div class="msg-img"><div class="online off"></div><img class="img-circle" src="assets/images/avatar3.png" alt=""></div>
+                                                        <p class="msg-name">Christopher Palmer</p>
+                                                        <p class="msg-text">See you soon !</p>
+                                                        <p class="msg-time">56 minutes ago</p>
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a href="#">
+                                                        <div class="msg-img"><div class="online on"></div><img class="img-circle" src="assets/images/avatar5.png" alt=""></div>
+                                                        <p class="msg-name">Nick Doe</p>
+                                                        <p class="msg-text">Nice to meet you</p>
+                                                        <p class="msg-time">2 hours ago</p>
+                                                    </a>
+                                                </li>
+                                                <!-- <li> -->
+                                                    <!-- <a href="#"> -->
+                                                        <!-- <div class="msg-img"><div class="online on"></div><img class="img-circle" src="assets/images/avatar2.png" alt=""></div> -->
+                                                        <!-- <p class="msg-name">Sandra Smith</p> -->
+                                                        <!-- <p class="msg-text">Hey ! I'm working on your project</p> -->
+                                                        <!-- <p class="msg-time">5 hours ago</p> -->
+                                                    <!-- </a> -->
+                                                <!-- </li> -->
+                                                <!-- <li> -->
+                                                    <!-- <a href="#"> -->
+                                                        <!-- <div class="msg-img"><div class="online off"></div><img class="img-circle" src="assets/images/avatar4.png" alt=""></div> -->
+                                                        <!-- <p class="msg-name">Amily Lee</p> -->
+                                                        <!-- <p class="msg-text">Hi David !</p> -->
+                                                        <!-- <p class="msg-time">9 hours ago</p> -->
+                                                    <!-- </a> -->
+                                                <!-- </li> -->
+                                            </ul>
+                                        </li>
+                                        <li class="drop-all"><a href="#" class="text-center">All Messages</a></li>
+                                    </ul>
+                                </li>
+                                <li class="dropdown">
+                                    <a href="#" class="dropdown-toggle waves-effect waves-button waves-classic" data-toggle="dropdown"><i class="fa fa-bell"></i><span class="badge badge-success pull-right">3</span></a>
+                                    <ul class="dropdown-menu title-caret dropdown-lg" role="menu">
+                                        <li><p class="drop-title">You have 3 pending tasks !</p></li>
+                                        <li class="dropdown-menu-list slimscroll tasks">
+                                            <ul class="list-unstyled">
+                                                <li>
+                                                    <a href="#">
+                                                        <div class="task-icon badge badge-success"><i class="icon-user"></i></div>
+                                                        <span class="badge badge-roundless badge-default pull-right">1min ago</span>
+                                                        <p class="task-details">New user registered.</p>
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a href="#">
+                                                        <div class="task-icon badge badge-danger"><i class="icon-energy"></i></div>
+                                                        <span class="badge badge-roundless badge-default pull-right">24min ago</span>
+                                                        <p class="task-details">Database error.</p>
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a href="#">
+                                                        <div class="task-icon badge badge-info"><i class="icon-heart"></i></div>
+                                                        <span class="badge badge-roundless badge-default pull-right">1h ago</span>
+                                                        <p class="task-details">Reached 24k likes</p>
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                        <li class="drop-all"><a href="#" class="text-center">All Tasks</a></li>
+                                    </ul>
+                                </li>
+                                <li class="dropdown">
+                                    <a href="#" class="dropdown-toggle waves-effect waves-button waves-classic" data-toggle="dropdown">
+                                        <span class="user-name">{{userName}}<i class="fa fa-angle-down"></i></span>
+                                        <!-- <img class="img-circle avatar" src="assets/images/avatar1.png" style="margin-right:10px !important;" width="40" height="40" alt=""> -->
+                                    </a>
+                                    <ul class="dropdown-menu dropdown-list" role="menu">
+                                        <li role="presentation"><a href="profile.html"><i class="fa fa-user"></i>Profile</a></li>
+                                        <li role="presentation"><a href="calendar.html"><i class="fa fa-calendar"></i>Calendar</a></li>
+                                        <li role="presentation"><a href="inbox.html"><i class="fa fa-envelope"></i>Inbox<span class="badge badge-success pull-right">4</span></a></li>
+                                        <li role="presentation" class="divider"></li>
+                                        <li role="presentation"><a href="lock-screen.html"><i class="fa fa-lock"></i>Lock screen</a></li>
+                                        <li role="presentation"><a href="login.html"><i class="fa fa-sign-out m-r-xs"></i>Log out</a></li>
+										<li *ngIf="authService.login()" [routerLinkActive]="['active']"   [routerLinkActiveOptions] = "{exact:true}"><a href="login.html" (click)="onLogoutClick()"><i class="fa fa-sign-out m-r-xs"></i> Log Out</a></li>
+                                    </ul>
+                                </li>
+								
+								<li *ngIf="authService.login()" [routerLinkActive]="['active']"   [routerLinkActiveOptions] = "{exact:true}"><a href="login.html" class="log-out waves-effect waves-button waves-classic" (click)="onLogoutClick()"><i class="fa fa-sign-out m-r-xs"></i> Log Out</a></li>
+                                
+                                
+                            </ul><!-- Nav -->
+                        </div><!-- Top Menu -->
+                    </div>
+                </div>
+            </div><!-- Navbar -->
+			
+			<div class="page-sidebar sidebar">
+                <div class="page-sidebar-inner slimscroll">
+                    <div class="sidebar-header">
+                        <div class="sidebar-profile">
+                            
+                                <div class="sidebar-profile-image">
+                                    <img src="assets/images/profile-menu-image.png" class="img-circle img-responsive" alt="">
+                                </div>
+                                <div class="sidebar-profile-details">
+                                    <span>Welcome<br><small>{{userName}}</small></span>
+                                </div>
+                           
+                        </div>
+                    </div>
+                <ul class="menu accordion-menu">
+                    
+                <li *ngIf="tagID=='U'"><a class="waves-effect waves-button" [routerLink]="['/universitydashboard']"> <span class="menu-icon glyphicon glyphicon-home"></span><p>Home</p></a>                 
+                  </li>
+				   <li *ngIf="tagID=='U'"><a class="waves-effect waves-button"  [routerLink]="['/universityhome']"> <span class="menu-icon glyphicon glyphicon-home"></span><p>University Events</p></a>                 
+                  </li>
+				  <li *ngIf="tagID=='O'"><a class="waves-effect waves-button" [routerLink]="['/universityhome']"><span class="menu-icon glyphicon glyphicon-home"></span><p>Organization Events </p></a>                 
+                  </li>
+				  <li *ngIf="tagID=='UR'"><a  class="waves-effect waves-button" [routerLink]="['/universitydashboard']"><span class="menu-icon glyphicon glyphicon-home"></span><p>Home </p></a>                 
+                  </li>
+				  <li *ngIf="tagID=='C'"><a class="waves-effect waves-button" [routerLink]="['/']"> <span class="menu-icon glyphicon glyphicon-home"></span><p>Home </p></a>                 
+                  </li>
+				  
+				  <li *ngIf="tagID=='C'"><a class="waves-effect waves-button" [routerLink]="['/university/1']"><span class="menu-icon fa fa-bank"></span><p>University </p></a>                 
+                  </li>
+				  <li *ngIf="tagID=='C'"><a class="waves-effect waves-button" [routerLink]="['/universityrole']"><span class="menu-icon fa fa-users"></span><p>University Role Mapping </p></a> 
+                  </li>
+				  
+				  <li *ngIf="tagID=='C'"><a class="waves-effect waves-button" [routerLink]="['/UniversityTransMapping']"><span class="menu-icon fa fa-slideshare"></span><p>University Trans Mapping </p></a>                 
+                  </li>
+				  <li *ngIf="tagID=='C'"><a class="waves-effect waves-button" [routerLink]="['/organization']"><span class="menu-icon fa fa-cubes"></span><p>Organization</p></a>                  
+                  </li>
+				  <li *ngIf="tagID=='C'"><a class="waves-effect waves-button" [routerLink]="['/organizationrole']"><span class="menu-icon fa fa-cube"></span><p>Organisation Role Mapping </p></a> 
+                  </li>
+				  <li *ngIf="tagID=='C'"><a class="waves-effect waves-button" [routerLink]="['/OrganizationTransMapping']"><span class="menu-icon fa fa-edit"></span><p>Organization Trans Map </p></a>                 
+                  </li>
+				   <li *ngIf="tagID=='S'"><a class="waves-effect waves-button" [routerLink]="['/']"><span class="menu-icon glyphicon glyphicon-home"></span><p>Home</p></a>                 
+                  </li>
+				  <!-- <li *ngIf="tagID=='UR'"><a [routerLink]="['/']"><i class="fa fa-home"></i> Events <span class="fa fa-chevron-down"></span></a>                  -->
+                  <!-- </li> -->
+				  <li *ngIf="tagID=='UR'"><a class="waves-effect waves-button" [routerLink]="['/eventstudentapprovallist']"><span class="menu-icon fa fa-bank"></span><p>Events student approval list</p></a>                 
+                  </li>
+				  
+				  <li *ngIf="tagID=='U'"><a class="waves-effect waves-button" [routerLink]="['/eventstudentapprovallist']"><span class="menu-icon fa fa-bank"></span><p>Events student approval list</p></a>                 
+                  </li>
+				 
+				 <li *ngIf="tagID=='U'"><a class="waves-effect waves-button" [routerLink]="['/UniversityTransMapping']"><span class="menu-icon fa fa-slideshare"></span><p>University Trans Mapping </p></a>                  
+                  </li>
+                  
+				  <li *ngIf="tagID=='U'"><a class="waves-effect waves-button" [routerLink]="['/universityrole']"><span class="menu-icon fa fa-edit"></span><p>Role Master</p></a>  
+                  </li>
+				  
+				  <li *ngIf="tagID=='U'"><a class="waves-effect waves-button" [routerLink]="['/eventinfo/0']"><span class="menu-icon fa fa-edit"></span><p>Create Event</p></a> 
+                  </li>
+				  <li *ngIf="tagID=='U'"><a class="waves-effect waves-button" [routerLink]="['/adduniversityroledetail']"><span class="menu-icon fa fa-edit"></span><p>User Role Mapping</p></a>  
+                  </li>
+				  
+                  <li *ngIf="tagID=='S'"><a class="waves-effect waves-button" [routerLink]="['/profile']"><span class="menu-icon fa fa-edit"></span><p>Profile</p></a>                 
+                  </li>
+                  <li *ngIf="tagID=='S'"><a class="waves-effect waves-button"><span class="menu-icon fa fa-edit"></span><p>Event Information</p></a>
+                    
+                  </li>
+                  <li *ngIf="tagID=='S'"><a class="waves-effect waves-button"><span class="menu-icon fa fa-edit"></span><p>My Goal</p></a>
+                   
+                  </li>
+				  <li *ngIf="tagID=='U'"><a class="waves-effect waves-button" [routerLink]="['/studentList']"><span class="menu-icon fa fa-bank"></span><p>Student List</p></a> 
+                  </li>
+				  <li *ngIf="tagID=='O'"><a class="waves-effect waves-button" [routerLink]="['/organizationrole']"><span class="menu-icon fa fa-edit"></span><p>Organization Role Mapping </p></a> 
+                  </li>
+				  <li *ngIf="tagID=='O'"><a class="waves-effect waves-button" [routerLink]="['/OrganizationTransMapping']"><span class="menu-icon fa fa-edit"></span><p>Organization Trans Map </p></a>                  
+                  </li>
+				   <li *ngIf="tagID=='O'"><a class="waves-effect waves-button" [routerLink]="['/addorganizationrole']"><span class="menu-icon fa fa-edit"></span><p> User Role Mapping </p></a> 
+                  </li>
+				  <li *ngIf="tagID=='O'"><a class="waves-effect waves-button" [routerLink]="['/eventinfo/0']"><span class="menu-icon fa fa-edit"></span><p>Create Event</p></a> 
+                  </li>
+				  <li *ngIf="tagID=='OR'"><a class="waves-effect waves-button" [routerLink]="['/']"> <span class="menu-icon glyphicon glyphicon-home"></span><p>Home</p></a>                
+                  </li>
+				  <li *ngIf="tagID=='OR'"><a class="waves-effect waves-button" [routerLink]="['/addorganizationrole']"><span class="menu-icon fa fa-edit"></span><p> User Role Mapping </p></a> 
+                  </li>
+				  <li *ngIf="tagID=='OR'"><a class="waves-effect waves-button" [routerLink]="['/profile']"><span class="menu-icon fa fa-edit"></span><p>Profile</p></a>                       
+                  </li>
+				  <li *ngIf="tagID=='O'"><a class="waves-effect waves-button" [routerLink]="['/EmployeeEventApprovalList']"><span class="menu-icon fa fa-bank"></span><p> Events Approval List</p></a>               
+                  </li>
+				  
+				  <li *ngIf="tagID=='OR'"><a class="waves-effect waves-button" [routerLink]="['/EmployeeEventApprovalList']"><span class="menu-icon fa fa-bank"></span><p> Events Approval List</p></a>                 
+                  </li>
+				  <li><a class="waves-effect waves-button" [routerLink]="['/changepassword']"><span class="menu-icon fa fa-exchange"></span><p>Change Password </p></a> 
+                  </li>
+                </ul>
+                </div><!-- Page Sidebar Inner -->
+            </div><!-- Page Sidebar -->
+<!-- </main> -->
+ <!-- <div class="cd-overlay"></div> -->
 
-            <div class="clearfix"></div>
+      <!-- <div class="main_container"> -->
+        <!-- <div class="col-md-3 left_col"> -->
+          <!-- <div class="left_col scroll-view"> -->
+            <!-- <div class="navbar nav_title" style="border: 0;"> -->
+              <!-- <a href="#" class="site_title"><span>CREST</span></a> -->
+            <!-- </div> -->
 
-            <!-- menu profile quick info -->
-            <div class="profile clearfix">
-              <div class="profile_pic">
-                <img src="./src/img/profile.png"  alt="..." class="img-circle profile_img">
-              </div>
+            <!-- <div class="clearfix"></div> -->
+
+            <!-- <!-- menu profile quick info --> 
+            <!-- <div class="profile clearfix"> -->
+              <!-- <div class="profile_pic"> -->
+                <!-- <img src="./src/img/profile.png"  alt="..." class="img-circle profile_img"> -->
+              <!-- </div> -->
 			  
 			 
 
 			  
-              <div class="profile_info">
-                <span>Welcome,</span>
-                <h2>{{userName}}</h2>
-              </div>
-            </div>
-            <!-- /menu profile quick info -->
+              <!-- <div class="profile_info"> -->
+                <!-- <span>Welcome,</span> -->
+                <!-- <h2>{{userName}}</h2> -->
+              <!-- </div> -->
+            <!-- </div> -->
+            <!-- <!-- /menu profile quick info --> 
 
-            <br>
+            <!-- <br> -->
 
-            <!-- sidebar menu -->
-            <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
-              <div class="menu_section">
-                <h3>General</h3>
-                <ul class="nav side-menu">
-                  <li *ngIf="tagID=='U'"><a [routerLink]="['/universitydashboard']"><i class="fa fa-home"></i> Home <span class="fa fa-chevron-down"></span></a>                 
-                  </li>
-				   <li *ngIf="tagID=='U'"><a [routerLink]="['/universityhome']"><i class="fa fa-home"></i> University Events <span class="fa fa-chevron-down"></span></a>                 
-                  </li>
-				  <li *ngIf="tagID=='O'"><a [routerLink]="['/universityhome']"><i class="fa fa-home"></i> Organization Events <span class="fa fa-chevron-down"></span></a>                 
-                  </li>
-				  <li *ngIf="tagID=='UR'"><a [routerLink]="['/universitydashboard']"><i class="fa fa-home"></i> Home <span class="fa fa-chevron-down"></span></a>                 
-                  </li>
-				  <li *ngIf="tagID=='C'"><a [routerLink]="['/']"><i class="fa fa-home"></i> Home <span class="fa fa-chevron-down"></span></a>                 
-                  </li>
-				  
-				  <li *ngIf="tagID=='C'"><a [routerLink]="['/university/1']"><i class="fa fa-home"></i> University <span class="fa fa-chevron-down"></span></a>                 
-                  </li>
-				  <li *ngIf="tagID=='C'"><a [routerLink]="['/universityrole']"><i class="fa fa-edit"></i> University Role Mapping <span class="fa fa-chevron-down"></span></a> 
-                  </li>
-				  
-				  <li *ngIf="tagID=='C'"><a [routerLink]="['/UniversityTransMapping']"><i class="fa fa-home"></i> UniversityTransMapping <span class="fa fa-chevron-down"></span></a>                 
-                  </li>
-				  <li *ngIf="tagID=='C'"><a [routerLink]="['/organization']"><i class="fa fa-home"></i> Organization <span class="fa fa-chevron-down"></span></a>                 
-                  </li>
-				  <li *ngIf="tagID=='C'"><a [routerLink]="['/organizationrole']"><i class="fa fa-edit"></i> Organization Role Mapping <span class="fa fa-chevron-down"></span></a> 
-                  </li>
-				  <li *ngIf="tagID=='C'"><a [routerLink]="['/OrganizationTransMapping']"><i class="fa fa-home"></i> OrganizationTransMapping <span class="fa fa-chevron-down"></span></a>                 
-                  </li>
-				   <li *ngIf="tagID=='S'"><a [routerLink]="['/']"><i class="fa fa-home"></i> Home <span class="fa fa-chevron-down"></span></a>                 
-                  </li>
-				  <!-- <li *ngIf="tagID=='UR'"><a [routerLink]="['/']"><i class="fa fa-home"></i> Events <span class="fa fa-chevron-down"></span></a>                  -->
+            <!-- <!-- sidebar menu --> 
+            <!-- <div id="sidebar-menu" class="main_menu_side hidden-print main_menu"> -->
+              <!-- <div class="menu_section"> -->
+                <!-- <h3>General</h3> -->
+                <!-- <ul class="nav side-menu">				 -->
+                  <!-- <li *ngIf="tagID=='U'"><a class="waves-effect waves-button" [routerLink]="['/universitydashboard']"> <span class="menu-icon glyphicon glyphicon-home"></span><p>Home</p></a>                  -->
                   <!-- </li> -->
-				  <li *ngIf="tagID=='UR'"><a [routerLink]="['/eventstudentapprovallist']"><i class="fa fa-home"></i> Events student approval list<span class="fa fa-chevron-down"></span></a>                 
-                  </li>
+				   <!-- <li *ngIf="tagID=='U'"><a class="waves-effect waves-button"  [routerLink]="['/universityhome']"> <span class="menu-icon glyphicon glyphicon-home"></span><p>University Events</p></a>                  -->
+                  <!-- </li> -->
+				  <!-- <li *ngIf="tagID=='O'"><a class="waves-effect waves-button" [routerLink]="['/universityhome']"><span class="menu-icon glyphicon glyphicon-home"></span><p>Organization Events </p></a>                  -->
+                  <!-- </li> -->
+				  <!-- <li *ngIf="tagID=='UR'"><a  class="waves-effect waves-button" [routerLink]="['/universitydashboard']"><span class="menu-icon glyphicon glyphicon-home"></span><p>Home </p></a>                  -->
+                  <!-- </li> -->
+				  <!-- <li *ngIf="tagID=='C'"><a class="waves-effect waves-button" [routerLink]="['/']"> <span class="menu-icon glyphicon glyphicon-home"></span><p>Home </p></a>                  -->
+                  <!-- </li> -->
 				  
-				  <li *ngIf="tagID=='U'"><a [routerLink]="['/eventstudentapprovallist']"><i class="fa fa-home"></i> Events student approval list<span class="fa fa-chevron-down"></span></a>                 
-                  </li>
+				  <!-- <li *ngIf="tagID=='C'"><a class="waves-effect waves-button" [routerLink]="['/university/1']"><span class="menu-icon fa fa-bank"></span><p>University </p></a>                  -->
+                  <!-- </li> -->
+				  <!-- <li *ngIf="tagID=='C'"><a class="waves-effect waves-button" [routerLink]="['/universityrole']"><span class="menu-icon fa fa-users"></span><p>University Role Mapping </p></a>  -->
+                  <!-- </li> -->
+				  
+				  <!-- <li *ngIf="tagID=='C'"><a class="waves-effect waves-button" [routerLink]="['/UniversityTransMapping']"><span class="menu-icon fa fa-slideshare"></span><p>University Trans Mapping </p></a>                  -->
+                  <!-- </li> -->
+				  <!-- <li *ngIf="tagID=='C'"><a class="waves-effect waves-button" [routerLink]="['/organization']"><span class="menu-icon fa fa-cubes"></span><p>Organization</p></a>                   -->
+                  <!-- </li> -->
+				  <!-- <li *ngIf="tagID=='C'"><a class="waves-effect waves-button" [routerLink]="['/organizationrole']"><span class="menu-icon fa fa-cube"></span><p>Organisation Role Mapping </p></a>  -->
+                  <!-- </li> -->
+				  <!-- <li *ngIf="tagID=='C'"><a class="waves-effect waves-button" [routerLink]="['/OrganizationTransMapping']"><span class="menu-icon fa fa-edit"></span><p>Organisation Trans Mapping </p></a>                  -->
+                  <!-- </li> -->
+				   <!-- <li *ngIf="tagID=='S'"><a class="waves-effect waves-button" [routerLink]="['/']"><i class="fa fa-home"></i> Home <span class="fa fa-chevron-down"></span></a>                  -->
+                  <!-- </li> -->
+				  <!-- <!-- <li *ngIf="tagID=='UR'"><a [routerLink]="['/']"><i class="fa fa-home"></i> Events <span class="fa fa-chevron-down"></span></a>                  --> 
+                  <!-- <!-- </li> --> 
+				  <!-- <li *ngIf="tagID=='UR'"><a class="waves-effect waves-button" [routerLink]="['/eventstudentapprovallist']"><i class="fa fa-home"></i> Events student approval list<span class="fa fa-chevron-down"></span></a>                  -->
+                  <!-- </li> -->
+				  
+				  <!-- <li *ngIf="tagID=='U'"><a class="waves-effect waves-button" [routerLink]="['/eventstudentapprovallist']"><i class="fa fa-home"></i> Events student approval list<span class="fa fa-chevron-down"></span></a>                  -->
+                  <!-- </li> -->
 				 
-				 <li *ngIf="tagID=='U'"><a [routerLink]="['/UniversityTransMapping']"><i class="fa fa-home"></i> UniversityTransMapping <span class="fa fa-chevron-down"></span></a>                 
-                  </li>
+				 <!-- <li *ngIf="tagID=='U'"><a class="waves-effect waves-button" [routerLink]="['/UniversityTransMapping']"><i class="fa fa-home"></i> UniversityTransMapping <span class="fa fa-chevron-down"></span></a>                  -->
+                  <!-- </li> -->
                   
-				  <li *ngIf="tagID=='U'"><a [routerLink]="['/universityrole']"><i class="fa fa-edit"></i>Role Master <span class="fa fa-chevron-down"></span></a> 
-                  </li>
+				  <!-- <li *ngIf="tagID=='U'"><a class="waves-effect waves-button" [routerLink]="['/universityrole']"><i class="fa fa-edit"></i>Role Master <span class="fa fa-chevron-down"></span></a>  -->
+                  <!-- </li> -->
 				  
-				  <li *ngIf="tagID=='U'"><a [routerLink]="['/eventinfo/0']"><i class="fa fa-edit"></i> Create Event <span class="fa fa-chevron-down"></span></a> 
-                  </li>
-				  <li *ngIf="tagID=='U'"><a [routerLink]="['/adduniversityroledetail']"><i class="fa fa-edit"></i> User Role Mapping <span class="fa fa-chevron-down"></span></a> 
-                  </li>
+				  <!-- <li *ngIf="tagID=='U'"><a class="waves-effect waves-button" [routerLink]="['/eventinfo/0']"><i class="fa fa-edit"></i> Create Event <span class="fa fa-chevron-down"></span></a>  -->
+                  <!-- </li> -->
+				  <!-- <li *ngIf="tagID=='U'"><a class="waves-effect waves-button" [routerLink]="['/adduniversityroledetail']"><i class="fa fa-edit"></i> User Role Mapping <span class="fa fa-chevron-down"></span></a>  -->
+                  <!-- </li> -->
 				  
-                  <li *ngIf="tagID=='S'"><a [routerLink]="['/profile']"><i class="fa fa-desktop"></i> Profile <span class="fa fa-chevron-down"></span></a>                   
-                  </li>
-                  <li *ngIf="tagID=='S'"><a><i class="fa fa-table"></i> Events Information <span class="fa fa-chevron-down"></span></a>
+                  <!-- <li *ngIf="tagID=='S'"><a class="waves-effect waves-button" [routerLink]="['/profile']"><i class="fa fa-desktop"></i> Profile <span class="fa fa-chevron-down"></span></a>                    -->
+                  <!-- </li> -->
+                  <!-- <li *ngIf="tagID=='S'"><a class="waves-effect waves-button"><i class="fa fa-table"></i> Events Information <span class="fa fa-chevron-down"></span></a> -->
                     
-                  </li>
-                  <li *ngIf="tagID=='S'"><a><i class="fa fa-bar-chart-o"></i> My Goal <span class="fa fa-chevron-down"></span></a>
+                  <!-- </li> -->
+                  <!-- <li *ngIf="tagID=='S'"><a class="waves-effect waves-button"><i class="fa fa-bar-chart-o"></i> My Goal <span class="fa fa-chevron-down"></span></a> -->
                    
-                  </li>
-				  <li *ngIf="tagID=='U'"><a [routerLink]="['/studentList']"><i class="fa fa-edit"></i> Student List <span class="fa fa-chevron-down"></span></a> 
-                  </li>
-				  <li *ngIf="tagID=='O'"><a [routerLink]="['/organizationrole']"><i class="fa fa-edit"></i> Organization Role Mapping <span class="fa fa-chevron-down"></span></a> 
-                  </li>
-				  <li *ngIf="tagID=='O'"><a [routerLink]="['/OrganizationTransMapping']"><i class="fa fa-home"></i> OrganizationTransMapping <span class="fa fa-chevron-down"></span></a>                 
-                  </li>
-				   <li *ngIf="tagID=='O'"><a [routerLink]="['/addorganizationrole']"><i class="fa fa-edit"></i> User Role Mapping <span class="fa fa-chevron-down"></span></a> 
-                  </li>
-				  <li *ngIf="tagID=='O'"><a [routerLink]="['/eventinfo/0']"><i class="fa fa-edit"></i> Create Event <span class="fa fa-chevron-down"></span></a> 
-                  </li>
-				  <li *ngIf="tagID=='OR'"><a [routerLink]="['/']"><i class="fa fa-home"></i> Home <span class="fa fa-chevron-down"></span></a>                 
-                  </li>
-				  <li *ngIf="tagID=='OR'"><a [routerLink]="['/addorganizationrole']"><i class="fa fa-edit"></i> User Role Mapping <span class="fa fa-chevron-down"></span></a> 
-                  </li>
-				  <li *ngIf="tagID=='OR'"><a [routerLink]="['/profile']"><i class="fa fa-desktop"></i> Profile <span class="fa fa-chevron-down"></span></a>                   
-                  </li>
-				  <li *ngIf="tagID=='O'"><a [routerLink]="['/EmployeeEventApprovalList']"><i class="fa fa-table"></i> Events Approval list<span class="fa fa-chevron-down"></span></a>                 
-                  </li>
+                  <!-- </li> -->
+				  <!-- <li *ngIf="tagID=='U'"><a class="waves-effect waves-button" [routerLink]="['/studentList']"><i class="fa fa-edit"></i> Student List <span class="fa fa-chevron-down"></span></a>  -->
+                  <!-- </li> -->
+				  <!-- <li *ngIf="tagID=='O'"><a class="waves-effect waves-button" [routerLink]="['/organizationrole']"><i class="fa fa-edit"></i> Organization Role Mapping <span class="fa fa-chevron-down"></span></a>  -->
+                  <!-- </li> -->
+				  <!-- <li *ngIf="tagID=='O'"><a class="waves-effect waves-button" [routerLink]="['/OrganizationTransMapping']"><i class="fa fa-home"></i> OrganizationTransMapping <span class="fa fa-chevron-down"></span></a>                  -->
+                  <!-- </li> -->
+				   <!-- <li *ngIf="tagID=='O'"><a class="waves-effect waves-button" [routerLink]="['/addorganizationrole']"><i class="fa fa-edit"></i> User Role Mapping <span class="fa fa-chevron-down"></span></a>  -->
+                  <!-- </li> -->
+				  <!-- <li *ngIf="tagID=='O'"><a class="waves-effect waves-button" [routerLink]="['/eventinfo/0']"><i class="fa fa-edit"></i> Create Event <span class="fa fa-chevron-down"></span></a>  -->
+                  <!-- </li> -->
+				  <!-- <li *ngIf="tagID=='OR'"><a class="waves-effect waves-button" [routerLink]="['/']"><i class="fa fa-home"></i> Home <span class="fa fa-chevron-down"></span></a>                  -->
+                  <!-- </li> -->
+				  <!-- <li *ngIf="tagID=='OR'"><a class="waves-effect waves-button" [routerLink]="['/addorganizationrole']"><i class="fa fa-edit"></i> User Role Mapping <span class="fa fa-chevron-down"></span></a>  -->
+                  <!-- </li> -->
+				  <!-- <li *ngIf="tagID=='OR'"><a class="waves-effect waves-button" [routerLink]="['/profile']"><i class="fa fa-desktop"></i> Profile <span class="fa fa-chevron-down"></span></a>                    -->
+                  <!-- </li> -->
+				  <!-- <li *ngIf="tagID=='O'"><a class="waves-effect waves-button" [routerLink]="['/EmployeeEventApprovalList']"><i class="fa fa-table"></i> Events Approval list<span class="fa fa-chevron-down"></span></a>                  -->
+                  <!-- </li> -->
 				  
-				  <li *ngIf="tagID=='OR'"><a [routerLink]="['/EmployeeEventApprovalList']"><i class="fa fa-table"></i> Events Approval list<span class="fa fa-chevron-down"></span></a>                 
-                  </li>
-				  <li><a [routerLink]="['/changepassword']"><i class="fa fa-edit"></i> Change Password <span class="fa fa-chevron-down"></span></a> 
-                  </li>
+				  <!-- <li *ngIf="tagID=='OR'"><a class="waves-effect waves-button" [routerLink]="['/EmployeeEventApprovalList']"><i class="fa fa-table"></i> Events Approval list<span class="fa fa-chevron-down"></span></a>                  -->
+                  <!-- </li> -->
+				  <!-- <li><a class="waves-effect waves-button" [routerLink]="['/changepassword']"><span class="menu-icon fa fa-exchange"></span><p>Change Password </p></a>  -->
+                  <!-- </li> -->
 				  
 				  
 				  
-				  <!--<li *ngIf="!authService.login()" [routerLinkActive]="['active']"   [routerLinkActiveOptions] = "{exact:true}"><a  [routerLink]="['/login']">Login</a></li>-->           
+				  <!-- <!--<li *ngIf="!authService.login()" [routerLinkActive]="['active']"   [routerLinkActiveOptions] = "{exact:true}"><a  [routerLink]="['/login']">Login</a></li>-->            
 
-                  <!-- <li *ngIf="!authService.login()" [routerLinkActive]="['active']"   [routerLinkActiveOptions] = "{exact:true}"><a [routerLink]="['/register']">Register</a> -->
+                  <!-- <!-- <li *ngIf="!authService.login()" [routerLinkActive]="['active']"   [routerLinkActiveOptions] = "{exact:true}"><a [routerLink]="['/register']">Register</a> --> 
 		          
 				  
                  
-                </ul>
-              </div>
-              <div class="menu_section">
+                <!-- </ul> -->
+              <!-- </div> -->
+              <!-- <div class="menu_section"> -->
                
-              </div>
+              <!-- </div> -->
 
-            </div>
-            <!-- /sidebar menu -->
+            <!-- </div> -->
+            <!-- <!-- /sidebar menu --> 
 
-            <!-- /menu footer buttons -->
-            <div class="sidebar-footer hidden-small">
-              <a data-toggle="tooltip" data-placement="top" title="Settings">
-                <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
-              </a>
-              <a data-toggle="tooltip" data-placement="top" title="FullScreen">
-                <span class="glyphicon glyphicon-fullscreen" aria-hidden="true"></span>
-              </a>
-              <a data-toggle="tooltip" data-placement="top" title="Lock">
-                <span class="glyphicon glyphicon-eye-close" aria-hidden="true"></span>
-              </a>
-              <a data-toggle="tooltip" data-placement="top" title="Logout" href="login.html">
-                <span class="glyphicon glyphicon-off" aria-hidden="true"></span>
-              </a>
-            </div>
-            <!-- /menu footer buttons -->
-          </div>
-        </div>
+            <!-- <!-- /menu footer buttons --> 
+            <!-- <div class="sidebar-footer hidden-small"> -->
+              <!-- <a data-toggle="tooltip" data-placement="top" title="Settings"> -->
+                <!-- <span class="glyphicon glyphicon-cog" aria-hidden="true"></span> -->
+              <!-- </a> -->
+              <!-- <a data-toggle="tooltip" data-placement="top" title="FullScreen"> -->
+                <!-- <span class="glyphicon glyphicon-fullscreen" aria-hidden="true"></span> -->
+              <!-- </a> -->
+              <!-- <a data-toggle="tooltip" data-placement="top" title="Lock"> -->
+                <!-- <span class="glyphicon glyphicon-eye-close" aria-hidden="true"></span> -->
+              <!-- </a> -->
+              <!-- <a data-toggle="tooltip" data-placement="top" title="Logout" href="login.html"> -->
+                <!-- <span class="glyphicon glyphicon-off" aria-hidden="true"></span> -->
+              <!-- </a> -->
+            <!-- </div> -->
+            <!-- <!-- /menu footer buttons --> 
+          <!-- </div> -->
+        <!-- </div> -->
 
-        <!-- top navigation -->
-        <div class="top_nav">
-          <div class="nav_menu">
-            <nav>
-              <div class="nav toggle">
-                <a id="menu_toggle"><i class="fa fa-bars"></i></a>
-              </div>
+        <!-- <!-- top navigation --> 
+        <!-- <div class="top_nav"> -->
+          <!-- <div class="nav_menu"> -->
+            <!-- <nav> -->
+              <!-- <div class="nav toggle"> -->
+                <!-- <a id="menu_toggle"><i class="fa fa-bars"></i></a> -->
+              <!-- </div> -->
 
-              <ul class="nav navbar-nav navbar-right">
-			  <!-- <li *ngIf="authService.login()" [routerLinkActive]="['active']"   [routerLinkActiveOptions] = "{exact:true}"><a  [routerLink]="['/login']">Login</a></li>  -->
-			   <!-- <li *ngIf="!authService.login()" [routerLinkActive]="['active']"   [routerLinkActiveOptions] = "{exact:true}"><a href="#"  (click)="onLogoutClick()">Logout</a></li> -->
+              <!-- <ul class="nav navbar-nav navbar-right"> -->
+			  <!-- <!-- <li *ngIf="authService.login()" [routerLinkActive]="['active']"   [routerLinkActiveOptions] = "{exact:true}"><a  [routerLink]="['/login']">Login</a></li>  --> 
+			   <!-- <!-- <li *ngIf="!authService.login()" [routerLinkActive]="['active']"   [routerLinkActiveOptions] = "{exact:true}"><a href="#"  (click)="onLogoutClick()">Logout</a></li> --> 
                 
-				<!-- <li *ngIf="!authService.login()" [routerLinkActive]="['active']"   [routerLinkActiveOptions] = "{exact:true}"><a  [routerLink]="['/login']">Login</a></li>  -->
-			   <!-- <li ><a href="#"  (click)="onLogoutClick()">Logout</a></li> --> 
+				<!-- <!-- <li *ngIf="!authService.login()" [routerLinkActive]="['active']"   [routerLinkActiveOptions] = "{exact:true}"><a  [routerLink]="['/login']">Login</a></li>  --> 
+			   <!-- <!-- <li ><a href="#"  (click)="onLogoutClick()">Logout</a></li> -->  
 				
-				<li>
-                  <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                    <img src="./src/img/profile.png"  alt="">
-                    <span class=" fa fa-angle-down"></span>
-                  </a>
-                  <ul class="dropdown-menu dropdown-usermenu pull-right">
-                    <li><a > Profile</a></li>                  
-                    <li *ngIf="authService.login()" [routerLinkActive]="['active']"   [routerLinkActiveOptions] = "{exact:true}"><a href="login.html" (click)="onLogoutClick()"><i class="fa fa-sign-out pull-right"></i> Log Out</a></li> 
-                  </ul>
-                </li>
+				<!-- <li> -->
+                  <!-- <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false"> -->
+                    <!-- <img src="./src/img/profile.png"  alt=""> -->
+                    <!-- <span class=" fa fa-angle-down"></span> -->
+                  <!-- </a> -->
+                  <!-- <ul class="dropdown-menu dropdown-usermenu pull-right"> -->
+                    <!-- <li><a > Profile</a></li>                   -->
+                    <!-- <li *ngIf="authService.login()" [routerLinkActive]="['active']"   [routerLinkActiveOptions] = "{exact:true}"><a href="login.html" (click)="onLogoutClick()"><i class="fa fa-sign-out pull-right"></i> Log Out</a></li>  -->
+                  <!-- </ul> -->
+                <!-- </li> -->
 
-                <li role="presentation" class="dropdown">
-                  <a href="javascript:;" class="dropdown-toggle info-number" data-toggle="dropdown" aria-expanded="false">
-                    <i class="fa fa-envelope-o"></i>
-                    <span class="badge bg-green">6</span>
-                  </a>
-                  <ul id="menu1" class="dropdown-menu list-unstyled msg_list" role="menu">
-                    <li>
-                      <a>
-                        <span class="image"><img src="#" alt="Profile Image"></span>
-                        <span>
-                          <span>John Smith</span>
-                          <span class="time">3 mins ago</span>
-                        </span>
-                        <span class="message">
-                          Film festivals used to be do-or-die moments for movie makers. They were where...
-                        </span>
-                      </a>
-                    </li>
-                    <li>
-                      <a>
-                        <span class="image"><img src="#" alt="Profile Image"></span>
-                        <span>
-                          <span>John Smith</span>
-                          <span class="time">3 mins ago</span>
-                        </span>
-                        <span class="message">
-                          Film festivals used to be do-or-die moments for movie makers. They were where...
-                        </span>
-                      </a>
-                    </li>
-                    <li>
-                      <a>
-                        <span class="image"><img src="#" alt="Profile Image"></span>
-                        <span>
-                          <span>John Smith</span>
-                          <span class="time">3 mins ago</span>
-                        </span>
-                        <span class="message">
-                          Film festivals used to be do-or-die moments for movie makers. They were where...
-                        </span>
-                      </a>
-                    </li>
-                    <li>
-                      <a>
-                        <span class="image"><img src="#" alt="Profile Image"></span>
-                        <span>
-                          <span>John Smith</span>
-                          <span class="time">3 mins ago</span>
-                        </span>
-                        <span class="message">
-                          Film festivals used to be do-or-die moments for movie makers. They were where...
-                        </span>
-                      </a>
-                    </li>
-                    <li>
-                      <div class="text-center">
-                        <a>
-                          <strong>See All Alerts</strong>
-                          <i class="fa fa-angle-right"></i>
-                        </a>
-                      </div>
-                    </li>
-                  </ul>
-                </li>
-              </ul>
-            </nav>
-          </div>
-        </div>
-        <!-- /top navigation -->
-       <!-- footer content -->
+                <!-- <li role="presentation" class="dropdown"> -->
+                  <!-- <a href="javascript:;" class="dropdown-toggle info-number" data-toggle="dropdown" aria-expanded="false"> -->
+                    <!-- <i class="fa fa-envelope-o"></i> -->
+                    <!-- <span class="badge bg-green">6</span> -->
+                  <!-- </a> -->
+                  <!-- <ul id="menu1" class="dropdown-menu list-unstyled msg_list" role="menu"> -->
+                    <!-- <li> -->
+                      <!-- <a> -->
+                        <!-- <span class="image"><img src="#" alt="Profile Image"></span> -->
+                        <!-- <span> -->
+                          <!-- <span>John Smith</span> -->
+                          <!-- <span class="time">3 mins ago</span> -->
+                        <!-- </span> -->
+                        <!-- <span class="message"> -->
+                          <!-- Film festivals used to be do-or-die moments for movie makers. They were where... -->
+                        <!-- </span> -->
+                      <!-- </a> -->
+                    <!-- </li> -->
+                    <!-- <li> -->
+                      <!-- <a> -->
+                        <!-- <span class="image"><img src="#" alt="Profile Image"></span> -->
+                        <!-- <span> -->
+                          <!-- <span>John Smith</span> -->
+                          <!-- <span class="time">3 mins ago</span> -->
+                        <!-- </span> -->
+                        <!-- <span class="message"> -->
+                          <!-- Film festivals used to be do-or-die moments for movie makers. They were where... -->
+                        <!-- </span> -->
+                      <!-- </a> -->
+                    <!-- </li> -->
+                    <!-- <li> -->
+                      <!-- <a> -->
+                        <!-- <span class="image"><img src="#" alt="Profile Image"></span> -->
+                        <!-- <span> -->
+                          <!-- <span>John Smith</span> -->
+                          <!-- <span class="time">3 mins ago</span> -->
+                        <!-- </span> -->
+                        <!-- <span class="message"> -->
+                          <!-- Film festivals used to be do-or-die moments for movie makers. They were where... -->
+                        <!-- </span> -->
+                      <!-- </a> -->
+                    <!-- </li> -->
+                    <!-- <li> -->
+                      <!-- <a> -->
+                        <!-- <span class="image"><img src="#" alt="Profile Image"></span> -->
+                        <!-- <span> -->
+                          <!-- <span>John Smith</span> -->
+                          <!-- <span class="time">3 mins ago</span> -->
+                        <!-- </span> -->
+                        <!-- <span class="message"> -->
+                          <!-- Film festivals used to be do-or-die moments for movie makers. They were where... -->
+                        <!-- </span> -->
+                      <!-- </a> -->
+                    <!-- </li> -->
+                    <!-- <li> -->
+                      <!-- <div class="text-center"> -->
+                        <!-- <a> -->
+                          <!-- <strong>See All Alerts</strong> -->
+                          <!-- <i class="fa fa-angle-right"></i> -->
+                        <!-- </a> -->
+                      <!-- </div> -->
+                    <!-- </li> -->
+                  <!-- </ul> -->
+                <!-- </li> -->
+              <!-- </ul> -->
+            <!-- </nav> -->
+          <!-- </div> -->
+        <!-- </div> -->
+        <!-- <!-- /top navigation --> 
+       <!-- <!-- footer content --> 
         
-        <!-- /footer content -->
-      </div>
-    </div>
-	<div id="ProfileModal" class="modal fade" role="dialog">
-	<!-- <app-profile></app-profile> -->
+        <!-- <!-- /footer content --> 
+      <!-- </div> -->
+    <!-- </div> -->
+	<!-- <div id="ProfileModal" class="modal fade" role="dialog"> -->
+	<!-- <!-- <app-profile></app-profile> --> 
 
-  </div> 
+  <!-- </div>  -->
 	<!-- <div id="ProfileModal" class="modal fade" role="dialog"> -->
   <!-- <div class="modal-dialog"> -->
 

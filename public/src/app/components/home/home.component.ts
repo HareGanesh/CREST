@@ -3,10 +3,13 @@ import {ValidateService} from '../../services/validate.service';
 import {AuthService} from '../../services/auth.service'
 import {Router} from '@angular/router';
 import { ToastsManager } from 'ng2-toastr/ng2-toastr';
+import '../../../assets/plugins/waves.min.js';
+
+
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
-  styleUrls: ['./home.component.scss','./custom.min.css']
+  styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit {
 tagID:String;
@@ -15,6 +18,7 @@ OrgEventModel:EventModel[];
 ApprovedOrgEventModel:EventModel[];
 public ActionPar = '';
  searchFilter:any;
+ public showSearchDiv='';
   constructor(
    private validateService: ValidateService,  
     private authService:AuthService,
@@ -57,6 +61,11 @@ ngOnInit() {
 		return;
 	} 
 	
+  }
+  
+  showSearchBox(){
+	  debugger;
+	 this.showSearchDiv="Search";
   }
   
    approveEvent(id)
@@ -244,10 +253,14 @@ public open() {
 	debugger;
 	if(this.searchFilter !=undefined && this.searchFilter !='')
 	{
+		this.showSearchDiv = '';
+		
 	var modelData=this.eventModel;
 	var orgData=this.OrgEventModel;
+	var orgApprovedData = this.ApprovedOrgEventModel;
 	var filterData=[];
 	var orgFilterData=[];
+	var orgApproveFilterData=[];
 	
 	if(this.tagID == '0' || this.tagID == 'S' || this.tagID == 'U' || this.tagID == 'UR')
 	{
@@ -270,6 +283,17 @@ public open() {
 		  }
 	 }
 	 this.OrgEventModel=orgFilterData;
+	 
+	 for(var i=0;i<orgApprovedData.length;i++)
+	 {
+		 debugger;
+		  if(orgApprovedData[i].Location.toString().toLowerCase().indexOf(this.searchFilter.toLowerCase())!=-1 || orgApprovedData[i].EventTitle.toString().toLowerCase().indexOf(this.searchFilter.toLowerCase())!=-1)
+		  {
+			  orgApproveFilterData.push(orgApprovedData[i]);
+		  }
+	 }
+	 this.ApprovedOrgEventModel=orgApproveFilterData;
+	 this.searchFilter='';
 	}
 	else
 	{

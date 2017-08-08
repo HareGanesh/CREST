@@ -11,17 +11,16 @@
 <ng-container *ngIf="authService.login();">
 <app-navbar></app-navbar> 
 
-<div class="container">  
-
+ <div class="page-inner" role="main">
+<div class="page-title" style="margin-top:63px;">
+			<h3>Create Event </h3>   
+            </div> 
+  <div id="main-wrapper">
   <div class="row">
-    <div class="col-am-6 col-md-4 col-md-offset-4" style="width:100%">
-      <h1 class="text-left">Event Detail</h1>
+    <div class="col-md-6">
+      <div class="panel panel-white">
       <br>
-      <div class="account-wall" style="width:50%">
-	  <div style="margin:5px;" class="alert alert-success" *ngIf="SuccessMessage !=''">
-  <strong>{{SuccessMessage}}</strong>
-</div>
-	  
+      <div class="panel-body">  
 	  
 	  
 <div [hidden]="submitted">
@@ -215,18 +214,20 @@
 	
 	<label>POC Required?</label>
     <div class="form-group">
-        <div class="radio">
+        <div >
             <label>
-                <input type="radio" [(ngModel)]="model.POCRequired" class="radio-control"  ngControl="POCRequired" id="#POCRequired" #POCRequired="ngModel"  name="POCRequired" value="Yes">Yes
+                <input style="opacity:1;" type="radio" [(ngModel)]="model.POCRequired" class="radio-control"  ngControl="POCRequired" id="#POCRequired" #POCRequired="ngModel"  name="POCRequired" value="Yes">Yes
                 
             </label>
         </div>
-        <div class="radio">
+        <div >
             <label>
-                <input type="radio" [(ngModel)]="model.POCRequired" class="radio-control" ngControl="POCRequired" id="#POCRequired" #POCRequired="ngModel"   name="POCRequired" value="No">No
+                <input style="opacity:1;" type="radio" [(ngModel)]="model.POCRequired" class="radio-control" ngControl="POCRequired" id="#POCRequired" #POCRequired="ngModel"   name="POCRequired" value="No">No
             </label>
         </div>
     </div>
+	
+	
 	
 		<div *ngIf="model.POCRequired == 'Yes'" class="form-group">
 		<label>POC Deadline<span class="red">*</span></label>
@@ -266,9 +267,9 @@
         </div>
 	</div>
 	
-	<a id="btnFinal" class="big-red-button" style="margin-left:5px;" [class.disabled]="isDisabled()" (click)=onEventSubmit()>Finish All</a>
+	<a id="btnFinal" class="btn btn-primary pull-right navbar-btn" style="margin-left:5px;" [class.disabled]="isDisabled()" (click)=onEventSubmit()>Finish All</a>
 	<!-- <button (click)="onEventSubmit()" class="big-red-button floatRight" [disabled]="!EventForm.form.valid" >Finish</button> -->
-	<a id="Next" class="big-red-button" data-toggle="tab" [class.disabled]="isDisabled()" (click)=OnNextClick(input,1,firstLI,secondLI) #input>Next</a>
+	<a id="Next" class="btn btn-primary pull-right navbar-btn" data-toggle="tab" [class.disabled]="isDisabled()" (click)=OnNextClick(input,1,firstLI,secondLI) #input>Next</a>
 	<!-- <input type="submit" class="btn btn-lg btn btn-primary btnNext" value="Next"> -->
 </div> 
 
@@ -292,8 +293,8 @@
 	</div>
 	</div>
 	
-	<a id="Prev1" class="big-red-button" data-toggle="tab" (click)=OnPrevClick(inputc,2,secondLI,firstLI) #inputc>Prev</a>
-	<a id="Next1" class="big-red-button" data-toggle="tab" (click)=OnNextClick(input1,2,secondLI,thirdLI) #input1>Next</a>
+	<a id="Prev1" class="btn btn-primary pull-right navbar-btn" data-toggle="tab" (click)=OnPrevClick(inputc,2,secondLI,firstLI) #inputc>Prev</a>
+	<a id="Next1" class="btn btn-primary pull-right navbar-btn" data-toggle="tab" (click)=OnNextClick(input1,2,secondLI,thirdLI) #input1>Next</a>
 	
 	<!-- <input type="submit" class="btn btn-lg btn btn-primary " value="Next" [disabled]="!EventForm.form.valid"> -->
 </div>
@@ -315,8 +316,8 @@
 	 </div>
 	 </div>
 	
-	<a id="Prev2" class="big-red-button" data-toggle="tab" (click)=OnPrevClick(inputb,3,thirdLI,secondLI) #inputb>Prev</a>
-	<a id="Next2" class="big-red-button" data-toggle="tab" (click)=OnNextClick(input2,3,thirdLI,forthLI) #input2>Next</a>
+	<a id="Prev2" class="btn btn-primary pull-right navbar-btn" data-toggle="tab" (click)=OnPrevClick(inputb,3,thirdLI,secondLI) #inputb>Prev</a>
+	<a id="Next2" class="btn btn-primary pull-right navbar-btn" data-toggle="tab" (click)=OnNextClick(input2,3,thirdLI,forthLI) #input2>Next</a>
 		<!-- <input type="submit" class="btn btn-lg btn btn-primary " value="Next" [disabled]="!EventForm.form.valid"> -->
 </div>
 
@@ -371,9 +372,9 @@
 		<a *ngIf="model.Organizers.length == i+1 && model.Organizers.length !=1" id="RemoveOrg" class="floatRight" (click)=RemoveOrganizer()><img src="..\..\src\img\Remove.png" height="30px" width="30px"></a>
 
 	</div>
-<a id="Prev3" class="big-red-button" data-toggle="tab" (click)=OnPrevClick(inputa,4,forthLI,thirdLI) #inputa>Prev</a>
-<button (click)="onEventSubmit()" class="big-red-button" [disabled]="!EventForm.form.valid" >Submit All</button>
-<a style="display:none;" id="Next3" class="big-red-button" data-toggle="tab" (click)=OnNextClick(input4,4,forthLI,fifthLI) #input4>Next</a>
+<a id="Prev3" class="btn btn-primary pull-right navbar-btn" data-toggle="tab" (click)=OnPrevClick(inputa,4,forthLI,thirdLI) #inputa>Prev</a>
+<button (click)="onEventSubmit()" class="btn btn-primary pull-right navbar-btn" [disabled]="!EventForm.form.valid" >Submit All</button>
+<a style="display:none;" id="Next3" class="btn btn-primary pull-right navbar-btn" data-toggle="tab" (click)=OnNextClick(input4,4,forthLI,fifthLI) #input4>Next</a>
 <!-- <button (click)="onEventSubmit()" class="big-red-button floatRight" [disabled]="!EventForm.form.valid" >Submit All</button> -->
 <!-- <a id="Prev3" class="big-red-button" data-toggle="tab" (click)=OnPrevClick(inputa,4,forthLI,thirdLI) #inputa>Prev</a>	 -->
 
@@ -398,8 +399,8 @@
 </div>
 
 	
-	<a id="Prev4" class="big-red-button" data-toggle="tab" (click)=OnPrevClick(inputao,5,fifthLI,forthLI) #inputao>Prev</a>
-<button (click)="onEventSubmit()" class="big-red-button" [disabled]="!EventForm.form.valid" >Submit All</button>
+	<a id="Prev4" class="btn btn-primary pull-right navbar-btn" data-toggle="tab" (click)=OnPrevClick(inputao,5,fifthLI,forthLI) #inputao>Prev</a>
+<button (click)="onEventSubmit()" class="btn btn-primary pull-right navbar-btn" [disabled]="!EventForm.form.valid" >Submit All</button>
 	
 	<!-- <input type="submit" class="btn btn-lg btn btn-primary " value="Next" [disabled]="!EventForm.form.valid"> -->
 </div>
@@ -411,6 +412,8 @@
 </div>
 
 </form>
+</div>
+</div>
 </div>
 </div>
 </div>

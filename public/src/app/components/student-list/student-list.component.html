@@ -1,29 +1,25 @@
 <ng-container>
 <app-navbar></app-navbar> 
-<div style="margin-left:230px">
-      <nav class="navbar ">
-  <div class="container-fluid">
-    <div> 
-	<div class="title_left">
-                <h3>Student List <small></small></h3>
-              </div>
-	<div class="nav navbar-nav navbar-right">
-	<input  #search class="search col-xs-10" type="text" placeholder="Search..." (keydown.enter)="onSearch(search.value)">
-		
-    </div>
+<div class="page-inner" role="main">
+      <div class="page-title" style="margin-top:63px;">
+			<h3>Student List</h3>
+			<div *ngIf="showSearchDiv !=''" id="sediv" class="input-group" style="width:50%;margin-top:-2%;float:right;" >                
+				<input  #search class="form-control search" style="margin:0px;" type="text" placeholder="Search..." (keydown.enter)="onSearch(search.value)">
+                <span class="input-group-btn">
+                    <button style="margin:0px;" class="btn btn-default close-search waves-effect waves-button waves-classic" (click)="onSearch(search.value)" type="button"><i class="fa fa-search"></i>Go</button>
+                </span>
+            </div>
+			 <a *ngIf="showSearchDiv ==''" (click)="showSearchBox()" class="waves-effect waves-button waves-classic show-search" style="float:right;margin-top:-1%;"><i class="fa fa-search"></i></a>
+			</div>  
 	
-</div>
-  </div>
-</nav>
 
- <div class="row">
+
+ <div id="main-wrapper" style="margin-left:0px !important;">
+ 
               <div class="col-md-12">
-                <div>
+                <div class="panel panel-white">
             
-                  <div class="x_content">
-				  
-				  
-				   <div class="row">
+                  <div class="panel-body">
 				   <ng2-smart-table [settings]="settings" [source]="source" mode="external"></ng2-smart-table>
                       <!-- <div class="col-md-12 mail_list_column"> -->
                       
@@ -55,7 +51,7 @@
                       <!-- CONTENT MAIL -->
                      
                       <!-- /CONTENT MAIL -->
-                    </div>
+                    
                     
                   </div>
                 </div>

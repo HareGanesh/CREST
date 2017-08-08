@@ -8,35 +8,52 @@
 			 <!-- <div style="margin-left:250px;" class="alert alert-success" *ngIf="ActionPar =='A'"> -->
 				<!-- <strong>Event is approved by Admin.</strong> -->
 			 <!-- </div> -->
-        <div class="right_col" role="main">
-		
 			 
-          <div class="">
-
-            <div class="page-title">
-			
-              <div class="title_left">
-                <h3>Event Lists <small></small></h3>
-              </div>
-			  
-              <div class="title_right">
-			  
-			  <!-- <div [routerLinkActive]="['active']"   [routerLinkActiveOptions] = "{exact:true}"><a  class="big-red-button" [routerLink]="['/eventinfo/0']">Register Event</a> -->
-			  <!-- </div> -->
-                <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
-                  <div class="input-group">
-                    <input type="text" [(ngModel)]="searchFilter" class="form-control" placeholder="Search for...">
-                    <span class="input-group-btn">
-                      <button class="btn btn-default" (click)="open()" type="button">Go!</button>
-                    </span>
-                  </div>
-                </div>
-              </div>
+        <div class="page-inner" role="main">
+		<!-- <form class="search-form" > -->
+            <!-- <div class="input-group" style="width:50%;"> -->
+                <!-- <input type="text" name="se" [(ngModel)]="searchFilter" class="form-control" placeholder="Search for..."> -->
+                <!-- <span class="input-group-btn"> -->
+                    <!-- <button class="btn btn-default close-search waves-effect waves-button waves-classic" (click)="open()" type="button"><i class="fa fa-times"></i>Go</button> -->
+                <!-- </span> -->
+            <!-- </div><!-- Input Group --> -->
+        <!-- </form><!-- Search Form --> -->
+            <div class="page-title" style="margin-top:63px;">
+			<h3>Event List</h3>   
+			<div *ngIf="showSearchDiv !=''" id="sediv" class="input-group" style="width:50%;margin-top:-2%;float:right;" >
+                <input type="text" name="searchDiv" [(ngModel)]="searchFilter" class="form-control search" placeholder="Search for...">
+                <span class="input-group-btn">
+                    <button class="btn btn-default close-search waves-effect waves-button waves-classic" (click)="open()" type="button"><i class="fa fa-search"></i>Go</button>
+                </span>
             </div>
+			 <a *ngIf="showSearchDiv ==''" (click)="showSearchBox()" class="waves-effect waves-button waves-classic show-search" style="float:right;margin-top:-1%;"><i class="fa fa-search"></i></a>
+            </div>			
+			  
+              <!-- <div class="title_right"> -->
+			  
+			  <!-- <!-- <div [routerLinkActive]="['active']"   [routerLinkActiveOptions] = "{exact:true}"><a  class="big-red-button" [routerLink]="['/eventinfo/0']">Register Event</a> --> 
+			  <!-- <!-- </div> --> 
+                <!-- <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search"> -->
+                  <!-- <div class="input-group"> -->
+                    <!-- <input type="text" [(ngModel)]="searchFilter" class="form-control" placeholder="Search for..."> -->
+                    <!-- <span class="input-group-btn"> -->
+                      <!-- <button class="btn btn-default" (click)="open()" type="button">Go!</button> -->
+                    <!-- </span> -->
+                  <!-- </div> -->
+                <!-- </div> -->
+              <!-- </div> --> 
+			   
+           
 
             <div class="clearfix"></div>
-<div id="tabs">
-<div class="row">
+<div id="main-wrapper">
+                    <div class="row">
+                    <div class="col-md-12">
+                    <div class="panel panel-white">
+                                   
+                                    <div class="panel-body">
+                                        <div role="tabpanel">
+                                            <!-- Nav tabs -->
 
 <ul class="nav nav-tabs">
 <li class="active" >
@@ -59,7 +76,7 @@
                     <div class="row">
                       <div class="col-md-12 mail_list_column" *ngFor="let item of OrgEventModel; ">
                       
-                        <a href="#" id="{{item._id}}">
+                        
                           <div class="mail_list">
                             <div class="left">
                               <i class="fa icon-time"></i>  &nbsp;{{item.RemainDay}} days
@@ -83,7 +100,7 @@
 								  <!-- <input type="button" value="Reject" class="btn btn-primary" (click)="rejectEvent(item._id);"/> -->
 							  </div> 
                           </div>
-                        </a>
+                        
                         
                     
                       </div>
@@ -109,7 +126,7 @@
                     <div class="row">
                       <div class="col-md-12 mail_list_column" *ngFor="let item of ApprovedOrgEventModel; ">
                       
-                        <a href="#" id="{{item._id}}">
+                        
                           <div class="mail_list">
                             <div class="left">
                               <i class="fa icon-time"></i>  &nbsp;{{item.RemainDay}} days
@@ -128,7 +145,7 @@
 							  
                             </div>
                           </div>
-                        </a>
+                        
                         
                     
                       </div>
@@ -149,9 +166,18 @@
 </div>
 </div>
            
-          </div>
+          
         </div>
+		</div>
+</div>
+           
+          
+        </div>
+		<div class="page-footer">
+                    <p class="no-s">2017 &copy; UST Global.</p>
+                </div>
 		
+		</div>
 		<!-- <button id="openModalButton" [hidden]="true" data-toggle="modal" data-backdrop="static" data-keyboard="false" data-target="#changepasswordModal">Open Modal</button> -->
 <!-- <div id="changepasswordModal" class="modal fade" role="dialog"> -->
 	 <!-- <app-changepasswordPopup></app-changepasswordPopup> -->
