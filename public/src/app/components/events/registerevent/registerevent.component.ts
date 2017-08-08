@@ -17,7 +17,8 @@ import { IMultiSelectTexts } from 'angular-2-dropdown-multiselect';
 @Component({
   selector: 'app-registerevent',
   templateUrl: './registerevent.component.html',
-  styleUrls: ['./registerevent.component.scss']
+  styleUrls: ['./registerevent.component.scss'],
+  encapsulation: ViewEncapsulation.None
 
 })
 export class RegistereventComponent implements OnInit {
