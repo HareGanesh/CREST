@@ -293,9 +293,9 @@
 	</div>
 	</div>
 	
-	<a id="Prev1" class="btn btn-primary pull-right navbar-btn" data-toggle="tab" (click)=OnPrevClick(inputc,2,secondLI,firstLI) #inputc>Prev</a>
-	<a id="Next1" class="btn btn-primary pull-right navbar-btn" data-toggle="tab" (click)=OnNextClick(input1,2,secondLI,thirdLI) #input1>Next</a>
 	
+	<a id="Next1" class="btn btn-primary pull-right navbar-btn" data-toggle="tab" (click)=OnNextClick(input1,2,secondLI,thirdLI) #input1>Next</a>
+	<a id="Prev1" class="btn btn-primary pull-right navbar-btn" data-toggle="tab" (click)=OnPrevClick(inputc,2,secondLI,firstLI) #inputc>Prev</a>
 	<!-- <input type="submit" class="btn btn-lg btn btn-primary " value="Next" [disabled]="!EventForm.form.valid"> -->
 </div>
 
@@ -316,8 +316,9 @@
 	 </div>
 	 </div>
 	
-	<a id="Prev2" class="btn btn-primary pull-right navbar-btn" data-toggle="tab" (click)=OnPrevClick(inputb,3,thirdLI,secondLI) #inputb>Prev</a>
+	
 	<a id="Next2" class="btn btn-primary pull-right navbar-btn" data-toggle="tab" (click)=OnNextClick(input2,3,thirdLI,forthLI) #input2>Next</a>
+	<a id="Prev2" class="btn btn-primary pull-right navbar-btn" data-toggle="tab" (click)=OnPrevClick(inputb,3,thirdLI,secondLI) #inputb>Prev</a>
 		<!-- <input type="submit" class="btn btn-lg btn btn-primary " value="Next" [disabled]="!EventForm.form.valid"> -->
 </div>
 
@@ -372,8 +373,9 @@
 		<a *ngIf="model.Organizers.length == i+1 && model.Organizers.length !=1" id="RemoveOrg" class="floatRight" (click)=RemoveOrganizer()><img src="..\..\src\img\Remove.png" height="30px" width="30px"></a>
 
 	</div>
-<a id="Prev3" class="btn btn-primary pull-right navbar-btn" data-toggle="tab" (click)=OnPrevClick(inputa,4,forthLI,thirdLI) #inputa>Prev</a>
+
 <button (click)="onEventSubmit()" class="btn btn-primary pull-right navbar-btn" [disabled]="!EventForm.form.valid" >Submit All</button>
+<a id="Prev3" class="btn btn-primary pull-right navbar-btn" data-toggle="tab" (click)=OnPrevClick(inputa,4,forthLI,thirdLI) #inputa>Prev</a>
 <a style="display:none;" id="Next3" class="btn btn-primary pull-right navbar-btn" data-toggle="tab" (click)=OnNextClick(input4,4,forthLI,fifthLI) #input4>Next</a>
 <!-- <button (click)="onEventSubmit()" class="big-red-button floatRight" [disabled]="!EventForm.form.valid" >Submit All</button> -->
 <!-- <a id="Prev3" class="big-red-button" data-toggle="tab" (click)=OnPrevClick(inputa,4,forthLI,thirdLI) #inputa>Prev</a>	 -->
